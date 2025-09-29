@@ -148,10 +148,6 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
         // Make sure the country is in the list of supported countries
         reject('Kérlek válassz egy érvényes országot');
         return;
-      } else if (!Number.isInteger(billingPcode) || billingPcode < 1000 || 
-        billingPcode > 9985) {
-        reject('Kérlek valós irányítószámot adj meg');
-        return;
       }
       
       if (billingType == 'diffYes') {
@@ -210,10 +206,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           return;
         } else if (payment == 'credit' && !transactionID) {
           reject('Add hozzá a bankkártyádat a fizetéshez'); 
-        // Validate postal code
-        } else if (!Number.isInteger(pcode) || pcode < 1000 || pcode > 9985) {
-          reject('Hibás irányítószám'); 
-          return;
+        // Skip strict postal code validation on server
         // Make sure there is a valid shipping price
         } else if ((priceWithoutDiscount <= FREE_SHIPPING_LIMIT && shippingPrice != SHIPPING_PRICE)
           || (priceWithoutDiscount > FREE_SHIPPING_LIMIT && shippingPrice != 0)) {

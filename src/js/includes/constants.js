@@ -9,7 +9,7 @@ const DOWNLOAD_STLS_URL = '';
 const EMAIL_USER_NAME = '';
 const EMAIL_PASSWORD = '';
 const PAYLIKE_ID = '';
-const SESSION_SECRET = '';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'dev-secret';
 const LIT_FORMS = ['Domború', 'Homorú', 'Sima'];
 const LIT_PRICES = {'100': 1990, '150': 2990, '200': 3990};
 const LAYER_WIDTH_VALUES = [0.12, 0.2, 0.28];
@@ -114,12 +114,12 @@ const REF_BG = `
 
 // NOTE: change ADMIN constants if you want to use that feature
 // Admin URLs (marked with capital letters), password & username
-const ADMIN_LOGIN_URL = '';
-const CONF_EMAIL_URL = '';
-const STATUS_UPDATE_URL = '';
-const ADMIN_PAGE_ACCESS = '';
-const ADMIN_UNAME = '';
-const ADMIN_PASSWORD = '';
+const ADMIN_LOGIN_URL = '/adminLogin';
+const CONF_EMAIL_URL = '/sendConfEmail';
+const STATUS_UPDATE_URL = '/updateOrderStatus';
+const ADMIN_PAGE_ACCESS = '/lick_weebshit';
+const ADMIN_UNAME = 'ahmad';
+const ADMIN_PASSWORD = 'abc123';
 
 const LAZY_LOAD = `
   <script src="/js/includes/lazyLoad.js"></script>

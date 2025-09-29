@@ -6,7 +6,9 @@ const PASSWORD = connContsts.password;
 const DATABASE = connContsts.database;
 const DATE_STRINGS = connContsts.dateStrings;
 
-let conn = mysql.createConnection({
+// Use a pool to avoid fatal connection errors and allow concurrent queries
+const pool = mysql.createPool({
+  connectionLimit: 10,
   host: HOST,
   user: USER,
   password: PASSWORD,
@@ -14,4 +16,4 @@ let conn = mysql.createConnection({
   dateStrings: DATE_STRINGS
 });
 
-module.exports = conn;
+module.exports = pool;

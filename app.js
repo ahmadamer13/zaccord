@@ -297,12 +297,8 @@ const server = http.createServer((req, res) => {
       let formData = JSON.parse(body.join(''));
       let responseData = {};
 
-      // Validate postal code; other paramters are too ambiguous
-      if (validatePcode(formData.pcode)) {
-        returnToClient(changeDeliveryInfo, [conn, userID, formData], null, res, successReturn);
-      } else {
-        errorFormResponse(res, 'Kérlek valós irányítószámot adj meg');
-      }
+      // Skip strict postal code validation; accept user input as provided
+      returnToClient(changeDeliveryInfo, [conn, userID, formData], null, res, successReturn);
     });
   } else if (req.url === '/passValidate' && req.method === 'POST') {
     // Make sure user is logged in

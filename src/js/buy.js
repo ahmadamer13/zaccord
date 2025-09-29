@@ -130,10 +130,7 @@ function submitOrder() {
     statusFill('errStatus', 'Kérlek töltsd ki a szállítási adatokat');
     resetSubmitBtn();
     return;
-  } else if (!Number.isInteger(pcode) || pcode < 1000 || pcode > 9985) {
-    statusFill('errStatus', 'Kérlek valós irányítószámot adj meg');
-    resetSubmitBtn();
-    return;
+  // Skip strict postal code validation on client; accept any value provided
   } else if (creditCard && !transactionID) {
     statusFill('errStatus', 'Kérlek add hozzá a bankkártyádat a fizetéshez');
     resetSubmitBtn();

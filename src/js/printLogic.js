@@ -23,8 +23,8 @@ async function buildPrintSection(conn, req) {
   let src = req.headers['user-agent'];
   let ua = useragent.parse(src);
   let isMobile = ua.isMobile;
-  let dragDropText = isMobile ? 'Tölts fel fájlokat' : 'Húzd ide a fájlokat';
-  let connWord = isMobile ? 'és' : 'vagy';
+  let dragDropText = isMobile ? 'Upload files' : 'Drag files here';
+  let connWord = isMobile ? 'and' : 'or';
 
   // Select relevant blogs
   let res = await query('SELECT * FROM blog WHERE id IN (9, 10, 7)');
@@ -44,37 +44,37 @@ async function buildPrintSection(conn, req) {
             <p class="gotham font18" style="margin-top: 0;" id="or">${connWord}</p>
             <div class="btnCommon fillBtn" id="fdzB" style="width: 60%; margin: 0 auto;
               max-width: 320px;">
-              Böngéssz
+              Browse
             </div>
             <input type="file" name="file[]" style="display: none;" id="fileInput" multiple
               >
             <input type="submit" id="submitForm" style="display: none;">
             <br>
             <p class="gotham lh">
-              Kérhetsz
-              <a href="/print#getQuote" class="blueLink font16">egyedi árajánlatot</a>
-              is, ha nincsen megfelelő fájlod nyomtatáshoz
+              You can also
+              <a href="/print#getQuote" class="blueLink font16">request a custom quote</a>
+              if you don’t have a printable file yet
             </p>
           </form>
         </div>
         <div class="cPrintDivs rightDiv flexDiv previews gotham" id="bigPrew">
           <div id="prew" class="lh">
             <p class="gotham font24" style="color: #2d2d2d; margin-top: 0;">
-              3D nyomtatás fájlból
+              3D printing from file
             </p> 
             <p class="gotham font18" style="color: #2d2d2d;">
-              Nincsen kinyomtatni való fájlod?<br>
+              Don’t have a file to print?<br>
               <a class="blueLink" href="https://www.thingiverse.com" target="_blank">
-                Nézz körul a Thingiversen!
+                Browse models on Thingiverse!
               </a>
             </p> 
 
             <p class="gotham font16" style="color: #2d2d2d;">
-              Litofániához képet, bérnyomtatáshoz STL fájlt tölts fel
+              For lithophanes upload an image; for printing upload an STL file
             </p> 
 
             <p class="gotham font16 hideOnMobile" style="color: #2d2d2d;">
-              <span class="gothamBold">Max. méret:</span> ${PRINT_SIZES_PLA[0]}mm x ${PRINT_SIZES_PLA[1]}mm x ${PRINT_SIZES_PLA[2]}mm (FDM)<br> ${PRINT_SIZES_SLA[0]}mm x ${PRINT_SIZES_SLA[1]}mm x ${PRINT_SIZES_SLA[2]}mm (SLA) 
+              <span class="gothamBold">Max. size:</span> ${PRINT_SIZES_PLA[0]}mm x ${PRINT_SIZES_PLA[1]}mm x ${PRINT_SIZES_PLA[2]}mm (FDM)<br> ${PRINT_SIZES_SLA[0]}mm x ${PRINT_SIZES_SLA[1]}mm x ${PRINT_SIZES_SLA[2]}mm (SLA) 
             </p> 
           </div>
         </div>
@@ -85,20 +85,18 @@ async function buildPrintSection(conn, req) {
   output += `
     <section class="keepBottom ofv" style="margin-top: 40px;">
       <div id="cpFadeHolder" style="opacity: 0;">
-        <h1 class="gotham font26 align fontNorm">Precíz, gyors 3D bérnyomtatás azonnali megrendeléssel</h1>
+        <h1 class="gotham font26 align fontNorm">Precise, fast 3D printing on demand</h1>
         <h2 class="align font18 lh fontNorm">
-          Megbízható FDM és SLA nyomtatás különféle színekben, akár rugalmas TPU-val is. A Zaccord
-          megoldást nyújt a 3D nyomtatásban kevésbé jártas átlagemberek számára és a
-          hozzáértőknek egyaránt.
+          Reliable FDM and SLA printing in multiple colors, including flexible TPU. Zaccord is designed for both newcomers and experienced makers.
         </h2>
         <p class="align">
           <a href="/printHelp" class="blueLink align">
-            További információ
+            Learn more
             ${rightArrow}
           </a>
-          <span class="orSep">vagy</span>
+          <span class="orSep">or</span>
           <a class="blueLink align jumpToPrint">
-            Ugrás a nyomtatáshoz
+            Jump to printing
             ${rightArrow}
           </a>
         </p>
@@ -118,11 +116,9 @@ async function buildPrintSection(conn, req) {
           </div>
         </div>
         <h3 class="capitalTitle gothamMedium align fontNorm font16" id="capTitle">
-          Gyors prototípusgyártás FDM nyomtatással
+          Fast prototyping with FDM
         </h3>
-        <p id="scText" class="align lh" style="color: #3c4043;">A technológia kiváló választás lehet nullsorozatok
-          gyártására a kész termék piacra dobása előtt. Így rengeteg időt és pénzt lehet megspórolni, ha még a
-          termékfejlesztés korai szakaszában feltárulnak az esetleges hibák.
+        <p id="scText" class="align lh" style="color: #3c4043;">This technology is ideal for small runs before launching a final product — catching issues early saves time and cost.
         </p>
       </div>
 
@@ -160,7 +156,7 @@ async function buildPrintSection(conn, req) {
 
   output += `
     <div id="fdmFadeHolder" style="opacity: 0;">
-      <h2 class="gotham font26 align fontNorm">FDM technológia</h2>
+      <h2 class="gotham font26 align fontNorm">FDM technology</h2>
         <h2 class="align font18 lh fontNorm">
           Az FDM technológia jelenleg a legelterjettebb és legköltséghatákonyabb nyomtatási
           eljárás, rengeteg elérhető anyaggal és textúrával. Kiváló választás a végső termék piacra dobása előtti
@@ -168,12 +164,12 @@ async function buildPrintSection(conn, req) {
         </h2>
         <p class="align">
           <a href="https://en.wikipedia.org/wiki/Fused_filament_fabrication" target="_blank" class="blueLink align">
-            További információ
+            Learn more
             ${rightArrow}
           </a>
-          <span class="orSep">vagy</span>
+          <span class="orSep">or</span>
           <a class="blueLink align jumpToPrint">
-            Ugrás a nyomtatáshoz
+            Jump to printing
             ${rightArrow}
           </a>
         </p>
@@ -193,18 +189,16 @@ async function buildPrintSection(conn, req) {
           </div>
         </div>
         <h3 class="capitalTitle gothamMedium align font16 fontNorm" id="capTitleFdm">
-          FDM nyomtató
+          FDM printer
         </h3>
         <p id="scTextFdm" class="align lh" style="color: #3c4043;">
-            Az FDM nyomtatók precízen, a megolvadt filamentből, rétegről rétegre készítik
-            el a kívánt modellt egy digitális fájlból. A nyomtató feje képes mindhárom
-            tengelyen (X, Y, Z) mozogni, így szinte bármilyen alakzatot képes elkészíteni.
+            FDM printers deposit molten filament layer by layer from a digital file. The print head moves on X, Y, Z, enabling a wide range of shapes.
         </p>
       </div>
     </div>
 
     <div id="slaFadeHolder" style="opacity: 0;">
-      <h2 class="gotham font26 align fontNorm">SLA technológia</h2>
+      <h2 class="gotham font26 align fontNorm">SLA technology</h2>
         <h2 class="align font18 lh fontNorm">
           Az SLA technológia az FDM-nél sokkal pontosabb, viszont ezzel együtt drágább is. Gyakran használják orvosi és
           gyógyászati célokra, például fogsor prototípus nyomtatásához vagy anatómai modellezéshez,
@@ -212,12 +206,12 @@ async function buildPrintSection(conn, req) {
         </h2>
         <p class="align">
           <a href="https://en.wikipedia.org/wiki/Stereolithography" target="_blank" class="blueLink align">
-            További információ
+            Learn more
             ${rightArrow}
           </a>
-          <span class="orSep">vagy</span>
+          <span class="orSep">or</span>
           <a class="blueLink align jumpToPrint">
-            Ugrás a nyomtatáshoz
+            Jump to printing
             ${rightArrow}
           </a>
         </p>
@@ -237,7 +231,7 @@ async function buildPrintSection(conn, req) {
           </div>
         </div>
         <h3 class="capitalTitle gothamMedium align font16 fontNorm" id="capTitleSla">
-          SLA nyomtatás
+          SLA printing
         </h3>
         <p id="scTextSla" class="align lh" style="color: #3c4043;">
           A sztereolitográfia egy olyan 3D nyomtatási eljárás, amelyet
@@ -251,7 +245,7 @@ async function buildPrintSection(conn, req) {
 
 
     <div id="matFadeHolder">
-      <h2 class="gotham font26 align fontNorm">FDM nyomtatási anyagok</h2>
+      <h2 class="gotham font26 align fontNorm">FDM materials</h2>
         <h2 class="align font18 lh fontNorm">
           Különböző típusú FDM nyomtatásokhoz eltérő anyagokra lehet szükség, így annak
           érdekében hogy a specifikusabb igényeket is kielégítsük jelenleg a PLA, ABS, PETG és
@@ -299,11 +293,10 @@ async function buildPrintSection(conn, req) {
       </div>
       
       <div class="mtsix">
-        <h2 class="gotham font26 align fontNorm">Hasznos blogbejegyzések</h2>
+        <h2 class="gotham font26 align fontNorm">Useful blog posts</h2>
         <h2 class="align font18 lh fontNorm">
-          Gyakran frissülő blogbejegyzéseink hasznos információt nyújthatnak a kezdők és a 3D nyomtatásban jártas 
-          emberek számára egyaránt. Ha szeretnél tovább olvasni a témában, akkor látogass el a
-          <a class="font18 blueLink" href="/blogs">blog</a> oldalunkra további érdekes cikkekért.
+          Our frequently updated blog offers useful tips for both beginners and advanced users. For more, visit the
+          <a class="font18 blueLink" href="/blogs">blog</a> for additional articles.
         </h2>
         <div class="flexDiv flexWrap lh flSpAr">
     `;
@@ -316,21 +309,18 @@ async function buildPrintSection(conn, req) {
       </div>
     </div>
     <div id="litFadeHolder">
-      <h2 class="gotham font26 align fontNorm">Örökítsd meg legszebb képeidet 3D-ben!</h2>
+      <h2 class="gotham font26 align fontNorm">Turn your favorite photos into 3D!</h2>
         <h2 class="align font18 lh fontNorm">
-          A legjobban sikerült képeidet litofánia formájában is kinyomtatjuk,
-          így megörökítve a
-          legszebb pillanataidat. Összesen egy képre van szükséged amit feltöltesz a Zaccordra
-          és ezután azonnal megvásárolhatod a terméket.
+          We 3D print your best photos as lithophanes so you can preserve your favorite moments. Just upload an image — you can purchase the product immediately.
         </h2>
         <p class="align">
           <a href="/lithophaneHelp" class="blueLink align">
-            További információ
+            Learn more
             ${rightArrow}
           </a>
-          <span class="orSep">vagy</span>
+          <span class="orSep">or</span>
           <a class="blueLink align jumpToPrint">
-            Ugrás a nyomtatáshoz
+            Jump to printing
             ${rightArrow}
           </a>
         </p>
@@ -348,34 +338,31 @@ async function buildPrintSection(conn, req) {
           </div>
         </div>
         <h3 class="capitalTitle gothamMedium align fontNorm font16" id="capTitleLit">
-          Kinyomtatott litofán és az eredeti kép
+          Printed lithophane next to the original photo
         </h3>
         <p id="scTextLit" class="align lh" style="color: #3c4043;">
-          A kész litofán alapesetben egy nehezen kivehető,
-          dombornyomott képed ad. Háttérvilágítással viszont kristálytisztán előtűnik maga a kép.
-          A feltöltött digitális képből a 3D nyomtató készít egy valódi, tapintható litofánt,
-          ami a technológiának köszönhetően valósághűen ábrázolja az eredeti képet.
+          A lithophane looks like a faint embossed image in normal light, but it reveals a crisp picture when backlit.
+          The 3D printer turns your digital image into a tangible lithophane with impressive detail.
         </p>
       </div>
       
       <div class="mtsix">
         <h2 class="gotham font26 align fontNorm" id="getQuote">
-          Ajánlatkérés
+          Request a quote
         </h2>
         <h2 class="align font18 lh fontNorm">
-          Amennyiben egyedi megrendelést szeretnél leadni vagy mást fájlformátumban vannak a nyomtatni kívánt
-          modelljeid, akkor bátran vedd fel velünk a kapcsolatot egy ajánlatkérés formájában.
+          If you need a custom order or have files in another format, contact us and request a personalized quote.
         </h2>
         <div class="flexDiv" style="flex-wrap: wrap;" id="normalDiv">
-          <input type="text" class="dFormField" id="name" placeholder="Név" value="">
+          <input type="text" class="dFormField" id="name" placeholder="Name" value="">
           <input type="email" class="dFormField" id="email" placeholder="Email">
           <input type="text" class="dFormField protmob" id="mobile"
-            placeholder="Telefonszám" value="">
-          <textarea placeholder="CAD modell URL, termékkel szembeni elvárások: anyag, szín, technológia stb."
+            placeholder="Phone number" value="">
+          <textarea placeholder="CAD model URL, expectations for the part: material, color, technology, etc."
             id="message" class="dFormField" style="width: 100%; height: 100px;"></textarea>
         </div>
         <button class="fillBtn btnCommon" id="submitBtn" style="display: block; margin: 0 auto;">
-          Küldés
+          Send
         </button>
         <div id="pstatus" class="align errorBox" style="margin-top: 20px;"></div>
         <div id="succstat" class="align successBox" style="margin-top: 20px;"></div>
@@ -386,11 +373,9 @@ async function buildPrintSection(conn, req) {
       <hr class="hrStyle">
 
       <p class="align lh font18 notoSans">
-        Sorozatgyártás vagy prototípusgyártás esetén látogass el a
-        <a class="blueLink font18" href="/prototype">Prototípusgyártás</a> oldalra vagy
-        vedd fel velünk a kapcsolatot a
-        <a class="blueLink font18" href="mailto:info@zaccord.com">info@zaccord.com</a>
-        email címen keresztül.
+        For serial production or prototyping, visit the
+        <a class="blueLink font18" href="/prototype">Prototyping</a> page or
+        contact us at <a class="blueLink font18" href="mailto:info@zaccord.com">info@zaccord.com</a>.
       <p>
     </section>
     ${LAZY_LOAD}
