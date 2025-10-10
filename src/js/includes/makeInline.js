@@ -61,7 +61,7 @@ function makeInline(html) {
     box-sizing: border-box;
   `;
 
-  let url = 'https://www.zaccord.com';
+  let url = 'https://www.jordan3dprint.store';
 
   localHTML = localHTML
     .replace(/class="cartItemHolder"/g, cartItemHolder)

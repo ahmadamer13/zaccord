@@ -125,7 +125,7 @@ const buildMainSection = (conn, cat) => {
               <div class="darken"></div>
               <div class="textCenter">
                 <h1 class="mainText lh gotham align fontNorm" style="padding: 10px;">
-                  Precíz 3D nyomtatás a Zaccordon
+                  Precíz 3D nyomtatás a Jordan3DPrinten
                   <button class="fillBtn instantQuote gotham" onclick="location.href = '/print'">
                     Azonnali árajánlat
                   </button>
@@ -282,7 +282,7 @@ const buildMainSection = (conn, cat) => {
                 <p class="gotham boxTitleLeft">Termékek</p>
                 <div class="greyBoxTextLeft">
                   <p class="gothamNormal lh">
-                    A Zaccordon számos előre kinyomtatott termék közül válogathatsz, rengeteg kategóriában.
+                    A Jordan3DPrinten számos előre kinyomtatott termék közül válogathatsz, rengeteg kategóriában.
                     Sokszor olyan termékekkel is találkozhatsz, amiket nem lehet kapni hétköznapi boltokban
                     vagy csak sokkal drágábban, mint az oldalon.
                   </p>
@@ -394,7 +394,7 @@ const buildMainSection = (conn, cat) => {
                   </div>
                   <span class="gotham align">
                     <p>${prodName}</p>
-                    <p>${price} Ft</p>
+                    <p>${price} JOD</p>
                   </span>
                 </a>
               `;

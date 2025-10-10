@@ -523,11 +523,11 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 let emailContent = `
                   <p style="font-size: 24px;">Megkaptuk a rendelésed!</p>
                   <p style="font-size: 16px;">
-                    Amennyiben rendelkezel Zaccord fiókkal, a rendelésed státuszát ott tudod
+                    If you have a 3DJordanPrint account, you can track your order status there.
                     nyomon követni.<br>
                     Ezen felül emailben is értesítünk, amikor a csomagod átadtuk a
                     futárszolgálatnak.<br>
-                    Köszönjük, hogy a Zaccordot választottad!
+                    Thank you for choosing 3DJordanPrint!
                   </p>
 
                   <hr style="border: 0;
@@ -581,7 +581,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   <br>
                   <p style="font-size: 14px; text-align: center;">
                     Az alábbi termék azonosítóval tudod nyomonkövetni a
-                    rendelésed a Zaccord fiókodban:
+                    your order in your 3DJordanPrint account:
                     <span style="color: #4285f4;">${uniqueID}</span>
                   </p>
 
@@ -612,16 +612,16 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   generateInvoice(conn, formData).then(resp => {
                     console.log(resp);
                     let attachmentOptions = {
-                      filename: `E-számla - Zaccord 3D nyomtatás (${uniqueID}).pdf`,
+                      filename: `E-invoice - 3DJordanPrint (${uniqueID}).pdf`,
                       path: path.join(__dirname, '..', '..', 'e-invoices', uniqueID + '.pdf')
                     };
-                    sendEmail('info@zaccord.com', emailContent, email, subject, attachmentOptions);
+                    sendEmail('info@jordan3dprint.store', emailContent, email, subject, attachmentOptions);
                   }).catch(err => {
                     console.log(err);
                     reject('Egy nem várt hiba történt, kérlek próbáld újra');
                   }); 
                 } else {
-                  sendEmail('info@zaccord.com', emailContent, email, subject);
+                  sendEmail('info@jordan3dprint.store', emailContent, email, subject);
                 }
 
                 // Send a notification email to us about every new order
@@ -638,8 +638,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                     }
 
                     const workbook = new ExcelJS.Workbook();
-                    workbook.creator = 'Zaccord';
-                    workbook.lastModifiedBy = 'Zaccord';
+                    workbook.creator = '3DJordanPrint';
+                    workbook.lastModifiedBy = 'Jordan3DPrint';
                     workbook.modified = new Date();
                     workbook.xlsx.readFile(path.resolve('./src/spreadsheets/shippingCredentials.xlsx')).then(w => {
                       let packageDimensions = getPackageDimensions(itemVolumes, itemSizes);

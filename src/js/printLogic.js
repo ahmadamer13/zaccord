@@ -87,7 +87,7 @@ async function buildPrintSection(conn, req) {
       <div id="cpFadeHolder" style="opacity: 0;">
         <h1 class="gotham font26 align fontNorm">Precise, fast 3D printing on demand</h1>
         <h2 class="align font18 lh fontNorm">
-          Reliable FDM and SLA printing in multiple colors, including flexible TPU. Zaccord is designed for both newcomers and experienced makers.
+          Reliable FDM and SLA printing in multiple colors, including flexible TPU. Jordan3DPrint is designed for both newcomers and experienced makers.
         </h2>
         <p class="align">
           <a href="/printHelp" class="blueLink align">
@@ -142,7 +142,7 @@ async function buildPrintSection(conn, req) {
             <br><br>
             Amenyiben eltérő fájlformátummal rendelkezel vagy egyedi megrendelést szeretnél leadni, akkor
             kérj személyre szabott árajánlatot az <a class="blueLink font18 goToQuote">oldal alján</a> vagy
-            írj nekünk emailt az <a href="mailto:info@zaccord.com" class="blueLink font18">info@zaccord.com</a>
+            írj nekünk emailt az <a href="mailto:info@jordan3dprint.store" class="blueLink font18">info@jordan3dprint.store</a>
             címre.
           </h2>
         </div>
@@ -375,7 +375,7 @@ async function buildPrintSection(conn, req) {
       <p class="align lh font18 notoSans">
         For serial production or prototyping, visit the
         <a class="blueLink font18" href="/prototype">Prototyping</a> page or
-        contact us at <a class="blueLink font18" href="mailto:info@zaccord.com">info@zaccord.com</a>.
+        contact us at <a class="blueLink font18" href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a>.
       <p>
     </section>
     ${LAZY_LOAD}

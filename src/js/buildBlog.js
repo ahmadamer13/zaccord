@@ -21,7 +21,7 @@ async function buildBlog(conn, blogID, req) {
     <!DOCTYPE html>
     <html lang="hu">
       <head>
-        <title>${title} - Zaccord 3D Nyomtatás Blog</title>
+        <title>${title} - Jordan3DPrint 3D Nyomtatás Blog</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/animate/animate.css">
@@ -44,7 +44,7 @@ async function buildBlog(conn, blogID, req) {
         <link rel="manifest" href="/manifest.json">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="white">
-        <meta name="apple-mobile-web-app-title" content="Zaccord">
+        <meta name="apple-mobile-web-app-title" content="Jordan3DPrint">
         <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
         <meta name="theme-color" content="#ffffff" />
       </head>

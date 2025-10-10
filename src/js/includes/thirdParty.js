@@ -6,11 +6,11 @@ gtag('config', 'UA-172408841-1');
 gtag('config', 'UA-169198596-1');
 gtag('config', 'AW-577856704');
 
-if (window.location.href.match(/https:\/\/www\.zaccord\.com\/buy\?product=(.+)/)) {
+if (window.location.href.match(/https:\/\/www\.3djordanprint\.com\/buy\?product=(.+)/)) {
   gtag('event', 'conversion', {'send_to': 'AW-577856704/zAdjCJz39aUDEMDJxZMC'});
 }
 
-if (window.location.href.match(/https:\/\/www\.zaccord\.com\/uploadPrint\?(.+)/)) {
+if (window.location.href.match(/https:\/\/www\.3djordanprint\.com\/uploadPrint\?(.+)/)) {
   gtag('event', 'conversion', {'send_to': 'AW-577856704/yM1KCIXewaUDEMDJxZMC'});
 }
 
@@ -33,7 +33,7 @@ function recordConversion(url, amount, sid) {
   gtag('event', 'conversion', {
       'send_to': 'AW-577856704/' + sid,
       'value': amount,
-      'currency': 'HUF',
+      'currency': 'JOD',
       'event_callback': callback
   });
 

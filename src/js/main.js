@@ -119,7 +119,7 @@ function sortByCat(cat, cid, isEye = false) {
   }
 
   // Change page url without reloading the page
-  window.history.replaceState("category", "Zaccord - " + cat, "/?cat=" + cat);
+  window.history.replaceState("category", "Jordan3DPrint - " + cat, "/?cat=" + cat);
 
   fetch('/category', {
     headers: {

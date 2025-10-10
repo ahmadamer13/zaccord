@@ -84,7 +84,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         subpriceText = `
           <p class="gotham align">
             <span class="blue gotham">Ár:</span>
-            <span id="subprice_${i}">${Math.round(basePrice)}</span> Ft
+            <span id="subprice_${i}">${Math.round(basePrice)}</span> JOD
           </p>
           <p class="gotham align">
             <span class="blue gotham">Méret:</span>
@@ -171,7 +171,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           <div>
             <p>
               <span class="blue gotham">Végösszeg:</span>
-              <span id="priceHolder">${Math.round(totalPrice)}</span> Ft
+              <span id="priceHolder">${Math.round(totalPrice)}</span> JOD
             </p>
           </div>
           <div>
@@ -247,7 +247,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="PLA" id="chmat">PLA</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -339,7 +339,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="Fehér" id="chcolor">Fehér</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -387,7 +387,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="0.20" id="chlh">0.20mm</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -438,7 +438,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="0.05" id="chlhSLA">0.05mm</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -490,7 +490,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="20" id="chinf">20%</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -535,7 +535,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="Tömör" id="chinfSLA">Tömör</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 
@@ -579,7 +579,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="1.0" id="chscale">x1.0</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
           </div>
         </div>
 

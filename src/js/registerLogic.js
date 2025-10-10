@@ -37,19 +37,19 @@ const userRegister = (conn, formData, req) => {
         // TODO do img source when deployed to server & email
         // On successful registration send a welcome email to user
         let emailContent = `
-          <p style="font-size: 22px;">Köszöntünk a Zaccord-on!</p>
+          <p style="font-size: 22px;">Köszöntünk a Jordan3DPrint-en!</p>
           <p style="line-height: 1.4;">
-            Ezt a levelet azért kapod, mert nemrégiben regisztráltál a Zaccordra.
-            A Zaccord egy olyan szolgáltatás, ahol a vásárlók 3D nyomtatóval készített
+            Ezt a levelet azért kapod, mert nemrégiben regisztráltál a Jordan3DPrint oldalán.
+            A Jordan3DPrint egy olyan szolgáltatás, ahol a vásárlók 3D nyomtatóval készített
             tárgyakat vehetnek vagy a már meglévő tervüket beküldhetik hozzánk és mi azt
             kinyomtatjuk nekik.
             A küldetésünk az, hogy minden ötletet megvalósítsunk és népszerűsítsük a 3D-s
             technológiával készült termékeket.
           </p>
         `;
-        let subject = 'Köszöntünk a Zaccordon!';
+        let subject = 'Köszöntünk a Jordan3DPrinten!';
 
-        sendEmail('info@zaccord.com', emailContent, email, subject);
+        sendEmail('info@jordan3dprint.store', emailContent, email, subject);
 
         // Insert user to delivery_data table
         let sQuery = 'SELECT id FROM users WHERE email = ? LIMIT 1';

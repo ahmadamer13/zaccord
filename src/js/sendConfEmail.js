@@ -80,15 +80,15 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
                 <span style="color: #4285f4;">${glsCode}</span>
               </p>
               <p style="font-size: 16px;">
-                Köszönjük, hogy a Zaccordot választottad!
+                Thank you for choosing 3DJordanPrint!
               </p>
               <p style="font-size: 16px;">
-                Zaccord
+                3DJordanPrint
               </p>
             </div>
           `;
           let subject = 'A csomagod átadtuk a futárszolgálatnak! - Azonosító: ' + uid;
-          sendEmail('info@zaccord.com', emailContent, emailAddr, subject);
+          sendEmail('info@jordan3dprint.store', emailContent, emailAddr, subject);
           
           resolve('success');
         });

@@ -64,7 +64,7 @@ const chPassword = (conn, userID, formData) => {
               </p>
             `;
             let subject = 'Sikeres jelszóváltoztatás!';
-            sendEmail('info@zaccord.com', emailContent, email, subject);
+            sendEmail('info@jordan3dprint.store', emailContent, email, subject);
             
             // Successful change
             resolve('password changed');

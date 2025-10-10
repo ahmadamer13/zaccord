@@ -43,7 +43,7 @@ const buildLithophane = (conn, userID, filePaths, width, height) => {
         <div>
           <p>
             <span class="blue gotham">Egységár:</span>
-            <span id="priceHolder">${totalPrice}</span> Ft 
+            <span id="priceHolder">${totalPrice}</span> JOD 
           </p>
         </div>
         <div>

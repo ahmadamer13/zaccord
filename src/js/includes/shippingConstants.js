@@ -11,7 +11,7 @@ const SHIPPING_OBJ = {
   'packeta': {
     title: 'Packeta csomagpont',
     desc: 'A Packetával partnerségben lévő futárszolgálat a megadott csomagpontra fogja szállítani a rendelt terméket/termékeket.',
-    price: `Szállítási költség: ${FREE_SHIPPING_LIMIT} Ft alatt ${PACKETA_POINT} Ft, felette ingyenes.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${PACKETA_POINT} JOD, above: free.`,
     actualPrice: PACKETA_POINT,
     divID: 'packetaPoint',
     radioID: 'pointPacketa',
@@ -23,7 +23,7 @@ const SHIPPING_OBJ = {
   'mpl': {
     title: 'MPL házhozszállítás',
     desc: 'A futárszolgálat a megadott címre fogja szállítani a rendelt terméket/termékeket.',
-    price: `Szállítási költség: ${FREE_SHIPPING_LIMIT} Ft alatt ${POST_TO_ADDR} Ft, felette ingyenes.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${POST_TO_ADDR} JOD, above: free.`,
     actualPrice: POST_TO_ADDR,
     divID: 'mplToAddr',
     radioID: 'toAddrMpl',
@@ -35,7 +35,7 @@ const SHIPPING_OBJ = {
   'glsAddr': {
     title: 'GLS házhozszállítás',
     desc: 'A futárszolgálat a megadott címre fogja szállítani a rendelt terméket/termékeket.',
-    price: `Szállítási költség: ${FREE_SHIPPING_LIMIT} Ft alatt ${GLS_TO_ADDR} Ft, felette ingyenes.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_TO_ADDR} JOD, above: free.`,
     actualPrice: GLS_TO_ADDR,
     divID: 'glsToAddr',
     radioID: 'toAddrGls',
@@ -47,7 +47,7 @@ const SHIPPING_OBJ = {
   'glsPoint': {
     title: 'GLS csomagpont átvétel',
     desc: 'A futárszolgálat a megadott csomagpontra fogja szállítani a rendelt terméket/termékeket.',
-    price: `Szállítási költség: ${FREE_SHIPPING_LIMIT} Ft alatt ${GLS_POINT} Ft, felette ingyenes.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_POINT} JOD, above: free.`,
     actualPrice: GLS_POINT,
     divID: 'glsPoint',
     radioID: 'pointGls',

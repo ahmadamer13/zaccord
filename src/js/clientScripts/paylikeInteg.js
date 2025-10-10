@@ -42,7 +42,7 @@ function getErrorMessage(errorCode) {
   return 'Egy nem várt hiba történt';
 }
 
-_('plAmountDyn').innerText = _('fPrice').innerText + ' Ft';
+ _('plAmountDyn').innerText = _('fPrice').innerText + ' JOD';
 
 const plForm = document.querySelector('form#checkout');
 
@@ -106,7 +106,7 @@ plForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
   plSubmit.disabled = true;
-  plSubmitUI.innerText = 'Folyamatban...';
+  plSubmitUI.innerText = 'Processing...';
   plError.innerHTML = '';
 
   // First get card credentials
@@ -160,7 +160,7 @@ plForm.addEventListener('submit', function (e) {
         key: API_KEY,
       },
       amount: {
-        currency: 'HUF',
+        currency: 'JOD',
         exponent: 2,
         value: Number(_('fPrice').innerText) * 100
       },
@@ -182,7 +182,7 @@ plForm.addEventListener('submit', function (e) {
     loop(paymentData).then((data) => {
       if (data.error) {
         _('checkout').innerHTML = '';
-        _('plBtnUI').innerText = 'Újrakezdés';
+        _('plBtnUI').innerText = 'Try again';
         _('unsuccAuthTxt').innerHTML = getErrorMessage(data.error);
         _('unsuccAuth').style.display = 'block';
         _('plBtnUI').setAttribute('onclick', 'startAgain()');
@@ -192,9 +192,7 @@ plForm.addEventListener('submit', function (e) {
       exitCont('plOuter');
       _('plInfoHolder').innerHTML = `
         <br>
-        <span class='blue'>
-          A bankkártyádat sikeresen felvettük a rendszerbe!
-        </span>
+        <span class='blue'>Your card was added successfully!</span>
       `;
 
       transactionID = data;
@@ -213,7 +211,7 @@ window.addEventListener('message', function (e) {
       continue;
     }
 
-    _('plBtnUI').innerText = 'Megerősítés';
+    _('plBtnUI').innerText = 'Confirm';
     $iframe.resolve(e.data);
   }
 });

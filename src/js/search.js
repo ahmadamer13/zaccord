@@ -89,7 +89,7 @@ function searchForItem() {
     toggleShowcase('show');
     showedEmpty = true;
     _('ms').style.marginTop = '0px';
-    window.history.pushState('home', 'Zaccord - 3D Nyomtatás', '/');
+    window.history.pushState('home', '3DJordanPrint - 3D Printing', '/');
   } else {
     toggleShowcase('hide');
     showedEmpty = false;

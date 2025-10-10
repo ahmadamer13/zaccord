@@ -1,17 +1,17 @@
-<img align="right" width="60" src="https://www.zaccord.com/images/logo.png">
-<h1>Zaccord</h1>
+<img align="right" width="60" src="https://www.jordan3dprint.store/images/logo.png">
+<h1>Jordan3DPrint</h1>
 A service for ordering STL files and lithophanes & a webshop for selling 3D printed products.
 
-Zaccord is a Hungary-based e-commerce website where users can order a variety of 3D-printed
+Jordan3DPrint is a Jordan-based e-commerce website where users can order a variety of 3D-printed
 products or upload their STL files for custom printing & creating lithophanes.<br>
 We tried to create a great customer experience by allowing users to upload their own STL files, give
 them an instant quote and provide the possibility to order their uploaded products immediately.<br><br>
 
 ## Target audience
-We aim to make Zaccord available for as many people as we can but currently we are limited
+We aim to make Jordan3DPrint available for as many people as we can but currently we are limited
 to Hungary. Therefore, only Hungarain citizens and people with a valid Hungarian address are
 able to use the service and buy products since shipping is restricted to inland.<br>
-Also note that Zaccord is currently only available in Hungarian.
+Also note that Jordan3DPrint is currently only available in Hungarian.
 
 ## Technical
 The site is mostly written in JS (Node.js on server side) and the 

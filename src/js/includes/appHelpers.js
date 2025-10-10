@@ -4,7 +4,8 @@
 
 const helpers = require('./helperFunctions.js');
 const HTMLParser = require('node-html-parser');
-const StlThumbnailer = require('node-stl-to-thumbnail');
+// Lazily require heavy native deps to allow startup without build toolchain
+let StlThumbnailer;
 const randomstring = require('randomstring');
 const validateEmail = require('email-validator');
 const errorFormResponse = helpers.errorFormResponse;
@@ -165,6 +166,15 @@ function createDefaultThumbnail(fname) {
 function createThumbnail(fname) {
   // Creates a thumbnail from an STL file
   return new Promise((resolve, reject) => {
+    // Load the thumbnailer only when needed; if unavailable, fall back to default image
+    try {
+      StlThumbnailer = StlThumbnailer || require('node-stl-to-thumbnail');
+    } catch (e) {
+      console.log('STL thumbnailer unavailable, using default thumbnail:', e && e.message ? e.message : e);
+      createDefaultThumbnail(fname).then(() => resolve('success')).catch(reject);
+      return;
+    }
+
     let thumbnailer = new StlThumbnailer({
       filePath: path.join(basePath(__dirname), 'printUploads', fname + '.stl'), 
       requestThumbnails: [

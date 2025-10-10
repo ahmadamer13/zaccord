@@ -325,28 +325,18 @@ function downloadSTLs() {
   });
 }
 
-function roundHUF(val) {
-  if (val % 10 != 0 && val % 5 != 0) {
-    let lastDigit = val % 10;
-    if ([1, 2].indexOf(lastDigit) > -1) {
-      val -= lastDigit;
-    } else if ([3, 4, 6, 7].indexOf(lastDigit) > -1) {
-      val += 5 - lastDigit;
-    } else {
-      val += 10 - lastDigit;
-    }
-  }
-
+function roundJOD(val) {
+  // JOD has 3 decimal places typically for pricing; keep as-is for admin totals
   return val;
 }
 
 function createPacket(id, n, ppID, isPP, dt) {
-  // Round price in HUF
+  // Total price in JOD
   let cont = document.getElementsByClassName('totalPrice_' + id);
   if (cont[cont.length - 1] === undefined || !cont[cont.length - 1].innerText) {
-    var val = roundHUF(Number(_('allp_' + n).innerText));
+    var val = roundJOD(Number(_('allp_' + n).innerText));
   } else {
-    var val = roundHUF(Number(cont[cont.length - 1].innerText));
+    var val = roundJOD(Number(cont[cont.length - 1].innerText));
   }
   console.log(val, 'totalPrice_' + id);
   let fullname = String(_('customerName_' + id).innerText);
@@ -367,10 +357,10 @@ function createPacket(id, n, ppID, isPP, dt) {
     surname: surname,
     email: String(_('email_' + id).innerText),
     phone: String(_('mobile_' + id).innerText),
-    currency: 'HUF',
+    currency: 'JOD',
     value: val,
     weight: 0.5,
-    eshop: 'Zaccord'
+    eshop: 'Jordan3DPrint'
   };
 
   if (_('paymentType_' + id).innerText == 'utánvét') {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
   <head>
-    <title>Zaccord - Admin Felület</title>
+    <title>3DJordanPrint - Admin Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex" />
@@ -21,7 +21,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="white">
-    <meta name="apple-mobile-web-app-title" content="Zaccord">
+    <meta name="apple-mobile-web-app-title" content="3DJordanPrint">
     <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/x-icon" href="/images/icons/logo.svg">
@@ -29,16 +29,16 @@
   </head>
   <body> 
     <section class="keepBottom">
-      <p class="mainTitle">Zaccord admin felület</p>
+      <p class="mainTitle">3DJordanPrint Admin</p>
       <div class="formContainer">
-        <input type="text" class="formField" id="user" placeholder="Felhasználónév">
-        <input type="password" class="formField" id="pass" placeholder="Jelszó"
+        <input type="text" class="formField" id="user" placeholder="Username">
+        <input type="password" class="formField" id="pass" placeholder="Password"
           style="margin-bottom: 0;">
         <div id="errStatus" class="errorBox"></div>
         <div class="loadImg" id="loader"></div>
         <div id="status" class="errorBox" style="margin-top: 20px;"></div>
         <button class="fillBtn btnCommon" id="ok" style="margin-top: 20px;">
-          Baszassuk neki
+          Login
         </button>
       </div>
     </section>

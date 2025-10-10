@@ -18,7 +18,7 @@ const handlePaylike = (transactionID, amount, isEmpty) => {
     /*
     paylike.transactions.capture(transactionID, {
       amount: amount * 100,
-      currency: 'HUF'
+      currency: 'JOD'
     }, function callback(err) {
       if (err) {
         console.log(err);

@@ -263,7 +263,7 @@ function submitOrder() {
           <p class="align dgray lh">
             A termékek legkésőbb a rendelés napjától számított 10. munkanapon házhoz lesznek
             szállítva.<br>
-            Köszönjük, hogy a Zaccordot választottad!
+            Köszönjük, hogy a Jordan3DPrintet választottad!
           </p>
           <button class="btnCommon fillBtn" style="margin: 20px auto;"
           onclick="window.location.href='/'">
@@ -271,7 +271,7 @@ function submitOrder() {
           </button>
         `;
         updateCartNum();
-        window.history.replaceState('home', 'Zaccord - 3D Nyomtatás', '/');
+        window.history.replaceState('home', 'Jordan3DPrint - 3D Nyomtatás', '/');
         // fbq('track', 'AddPaymentInfo');
         /*
         fbq('track', 'Purchase', {
@@ -474,7 +474,7 @@ window.addEventListener('resize', e => {
 _('packetaPoint').addEventListener('click', (e) => {
   Packeta.Widget.pick(PACKETA_API_KEY, packetaSelectPoint,
     {
-      webUrl: 'zaccord.com',
+      webUrl: 'jordan3dprint.store',
       country: 'hu', 
       language: 'hu'
     }, 

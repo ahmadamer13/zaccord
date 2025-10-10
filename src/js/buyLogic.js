@@ -409,7 +409,7 @@ const buildBuySection = (conn, paramObj, req) => {
               <div style="padding-bottom: 0;">Utánvétel</div>
               <div class="lh sel">
                 Ez esetben a csomag kiszállítása után történik meg a fizetés készpénzzel vagy
-                bankkártyával és a futárcég ${MONEY_HANDLE} Ft kezelési költséget számol fel.
+                bankkártyával és a futárcég ${MONEY_HANDLE} JOD kezelési költséget számol fel.
               </div>
               <input type="radio" name="radio" id="uvet">
               <span class="checkmark"></span>
@@ -512,7 +512,7 @@ const buildBuySection = (conn, paramObj, req) => {
                   Végösszeg:
                 </span>
                 <span id="fPrice">${Math.round(finalPrice + charge)}</span>
-                Ft ${discountText}
+                JOD ${discountText}
                 (szállítással együtt)
               </p>
               <div id="submitBtnCont">

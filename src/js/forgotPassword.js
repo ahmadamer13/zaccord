@@ -42,7 +42,7 @@ const forgotPassword = (conn, email) => {
           </p>
         `;
 
-        sendEmail('info@zaccord.com', emailContent, email, subject);
+        sendEmail('info@jordan3dprint.store', emailContent, email, subject);
         resolve('success');
       });
     });
