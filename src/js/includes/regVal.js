@@ -9,19 +9,19 @@ function validateEmail(email) {
 function regVal(email, pass, passConf, statName, btn) {
   let errStatus = document.getElementById(statName);
   if (!email || !pass || !passConf) {
-    errStatus.innerHTML = '<p>Kérlek tölts ki minden mezőt</p>';
+    errStatus.innerHTML = '<p>Please fill out all fields</p>';
     _(btn).disabled = false;
     return false;
   } else if (!validateEmail(email)) {
-    errStatus.innerHTML = '<p>Kérlek valós e-mailt adj meg</p>';
+    errStatus.innerHTML = '<p>Please enter a valid email</p>';
     _(btn).disabled = false;
     return false;
   } else if (pass.length < 6) {
-    errStatus.innerHTML = '<p>A jelszónak minimum 6 karakterből kell állnia</p>';
+    errStatus.innerHTML = '<p>Password must be at least 6 characters</p>';
     _(btn).disabled = false;
     return false;
   } else if (pass != passConf) {
-    errStatus.innerHTML = '<p>A jelszavak nem egyeznek</p>';
+    errStatus.innerHTML = '<p>Passwords do not match</p>';
     _(btn).disabled = false;
     return false;
   }

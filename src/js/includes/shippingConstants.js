@@ -9,8 +9,8 @@ const PACKET_POINT_TYPES_R = ['pointPacketa', 'pointGls'];
 
 const SHIPPING_OBJ = {
   'packeta': {
-    title: 'Packeta csomagpont',
-    desc: 'A Packetával partnerségben lévő futárszolgálat a megadott csomagpontra fogja szállítani a rendelt terméket/termékeket.',
+    title: 'Packeta pickup point',
+    desc: 'Courier partnered with Packeta will deliver your package to the selected pickup point.',
     price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${PACKETA_POINT} JOD, above: free.`,
     actualPrice: PACKETA_POINT,
     divID: 'packetaPoint',
@@ -21,8 +21,8 @@ const SHIPPING_OBJ = {
   },
 
   'mpl': {
-    title: 'MPL házhozszállítás',
-    desc: 'A futárszolgálat a megadott címre fogja szállítani a rendelt terméket/termékeket.',
+    title: 'MPL home delivery',
+    desc: 'Courier will deliver your order to the specified address.',
     price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${POST_TO_ADDR} JOD, above: free.`,
     actualPrice: POST_TO_ADDR,
     divID: 'mplToAddr',
@@ -33,8 +33,8 @@ const SHIPPING_OBJ = {
   },
 
   'glsAddr': {
-    title: 'GLS házhozszállítás',
-    desc: 'A futárszolgálat a megadott címre fogja szállítani a rendelt terméket/termékeket.',
+    title: 'GLS home delivery',
+    desc: 'Courier will deliver your order to the specified address.',
     price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_TO_ADDR} JOD, above: free.`,
     actualPrice: GLS_TO_ADDR,
     divID: 'glsToAddr',
@@ -45,8 +45,8 @@ const SHIPPING_OBJ = {
   },
 
   'glsPoint': {
-    title: 'GLS csomagpont átvétel',
-    desc: 'A futárszolgálat a megadott csomagpontra fogja szállítani a rendelt terméket/termékeket.',
+    title: 'GLS pickup point',
+    desc: 'Courier will deliver your order to the selected pickup point.',
     price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_POINT} JOD, above: free.`,
     actualPrice: GLS_POINT,
     divID: 'glsPoint',

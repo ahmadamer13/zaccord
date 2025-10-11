@@ -22,13 +22,13 @@ function buildBlogItem(currentBlog) {
         <p class="gothamNormal maz">${summary}</p>
         <br>
         <p class="gotham maz catLines">
-          <span>Kategóriak:</span> ${categories}
+          <span>Categories:</span> ${categories}
         </p>
       </div>
       <div class="lowerReadMore">
         <hr class="hrStyle">
         <a href="/blog?id=${id}">
-          <button class="fillBtn btnCommon">Olvass tovább</button>
+          <button class="fillBtn btnCommon">Read more</button>
         </a>
       </div>
     </div>

@@ -158,7 +158,7 @@ const server = http.createServer((req, res) => {
         res.end(data);
       }).catch(err => {
         console.log(err);
-        errorFormResponse(res, 'Hoppá... hiba történt a keresés közben');
+        errorFormResponse(res, 'Oops... an error occurred during search');
       });
     });
   } else if (req.url === '/delCartFile' && req.method === 'POST') {
@@ -200,7 +200,7 @@ const server = http.createServer((req, res) => {
   } else if (req.url === '/validateRegister' && req.method === 'POST') {
     // Make sure user is not alreday logged in
     if (req.user.id) {
-      errorFormResponse(res, 'Már be vagy jelentkezve');
+      errorFormResponse(res, 'You are already logged in');
     }
 
     // Perform server-side validation of user data
@@ -227,7 +227,7 @@ const server = http.createServer((req, res) => {
   } else if (req.url === '/validateLogin' && req.method === 'POST') {
     // Make sure user is not alreday logged in
     if (req.user.id) {
-      errorFormResponse(res, 'Már be vagy jelentkezve');
+      errorFormResponse(res, 'You are already logged in');
     }
 
     // Implement login system; perform server-side checks & respond to client
@@ -239,7 +239,7 @@ const server = http.createServer((req, res) => {
       let responseData = {};
 
       if (!formData.email || !formData.pass) {
-        errorFormResponse(res, 'Kérlek tölts ki minden mezőt');
+        errorFormResponse(res, 'Please fill out all fields');
         return;
       }
 
@@ -325,7 +325,7 @@ const server = http.createServer((req, res) => {
       let formData = JSON.parse(body.join(''));
       let responseData = {};
 
-      let errorMsg = 'Hoppá... hiba történt a rendezés során';
+      let errorMsg = 'Oops... an error occurred while sorting';
       returnToClient(buildCategory, [conn, formData.cat], errorMsg, res);
     });
   } else if (req.url === '/uploadPrint' && req.method.toLowerCase() === 'post') {

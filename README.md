@@ -28,6 +28,32 @@ algorithm you can find
 
 ## TODOs
 Implementing one or more of the following features would be nice & you may also get a reward:
+
+## Deploy
+
+Use the helper script to commit+push and then pull+restart on the server.
+
+Prerequisites: your server trusts your SSH key as `root@172.245.138.214` and the app lives in `/srv/zaccord` with systemd service `zaccord`.
+
+Commands:
+
+```
+# From repo root
+scripts/deploy.sh "Your commit message"
+
+# Optional overrides
+BRANCH=master \
+REMOTE=root@172.245.138.214 \
+SERVICE=zaccord \
+APP_DIR=/srv/zaccord \
+APP_USER=zaccord \
+scripts/deploy.sh "Copy updates"
+```
+
+The script will:
+- git add/commit/pull --rebase/push on the current repo
+- SSH to the server, `git reset --hard origin/$BRANCH` in `/srv/zaccord`, run `npm ci` and restart `zaccord`
+- Print service status or recent logs on failure
   - Geometrically check if the uploaded STL file determines a closed object in space
   - Check if the STL file has a minimum wall thickness (necessarry for printing)
   - Check any other requirements for 3D printing
