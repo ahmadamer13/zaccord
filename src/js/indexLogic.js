@@ -286,23 +286,20 @@ const buildMainSection = (conn, cat) => {
 
             <div class="greyBoxCont">
               <div class="indexGreyBox">
-                <p class="gotham boxTitle">Litofánia</p>
+                <p class="gotham boxTitle">Lithophane</p>
                 <div class="greyBoxText">
                   <p class="gothamNormal lh">
-                    A <a href="/print" class="blueLink">litofánia</a> egy tökéletes személyes ajándék lehet szinte
-                    bármilyen alkalomra.
-                    Lepd meg szeretteidet egyedi, dombornyomott ajándékkal, amit azonnal megrendelhetsz az oldalon
-                    keresztül.
+                    A <a href="/print" class="blueLink">lithophane</a> is a perfect personal gift for almost any
+                    occasion. Surprise loved ones with a unique relief image you can order instantly.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    A nyomtató egy sík vagy görbe felületre készíti el a dombornyomott képet, ami háttérvilágítás
-                    után tisztán látható lesz. 
+                    The printer creates a relief image on a flat or curved surface that becomes clear when backlit.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Gyakran használják lámpák vagy egyéb fényforrások búrájaként, így amikor felkapcsoljuk a lámpát
-                    a különböző rétegvastagságú felületek különböző mértékben engedik át a fényt, és előtűnik a monokróm kép.
+                    Often used as lamp shades: varying thickness lets through different light levels, revealing a
+                    monochrome image.
                   </p>
                 </div>
               </div>
