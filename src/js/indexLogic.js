@@ -5,21 +5,21 @@ const CONTACT_FORM = `
   <div class="mtsix" style="width: calc(100% - 40px); max-width: 1300px; margin: 0 auto;">
     <hr class="hrStyle">
     <h2 class="gotham font26 align fontNorm" id="getQuote">
-      Kapcsolatfelvétel
+      Contact
     </h2>
     <h2 class="align font18 lh fontNorm gothamNormal">
-      Egyedi nyomtatás, kérdés vagy speciális igény esetén bátran vedd fel velünk a kapcsolatot!
+      For custom printing, questions, or special requests, feel free to contact us!
     </h2>
     <div class="flexDiv" style="flex-wrap: wrap;" id="normalDiv">
-      <input type="text" class="dFormField" id="name" placeholder="Név" value="">
+      <input type="text" class="dFormField" id="name" placeholder="Name" value="">
       <input type="email" class="dFormField" id="email" placeholder="Email">
       <input type="text" class="dFormField protmob" id="mobile"
-        placeholder="Telefonszám" value="">
-      <textarea placeholder="CAD modell URL, termékkel szembeni elvárások: anyag, szín, technológia stb."
+        placeholder="Phone number" value="">
+      <textarea placeholder="CAD model URL, expectations: material, color, technology, etc."
         id="message" class="dFormField" style="width: 100%; height: 100px;"></textarea>
     </div>
     <button class="fillBtn btnCommon" id="submitBtn" style="display: block; margin: 0 auto;">
-      Küldés
+      Send
     </button>
     <div id="pstatus" class="align errorBox gothamNormal lh" style="margin-top: 20px;"></div>
     <div id="succstat" class="align successBox gothamNormal lh" style="margin-top: 20px;"></div>
@@ -56,7 +56,7 @@ const buildMainSection = (conn, cat) => {
             <div class="topShrink">
               <div class="topInner">
                 <input type="text" autocomplete="off" class="searchBox"
-                  placeholder="Mit szeretnél megtalálni?"
+                  placeholder="What are you looking for?"
                   onkeyup="searchForItem()" id="sfi" />
                 <div class="categoryImg" onclick="toggleCategory()" id="categoryImg">
                   <img src="/images/icons/vmenu.svg">
@@ -67,10 +67,10 @@ const buildMainSection = (conn, cat) => {
                   <img src="/images/larr.png" width="25" height="25">
                 </div>
                 <div class="catBox" id="catBox">
-                  <a href="/?cat=Legnépszerűbb" class="pseudoLink">
-                    <div onclick="sortByCat('Legnépszerűbb', 0)" class="scat"
+                  <a href="/?cat=Most%20Popular" class="pseudoLink">
+                    <div onclick="sortByCat('Most Popular', 0)" class="scat"
                       style="background-color: #ececec; color: #4285f4; border-color: #4285f4;">
-                      Legnépszerűbb
+                      Most Popular
                     </div>
                   </a>
         `;
@@ -89,9 +89,9 @@ const buildMainSection = (conn, cat) => {
         }
 
         output += `
-                  <a href="/?cat=Összes" class="pseudoLink">
-                    <div onclick="sortByCat('Összes', ${res.length + 1})" class="scat">
-                      Összes
+                  <a href="/?cat=All" class="pseudoLink">
+                    <div onclick="sortByCat('All', ${res.length + 1})" class="scat">
+                      All
                     </div>
                   </a>
                 </div>
@@ -138,15 +138,14 @@ const buildMainSection = (conn, cat) => {
             <div class="bgService bgCommon" id="cprintService">
               <div class="darken keepRounded"></div>
               <div class="textCenter pad lh">
-                <h2 class="serviceTxt align font34 gotham servMain servMain fontNorm">Bérnyomtatás</h2>
+                <h2 class="serviceTxt align font34 gotham servMain servMain fontNorm">Contract Printing</h2>
                 <h3 class="serviceTxt align gotham fontNorm font16">
-                  FDM és SLA nyomtatás számos színnel és anyaggal. Az intelligens algoritmus
-                  segítségével azonnal láthatod az árat és megrendelheted a feltöltött
-                  termékeket.
+                  FDM and SLA printing with many colors and materials. Instant pricing lets you order
+                  uploaded items immediately.
                 </h3>
                 <div class="flexDiv btnAlign">
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/print')">További információ</button>
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/printHelp')">Segítség</button>
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/print')">Learn more</button>
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/printHelp')">Help</button>
                 </div>
               </div>
             </div>
@@ -154,18 +153,17 @@ const buildMainSection = (conn, cat) => {
             <div class="bgService bgCommon" id="protService">
               <div class="darken keepRounded"></div>
               <div class="textCenter pad lh">
-                <h2 class="serviceTxt align font34 gotham servMain fontNorm">Prototípusgyártás</h2>
+                <h2 class="serviceTxt align font34 gotham servMain fontNorm">Prototyping</h2>
                 <h3 class="serviceTxt align gotham fontNorm font16">
-                  A 3D nyomtatott kisszériás prototípusgyártás egy sokkal költséghatékonyabb és gyorsabb
-                  módja a nullsorozatok gyártásának. Egyedi rendelésekhez bátran vedd fel
-                  felünk a kapcsolatot.
+                  Small‑batch 3D‑printed prototyping is a faster, more cost‑effective way to build pilot
+                  runs. For custom orders, feel free to contact us.
                 </h3>
                 <div class="flexDiv btnAlign">
                   <button class="whiteBtn gotham font18 trans" onclick="redirect('/prototype')">
-                    További információ
+                    Learn more
                   </button>
                   <button class="whiteBtn gotham font18 trans" onclick="redirect('/prototype#getInCont')">
-                    Kapcsolatfelvétel
+                    Contact
                   </button>
                 </div>
               </div>
@@ -173,7 +171,7 @@ const buildMainSection = (conn, cat) => {
           </div>
 
           <h2 class="gotham align font34 printTech fontNorm" id="printTech" style="${popProdsStyle}">
-            Nyomtatási Technológiák
+            Printing Technologies
           </h2>
 
           <div class="flexProtCont" style="${furtherShow}">
@@ -182,9 +180,8 @@ const buildMainSection = (conn, cat) => {
               <div class="textCenter pad lh">
                 <h2 class="serviceTxt align font34 gotham servMain fontNorm">FDM</h2>
                 <h3 class="serviceTxt align gotham fontNorm font16">
-                  Az FDM nyomtatási technológia kiváló a rapid prototypinghoz és
-                  költséghatékony modellezéshez. Ez esetben a nyomtató olvadt filamentből
-                  készíti el a terméket rétegről-rétegre.
+                  Great for rapid prototyping and cost‑effective models. The printer extrudes molten
+                  filament layer by layer.
                 </h3>
                 <div class="flexDiv btnAlign">
                   <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">További információ</button>
@@ -196,9 +193,8 @@ const buildMainSection = (conn, cat) => {
               <div class="textCenter pad lh">
                 <h2 class="serviceTxt align font34 gotham servMain fontNorm">SLA</h2>
                 <h3 class="serviceTxt align gotham fontNorm font16">
-                  Kiváló választás lehet apróbb vagy nagyobb pontosságot igénylő modellekhez,
-                  hiszen minősége a fröccsöntött műanyagéval vetekszik. Ilyenkor a nyomtató
-                  műgyantából állítja elő a terméket, ami utána UV-fénnyel lesz kezelve.
+                  Excellent for small parts or high precision; quality rivals injection‑molded plastic.
+                  The printer cures liquid resin; parts are UV post‑cured.
                 </h3>
                 <div class="flexDiv btnAlign">
                   <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">További információ</button>
@@ -208,22 +204,19 @@ const buildMainSection = (conn, cat) => {
 
             <div class="greyBoxCont">
               <div class="indexGreyBox">
-                <p class="gotham boxTitle">Bérnyomtatás</p>
+                <p class="gotham boxTitle">Contract Printing</p>
                 <div class="greyBoxText">
                   <p class="gothamNormal lh">
-                    Ha szeretnél nyomtatni, de nem férsz hozzá egy saját 3D nyomtatóhoz, akkor bátran
-                    vedd igénybe a teljesen automatizált <a class="blueLink" href="/print">bérnyomtatás</a> szolgáltatásunkat.
+                    If you need prints but don’t have a 3D printer, use our fully automated
+                    <a class="blueLink" href="/print">contract printing</a> service.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Nincs más dolgod, mint feltölteni a modellről készült STL fájlt és azonnal meg is rendelheted
-                    azt. Szabd teljesen személyre a modelled a színtől kezdve egészen a rétegvastagságig!
+                    Upload your model’s STL and order immediately. Personalize from color to layer height.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Nem kell várnod hosszú napokat egy egyedileg adott árajánlatért, hiszen ezt a terhet
-                    teljesen levesszük a válladról. Az algoritmus azonnal megmondja mennyibe kerül a termék,
-                    így magad döntheted el, hogy megvásárolod vagy nem.
+                    No waiting days for quotes — our algorithm shows instant pricing so you can decide on the spot.
                   </p>
                 </div>
               </div>
@@ -232,21 +225,18 @@ const buildMainSection = (conn, cat) => {
 
             <div class="greyBoxCont">
               <div class="indexGreyBoxLeft">
-                <p class="gotham boxTitleLeft">Modellezés</p>
+                <p class="gotham boxTitleLeft">Modeling</p>
                 <div class="greyBoxTextLeft">
                   <p class="gothamNormal lh">
-                    Amennyiben csak egy elképzeléssel rendelkezel, modellel viszont nem, akkor vedd igénybe egy
-                    3D modellező munkatársunk segítségét a kidolgozásban.
+                    If you have an idea but no model, our 3D designers can help bring it to life.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Tervrajzok, képek, leírások, vagy mindössze egy ötlet alapján végezzük el a 3D modellezést
-                    egy részletes konzultáció után.
+                    We can work from drawings, photos, descriptions — or just an idea — after a short consultation.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Gyakori alkalmazás lehet törött eszközök, alkatrészek modellezése képek és egy mérettáblázat
-                    alapján, amiket utána kinyomtatunk és elküldünk a megrendelőnek.
+                    Common requests include modeling broken parts from photos and measurements, then printing and shipping replacements.
                   </p>
                 </div>
               </div>
@@ -255,22 +245,18 @@ const buildMainSection = (conn, cat) => {
 
             <div class="greyBoxCont">
               <div class="indexGreyBox">
-                <p class="gotham boxTitle">Gyártás</p>
+                <p class="gotham boxTitle">Manufacturing</p>
                 <div class="greyBoxText">
                   <p class="gothamNormal lh">
-                    Termékfejlesztés, <a href="/prototype" class="blueLink">prototípus- és sorozatgyártás</a> esetén
-                    fordulj bizalommal több éves tapasztalattal rendelkező csapatunkhoz.
+                    For product development, <a href="/prototype" class="blueLink">prototyping and short‑run production</a>, rely on our experienced team.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Egy termék piacra dobása előtti legfontosabb mérföldkő a prototípus elkészítése, esetleg annak
-                    kisszériás gyártása.
+                    Before launch, building prototypes — even short pilot runs — is crucial.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    A 3D nyomtatás erre egy kiváló technológia, gyorsaságából és költséghatékonyságából adódóan.
-                    Emellett a kész termék elkészülte előtt kulcsfontosságú a potenciális vásárlók kezébe adni valami kézzel
-                    foghatót.
+                    3D printing excels here for speed and cost. Getting something tangible into customers’ hands early is key.
                   </p>
                 </div>
               </div>
@@ -279,22 +265,18 @@ const buildMainSection = (conn, cat) => {
 
             <div class="greyBoxCont">
               <div class="indexGreyBoxLeft">
-                <p class="gotham boxTitleLeft">Termékek</p>
+                <p class="gotham boxTitleLeft">Products</p>
                 <div class="greyBoxTextLeft">
                   <p class="gothamNormal lh">
-                    A Jordan3DPrinten számos előre kinyomtatott termék közül válogathatsz, rengeteg kategóriában.
-                    Sokszor olyan termékekkel is találkozhatsz, amiket nem lehet kapni hétköznapi boltokban
-                    vagy csak sokkal drágábban, mint az oldalon.
+                    Browse many pre‑printed products across categories — often items you won’t find elsewhere or at higher prices.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    Minden terméket biológiailag lebomló PLA filamentből nyomtatunk, így nincsen akkora ökológiai
-                    lábnyoma, mint a hagyományos műanyagnak.
+                    We print in biodegradable PLA filament to reduce environmental impact.
                   </p>
                   <br>
                   <p class="gothamNormal lh">
-                    A szobroktól és vázáktól kezdődően a szappantartóig szinte minden hétköznapi tárgyat megtalálsz
-                    a webshopban. Minden terméket egy külön modellező tervezett, így vásárlásoddal az ő munkájukat is támogatod.
+                    From statues and vases to soap dishes — everything is designed by individual modelers, so your purchase supports their work.
                   </p>
                 </div>
               </div>
