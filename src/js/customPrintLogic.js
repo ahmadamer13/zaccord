@@ -27,8 +27,10 @@ const INFILL_SLA = specParams.infillSLA;
 
 // Check if model fits the size of SLA printing 
 function shouldAllowSLA(box) {
-  let boxSorted = box.sort((a, b) => a - b);
-  return (box[0] > PRINT_SIZES_SLA[0] || box[1] > PRINT_SIZES_SLA[1] || box[2] > PRINT_SIZES_SLA[3]) ? false : true
+  // make a copy and sort so we don't mutate the original bounding box array
+  let boxSorted = [...box].sort((a, b) => a - b);
+  // compare sorted dimensions to SLA limits (indices 0..2)
+  return !(boxSorted[0] > PRINT_SIZES_SLA[0] || boxSorted[1] > PRINT_SIZES_SLA[1] || boxSorted[2] > PRINT_SIZES_SLA[2]);
 }
 
 // Build custom print page; add interactive .stl file viewer + customization
@@ -549,33 +551,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         `;
       }
       
-      content += `
-        </div>
-
-        <div class="specChBox trans" id="specChScale">
-          <div class="specChBoxTitle gothamBold font22">Méretezés</div>
-          <div class="specChImgBox">
-            <img src="/images/specChImg/scale.jpg">
-          </div>
-          <div class="specChLongDesc gothamNormal">
-            A tárgy méreteinek kicsinyítését, nagyítását jelenti az
-            alapértelmezetthez képest. Az összes tengely mentén való
-            méretváltozással járó folyamat. Például egy 10mm x 10mm x 10mm-es
-            termék x0.5-ös méretezéssel 5mm x 5mm x 5mm-es lesz.
-          </div>
-          <div class="specChProps gothamNormal">
-            <div>Méret</div>
-            <div>Nyomtathatóság</div>
-            <div>Kicsinyítés</div>
-          </div>
-          <div class="specChValBox font32 blue">
-            <p data-value="1.0" id="chscale">x1.0</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
-          </div>
-        </div>
-
-        <div class="specChDD" id="specChScaleDD" data-open="closed">
-      `;
+      
 
       for (let i of SCALE) {
         let highlight = i == 10 ? 'specChHl' : '';

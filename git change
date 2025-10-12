@@ -1,0 +1,6 @@
+sudo -u zaccord bash -lc 'cd /srv/zaccord && git fetch --all && git checkout master && git pull'
+sudo -u zaccord bash -lc 'cd /srv/zaccord && npm ci --omit=dev || true'
+systemctl restart zaccord
+systemctl status zaccord --no-pager
+journalctl -u zaccord -n 50 --no-pager
+hi
