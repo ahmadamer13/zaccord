@@ -119,9 +119,9 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     let billingEmail = 'Same as shipping address';
     if (billingType !== 'same') {
       billingEmail = `
-        <div><b>Név: </b>${billingName}</div>
+        <div><b>Name: </b>${billingName}</div>
         <div><b>Ország: </b>${billingCountry}</div>
-        <div><b>Cím: </b>${billingPcode} ${billingCity}, ${billingAddress}</div>
+        <div><b>Address: </b>${billingPcode} ${billingCity}, ${billingAddress}</div>
       `;    
 
       if (billingCompname) {
@@ -521,12 +521,10 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 // If query result is null then user is not in db -> get email from form field
                 let email = result[0] ? result[0].email : nlEmail;
                 let emailContent = `
-                  <p style="font-size: 24px;">Megkaptuk a rendelésed!</p>
+                  <p style="font-size: 24px;">We have received your order!</p>
                   <p style="font-size: 16px;">
                     If you have a 3DJordanPrint account, you can track your order status there.
-                    nyomon követni.<br>
-                    Ezen felül emailben is értesítünk, amikor a csomagod átadtuk a
-                    futárszolgálatnak.<br>
+                    <br>We will also notify you by email when your package is handed over to the courier service.<br>
                     Thank you for choosing 3DJordanPrint!
                   </p>
 
@@ -538,24 +536,24 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
                   <div style="text-align: center; line-height: 1.7; width: 50%; float: left;">
                     <p style="font-weight: bold; font-size: 16px;">
-                      Személyes & Szállítási Adatok
+                      Personal \& Shipping Information
                     </p>
                     <div style="font-size: 14px;">
-                      <div><b>Név: </b>${name}</div>
-                      <div><b>Cím: </b>${pcode} ${city}, ${address}</div>
-                      <div><b>Telefonszám: </b>${mobile}</div>
+                      <div><b>Name: </b>${name}</div>
+                      <div><b>Address: </b>${pcode} ${city}, ${address}</div>
+                      <div><b>Phone number: </b>${mobile}</div>
                       <div>
-                        <b>Fizetési mód: </b>
+                        <b>Payment method: </b>
                         ${payment == 'transfer' ? 'bank transfer' : (payment == 'credit' ? 'card payment' : 'cash on delivery')}
                         ${
                           payment == 'transfer' ? `<div>
-                                                      <div><b>Számlaszám:</b> ${BA_NUM}</div>
+                                                      <div><b>Bank account:</b> ${BA_NUM}</div>
                                                       <div>
-                                                        <b>Kedvezményezett neve:</b> ${BA_NAME}
+                                                        <b>Beneficiary name:</b> ${BA_NAME}
                                                       </div>
                                                       <div>
                                                         <b>
-                                                          Közleményben feltűntetendő azonosító:
+                                                          Identifier to include in transfer note:
                                                         </b> ${orderIDDisplay}
                                                       </div>
                                                    </div>
@@ -571,7 +569,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   </div>
 
                   <div style="text-align: center; width: 50%; float: left; line-height: 1.7;">
-                    <p style="font-weight: bold; font-size: 16px;">Számlázási Adatok</p>
+                    <p style="font-weight: bold; font-size: 16px;">Billing Information</p>
                     <div style="font-size: 14px;">
                       ${billingEmail}
                     </div>
@@ -579,8 +577,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   <div style="clear: both;"></div>
                   <br>
                   <p style="font-size: 14px; text-align: center;">
-                    Az alábbi termék azonosítóval tudod nyomonkövetni a
-                    your order in your 3DJordanPrint account:
+                    You can track your order in your 3DJordanPrint account with the following identifier:
                     <span style="color: #4285f4;">${uniqueID}</span>
                   </p>
 
@@ -589,7 +586,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   </div>
                   <b style="font-size: 16px;">${emailTotPrice}</b>
                   <p style="color: #7d7d7d; font-size: 14px;">
-                    Az oldalon feltüntetett árak tartalmazzák az áfát!
+                    Prices shown on the site include VAT!
                   </p>
                   <p style="color: #7d7d7d; font-size: 14px;">
                     
@@ -617,7 +614,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                     sendEmail('info@jordan3dprint.store', emailContent, email, subject, attachmentOptions);
                   }).catch(err => {
                     console.log(err);
-                    reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                    reject('An unexpected error occurred, please try again');
                   }); 
                 } else {
                   sendEmail('info@jordan3dprint.store', emailContent, email, subject);

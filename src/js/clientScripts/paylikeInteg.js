@@ -3,33 +3,33 @@ let paylike = Paylike(API_KEY); // f096aba2-e6bd-4980-850b-c4c6dacac896
 
 // Define possible error codes and their explanations
 const errorCodes = [
-  { INTERNAL_ERROR: 'Belső hiba történt' },
-  { ENDPOINT_NOT_FOUND: 'Végpont nem található' },
-  { VERSION_MISSING: 'Hiányzó verziószám' },
-  { VERSION_UNSUPPORTED: 'Nem támogatott verzió' },
-  { BODY_INVALID: 'Érvénytelen adatok' },
-  { REQUEST_INVALID: 'Érvénytelen kérés' },
-  { TOKEN_INVALID: 'Érvénytelen token' },
-  { TOKEN_TYPE_UNEXPECTED: 'Nem ismert token típus' },
-  { TEST_MODE_MIXED: 'Mixelt teszt mód' },
-  { PAYMENT_INTEGRATION_KEY_UNKNOWN: 'Ismeretlen integrációs kulcs' },
-  { PAYMENT_INTEGRATION_DISABLED: 'Fizetési integráció letiltva' },
-  { PAYMENT_CHALLENGE_UNAVAILABLE: 'Fizetési challenge nem érhető el' },
-  { PAYMENT_CARD_NUMBER_INVALID: 'Érvénytelen kártyaszám' },
-  { PAYMENT_CARD_SCHEME_UNKNOWN: 'Ismeretlen kártyatípus' },
-  { PAYMENT_CARD_SCHEME_UNSUPPORTED: 'Nem támogatott kártyatípus' },
-  { PAYMENT_CARD_SECURITY_CODE_INVALID: 'Érvénytelen CVC kód' },
-  { PAYMENT_CARD_EXPIRED: 'A kártya lejárt' },
-  { PAYMENT_CARD_DISABLED: 'Letiltott kártya' },
-  { PAYMENT_CARD_LOST: 'Elvesztett kártya' },
-  { PAYMENT_AMOUNT_LIMIT: 'Nincs elég pénz a kártyán' },
-  { PAYMENT_INSUFFICIENT_FUNDS: 'Nincs elég pénz a kártyán' },
-  { PAYMENT_RECEIVER_BLOCKED: 'Fizetés fogadása tiltva van' },
-  { PAYMENT_REJECTED_BY_ISSUER: 'Fizetés elutasítva a kibocsáltó által' },
-  { PAYMENT_REJECTED: 'Fizetés elutasítva' },
-  { TDSECURE_REQUIRED: 'TDSecure kód szükséges' },
-  { TDSECURE_FAILED: 'Hibás TDSecure kód' },
-  { TDSECURE_PARES_INVALID: 'Érvénytelen PaRes kód' },
+  { INTERNAL_ERROR: 'Internal error occurred' },
+  { ENDPOINT_NOT_FOUND: 'Endpoint not found' },
+  { VERSION_MISSING: 'Missing version number' },
+  { VERSION_UNSUPPORTED: 'Unsupported version' },
+  { BODY_INVALID: 'Invalid data' },
+  { REQUEST_INVALID: 'Invalid request' },
+  { TOKEN_INVALID: 'Invalid token' },
+  { TOKEN_TYPE_UNEXPECTED: 'Unknown token type' },
+  { TEST_MODE_MIXED: 'Mixed test mode' },
+  { PAYMENT_INTEGRATION_KEY_UNKNOWN: 'Unknown integration key' },
+  { PAYMENT_INTEGRATION_DISABLED: 'Payment integration disabled' },
+  { PAYMENT_CHALLENGE_UNAVAILABLE: 'Payment challenge unavailable' },
+  { PAYMENT_CARD_NUMBER_INVALID: 'Invalid card number' },
+  { PAYMENT_CARD_SCHEME_UNKNOWN: 'Unknown card scheme' },
+  { PAYMENT_CARD_SCHEME_UNSUPPORTED: 'Unsupported card scheme' },
+  { PAYMENT_CARD_SECURITY_CODE_INVALID: 'Invalid CVC code' },
+  { PAYMENT_CARD_EXPIRED: 'Card expired' },
+  { PAYMENT_CARD_DISABLED: 'Card disabled' },
+  { PAYMENT_CARD_LOST: 'Card reported lost' },
+  { PAYMENT_AMOUNT_LIMIT: 'Amount exceeds limit' },
+  { PAYMENT_INSUFFICIENT_FUNDS: 'Insufficient funds' },
+  { PAYMENT_RECEIVER_BLOCKED: 'Payment receiver is blocked' },
+  { PAYMENT_REJECTED_BY_ISSUER: 'Payment rejected by issuer' },
+  { PAYMENT_REJECTED: 'Payment rejected' },
+  { TDSECURE_REQUIRED: '3‑D Secure code required' },
+  { TDSECURE_FAILED: 'Incorrect 3‑D Secure code' },
+  { TDSECURE_PARES_INVALID: 'Invalid PaRes code' },
 ];
 
 // Get a specific error explanation by error code
@@ -39,10 +39,10 @@ function getErrorMessage(errorCode) {
       return errorCodes[i][errorCode];
     }
   }
-  return 'Egy nem várt hiba történt';
+  return 'An unexpected error occurred';
 }
 
- _('plAmountDyn').innerText = _('fPrice').innerText + ' JOD';
+  _('plAmountDyn').innerText = _('fPrice').innerText + ' JD';
 
 const plForm = document.querySelector('form#checkout');
 

@@ -105,11 +105,11 @@ function validatePcode(pcode) {
 function validateUploadFile(cFile, err) {
   // Make sure that the number of files to be uploaded is between 1 and 5 (both inclusive)
   if (!Array.isArray(cFile) && !cFile.size) {
-    return ['cFile', 'Válassz egy fájlt'];
+    return ['cFile', 'Choose a file'];
   } else if (cFile.length > 5) {
     return ['sfupload', 'Maximum 5db fájlt tölthetsz fel'];
   } else if (err) {
-    return ['sfupload', 'Hiba történt'];
+    return ['sfupload', 'An error occurred'];
   }
   return 'success';
 }

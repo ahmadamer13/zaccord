@@ -1,19 +1,17 @@
-<h2 class="gothamNormal fontNorm font22">Bevezető</h2>
+<h2 class="gothamNormal fontNorm font22">Introduction</h2>
 <p class="font18">
-    A leggyakrabban megvitatott témák a nyomtatott modellek minőségével, anyagköltségével és az egyes technológiák nyomtatási idejével kapcsolatosak.
-    Az is előfordulhat, hogy olyan tárgyat kell nyomtatnunk, amelyhez bizonyos speciális szerkezeti tulajdonságokra van szükség, például szakítószilárdságra és ütésállóságra, és ki kell derítenünk, hogy a műgyantával nyomtatott alkatrészek erősebbek vagy gyengébbek-e, mint a filamenttel nyomtatottak.
-  <br><br> 
+Common questions compare resin and filament printing on model quality, material cost, and print time. Sometimes a part needs specific mechanical properties like tensile strength or impact resistance — how do resin prints compare to filament prints? This article covers the trade‑offs.
+  <br><br>
 </p>
 
-  <h2 class="gothamNormal fontNorm font22">Strapabírás</h2>
+  <h2 class="gothamNormal fontNorm font22">Durability</h2>
 <p class="font18">
-        Ha a szilárdságról van szó, az FDM nyomtatott alkatrészek általában erősebbek, mint a gyantával nyomtatott tárgyak. Ez mind az ütésállóság, mind a szakítószilárdság tekintetében igaz. Szinte az összes népszerű filament, mint például az ABS, a PLA, a PETG, felülmúlja a hagyományos műgyantával készült nyomatokat.
+        For strength, FDM‑printed parts are generally stronger than resin‑printed ones — for both impact resistance and tensile strength. Popular filaments like ABS, PLA, and PETG typically outperform standard resins.
     <br><br>
-        A szakítószilárdság azt a feszültséget méri, amelyet egy adott anyag a töréspontjáig nyújtva elvisel. Az anyag szakítószilárdságát a szakadási ponton mérik, és az azonos alkatrész előállításához használt különböző anyagok között változik. <br>
-        Ez egy meglehetősen gyakori vizsgálat, amelyet a legtöbb iparágban végeznek; ahhoz azonban, hogy viszonylag pontos eredményeket kapjunk, a tényleges gyártási folyamatot is figyelembe kell venni és változóként kell figyelembe venni. <br><br>
-        A 3D gyantanyomatok nem annyira ütésállóak, emellett kérdéses lehat az UV-fénynek időszakosan kitett gyantatermékek folyamatos kikeményedése, míg a skála másik oldalán a PLA egy viszonylag olcsó, alacsony hőmérsékletnek ellenálló anyag. <br>
-        Ezek a feltételezések nem is állhatnának messzebb az igazságtól, és az igazságot a tisztességes és pontos tesztelés mutatja meg. Íme egy alapvető áttekintés a különböző FDM-filament típusokon végzett szakítószilárdsági mérésekből amelyek megfelelnek az ISO 527 szabványoknak. Egy kampót készítettek különböző anyagokból és tették próbára. <br>
-        <a href="https://www.iso.org/standard/75824.html" class="blueLink font18">ISO 527</a>: Ezek az irányelvek határozzák meg a hőre lágyuló műanyagok szakítószilárdsági tulajdonságainak meghatározott körülmények közötti  vonatkozó általános feltételeket.
+        Tensile strength measures the stress a material withstands when pulled until it breaks; it varies by material and part construction. Testing should consider the actual manufacturing method to be accurate. <br><br>
+        Standard resin prints are usually less impact‑resistant, and UV exposure may continue curing over time. By contrast, PLA is inexpensive but has low heat resistance. <br>
+        Below is a basic overview of tensile results for common FDM materials under ISO 527 conditions, using hook specimens printed from different materials. <br>
+        <a href="https://www.iso.org/standard/75824.html" class="blueLink font18">ISO 527</a>: Ezek az irányelvek határozzák meg a hőre lágyuló műmaterials szakítószilárdsági tulajdonságainak meghatározott körülmények közötti  vonatkozó általános feltételeket.
 <br><br>
 </p>
 
@@ -22,37 +20,31 @@
     <div class="bgCommon bimg lazy" data-bg="/blogContent/images/fdmslafog.jpg"
       style="background-color: rgb(53, 54, 58);"></div>
     <div class="imageWriteup font14 align notoSans">
-      FDM és SLA nyomtatási technológiával készült modellek
+      Models printed with FDM and SLA technologies
     </div>
   </div>
 </div>
  <br> 
-  <h2 class="gothamNormal fontNorm font22">Mérések eredménye</h2>
+  <h2 class="gothamNormal fontNorm font22">Test Results</h2>
 <h3 class="gothamNormal fontNorm font20">PLA</h3>
 <p class="font18">
-        A nyomtatóágyat 60 °C-ra állították be, és a kampót burkolat nélkül nyomtatták, hogy a hőt mérsékelten tartsák. A PLA horognak sikerült megtartania 129.274 kg súlyt, ami 64,4 MPa szakítószilárdságot jelent, de mint mindig, itt is van egy bökkenő.
-        A PLA idővel veszít szakítószilárdságából, ezért csak a rendeltetésének megfelelő célra szabad használni és nem olyan célokra, amelyek nagy szakítószilárdságot igényelnek.
+        The bed was set to 60 °C and hooks were printed without enclosure. The PLA hook held 129.274 kg, about 64.4 MPa tensile strength. PLA loses tensile strength over time, so it’s best for intended uses rather than high‑tensile applications.
 </p>
 <h3 class="gothamNormal fontNorm font20">PETG</h3>
 <p class="font18">
-        A PETG 50,0 MPa értéket mért, ami meglepő, mivel azt várnánk, hogy erősebb, mint a PLA. Egy másik fél által végzett tesztben a PLA a PETG-vel került szembe, de mindkettőből két tesztstruktúrát nyomtattak, hogy meghatározzák a rétegirány hatását. A két mintát függőlegesen és vízszintesen nyomtatták. <br>
-        Az elvégzett teszt egy hajlítási teszt volt, hogy meghatározzák azt a pontot, ahol a minta elpattan. Először a függőlegesen nyomtatott mintákat vizsgálták, és ezzel a rétegtapadást is tesztelték. A PLA minta valamivel kevesebb mint 8 kg-ot bírt ki, míg a PETG 5,9 kg-ot. A második minta az anyagszilárdságot tesztelte, és a PLA 16,6 kg-ot mért, míg a PETG minta nem bukott meg, mivel egyáltalán nem tört el, hanem csak meghajlott. <br>
-        Lényegében a PETG rugalmasabb, és bizonyos erők hatására nem törik el, mint a PLA, de ami a szakítószilárdságot illeti, a PLA az erősebb.
+        PETG measured 50.0 MPa — surprisingly lower than PLA. In another third‑party test comparing PLA and PETG with vertical and horizontal specimens, the bending test showed vertically printed PLA handled just under 8 kg vs. PETG’s 5.9 kg (testing layer adhesion). Horizontally, PLA reached 16.6 kg while PETG didn’t fail, bending without breaking. In short, PETG is more flexible and resists breaking under some loads, but PLA has higher tensile strength.
 </p>
 <h3 class="gothamNormal fontNorm font20">ABS</h3>
 <p class="font18">
-        Az <a href="https://www.iso.org/standard/75824.html" class="blueLink font18">ISO 527</a>-es teszttel az ABS 38,6 MPa értéket kapott, ami lényegesen gyengébb, mint a PLA és a PETG. A horogvizsgálat során az ABS rosszul teljesített, és azonnal eltört ugyanannál a 129 kg-os terhelésnél. <br>
-        Bár az ABS-t valódi mérnöki anyagnak tekintik, amelyet a mindennapi alkalmazásokban használnak, ezek az alkalmazások nem igényelnek hatalmas szakítószilárdságot.
+        Under <a href="https://www.iso.org/standard/75824.html" class="blueLink font18">ISO 527</a>, ABS measured 38.6 MPa, weaker than PLA and PETG. In the hook test, ABS failed immediately at the same 129 kg load. While ABS is a true engineering material used daily, most applications don’t demand very high tensile strength.
 <h3 class="gothamNormal fontNorm font20">Gyanta</h3>
 <p class="font18">
-        A gyantát általában úgy ismerik, mint egy nagyon gyenge anyagot, ha a szakítószilárdságról van szó, és az eredmények valahogy összhangban vannak ezzel a felfogással mivel a normál gyanta mindössze 23,4 MPa-t mért, ami jóval az összes mért eredmény alatt helyezkedik el.
-        A normál gyanta gyenge eredményei ellenére meg kell említeni, hogy  fejlődések sokasága történt az SLA nyomtatásban, és a szakítószilárdság határozottan az egyik olyan dimenzió, amely nagy figyelmet kapott.
-        Ez is azt mutatja, hogy a gyártók nagy erőfeszítéseket tesznek annak érdekében, hogy megfeleljenek azoknak a követelményeknek, amelyeket a 3D nyomtatási ipar egyre nagyobb mértékben követel meg.<br><br>
+        Standard resin is often seen as weak in tensile strength, and results align: standard resin measured 23.4 MPa, well below the others. Still, SLA materials have advanced rapidly, with tensile strength a focus area — manufacturers are working hard to meet growing industry demands.<br><br>
 </p>
 
-<h2 class="gothamNormal fontNorm font22">Gyanta és Filament ütőszilárdságának összehasonlítása</h2>
+<h2 class="gothamNormal fontNorm font22">Resin vs Filament Impact Strength</h2>
 <p class="font18">
-        Az ütésállóság (Joule/Méter-ben mérve) abban különbözik a szakítószilárdságtól, hogy egy szabványos modell mekkora ütést bír el, és mennyi ütési energiát nyel el az adott erőből. A vizsgálat elvégzésére használt módszer az <a href="https://en.wikipedia.org/wiki/Izod_impact_strength_test" class="font18 blueLink">IZOD</a> ütésszilárdsági vizsgálat. A vizsgálatokat három különböző orientációval végezték, sík, függőleges és vízszintes orientációjú próbatestekkel.
+        Impact strength (measured in J/m) differs from tensile strength; it measures how much impact energy a standard specimen absorbs before failure. The <a href="https://en.wikipedia.org/wiki/Izod_impact_strength_test" class="font18 blueLink">IZOD</a> test was used, with flat, vertical, and horizontal orientations.
 </p>
 
 <h3 class="gothamNormal fontNorm font20">A vizsgálathoz használt különböző nyomtatási orientációk</h3>
@@ -62,10 +54,10 @@
 
 <ul class="dul font18">
   <li>
-    Vízszintes: 113,21 j/m
+    Horizontal: 113.21 J/m
   </li>
   <li>
-    Függőleges: 77,42 j/m
+    Vertical: 77.42 J/m
   </li>
 </ul>
 
@@ -75,10 +67,10 @@
 
 <ul class="dul font18">
   <li>
-    Vízszintes: 178,09 j/m
+    Horizontal: 178.09 J/m
   </li>
   <li>
-    Függőleges: 35,45 j/m
+    Vertical: 35.45 J/m
   </li>
 </ul>
 
@@ -88,15 +80,15 @@
 
 <ul class="dul font18">
   <li>
-    Vízszintes: 149,14 j/m
+    Horizontal: 149.14 J/m
   </li>
   <li>
-    Függőleges: 55,14 j/m
+    Vertical: 55.14 J/m
   </li>
 </ul>
 
 <p class="font18">
-    Műgyanta
+    Resin
 </p>
 
 <ul class="dul font18">
@@ -109,21 +101,21 @@
 </ul>
 
 <p class="font18">
-        Amint az eredményekből látható, a szálak típusai és a vizsgálati minta tájolása között vegyes számok vannak. A függőleges teszt során a PLA érte el a legmagasabb pontszámot 77,42 j/m értékkel, a PETG pedig a legalacsonyabbat 35,45 j/m értékkel. <br><br>
-        A gyanta ütőszilárdságát a végzett IZOD ütőszilárdsági teszttel hasonlították össze. Mivel izotróp anyagról van szó, a gyanta tesztmintákhoz csak egy-egy mintára volt szükség.
+        As shown, results vary by material and orientation. In the vertical test, PLA scored highest at 77.42 J/m, PETG lowest at 35.45 J/m. <br><br>
+        Resin impact strength was assessed with the IZOD test. As an isotropic material, only one specimen orientation was required for resin.
 <br><br>
 </p>
   
-<h2 class="gothamNormal fontNorm font22">Hogyan lehet egy FDM alkatrészt erősebbé tenni?</h2>
+<h2 class="gothamNormal fontNorm font22">How to Strengthen an FDM Part</h2>
 <p class="font18">
-        Az erős FDM modell egy fontos nyomtatási szempont lehet a használatától függően. A nyomatok erősségének növelésére többféle módszer is létezik, például egyenes vonalú kitöltés használata (sűrűség értékének 50% felé állított értéke), az extrudálás szélességének növelése, a peremek számának növelése (rétegvastagság növelése) és vékonyabb rétegek használata (rétegvastagság alacsonyabb értékre állítása). Ezeket a mutatókat, amelyek segítenek növelni az FDM-nyomatok szilárdságát.
+        Depending on the application, strength matters. Methods to increase FDM part strength include using straight‑line infill (density above 50%), increasing extrusion width, increasing perimeters (wall thickness), and lowering layer height.
 <br><br>
 </p>
 
-<h2 class="gothamNormal fontNorm font22">Összefoglalás</h2>
+<h2 class="gothamNormal fontNorm font22">Summary</h2>
 <p class="font18">
-  Amennyiben erős, mechanikai tulajdonságoknak ellenálló nyomatot szeretnél elérni, úgy a filament szálak választása a legmegfelelőbb opció. <br>
-  Azonban, ha részletgazdag, esztétikai célokra szánt modellt választasz, úgy javasolt a műgyanta használata. <br>
-  A fentiekben említettek alapján pedig el tudod dönteni, hogy a választott anyag erőssége, tartóssága megfelel e a céljaidhoz.
+  For strong, mechanically resistant prints, filament is usually the best option. <br>
+  For high‑detail, aesthetic models, resin is recommended. <br>
+  Use the comparisons above to decide whether a material’s strength and durability match your goals.
   <br><br>
 </p>

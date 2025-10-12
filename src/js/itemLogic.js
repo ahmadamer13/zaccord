@@ -10,13 +10,13 @@ const buildItemSection = (conn, itemId, req) => {
     conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [itemId],
     function (err, result, fields) {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra')
+        reject('An unexpected error occurred, please try again')
         return;
       }
 
       // Invalid item id
       if (result.length === 0) {
-        reject('Nincs ilyen termékünk');
+        reject('No such product');
         return;
       }
 
@@ -50,7 +50,7 @@ const buildItemSection = (conn, itemId, req) => {
         </svg>
       `;
       description = result[0].description.replace('<!--GBTN-->', gbtn);
-      let replaceFor = `Ütésálló csomagolás
+      let replaceFor = `Shock‑resistant packaging
         <li>Ajándék a csomagban</li>
       `;
       description = description.replace('Környezetbarát csomagolás', replaceFor);
@@ -79,11 +79,11 @@ const buildItemSection = (conn, itemId, req) => {
       let popularTxt = '';
       if (isBest) {
         popularTxt = `
-          <p class="gotham ddgray">Népszerű termék</p>
+          <p class="gotham ddgray">Popular product</p>
         `;
       } else {
         popularTxt = `
-          <p class="gotham ddgray">Kategória: ${category}</p>
+          <p class="gotham ddgray">Category: ${category}</p>
         `;
       }
       
@@ -98,14 +98,14 @@ const buildItemSection = (conn, itemId, req) => {
             <div class="itemInfo">
               <p class="prodName hideText">${productName}</p>
               <p class="itemPrice">
-                <span id="priceHolder">${price}</span> JOD
+                <span id="priceHolder">${price}</span> JD
               </p>
               <p class="gotham">
                 <span id="sizeHolder">${size}</span>
               </p>
               ${popularTxt}
               <p class="gotham font14 qty" style="margin-bottom: 0;">
-                Mennyiség
+                Quantity
               </p> 
               <div class="quantity buttons_added">
                 <input type="button" value="-" class="minus" id="minus">
@@ -118,10 +118,10 @@ const buildItemSection = (conn, itemId, req) => {
 
               <div class="broHolder flexDiv" id="broHolder">
                 <button class="fillBtn btnCommon bros" onclick="buyItem(${id})">
-                  Vásárlás
+                  Buy now
                 </button> 
                 <button class="fillBtn btnCommon bros" onclick="addToCart(${id})">
-                  Kosárba
+                  Add to cart
                 </button>
                 <button class="fillBtn btnCommon bros" id="view3D">
                   3D
@@ -138,13 +138,13 @@ const buildItemSection = (conn, itemId, req) => {
           <div class="contHolder flexDiv gotham">
             <div class="contTitle" id="descTitle">
               <div>
-                Leírás            
+                Description            
               </div>
               <div class="hoverItem" id="descTitle_anim" style="display: block;"></div>
             </div>
             <div class="contTitle" id="specsTitle">
               <div>
-                Specifikációk
+                Specifications
               </div>
               <div class="hoverItem animate__animated animate__fadeOut" id="specsTitle_anim">
               </div>
@@ -156,8 +156,8 @@ const buildItemSection = (conn, itemId, req) => {
               ${description}
             </p>
             <p class="ddgray">
-              Az élő fényképek kivételével a termékfotók csak illusztrációk!
-              A termék 3D nyomtatóval készül!
+              Except for live photos, product images are for illustration only!
+              The product is made with a 3D printer!
             </p>
           </div>
           <div id="specsHS" class="specsHS trans">
@@ -174,15 +174,15 @@ const buildItemSection = (conn, itemId, req) => {
           <div class="clear"></div> 
 
           <p class="align">
-            <a href="/mitjelent" class="blueLink">Segítség a specifikációkhoz</a>
+            <a href="/mitjelent" class="blueLink">Specification help</a>
           </p>
 
           <p class="align note ddgray">
-            A specifikációk megváltoztatása árváltozást vonhat maga után!
+            Changing specifications may affect the price!
           </p>
 
           <p class="align note ddgray">
-            Ha nem szeretnél bajlódni a paraméterekkel, hagyd az alapbeállításokon!
+            If you don’t want to fuss with parameters, leave the defaults!
           </p>
         </div>
         `;
@@ -192,7 +192,7 @@ const buildItemSection = (conn, itemId, req) => {
           LIMIT 6`;
         conn.query(sQuery, [category, itemId], (err, result, fields) => {
           if (err) {
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           }
 
@@ -207,7 +207,7 @@ const buildItemSection = (conn, itemId, req) => {
             output += `
               <hr class="hrStyle">
                 <p id="spec" class="align gotham" style="font-weight: 500;">
-                  Ezek is érdekelhetnek
+                  You may also like
                 </p>
                 <div class="flexDiv" style="flex-wrap: wrap;">   
             `;

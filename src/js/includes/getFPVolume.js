@@ -4,7 +4,7 @@ const getFPVolume = (conn, itemID) => {
     let sQuery = 'SELECT size FROM fix_products WHERE id = ?';
     conn.query(sQuery, [itemID], (err, result, field) => {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       }
       

@@ -5,7 +5,7 @@ const buildMainSection = (conn, formData) => {
     let uQuery = 'UPDATE orders SET status = ? WHERE id = ? LIMIT 1';
     conn.query(uQuery, [val, oid], (err, result, field) => {
       if (err) {
-        reject('hiba történt');
+        reject('An error occurred');
         return;
       }
       

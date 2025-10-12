@@ -152,7 +152,7 @@ function errorFormResponse(res, msg) {
 
 function pageCouldNotLoad(res, userID) {
   let content = fs.readFileSync(path.join('src', 'index.html'));
-  content += generateTemplate('notLoad', 'Nem sikerült az oldal betöltése')
+  content += generateTemplate('notLoad', 'Failed to load the page')
   commonData(content, userID, '', res);
 }
 

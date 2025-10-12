@@ -100,11 +100,11 @@ litSegment.attachHandlers(1, 'litShow', 'lit', 'capTitleLit', 'scTextLit');
 let leftBtnFdm = _('fdmLeftButton');
 let rightBtnFdm = _('fdmRightButton');
 let currentIndexFdm = 0;
-let titleSourcesFdm = ['FDM nyomtató', ' FDM Nyomtatáshoz szükséges filament'];
+let titleSourcesFdm = ['FDM printer', ' Filament needed for FDM printing'];
 let textSourcesFdm = [
-  `Az FDM nyomtatók precízen, a megolvadt filamentből, rétegről rétegre készítik el a kívánt modellt egy digitális fájlból. A nyomtató feje képes mindhárom tengelyen (X, Y, Z) mozogni, így szinte bármilyen alakzatot képes elkészíteni`,
-  `Az FDM nyomtatók filamentet használnak nyomtatáshoz, ami egy magas hőmérsékleten (200 - 250 °C) olvadó anyag. A nyomtató az olvadt filamentből epíti fel a modellt, ami a lehűlés után használatra kész. A Zaccordon a hagyományos filament mellett lehetőség van rugalmas TPU-val is nyomtatni.`,
-  `Az SLA nyomtatók a kívánt terméket fényre keményedő műgyanta alapanyagból állítják elő, ami a levilágítás helyén megszilárdul és így rétegről rétegre épül fel a végeredmény. Ezzel a technológiával sokkal pontosabb termékeket (50 mikron vagy alatta) lehet nyomtatni, viszont költségesebb és lassabb az FDM nyomtatásnál.`
+  `FDM printers precisely build the desired model from melted filament layer by layer from a digital file. The print head moves along all three axes (X, Y, Z), so it can create almost any shape.`,
+  `FDM printers use filament for printing, a material that melts at high temperatures (200–250 °C). The printer builds the model from the molten filament, which is ready to use after cooling. On Zaccord, in addition to standard filaments, we can also print with flexible TPU.`,
+  `SLA printers produce the desired product from a light‑curing resin that solidifies where exposed and thus builds up the result layer by layer. This technology can print much more precise parts (50 microns or below), but it is more expensive and slower than FDM printing.`
 ];
 
 let fdmSegment = new ImageSegment(_('fdmLeftButton'), _('fdmRightButton'), 0, titleSourcesFdm, textSourcesFdm);
@@ -113,23 +113,22 @@ fdmSegment.attachHandlers(1, 'fdmShow', 'fdm', 'capTitleFdm', 'scTextFdm');
 // Filament materials
 let titleSourcesMat = ['PLA filament', 'ABS filament', 'PETG filament', 'TPU filament'];
 let textSourcesMat = [
-  `A PLA egy keményítő alapú biopolimer, ami megújuló nyersanyagokból állítható elő, például kukoricából vagy cukornádból, ezáltal környezetbarát lesz. Magas szakítószilárdsággal és felületi minőséggel rendelkezik, ezáltal mind otthoni, mind irodai környezetben is alkalmazható. Olyan tárgyak létrehozását teszi lehetővé mint például háztartási eszközök, prototípusok készítése, játékok, bemutató tárgyak, építészeti modellek, valamint elveszett alkatrészek pótlása.`,
-  `Az ABS nyomtatószál egy erős, a PLA -nál rugalmasabb, kevésbé törékeny, könnyen csiszolható és megmunkálható anyag, melyet old az aceton, így akár két darabot is egymáshoz lehet ragasztani vagy fényes felületet alkotni, azáltal, hogy acetonba, vagy aceton gőzbe mártjuk a megfelelő ideig modellünket (ekkor az apróbb részletek elveszhetnek).`,
-  `A PETG egy erős és sokoldalú anyag, amely a hagyományos PET palack műanyagjának egy módosított változata. Egyesíti a PLA egyszerű használatát az ABS erősségével, hőállóságával és tartósságával. A PETG alkalmas nagy tárgyak nyomtatására is, mivel alig van vetemedése, továbbá ipari erősségű nyomtatószál, számos nagyszerű tulajdonsággal.`,
-  `A TPU alapú rugalmas nyomtatószálak hőre lágyuló poliuretánok. A 3D nyomtatás világában a nyomtatószálakhoz használt standard műanyag az ABS és a PLA volt. Ennek a két filamentnek azonban nincs meg egy alapvető fizikai tulajdonsága - a rugalmasság. Számos prototípusnak vagy 3D-s nyomatnak hajlékonynak kell lennie, miközben megtartja az eredeti formai tényezőit.`
+  `PLA is a starch‑based biopolymer produced from renewable raw materials such as corn or sugarcane, making it environmentally friendly. It has high tensile strength and surface quality, making it suitable for both home and office environments. It enables the creation of household tools, prototypes, toys, display pieces, architectural models, and replacement parts.`,
+  `ABS filament is a strong material that is more flexible and less brittle than PLA. It is easy to sand and machine, and it dissolves in acetone, allowing two parts to be bonded or a glossy surface to be created by dipping the model in acetone or exposing it to acetone vapor (fine details may be lost).`,
+  `PETG is a strong and versatile material, a modified version of traditional PET bottle plastic. It combines PLA’s ease of use with ABS’s strength, heat resistance and durability. PETG is suitable for printing large objects due to minimal warping and is an industrial‑grade filament with many great properties.`,
+  `Flexible filaments based on TPU are thermoplastic polyurethanes. In 3D printing, ABS and PLA were the standard plastics used for filaments. However, these two filaments lack a fundamental physical property — flexibility. Many prototypes or 3D prints need to be bendable while retaining their original form factor.`
 ];
 
 let matSegment = new ImageSegment(_('matLeftButton'), _('matRightButton'), 0, titleSourcesMat, textSourcesMat);
 matSegment.attachHandlers(2, 'matShow', 'mat', 'capTitleMat', 'scTextMat');
 
 // SLA printer
-let titleSourcesSLA = ['SLA nyomtatás', 'Hogyan működik?', 'Miért válaszd az SLA-t?'];
+let titleSourcesSLA = ['SLA printing', 'How does it work?', 'Why choose SLA?'];
 let textSourcesSLA = [
-  `A sztereolitográfia egy olyan 3D nyomtatási eljárás, amelyet koncepciómodellek, kozmetikai kellékek, gyors prototípusok és bonyolult geometriájú, összetett alkatrészek akár 1 nap alatt történő előállítására használnak. Az így készült alkatrészek az anyagok széles választékából állíthatók elő, segítségével rendkívül nagy felbontású részletek és minőségi felületek készíthetőek.`,
-  `A gép a 3D nyomtatási folyamatot a tartószerkezetek rétegeinek, majd magának az alkatrésznek a megrajzolásával kezdi, egy folyékony, keményedő gyanta felületére irányított ultraibolya lézerrel. Miután egy réteget leképeztek a gyanta felületén, az építőplatform lefelé/felfelé tolódik, ezáltal lehetővé téve a következő gyantaréteg felvitelét. A folyamatot rétegről rétegre megismétli, amíg az építési folyamat be nem fejeződik.`,
-  `Az SLA kiváló választás a gyors prototípusgyártáshoz és olyan projekttervekhez, amelyek nagyon pontos és finom részletességű alkatrészek gyártását igénylik. Ideális a koncepcióötletek validálását és az ergonómiai tesztelést lehetővé tevő, bemutató jellegű alkatrészek előállításához.`
+  `Stereolithography is a 3D printing process used to produce concept models, cosmetic parts, rapid prototypes, and complex components with intricate geometry in as little as one day. Parts can be made from a wide range of materials, enabling extremely high‑resolution details and quality surfaces.`,
+  `The machine begins the 3D printing process by drawing the support structures and then the part itself with an ultraviolet laser directed onto the surface of a liquid, curable resin. After a layer is imaged on the resin surface, the build platform moves down/up, allowing the next layer of resin to be applied. The process repeats layer by layer until the build is complete.`,
+  `SLA is an excellent choice for rapid prototyping and for projects that require highly accurate parts with fine detail. It’s ideal for display parts that validate concept ideas and enable ergonomic testing.`
 ];
 
 let slaSegment = new ImageSegment(_('slaLeftButton'), _('slaRightButton'), 0, titleSourcesSLA, textSourcesSLA);
 slaSegment.attachHandlers(2, 'slaShow', 'sla', 'capTitleSla', 'scTextSla');
-

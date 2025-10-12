@@ -78,7 +78,7 @@ const buildCartSection = (conn, req) => {
           conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [dbId],
           function (err, result, fields) {
             if (err) {
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             }
 
@@ -91,13 +91,13 @@ const buildCartSection = (conn, req) => {
               let tPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
                 'printUploads', 'thumbnails', tid + '.png');
               if (!fs.existsSync(fPath) || !fs.existsSync(tPath)) {
-                reject('Nem létezik ilyen fájl');
+                reject('The requested file does not exist');
                 return;
               }
 
               var url = 'uploadPrint?file=' + tid;
               var imgUrl = 'printUploads/thumbnails/' + tid + '.png';
-              var productName = 'Bérnyomtatott Termék';
+              var productName = 'Custom Printed Product';
               var price = Number(content['price_' + tid]);
               allowSLA = shouldAllowSLA(fPath, scale);
 
@@ -111,19 +111,19 @@ const buildCartSection = (conn, req) => {
 
               // No such lithophane
               if (!fs.existsSync(fPath)) {
-                reject('Nem létezik ilyen fájl');
+                reject('The requested file does not exist');
                 return;
               }
 
               var url = 'uploadPrint?image=' + tid;
               var imgUrl = 'printUploads/lithophanes/' + lithophaneFile;
-              var productName = 'Litofánia';
+              var productName = 'Lithophane';
               var litSphere = content['sphere_' + tid];
               var litSize = content['size_' + tid];
               var litColor = content['color_' + tid];
             } else if (result.length === 0) {
               // Item is not found in db
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             } else {
               var id = result[0]['id'];
@@ -185,7 +185,7 @@ const buildCartSection = (conn, req) => {
 
                 <div class="flexDiv prodInfo" id="uniqueCont_${tid}">
                   <div id="unitPrice_${tid}">
-                    <p>Unit price: <span id="priceHolder_${tid}">${actualPrice}</span> JOD</p>
+                    <p>Unit price: <span id="priceHolder_${tid}">${actualPrice}</span> JD</p>
                   </div>
             `;
             
@@ -194,7 +194,7 @@ const buildCartSection = (conn, req) => {
                 output += `
                       <div>
                         <p>
-                          Rétegvastagság:
+                          Layer Height:
                           <select class="specSelect chItem" id="rvas${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
@@ -210,7 +210,7 @@ const buildCartSection = (conn, req) => {
                       </div>
                       <div>
                         <p>
-                          Sűrűség:
+                          Infill:
                           <select class="specSelect chItem" id="suruseg${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
@@ -231,7 +231,7 @@ const buildCartSection = (conn, req) => {
                 output += `
                       <div>
                         <p>
-                          Rétegvastagság:
+                          Layer Height:
                           <select class="specSelect chItem" id="rvas${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, true)">
                 `;
@@ -247,7 +247,7 @@ const buildCartSection = (conn, req) => {
                       </div>
                       <div>
                         <p>
-                          Sűrűség:
+                          Infill:
                           <select class="specSelect chItem" id="suruseg${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, true)">
                 `;
@@ -269,7 +269,7 @@ const buildCartSection = (conn, req) => {
               output += `
                     <div id="scaleDiv_${tid}">
                       <p>
-                        Méretezés:
+                        Scale:
                         <select class="specSelect chItem" id="scale${tid}"
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, ${isSLA})">
               `;
@@ -291,7 +291,7 @@ const buildCartSection = (conn, req) => {
                 output += `
                     <div>
                       <p>
-                        Falvastagság:
+                        Wall Thickness:
                         <select class="specSelect chItem" id="fvas${tid}"
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
@@ -313,7 +313,7 @@ const buildCartSection = (conn, req) => {
                   output += `
                     <div>
                       <p>
-                        Anyag:
+                        Material:
                         <select class="specSelect chItem" id="printMat${tid}"
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
 
@@ -335,7 +335,7 @@ const buildCartSection = (conn, req) => {
               output += `
                   <div>
                     <p> 
-                      Forma:
+                      Shape:
                       <select class="specSelect chItem" id="sphere${tid}"
                         onchange="updateLit('sphere', 'sphere${tid}', '${tid}')">
               `;
@@ -356,7 +356,7 @@ const buildCartSection = (conn, req) => {
               output += `
                     <div>
                       <p> 
-                        Méret:
+                        Size:
                         <select class="specSelect chItem" id="size${tid}"
                           onchange="${selQuan}">
               `;
@@ -381,7 +381,7 @@ const buildCartSection = (conn, req) => {
             output += `
                   <div id="colorDiv_${tid}">
                     <p> 
-                      Szín:
+                      Color:
                       <select class="specSelect chItem" id="color${tid}"
                         onchange="chColor(this, '${tid}')">
             `;
@@ -408,7 +408,7 @@ const buildCartSection = (conn, req) => {
                   </div>
                   <div id="quantityDiv_${tid}">
                     <p>
-                      Mennyiség:
+                      Quantity:
                       <select class="specSelect chItem" id="quantity${tid}"
                         onchange="${selQuan}">
             `;
@@ -416,7 +416,7 @@ const buildCartSection = (conn, req) => {
             for (let i = MIN_QUANTITY; i <= MAX_QUANTITY; i++) {
               let selected = quantity == i ? 'selected' : '';
               output += `
-                <option value="${i}" ${selected}>${i}db</option>
+                <option value="${i}" ${selected}>${i} pcs</option>
               `;
             }
 
@@ -430,7 +430,7 @@ const buildCartSection = (conn, req) => {
               output += `
                   <div id="printTechDiv_${tid}">
                     <p>
-                      Technológia:
+                      Technology:
                       <select class="specSelect chItem" id="printTech${tid}"
                         onchange="changeTech('${printTech}', '${tid}', ${price})">
               `;
@@ -452,8 +452,8 @@ const buildCartSection = (conn, req) => {
 
             output += `
                 <div>
-                  <p class="bold">Összesen: <span id="totpHolder_${tid}">
-                    ${quantity * actualPrice}</span> JOD
+                  <p class="bold">Subtotal: <span id="totpHolder_${tid}">
+                    ${quantity * actualPrice}</span> JD
                   </p>
                 </div>
               </div>
@@ -484,19 +484,19 @@ const buildCartSection = (conn, req) => {
         if (finalPrice < 800) {
           extraPrice = 800 - finalPrice;
           finalPrice += extraPrice;
-          ePriceText = `<span id="extraPrice">(+${extraPrice} JOD surcharge included)</span>`;
+          ePriceText = `<span id="extraPrice">(+${extraPrice} JD surcharge included)</span>`;
         }
 
         finalPrice = `
           <span id="fPrice">
             ${Math.round(finalPrice * discount)}
           </span>
-          JOD
+          JD
         `;
 
         if (discount == DISCOUNT) {
           finalPrice += `
-            <span id="discount">(${Math.round((1 - DISCOUNT) * 100)}% kedvezmény)</span>
+            <span id="discount">(${Math.round((1 - DISCOUNT) * 100)}% discount)</span>
           `;
         } else {
           finalPrice += '<span id="discount"></span>';
@@ -505,13 +505,13 @@ const buildCartSection = (conn, req) => {
         output += `
           <p class="align bold" id="finalPrice">
             <span style="color: #4285f4;">
-              Végösszeg:
+              Total:
             </span>
             ${finalPrice}
             ${ePriceText}
           </p>
           <div class="infoBox" id="infoLogin"></div>
-          <button class="fillBtn btnCommon centerBtn" id="buyCart">Tovább a fizetéshez</button> 
+          <button class="fillBtn btnCommon centerBtn" id="buyCart">Proceed to Checkout</button> 
         `;
         output += '</section>';
         output += `

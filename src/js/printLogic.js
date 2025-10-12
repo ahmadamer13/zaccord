@@ -234,11 +234,9 @@ async function buildPrintSection(conn, req) {
           SLA printing
         </h3>
         <p id="scTextSla" class="align lh" style="color: #3c4043;">
-          A sztereolitográfia egy olyan 3D nyomtatási eljárás, amelyet
-          koncepciómodellek, kozmetikai kellékek, gyors prototípusok és
-          bonyolult geometriájú, összetett alkatrészek akár 1 nap alatt történő
-          előállítására használnak. Az így készült alkatrészek az anyagok széles választékából
-          állíthatók elő, segítségével rendkívül nagy felbontású részletek és minőségi felületek készíthetőek. 
+          Stereolithography is a 3D printing process used to produce concept models, cosmetic parts,
+          rapid prototypes, and complex components with intricate geometry in as little as one day. Parts can
+          be made from a wide range of materials, enabling extremely high‑resolution details and quality surfaces.
         </p>
       </div>
     </div>
@@ -247,11 +245,10 @@ async function buildPrintSection(conn, req) {
     <div id="matFadeHolder">
       <h2 class="gotham font26 align fontNorm">FDM materials</h2>
         <h2 class="align font18 lh fontNorm">
-          Különböző típusú FDM nyomtatásokhoz eltérő anyagokra lehet szükség, így annak
-          érdekében hogy a specifikusabb igényeket is kielégítsük jelenleg a PLA, ABS, PETG és
-          TPU anyagok mellett rengeteg más <a href="/colors" class="blueLink font18">anyag</a> is
-          rendelkezésre áll. SLA nyomtatáshoz kizárólag UV resint használunk
-          (különleges esetekben ennek egy adott  kategóriáját, például fogászati modellekhez).
+          Different types of FDM prints may require different materials. To meet specific needs, we currently offer
+          PLA, ABS, PETG, and TPU, along with many other <a href="/colors" class="blueLink font18">materials</a>.
+          For SLA printing, we exclusively use UV resin (in special cases, a specific category of it, such as for
+          dental models).
         </h2>
         <p class="align">
           <a href="/materialHelp" class="blueLink align">
@@ -283,12 +280,10 @@ async function buildPrintSection(conn, req) {
           PLA filament
         </h3>
         <p id="scTextMat" class="align lh" style="color: #3c4043;">
-          A PLA egy keményítő alapú biopolimer, ami megújuló nyersanyagokból állítható elő,
-          például kukoricából vagy cukornádból, ezáltal környezetbarát lesz.
-          Magas szakítószilárdsággal és felületi minőséggel rendelkezik, ezáltal mind
-          otthoni, mind irodai környezetben is alkalmazható. Olyan tárgyak létrehozását teszi
-          lehetővé mint például háztartási eszközök, prototípusok készítése, játékok,
-          bemutató tárgyak, építészeti modellek, valamint elveszett alkatrészek pótlása. 
+          PLA is a starch‑based biopolymer produced from renewable raw materials such as corn or sugarcane,
+          making it environmentally friendly. It has high tensile strength and surface quality, making it suitable
+          for both home and office use. It enables the creation of household tools, prototypes, toys, display pieces,
+          architectural models, and replacement parts.
         </p>
       </div>
       

@@ -161,7 +161,7 @@ function displayFiles() {
         <label for="submitForm" tabindex="0"
           class="btnCommon fillBtn animate__animated animate__fadeIn"
           style="margin: 20px auto; width: 60%; max-width: 320px;" id="continue">
-          Tovább
+          Continue
         </label> 
       `; 
 
@@ -173,7 +173,7 @@ function displayFiles() {
           _('bigPrew').innerHTML += `
             <img src="/images/icons/loader.gif" width="24" style="margin: 0 auto"
               class="animate__animated animate__fadeIn">
-            <p class="blue">Ez akár pár percig is eltarthat...</p>
+            <p class="blue">This may take a few minutes...</p>
           `;
           _('continue').style.cursor = "not-allowed";
           _('continue').style.opacity = "0.8";

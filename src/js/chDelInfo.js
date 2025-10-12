@@ -26,7 +26,7 @@ const changeDeliveryInfo = (conn, userID, formData) => {
         resolve('success');
       });
     }).catch(err => {
-      reject('Nincs ilyen felhasználó');
+      reject('No such user');
       return;
     });
   });

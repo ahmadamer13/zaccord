@@ -36,7 +36,7 @@ const buildRefImage = (conn, id) => {
             <p><span class="gotham">Rétegvastagság:</span> ${rvas}mm</p>
             <p><span class="gotham">Falvastagság:</span> ${fvas}mm</p>
             <p><span class="gotham">Sűrűség:</span> ${infill}%</p>
-            <p><span class="gotham">Méret:</span> ${sizeReadable}</p>
+            <p><span class="gotham">Size:</span> ${sizeReadable}</p>
             <div class="downloadHolder gotham align blue trans" style="margin-top: 40px;">
               <a href="/images/referenceImages/${imgUrl}" download="${imgUrl}"class="blue">
                 Letöltés

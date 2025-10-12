@@ -31,7 +31,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
   } else {
     output += `
       <div>
-        <p>Unit price: ${data.price} JOD</p>
+        <p>Unit price: ${data.price} JD</p>
       </div>
     `;
 
@@ -90,7 +90,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
           <p>Forma: ${data.sphere}</p>
         </div>
         <div>
-          <p>Méret: ${data.size.split('x').map(v => Number(v).toFixed(2)).join('x')
+          <p>Size: ${data.size.split('x').map(v => Number(v).toFixed(2)).join('x')
             .replace(/x/g, 'mm x ') + 'mm'}</p>
         </div>
       `; 
@@ -139,7 +139,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
 
   output += `
         <div>
-          <p class="bold">Total: ${data.quantity * data.price} JOD</p>
+          <p class="bold">Total: ${data.quantity * data.price} JD</p>
         </div>
       </div>
       <div class="clear"></div>

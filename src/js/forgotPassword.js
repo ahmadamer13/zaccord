@@ -33,12 +33,12 @@ const forgotPassword = (conn, email) => {
         // Now send email
         let subject = 'Temporary password request';
         let emailContent = `
-          <p style="font-size: 22px;">Ideiglenes jelszó igénylés</p>
+          <p style="font-size: 22px;">Temporary password request</p>
           <p>
-            A jelszavad sikeresen megváltozott!<br>
-            Az alábbi ideiglenes jelszóval tudsz belépni a fiókodba:
+            Your password has been updated successfully!<br>
+            You can log in with the following temporary password:
             <b>${tmpPass}</b><br>
-            Erősen ajánljuk, hogy belépés után változtatsd meg az ideiglenes jelszót!
+            We strongly recommend changing the temporary password after logging in.
           </p>
         `;
 

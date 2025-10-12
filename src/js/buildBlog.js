@@ -19,9 +19,9 @@ async function buildBlog(conn, blogID, req) {
 
   let content = `
     <!DOCTYPE html>
-    <html lang="hu">
+    <html lang="en">
       <head>
-        <title>${title} - Jordan3DPrint 3D Nyomtatás Blog</title>
+        <title>${title} - Jordan3DPrint 3D Printing Blog</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/animate/animate.css">
@@ -55,9 +55,9 @@ async function buildBlog(conn, blogID, req) {
   content += `
     <h1 class="gotham fontNorm font34 blogPageTitle" style="margin-top: 0;">${title}</h1>
     <div class="blogHeaderCont notoSans">
-      <div><span class="hideSeekBlog">Írta:</span> ${author}</div>
-      <div><span class="hideSeekBlog">Kulcsszavak:</span> ${categories}</div> 
-      <div>Utoljára frissítve: ${lastUpdate}</div> 
+      <div><span class="hideSeekBlog">By:</span> ${author}</div>
+      <div><span class="hideSeekBlog">Keywords:</span> ${categories}</div> 
+      <div>Last updated: ${lastUpdate}</div> 
     </div>
     <div class="clear"></div>
     <hr class="hrStyle">
@@ -68,8 +68,8 @@ async function buildBlog(conn, blogID, req) {
   content += `
     <hr class="hrStyle">
     <p class="font18 align ttt notoSans">
-      3D nyomtatáshoz látogass el a <a class="blueLink font18" href="/print">bérnyomtatás</a> vagy
-      a <a class="blueLink font18" href="/prototype">prototípusgyártás</a> oldalra.
+      For 3D printing, visit the <a class="blueLink font18" href="/print">on‑demand printing</a> or
+      <a class="blueLink font18" href="/prototype">prototyping</a> pages.
     </p>
   `;
   content += '</div>'

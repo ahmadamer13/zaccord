@@ -42,10 +42,10 @@ function sendEmail(from, content, email, subject, attachmentPath = null) {
         </div>
         <div style="width: 100%; background-color: #f4f4f4; color: #171717; padding: 10px;
           border-radius: 10px; text-align: center; box-sizing: border-box; font-size: 14px;">
-          <p style="margin-bottom: 0; color: #7d7d7d;">Megvalósítunk minden elképzelést</p>
+          <p style="margin-bottom: 0; color: #7d7d7d;">We bring every idea to life</p>
           <p style="color: #7d7d7d;">
             ${curYear} Jordan3DPrint -
-            <a href="https://www.jordan3dprint.store/aszf" style="color: #7d7d7d;">ÁSZF</a>
+            <a href="https://www.jordan3dprint.store/aszf" style="color: #7d7d7d;">Terms</a>
           </p>
         </div>
       </div>
@@ -68,7 +68,7 @@ function sendEmail(from, content, email, subject, attachmentPath = null) {
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
         console.log(error);
-        reject('Egy nem várt hiba történt, kérlek próbáld újra (email)');
+        reject('An unexpected error occurred, please try again (email)');
         return;
       } else {
         resolve('success');

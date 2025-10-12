@@ -40,13 +40,13 @@ const buildMainSection = (conn, cat) => {
     let catQuery = 'SELECT DISTINCT category FROM fix_products ORDER BY category ASC';
     conn.query(catQuery, (e, res, f) => {
       if (e) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra 1', e);
+        reject('An unexpected error occurred, please try again 1', e);
         return;
       }
 
       conn.query(sQuery, function (err, result, fields) {
         if (err) {
-          reject('Egy nem várt hiba történt, kérlek próbáld újra 2');
+          reject('An unexpected error occurred, please try again 2');
           return;
         }
 
@@ -125,9 +125,13 @@ const buildMainSection = (conn, cat) => {
               <div class="darken"></div>
               <div class="textCenter">
                 <h1 class="mainText lh gotham align fontNorm" style="padding: 10px;">
-                  Precíz 3D nyomtatás a Jordan3DPrinten
+                  Precise 3D printing at Jordan3DPrint
+                  <br>
+                  <span class="gothamNormal font18" style="display:inline-block; margin-top:6px;">
+                    We are proud to print your models on Bamboo Lab printers.
+                  </span>
                   <button class="fillBtn instantQuote gotham" onclick="location.href = '/print'">
-                    Azonnali árajánlat
+                    Instant quotation
                   </button>
                 </h1>
               </div>
@@ -170,6 +174,18 @@ const buildMainSection = (conn, cat) => {
             </div>
           </div>
 
+          <div class="flexProtCont" style="${furtherShow}">
+            <div class="bgService bgCommon" style="background-image: url('/images/a1.jpg'); background-size: cover; background-position: center; min-height: 220px; border-radius: 12px;">
+              <div class="darken keepRounded"></div>
+              <div class="textCenter pad lh">
+                <h2 class="serviceTxt align font26 gotham fontNorm">Printed on Bambu Lab A1 Combo</h2>
+                <h3 class="serviceTxt align gotham fontNorm font16">
+                  High quality, speed and reliability thanks to our Bamboo Lab printers.
+                </h3>
+              </div>
+            </div>
+          </div>
+
           <h2 class="gotham align font34 printTech fontNorm" id="printTech" style="${popProdsStyle}">
             Printing Technologies
           </h2>
@@ -184,7 +200,7 @@ const buildMainSection = (conn, cat) => {
                   filament layer by layer.
                 </h3>
                 <div class="flexDiv btnAlign">
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">További információ</button>
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">Learn more</button>
                 </div>
               </div>
             </div>
@@ -197,7 +213,7 @@ const buildMainSection = (conn, cat) => {
                   The printer cures liquid resin; parts are UV post‑cured.
                 </h3>
                 <div class="flexDiv btnAlign">
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">További információ</button>
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/mitjelent')">Learn more</button>
                 </div>
               </div>
             </div>
@@ -309,7 +325,7 @@ const buildMainSection = (conn, cat) => {
           
           <p class="gotham align font34" style="margin-top: 60px; margin-bottom: 0; ${popProdsStyle}"
             id="popProds">
-            Legnépszerűbb Termékek
+            Most Popular Products
           </p>
         `;
 
@@ -347,7 +363,7 @@ const buildMainSection = (conn, cat) => {
           let newestQuery = 'SELECT * FROM fix_products ORDER BY date_added DESC LIMIT 4';
           conn.query(newestQuery, function displayNewItems(err, newRes, fields) {
             if (err) {
-              reject('Egy nem várt hiba történt, kérlek próbáld újra 3');
+              reject('An unexpected error occurred, please try again 3');
               return;
             }
             
@@ -355,7 +371,7 @@ const buildMainSection = (conn, cat) => {
               </div>
               <section class="mainShowcase" id="toggleLower" style="${catToggle}">
                 <hr class="hrStyle" style="margin-top: 0;">
-                <p class="mainTitle" style="margin-top: 20px;">Újdonságok</p>
+                <p class="mainTitle" style="margin-top: 20px;">New Arrivals</p>
                 <div class="dynamicShowcase newies">
             `;
 
@@ -373,7 +389,7 @@ const buildMainSection = (conn, cat) => {
                   </div>
                   <span class="gotham align">
                     <p>${prodName}</p>
-                    <p>${price} JOD</p>
+                    <p>${price} JD</p>
                   </span>
                 </a>
               `;
@@ -384,7 +400,7 @@ const buildMainSection = (conn, cat) => {
             // Finally, select products from other categories 
             output += `
               <hr class="hrStyle" style="${catToggle}">
-              <p class="mainTitle" style="margin-top: 20px; ${catToggle}">További Termékek</p>
+              <p class="mainTitle" style="margin-top: 20px; ${catToggle}">More Products</p>
               <div class="dynamicShowcase" style="${moreShow}">
             `;
        
@@ -393,7 +409,7 @@ const buildMainSection = (conn, cat) => {
             let catRes = conn.query(uniqueCategories, (err, catRes, fields) => {
               for (let i = 0; i < catRes.length; i++) {
                 if (err) {
-                  reject('Egy nem várt hiba történt, kérlek próbáld újra 4');
+                  reject('An unexpected error occurred, please try again 4');
                   return;
                 }
                 
@@ -405,7 +421,7 @@ const buildMainSection = (conn, cat) => {
                 let innerRes = new Promise((resolve, reject) => {
                   conn.query(moreQuery, [currentCat], (err, innerRes, fields) => {
                     if (err) {
-                      reject('Egy nem várt hiba történt, kérlek próbáld újra 5');
+                      reject('An unexpected error occurred, please try again 5');
                       return;
                     }
                    
@@ -423,7 +439,7 @@ const buildMainSection = (conn, cat) => {
                         <div class="seeMore trans"
                           onclick="sortByCat('${currentCat}', ${catToNum[currentCat]}, true)">
                           <img src="/images/icons/eye.svg" width="24" height="24"
-                            alt="További termékek a(z) ${currentCat} kategóriában">
+                            alt="More products in category ${currentCat}">
                         </div>
                       </div>
                     `;

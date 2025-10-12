@@ -34,25 +34,25 @@ function addToCart(id) {
   // Validation on client-side
   _('status').innerHTML = '';
   if (LAYER_WIDTH_VALUES.indexOf(rvas) < 0) {
-    displayErrorMsg('A rétegvastagság értéke nem megfelelő');
+    displayErrorMsg('Invalid layer height value');
     return;
   } else if (INFILL_VALUES.indexOf(suruseg) < 0) {
-    displayErrorMsg('A sűrűség értéke nem megfelelő');
+    displayErrorMsg('Invalid infill value');
     return; 
   } else if (PCOLORS['pla'].indexOf(color) < 0) {
-    displayErrorMsg('A szín értéke nem megfelelő');
+    displayErrorMsg('Invalid color value');
     return; 
   } else if (SCALE_VALUES.indexOf(scale) < 0) {
-    displayErrorMsg('A méretezés értéke nem megfelelő');
+    displayErrorMsg('Invalid scale value');
     return; 
   } else if (WALL_WIDTH_VALUES.indexOf(fvas) < 0) {
-    displayErrorMsg('A falvastagság értéke nem megfelelő');
+    displayErrorMsg('Invalid wall thickness value');
     return;
   } else if (!_('quantity').value || quantity % 1 !== 0) {
-    displayErrorMsg('A mennyiség értéke nem megfelelő');
+    displayErrorMsg('Invalid quantity value');
     return; 
   } else if (quantity < MIN_QUANTITY || quantity > MAX_QUANTITY) {
-    displayErrorMsg(`Egyféle termékből maximum ${MAX_QUANTITY}db rendelhető`);
+    displayErrorMsg(`You can order at most ${MAX_QUANTITY} pcs of a single product`);
     return;
   }
 
@@ -99,7 +99,7 @@ function addToCart(id) {
             }
             itemsSoFar['content_' + cid]['quantity_' + cid] = tmpQuantity + quantity;
             setCookie('cartItems', JSON.stringify(itemsSoFar), 365);
-            statusFill('succBox', 'A terméket sikeresen a kosárba helyezted');
+            statusFill('succBox', 'Product successfully added to cart');
             _('broHolder').style.marginBottom = "20px";
             updateCartNum();
             return;
@@ -118,7 +118,7 @@ function addToCart(id) {
   // Update the number of items in cart on UI
   updateCartNum();
 
-  statusFill('succBox', 'A terméket sikeresen a kosárba helyezted');
+  statusFill('succBox', 'Product successfully added to cart');
   _('broHolder').style.marginBottom = "20px";
 
   // Add fb tracking for ads
@@ -233,14 +233,14 @@ function updatePrice(isInCart, price, domElement, isLit, isCP = false, isSLA = f
 }
 
 function calcSLAPrice(p, lw, infill, scale) {
-  let multiplier = infill == 'Tömör' ? 1 : 0.8;
+  let multiplier = infill == 'Solid' ? 1 : 0.8;
   let fp = smoothPrice(Math.round(p * (1 / (lw * 70) + 0.7142857142857143) * multiplier * scale));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
 
 function manageDiscountTxt(newPrice) {
   if (newPrice > FREE_SHIPPING_LIMIT) {
-    _('discount').innerHTML = `(${Math.round((1 - DISCOUNT) * 100)}% kedvezmény)`;
+    _('discount').innerHTML = `(${Math.round((1 - DISCOUNT) * 100)}% discount)`;
   } else {
     _('discount').innerHTML = '';
   }
@@ -289,7 +289,7 @@ function buyItem(id) {
   let size = getModelSize();
 
   if (!_('quantity').value) {
-    displayErrorMsg('A mennyiség értéke nem megfelelő');
+    displayErrorMsg('Invalid quantity value');
     return; 
   }
 

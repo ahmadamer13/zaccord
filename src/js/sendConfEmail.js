@@ -60,23 +60,22 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
           // Now send email to the customer
           let emailContent = `
             <div style="line-height: 1.7;">
-              <p style="font-size: 24px;">A csomagod átadtuk a futárszolgálatnak!</p>
-              <p style="font-size: 16px;">Kedves Vásárlónk,</p>
+              <p style="font-size: 24px;">Your package has been handed over to the courier!</p>
+              <p style="font-size: 16px;">Dear Customer,</p>
               <p style="font-size: 16px;">
-                A(z) <span style="color: #4285f4;">${uid}</span> azonosító számú rendelésed
-                átadásra került a kiszállítást végző szolgáltatónak.
+                Your order with ID <span style="color: #4285f4;">${uid}</span> has been handed over to the delivery provider.
               </p>
               <p style="font-size: 16px;">
-                Választott szállítási mód: <span style="color: #4285f4;">${delText}</span>
+                Selected shipping method: <span style="color: #4285f4;">${delText}</span>
                 <br>
-                A megrendelésről bővebb információ weboldalunkon, a
-                <span style="color: #4285f4;">Fiók</span> menüpont alatt található.
+                For more information about your order, please visit the
+                <span style="color: #4285f4;">Account</span> menüpont alatt található.
               </p>
               <p style="font-size: 16px;">
-                A csomag státuszát a
+                You can view the package status in the
                 <a href="${trackURL}"
-                  style="color: #4285f4; text-decoration: none;">futárszolgálat rendszerében</a>
-                tudod megtekinteni az alábbi azonosítóval:
+                  style="color: #4285f4; text-decoration: none;">courier’s system</a>
+                using the following identifier:
                 <span style="color: #4285f4;">${glsCode}</span>
               </p>
               <p style="font-size: 16px;">

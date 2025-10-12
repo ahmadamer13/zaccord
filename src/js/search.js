@@ -122,7 +122,7 @@ function searchForItem() {
     _('dynamicShowcase').innerHTML = `
       <div>
         <img src="/images/icons/nofound.png" class="emptyCart">
-        <p class="dgray font18">Hiba történt a keresés során</p>
+        <p class="dgray font18">An error occurred during the search</p>
       </div>
     `;
   });

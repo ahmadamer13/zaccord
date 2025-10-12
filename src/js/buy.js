@@ -74,7 +74,7 @@ function resetSubmitBtn() {
   _('submitBtnCont').innerHTML = `
     <button class="fillBtn btnCommon centerBtn" style="margin-top: 20px;"
       onclick="submitOrder()" id="submitBtn">
-      Megrendelés
+      Place order
     </button>
   `;
 }
@@ -123,21 +123,21 @@ function submitOrder() {
   let eInvoice = _('einvoice').checked;
   let isPP = isChecked(PACKET_POINT_TYPES_R);
   if (!uvet && !transfer && !creditCard) {
-    statusFill('errStatus', 'Kérlek válassz egy fizetési módot');
+    statusFill('errStatus', 'Please select a payment method');
     resetSubmitBtn();
     return;
   } else if (!name || !pcode || !city || !address || !mobile) {
-    statusFill('errStatus', 'Kérlek töltsd ki a szállítási adatokat');
+    statusFill('errStatus', 'Please fill in the delivery details');
     resetSubmitBtn();
     return;
   // Skip strict postal code validation on client; accept any value provided
   } else if (creditCard && !transactionID) {
-    statusFill('errStatus', 'Kérlek add hozzá a bankkártyádat a fizetéshez');
+    statusFill('errStatus', 'Please add your credit card to proceed with payment');
     resetSubmitBtn();
     return;
   } else if (!isAgree || !isAgree2) {
     // Did not accept the terms & policy
-    statusFill('errStatus', 'Fogadd el az ÁSZF-et és az Adatvédelmi Nyilatkozatot');
+    statusFill('errStatus', 'Please accept the Terms and the Privacy Policy');
     resetSubmitBtn();
     return;
   } else if (_('billingName') && (billingName || billingPcode.value || billingCity ||
@@ -147,7 +147,7 @@ function submitOrder() {
     if (_('billingCompname') && (billingCompname || billingCompnum || buyAsComp)) {
       isComp = true;
     } else if (isCompNormal && (!normalCompnum || !normalCompname)) {
-      statusFill('errStatus', 'Kérlek adj meg minden céggel kapcsolatos adatot');
+      statusFill('errStatus', 'Please provide all company details');
     resetSubmitBtn();
       return;
     } else if (normalCompnum && normalCompname && isCompNormal) {
@@ -158,11 +158,11 @@ function submitOrder() {
     else if (!isComp) billingType = 'diffNo';
     else billingType = 'diffYes';
   } else if (!isChecked(SHIPPING_RADIO_IDS)) {
-    statusFill('errStatus', 'Válassz szállítási módot');
+    statusFill('errStatus', 'Please select a shipping method');
     resetSubmitBtn();
     return;
   } else if (isPP && !infoArr && !packetaArr) {
-    statusFill('errStatus', 'Válassz egy csomagpontot');
+    statusFill('errStatus', 'Please choose a pickup point');
     resetSubmitBtn();
     return;
   }

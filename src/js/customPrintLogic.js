@@ -83,17 +83,17 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       if (isMoreFiles) {
         subpriceText = `
           <p class="gotham align">
-            <span class="blue gotham">Ár:</span>
-            <span id="subprice_${i}">${Math.round(basePrice)}</span> JOD
+            <span class="blue gotham">Price:</span>
+            <span id="subprice_${i}">${Math.round(basePrice)}</span> JD
           </p>
           <p class="gotham align">
-            <span class="blue gotham">Méret:</span>
+            <span class="blue gotham">Size:</span>
             <span id="subsize_${i}">
               ${subSize}
             </span>
           </p>
           <p class="gotham align">
-            <span class="blue gotham">Térfogat:</span>
+            <span class="blue gotham">Volume:</span>
             <span id="subvolume_${i}">${Number(volume).toFixed(2)}</span>cm<sup>3</sup>
           </p>
         `;
@@ -110,7 +110,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       
       // Make sure that model is not too large 
       if (!checkStlSize(stl.boundingBox)) {
-        reject(`A maximális méret ${PRINT_SIZES_PLA[0]}mm x ${PRINT_SIZES_PLA[1]}mm x ${PRINT_SIZES_PLA[2]}mm lehet`);
+        reject(`The maximum size can be ${PRINT_SIZES_PLA[0]}mm x ${PRINT_SIZES_PLA[1]}mm x ${PRINT_SIZES_PLA[2]}mm`);
         return;
       }
 
@@ -170,19 +170,19 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         <div class="flexDiv" id="customProps" style="flex-wrap: wrap; margin-top: 10px;">
           <div>
             <p>
-              <span class="blue gotham">Végösszeg:</span>
-              <span id="priceHolder">${Math.round(totalPrice)}</span> JOD
+              <span class="blue gotham">Total price:</span>
+              <span id="priceHolder">${Math.round(totalPrice)}</span> JD
             </p>
           </div>
           <div>
             <p>
-              <span class="blue gotham">Össztérfogat:</span>
+              <span class="blue gotham">Total volume:</span>
               <span id="weightHolder">${totVolume.toFixed(2)}cm<sup>3</sup></span>
             </p>
           </div>
           <div style="display: ${!isMoreFiles ? 'block' : 'none'};">
             <p>
-              <span class="blue gotham">Méret:</span>
+              <span class="blue gotham">Size:</span>
               <span id="sizeHolder">${sizeMM}</span>
             </p>
           </div>
@@ -191,7 +191,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
 
     let afterWorkNote = `
       <p class="align note ddgray">
-        Az ár tartalmazza az utómunkát!
+        The price includes post‑processing!
       </p>
     `;
     
@@ -229,25 +229,24 @@ const buildCustomPrint = (conn, userID, filePaths) => {
 
       content += `
         <div class="specChBox trans" id="specChMat">
-          <div class="specChBoxTitle gothamBold font22">Nyomtatás anyaga</div>
+          <div class="specChBoxTitle gothamBold font22">Print material</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/materials.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A nyomat ebből az anyagból fog készülni. Különböző anyagoknak más
-            kémiai és fizikai tulajdonságaik vannak, így ez nagyban befolyásolja
-            a végeredményt. Olyan szempontokat érdemes figyelembe venni, mint a
-            hőnek vagy UV fénynek való kitettség, kell-e, hogy rugalmas legyen
-            vagy, hogy mekkora terhelésnek lesz kitéve.
+            The print will be made from this material. Different materials have different
+            chemical and physical properties, which greatly affect the result. Consider factors
+            such as heat or UV exposure, whether it needs to be flexible, and how much load
+            it will be subjected to.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Hőállóság</div>
-            <div>Szakítószilárdság</div>
-            <div>Rugalmasság</div>
+            <div>Heat resistance</div>
+            <div>Tensile strength</div>
+            <div>Flexibility</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="PLA" id="chmat">PLA</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -257,47 +256,47 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       let matPairs = [
         {
           'npair': ['pla', 'PLA'],
-          'desc': 'Alacsony költségű műanyag olyan prototípusokhoz, amik nem lesznek terhelve és hőnek kitéve'
+          'desc': 'Low-cost plastic for prototypes that are not load-bearing or exposed to heat'
         },
         {
           'npair': ['petg', 'PETG'],
-          'desc': 'Alacsony költségű műanyag funkcionális alkatrészekhez'
+          'desc': 'Low-cost plastic for functional parts'
         },
         {
           'npair': ['tpu_soft', 'TPU (SOFT - A70)'],
-          'desc': 'Shore A70-es keménységű, rugalmas anyag flexibilis tárgyakhoz'
+          'desc': 'Flexible material with Shore A70 hardness for flexible objects'
         },
         {
           'npair': ['tpu_medium', 'TPU (MEDIUM - A85)'],
-          'desc': 'Shore A85-ös keménységű, rugalmas anyag flexibilis tárgyakhoz'
+          'desc': 'Flexible material with Shore A85 hardness for flexible objects'
         },
         {
           'npair': ['tpu_hard', 'TPU (HARD - A95)'],
-          'desc': 'Shore A95-ös keménységű, rugalmas anyag flexibilis tárgyakhoz'
+          'desc': 'Flexible material with Shore A95 hardness for flexible objects'
         },
         {
           'npair': ['asa', 'ASA'],
-          'desc': 'Erős, UV fény ellenálló anyag kinti prototípusokhoz'
+          'desc': 'Strong, UV‑resistant material for outdoor prototypes'
         },
         {
           'npair': ['wood', 'WOOD'],
-          'desc': 'PLA filament hozzáadott faforgáccsal a fa-szerű hatásért'
+          'desc': 'PLA filament with wood particles for a wood‑like effect'
         },
         {
           'npair': ['metal', 'METAL'],
-          'desc': 'PLA filament hozzáadott fémforgáccsal a fémes hatásért'
+          'desc': 'PLA filament with metal particles for a metallic effect'
         },
         {
           'npair': ['magicpla', 'MAGIC PLA'],
-          'desc': 'Többszínű, szivárványos PLA filament'
+          'desc': 'Multicolor, rainbow PLA filament'
         },
         {
           'npair': ['nylon', 'NYLON'],
-          'desc': 'Erős, hőálló anyag funkcionális prototípusokhoz'
+          'desc': 'Strong, heat‑resistant material for functional prototypes'
         },
         {
           'npair': ['carbon_fiber', 'CARBON FIBER'],
-          'desc': 'Erős, szénszállal erősített anyag funkcionális prototípusokhoz'
+          'desc': 'Strong, carbon‑fiber reinforced material for functional prototypes'
         }
       ];
 
@@ -323,23 +322,22 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChColor">
-          <div class="specChBoxTitle gothamBold font22">Szín</div>
+          <div class="specChBoxTitle gothamBold font22">Color</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/colors.jpg" id="colorCh">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A nyomtatási anyag színe. Jelenleg egy terméket csak egy színnel
-            tudunk nyomtatni, vagyis egy modellen belül csak egy szín
-            alkalmazható.
+            The color of the printing material. Currently we can print a product in only one color,
+            meaning only a single color can be used within a model.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Megjelenés</div>
-            <div>Szállítási idő</div>
-            <div>Felületminőség</div>
+            <div>Appearance</div>
+            <div>Delivery time</div>
+            <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="Fehér" id="chcolor">Fehér</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -369,25 +367,23 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChLh">
-          <div class="specChBoxTitle gothamBold font22">Rétegvastagság</div>
+          <div class="specChBoxTitle gothamBold font22">Layer height</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/layerHeight.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A 3D nyomtatás egy additív gyártási folyamat, tehát a modellek
-            rétegekből épülnek fel. Az egymást követő rétegeknek vastagsága van,
-            ezt hívjuk rétegvastagságnak. Minél kisebb a rétegek közötti
-            távolság, annál pontosabb és részletesebb lesz a kívánt modell,
-            viszont ezzel együtt drasztikusan megemelkedik a nyomtatási idő.
+            3D printing is an additive manufacturing process, so models are built from layers.
+            Consecutive layers have a thickness, called the layer height. Smaller layer heights
+            yield higher detail but increase print time significantly.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Megjelenés</div>
-            <div>Nyomtatási idő</div>
-            <div>Felületminőség</div>
+            <div>Appearance</div>
+            <div>Print time</div>
+            <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="0.20" id="chlh">0.20mm</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -420,25 +416,23 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChLhSLA" style="display: none">
-          <div class="specChBoxTitle gothamBold font22">Rétegvastagság</div>
+          <div class="specChBoxTitle gothamBold font22">Layer height</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/sla_lh.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A 3D nyomtatás egy additív gyártási folyamat, tehát a modellek
-            rétegekből épülnek fel. Az egymást követő rétegeknek vastagsága van,
-            ezt hívjuk rétegvastagságnak. Minél kisebb a rétegek közötti
-            távolság, annál pontosabb és részletesebb lesz a kívánt modell,
-            viszont ezzel együtt drasztikusan megemelkedik a nyomtatási idő.
+            3D printing is an additive manufacturing process, so models are built from layers.
+            Consecutive layers have a thickness, called the layer height. Smaller layer heights
+            yield higher detail but increase print time significantly.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Megjelenés</div>
-            <div>Nyomtatási idő</div>
-            <div>Felületminőség</div>
+            <div>Appearance</div>
+            <div>Print time</div>
+            <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="0.05" id="chlhSLA">0.05mm</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -471,26 +465,23 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChInf">
-          <div class="specChBoxTitle gothamBold font22">Sűrűség</div>
+          <div class="specChBoxTitle gothamBold font22">Infill</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/density.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A 3D-s modell belső telítettségét jelenti. Ahogy nő a sűrűség értéke,
-            annál több anyag kell a termék elkészítéséhez, de annál masszívabb is
-            lesz. Szoborszerű vagy kevésbé használatos tárgyaknál felesleges a
-            termék sűrű kitötlése, viszont rendszeresen használt eszközöknél
-            érdemes beállítani egy nagyobb értéket. A sűrűség növelésével nő a
-            nyomtatási idő és a modell tömege is.
+            Represents the internal fill of the 3D model. Higher infill increases strength and rigidity
+            but uses more material and takes longer to print. For decorative or lightly used items a lower
+            infill is sufficient; for functional parts choose a higher value.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Stabilitás</div>
-            <div>Nyomtatási idő</div>
-            <div>Tömeg</div>
+            <div>Stability</div>
+            <div>Print time</div>
+            <div>Weight</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="20" id="chinf">20%</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -535,7 +526,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="Tömör" id="chinfSLA">Tömör</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -579,7 +570,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="1.0" id="chscale">x1.0</p>
-            <p class="otherPrice">Price: ${Math.round(totalPrice)} JOD</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 

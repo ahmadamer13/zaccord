@@ -24,7 +24,7 @@ const buildCategory = (conn, category) => {
 
     conn.query(sQuery, (err, result, field) => {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       }
       

@@ -16,12 +16,12 @@ const chPassword = (conn, userID, formData) => {
       conn.query('SELECT password, temp_password FROM users WHERE id = ? LIMIT 1', [userID],
       function (err, result, fields) {
         if (err) {
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+          reject('An unexpected error occurred, please try again');
           throw err;
         }
         
         if (result.length < 1) {
-          reject('Nincs ilyen felhasználó');
+          reject('No such user');
           return;
         }
 
@@ -29,13 +29,13 @@ const chPassword = (conn, userID, formData) => {
         let hashedPass = result[0].password;
         let tmpPass = result[0].temp_password ? result[0].temp_password : '';
         if (!bcrypt.compareSync(cpass, hashedPass) && !bcrypt.compareSync(cpass, tmpPass)) {
-          reject('Hibás jelszót adtál meg');
+          reject('Incorrect current password');
           return;
         }
 
         // Current password is valid; now check new password
         if (npass.length < 6 || rpass != npass) {
-          reject('Helytelen új jelszó');
+          reject('Invalid new password');
           return;
         }
 
@@ -48,7 +48,7 @@ const chPassword = (conn, userID, formData) => {
         conn.query(uQuery, [hash, '', userID],
         (err, result, field) => {
           if (err) {
-            reject('Egy nem várt hiba történt, kérlek proóbád újra');
+            reject('An unexpected error occurred, please try again');
             return;
           }
 
@@ -57,13 +57,13 @@ const chPassword = (conn, userID, formData) => {
             // On successful ordering, send customer a notification email
             let email = result[0].email;
             let emailContent = `
-              <p style="font-size: 22px;">Sikeres jelszóváltoztatás!</p>
+              <p style="font-size: 22px;">Password change successful!</p>
               <p>
-                Értesítünk, hogy a fiókodhoz tartozó jelszavadat sikeresen megváltoztattad.<br>
-                Mostantól ezzel a jelszóval tudsz belépni a fiókba.
+                We confirm that you successfully changed your account password.<br>
+                You can now log in with the new password.
               </p>
             `;
-            let subject = 'Sikeres jelszóváltoztatás!';
+            let subject = 'Password change successful!';
             sendEmail('info@jordan3dprint.store', emailContent, email, subject);
             
             // Successful change
@@ -73,7 +73,7 @@ const chPassword = (conn, userID, formData) => {
       });
     }).catch(err => {
       // User does not exist in db
-      reject('Nincs ilyen felhasználó');
+      reject('No such user');
     });
   });
 }

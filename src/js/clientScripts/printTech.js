@@ -34,7 +34,7 @@ function changeTech(techBefore, tid, price) {
   content += `
     <div>
       <p>
-        Rétegvastagság:
+        Layer height:
         <select class="specSelect chItem" id="rvas${tid}"
           onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
   `;
@@ -51,7 +51,7 @@ function changeTech(techBefore, tid, price) {
     </div>
     <div>
       <p>
-        Sűrűség:
+        Infill:
         <select class="specSelect chItem" id="suruseg${tid}"
           onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
   `;
@@ -82,7 +82,7 @@ function changeTech(techBefore, tid, price) {
     content += `
       <div>
         <p>
-          Falvastagság:
+          Wall thickness:
           <select class="specSelect chItem" id="fvas${tid}"
             onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
     `;
@@ -99,7 +99,7 @@ function changeTech(techBefore, tid, price) {
       </div>
       <div>
         <p>
-          Nyomtatási Anyag:
+          Print material:
           <select class="specSelect chItem" id="printMat${tid}"
             onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
     `;
@@ -126,7 +126,7 @@ function changeTech(techBefore, tid, price) {
   content += `
     <div id="colorDiv_${tid}">
       <p>
-        Szín:
+        Color:
         <select class="specSelect chItem" id="color${tid}" onchange="chColor(this, '${tid}')">
           ${colorContent}
         </select>
@@ -161,8 +161,8 @@ function changeTech(techBefore, tid, price) {
 
   _('uniqueCont_' + tid).innerHTML += `
     <div>
-      <p class="bold">Összesen: <span id="totpHolder_${tid}">
-        ${newPrice}</span> Ft
+      <p class="bold">Total: <span id="totpHolder_${tid}">
+        ${newPrice}</span> JD
       </p>
     </div>
   `;

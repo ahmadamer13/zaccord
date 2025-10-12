@@ -16,7 +16,7 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
   errStatus.innerHTML = '';
   successStatus.innerHTML = '';
   if (Math.round(timeDiff) >= 300) {
-    errStatus.innerHTML = '<p>Túllépted az időkorlátot, kérlek frissítsd az oldalt</p>';
+    errStatus.innerHTML = '<p>You exceeded the time limit, please refresh the page</p>';
     return;
   }
 
@@ -54,9 +54,9 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
         successStatus.innerHTML = data.success;
 
         // Change header to logged in
-        _('register').innerText = 'Fiók';
+        _('register').innerText = 'Account';
         _('register').href = '/account';
-        _('login').innerText = 'Prototípusgyártás';
+        _('login').innerText = 'Prototyping';
         _('login').href = '/prototype';
 
         // Update highlighted icon color
@@ -70,7 +70,7 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
       }
     }).catch(err => {
       // Something unexpected happened, report error
-      errStatus.innerHTML = '<p>Egy nem várt hiba történt, kérlek próbáld újra</p>'; 
+      errStatus.innerHTML = '<p>An unexpected error occurred, please try again</p>'; 
       _('loader').innerHTML = '';
       _('submitBtn').disabled = false;
     });

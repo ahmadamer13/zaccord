@@ -17,8 +17,8 @@ const buildColors = (conn) => {
     'Standard resin material for SLA printers.',
     'Flexible and strong material that keeps its shape.',
     'Flexible and strong material that keeps its shape.',
-    'Magas olvadáspontú, nagy szakítószilárdságú és erős anyag ipari alkalmazásra, funkcionális alkatrészekhez.',
-    'Szénszálas, erős és tartós anyag ipari alkalmazásra.'
+    'High melting point, high tensile strength, strong material for industrial applications and functional parts.',
+    'Carbon‑fiber reinforced, strong and durable material for industrial applications.'
   ];
 
   return new Promise((resolve, reject) => {

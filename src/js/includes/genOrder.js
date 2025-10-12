@@ -14,7 +14,7 @@ const genOrder = (conn, userID, limit = '3, 2147483647', threeLimit = false) => 
 
     conn.query(sQuery, [userID], function getOrders(err, result, field) {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       }
 
@@ -76,8 +76,8 @@ const genOrder = (conn, userID, limit = '3, 2147483647', threeLimit = false) => 
           imgURL = 'printUploads/lithophanes/' + litFname;
         }
         
-        if (cpFname) name = 'Bérnyomtatott Termék';
-        else if (litFname) name = 'Litofánia';
+        if (cpFname) name = 'Custom printed product';
+        else if (litFname) name = 'Lithophane';
 
         let data = {
           'orderTime': orderTime,
@@ -105,11 +105,11 @@ const genOrder = (conn, userID, limit = '3, 2147483647', threeLimit = false) => 
           let invoiceLink = '';
           if (result[i].e_invoice) {
             invoiceLink = `
-              - <a class="blueLink font20" href="/e-invoices/${uniqueID}.pdf" target="_blank">E-számla letöltés</a>
+              - <a class="blueLink font20" href="/e-invoices/${uniqueID}.pdf" target="_blank">Download e‑invoice</a>
             `;
           }
           output += `
-            <p class="gotham font20 group">Rendelés (${orderTime.substring(0, 10)}) ${invoiceLink}</p>
+            <p class="gotham font20 group">Order (${orderTime.substring(0, 10)}) ${invoiceLink}</p>
           `;
         }
 

@@ -12,7 +12,7 @@ _('cDel').addEventListener('click', function changeDelInfo(e) {
 
   // Only postal code validation can be performed; other params are too ambiguous
   if (!Number.isInteger(pcode) || pcode < 1000 || pcode > 9985) {
-    statusFill('errStatusDel', 'Kérlek valós irányítószámot adj meg');
+    statusFill('errStatusDel', 'Please provide a valid ZIP code');
     return;
   } else {
     // Send data to server for further validation
@@ -34,14 +34,14 @@ _('cDel').addEventListener('click', function changeDelInfo(e) {
       return response.json();
     }).then(data => {
       if (data.success) { 
-        statusFill('succStatusDel', 'A szállítási adatok sikeresen megváltoztak');
+        statusFill('succStatusDel', 'Delivery information updated successfully');
       } else if (data.error) {
         _('errStatusDel').innerHTML = data.error;
       } else {
-        statusFill('errStatusDel', 'Egy nem várt hiba történt, próbáld újra');
+        statusFill('errStatusDel', 'An unexpected error occurred, please try again');
       }
     }).catch(err => {
-      statusFill('errStatusDel', 'Egy nem várt hiba történt, próbáld újra');
+      statusFill('errStatusDel', 'An unexpected error occurred, please try again');
     });
   }
 });
@@ -57,7 +57,7 @@ _('cPass').addEventListener('click', function changePassword(e) {
 
   // Make sure new password is at least 6 characters long
   if (npass.length < 6) {
-    statusFill('errStatusPass', 'A jelszónak minimum 6 karakter hosszúnak kell lennie');
+    statusFill('errStatusPass', 'Password must be at least 6 characters long');
     return;
   } else {
     // Send data to server for further validation
@@ -80,9 +80,9 @@ _('cPass').addEventListener('click', function changePassword(e) {
         _('errStatusPass').innerHTML = data.error;
         return;
       }
-      statusFill('succStatusPass', 'Sikeresen megváltoztattad a jelszavad');
+      statusFill('succStatusPass', 'Password changed successfully');
     }).catch(err => {
-      statusFill('errStatusPass', 'Egy nem várt hiba történt, próbáld újra');
+      statusFill('errStatusPass', 'An unexpected error occurred, please try again');
     });
   }
 });
@@ -105,7 +105,7 @@ if (_('moreOrders')) {
       _('allOrders').classList = 'animate__animated animate__fadeIn';
       _('allOrders').innerHTML += data;
     }).catch(err => {
-      _('moreHolder').innerHTML = '<p>Hiba történt, kérlek próbáld újra</p>';
+      _('moreHolder').innerHTML = '<p>An error occurred, please try again</p>';
     });
   });
 }

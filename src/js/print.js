@@ -67,10 +67,10 @@ function genUIColors(selectedColor, mat) {
     let highlight = currentColor == selectedColor ? 'specChHl' : '';
     if (Number(COLOR_IN_STOCK[mat][currentColor])) {
       var stockColor = 'green'; 
-      var stockText = 'Raktáron'
+      var stockText = 'In stock'
     } else {
       var stockColor = 'red'; 
-      var stockText = 'Nincs raktáron'
+      var stockText = 'Out of stock'
     }
     let imgStyle = '';
     if (mat == 'gyanta (resin)') {
@@ -139,7 +139,7 @@ function hasBelow800() {
 }
 
 function calcSLAPrice(p, lw, infill, scale) {
-  let multiplier = infill == 'Tömör' ? 1 : 0.8;
+  let multiplier = infill == 'Solid' ? 1 : 0.8;
   let fp = smoothPrice(Math.round(p * (1 / (lw * 70) + 0.7142857142857143) * multiplier * scale));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
@@ -719,7 +719,7 @@ function updatePriceDiffs() {
       }
 
       let sign = newPrice - currentPrice >= 0 ? '+' : '-';
-      child.children[2].innerText = `(${sign}${Math.abs(newPrice - currentPrice)} JOD)`;
+      child.children[2].innerText = `(${sign}${Math.abs(newPrice - currentPrice)} JD)`;
       if (newPrice - currentPrice > 0) {
         child.children[2].setAttribute('style', 'color: green;');
       } else if (newPrice - currentPrice < 0) {

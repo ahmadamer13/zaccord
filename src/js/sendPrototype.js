@@ -14,7 +14,7 @@ const sendPrototype = (conn, formData) => {
     let date = new Date().toMysqlFormat();
     conn.query(iQuery, [name, email, tel, message, date], (err, result, field) => {
       if (err) {
-        reject('Hiba történt a küldés közben');
+        reject('An error occurred during sending');
         return;
       } 
       resolve('success');

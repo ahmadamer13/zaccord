@@ -58,7 +58,7 @@ const buildAdminSection = (conn) => {
               <td>${r.customerName || '-'}</td>
               <td>${contact || '-'}</td>
               <td><span class=\"status-badge ${isDone?'status-done':'status-new'}\">${del}</span></td>
-              <td><b id=\"allp_${i}\">${t}</b> JOD</td>
+              <td><b id=\"allp_${i}\">${t}</b> JD</td>
               <td class=\"actions\">
                 ${files}
                 <label class=\"chCont\" style=\"margin-left:6px;\"> 

@@ -17,7 +17,7 @@ const userRegister = (conn, formData, req) => {
     // Make sure email is not already in the system
     conn.query('SELECT id FROM users WHERE email = ?', [email], (err, result, fields) => {
       if (result.length > 0) {
-        reject('Ez az e-mail cím már foglalt');
+        reject('This email address is already in use');
         return;
       }
 
@@ -30,24 +30,24 @@ const userRegister = (conn, formData, req) => {
       conn.query(sQuery, [email, hash, userAgent, ip], function (err, result, fields) {
         if (err) {
           console.log(err);
-          reject('Egy nem várt hiba történt, kérlek próbáld űjra');
+          reject('An unexpected error occurred, please try again');
           throw err;
         }
 
         // TODO do img source when deployed to server & email
         // On successful registration send a welcome email to user
         let emailContent = `
-          <p style="font-size: 22px;">Köszöntünk a Jordan3DPrint-en!</p>
+          <p style="font-size: 22px;">Welcome to Jordan3DPrint!</p>
           <p style="line-height: 1.4;">
-            Ezt a levelet azért kapod, mert nemrégiben regisztráltál a Jordan3DPrint oldalán.
-            A Jordan3DPrint egy olyan szolgáltatás, ahol a vásárlók 3D nyomtatóval készített
-            tárgyakat vehetnek vagy a már meglévő tervüket beküldhetik hozzánk és mi azt
+            You are receiving this email because you recently registered on Jordan3DPrint.
+            Jordan3DPrint is a service where customers can purchase 3D printed
+            items or submit their existing designs and we will
             kinyomtatjuk nekik.
-            A küldetésünk az, hogy minden ötletet megvalósítsunk és népszerűsítsük a 3D-s
-            technológiával készült termékeket.
+            Our mission is to bring every idea to life and popularize 3D‑printed
+            products.
           </p>
         `;
-        let subject = 'Köszöntünk a Jordan3DPrinten!';
+        let subject = 'Welcome to Jordan3DPrint!';
 
         sendEmail('info@jordan3dprint.store', emailContent, email, subject);
 
@@ -56,7 +56,7 @@ const userRegister = (conn, formData, req) => {
         conn.query(sQuery, [email], (err, result, field) => {
           if (err) {
             console.log(err);
-            reject('Egy nem várt hiba történt, kérlek próbáld űjra');
+            reject('An unexpected error occurred, please try again');
             return;
           }
 
@@ -65,7 +65,7 @@ const userRegister = (conn, formData, req) => {
           conn.query(iQuery, [userID], (err, result, field) => {
             if (err) {
           console.log(err);
-              reject('Egy nem várt hiba történt, kérlek próbáld űjra');
+              reject('An unexpected error occurred, please try again');
               return;
             }
 

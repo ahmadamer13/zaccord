@@ -39,7 +39,7 @@ const generateInvoice = (conn, formData) => {
     let cQuery = 'SELECT * FROM orders WHERE unique_id = ?';
     conn.query(cQuery, [uniqueID], (err, result, field) => {
       if (err) {
-        reject('Nincs ilyen rendelés');
+        reject('No such order');
         return;
       }
       
@@ -71,15 +71,15 @@ const generateInvoice = (conn, formData) => {
       for (let row of result) {
         let name;
         if (row.lit_fname) {
-          name = 'Litofánia';
+          name = 'Lithophane';
         } else if (row.cp_fname) {
-          name = 'Bérnyomtatott Termék';
+          name = 'Custom printed product';
         } else {
-          name = '3D Nyomtatott Termék';
+          name = '3D Printed Product';
         }
 
         items.push({
-          'name': '3D Nyomtatott Termék',
+          'name': '3D Printed Product',
           'unit_price': row.price,
           'quantity': row.quantity,
           ...common
@@ -170,14 +170,14 @@ const generateInvoice = (conn, formData) => {
             }; 
             
             let mhandle = {
-              name: 'Utánvét',
+              name: 'Cash on delivery',
               quantity: 1,
               unit_price: MONEY_HANDLE,
               ...common
             };
 
             let sprice = {
-              name: 'Szállítás',
+              name: 'Shipping',
               quantity: 1,
               unit_price: SHIPPING_PRICE,
               ...common

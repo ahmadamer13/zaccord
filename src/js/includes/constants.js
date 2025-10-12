@@ -10,15 +10,15 @@ const EMAIL_USER_NAME = '';
 const EMAIL_PASSWORD = '';
 const PAYLIKE_ID = '';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'dev-secret';
-const LIT_FORMS = ['Domború', 'Homorú', 'Sima'];
+const LIT_FORMS = ['Convex', 'Concave', 'Flat'];
 const LIT_PRICES = {'100': 1990, '150': 2990, '200': 3990};
 const LAYER_WIDTH_VALUES = [0.12, 0.2, 0.28];
 const INFILL_VALUES = [];
 const PRINT_MATERIALS = ['PLA', 'ABS', 'PETG', 'TPU'];
 const LAYER_WIDTH_VALUES_SLA = [0.05, 0.07, 0.1];
-const INFILL_VALUES_SLA = ['Üreges', 'Tömör'];
+const INFILL_VALUES_SLA = ['Hollow', 'Solid'];
 const PRINT_TECHS = ['FDM', 'SLA'];
-const MIN_PRICE = 1990;
+const MIN_PRICE = 1; // in JD
 const BOX_SIZES = [[18, 16, 5], [18, 7, 12], [15, 20, 15], [15, 20, 25], [30, 30, 20]];
 const BILLINGO_API_KEY = '';
 const BILLINGO_PRODNUM_1 = 13026788; // 6821423 custom print
@@ -37,9 +37,9 @@ function basePath(p) {
 const DEFAULT_CP_IMG = path.join(basePath(__dirname), 'src', 'images', 'defaultStl.png');
 
 const PACKAGE_WIDTH = 3; // in cm
-const SLA_MULTIPLIER = 1.9;
+const SLA_MULTIPLIER = 5.0;
 const BA_NUM = '11709026-20003809';
-const BA_NAME = 'Frankli Márk';
+const BA_NAME = 'Frankli Mark';
 const PRINT_SIZES_PLA = [470, 450, 450];
 const PRINT_SIZES_SLA = [250, 220, 120];
 const PACKETA_API_PASSWORD = '';
@@ -54,23 +54,25 @@ const FILES_TO_CACHE = [
   path.join(DR, 'js', 'includes', 'lazyLoad.js')
 ];
 
-const COUNTRIES = ["Albánia", "Andorra", "Argentína", "Ausztrália", "Ausztria", "Azerbajdzsán",
-    "Belgium", "Bosznia-Hercegovina", "Brazília", "Bulgária", "Kanada", "Chile", "Kína",
-    "Horvátország", "Kuba", "Ciprus", "Cseh köztársaság", "Dánia", "Egyiptom", "Észtország",
-    "Faroe-szigetek", "Finnország", "Franciaország", "Grúzia", "Németország", "Gibraltár",
-    "Görögország", "Hong Kong", "Magyarország", "Izland", "India", "Indonézia", "Irán", "Irak",
-    "Írország", "Izrael", "Olaszország", "Japán", "Kazahsztán", "Dél-Koreai Köztársaság",
-    "Kuwait",
-    "Lettország", "Liechtenstein", "Litvánia", "Luxemburg", "Makedónia", "Malajzia", "Málta",
-    "Mexikó", "Monaco", "Marokkó", "Hollandia", "Új-Zéland", "Norvégia", "Paraguay",
-    "Fülöp-szigetek", "Lengyelország", "Portugália", "Katar", "Románia", "Oroszország",
-    "San Marino", "Szaud-Arábia", "Szlovákia", "Szlovénia", "Dél-afrikai Köztársaság",
-    "Spanyolország", "Svédország", "Svájc", "Thaiföld", "Tunézia", "Törökország",
-    "Türkmenisztán",
-    "Ukrajna", "Egyesült Arab Emirátusok", "Egyesült Királyság", "Amerikai Egyesült Államok",
-    "Uruguay", "Üzbégisztán", "Vatikáni városállam", "Venezuela", "Vietnám", "Szerbia",
-    "Koszovó",
-    "Montenegró"];
+const COUNTRIES = [
+  "Albania", "Andorra", "Argentina", "Australia", "Austria", "Azerbaijan",
+  "Belgium", "Bosnia and Herzegovina", "Brazil", "Bulgaria", "Canada", "Chile", "China",
+  "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Egypt", "Estonia",
+  "Faroe Islands", "Finland", "France", "Georgia", "Germany", "Gibraltar",
+  "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+  "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Republic of Korea",
+  "Kuwait",
+  "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "North Macedonia", "Malaysia", "Malta",
+  "Mexico", "Monaco", "Morocco", "Netherlands", "New Zealand", "Norway", "Paraguay",
+  "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation",
+  "San Marino", "Saudi Arabia", "Slovakia", "Slovenia", "South Africa",
+  "Spain", "Sweden", "Switzerland", "Thailand", "Tunisia", "Turkey",
+  "Turkmenistan",
+  "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America",
+  "Uruguay", "Uzbekistan", "Vatican City", "Venezuela", "Viet Nam", "Serbia",
+  "Kosovo",
+  "Montenegro"
+];
 
 const FIX_ADD_CPRINT = 500;
 const SUCCESS_RETURN = '{"success": true}';
@@ -79,7 +81,8 @@ const OWNER_EMAILS = []; //['mark@pearscom.com', 'turcsanmate113@gmail.com'];
 // For printing
 const M = 12; // cost/min in forint
 const DENSITY = 1.24; // PLA density is 1.27 g/cm^3
-const PRICE_PER_GRAMM = 9.34;
+// PLA price per gram in JD
+const PRICE_PER_GRAMM = 0.07;
 
 function smoothPrice(price) {
   if (price <= 8000) {

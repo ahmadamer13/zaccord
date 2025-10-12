@@ -6,10 +6,10 @@ const itemExists = (conn, itemID, isCP = false) => {
       if (isCP) {
         resolve('success');
       } else if (err) {
-        reject('Nincs ilyen termék');
+        reject('No such product');
         return;
       } else if (result.length < 1) {
-        reject('Nincs ilyen termék');
+        reject('No such product');
         return;
       }
 

@@ -11,7 +11,7 @@ const SHIPPING_OBJ = {
   'packeta': {
     title: 'Packeta pickup point',
     desc: 'Courier partnered with Packeta will deliver your package to the selected pickup point.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${PACKETA_POINT} JOD, above: free.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${PACKETA_POINT} JD, above: free.`,
     actualPrice: PACKETA_POINT,
     divID: 'packetaPoint',
     radioID: 'pointPacketa',
@@ -23,7 +23,7 @@ const SHIPPING_OBJ = {
   'mpl': {
     title: 'MPL home delivery',
     desc: 'Courier will deliver your order to the specified address.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${POST_TO_ADDR} JOD, above: free.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${POST_TO_ADDR} JD, above: free.`,
     actualPrice: POST_TO_ADDR,
     divID: 'mplToAddr',
     radioID: 'toAddrMpl',
@@ -35,7 +35,7 @@ const SHIPPING_OBJ = {
   'glsAddr': {
     title: 'GLS home delivery',
     desc: 'Courier will deliver your order to the specified address.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_TO_ADDR} JOD, above: free.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${GLS_TO_ADDR} JD, above: free.`,
     actualPrice: GLS_TO_ADDR,
     divID: 'glsToAddr',
     radioID: 'toAddrGls',
@@ -47,7 +47,7 @@ const SHIPPING_OBJ = {
   'glsPoint': {
     title: 'GLS pickup point',
     desc: 'Courier will deliver your order to the selected pickup point.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JOD and below: ${GLS_POINT} JOD, above: free.`,
+    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${GLS_POINT} JD, above: free.`,
     actualPrice: GLS_POINT,
     divID: 'glsPoint',
     radioID: 'pointGls',

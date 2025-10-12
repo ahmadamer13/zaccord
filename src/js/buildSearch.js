@@ -20,7 +20,7 @@ const buildSearch = (conn, searchValue) => {
     }
     conn.query(sQuery, (err, result, field) => {
       if (err) {
-        reject('Keresési hiba');
+        reject('Search error');
         return;
       }
 
@@ -39,7 +39,7 @@ const buildSearch = (conn, searchValue) => {
         
         conn.query(nextQuery, [flatIds], (err, result, fields) => {
           if (err) {
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           }
 
@@ -58,7 +58,7 @@ const buildSearch = (conn, searchValue) => {
             `;
             conn.query(dQuery, [flatIds], (err, result, fields) => {
               if (err) {
-                reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                reject('An unexpected error occurred, please try again');
                 return;
               }
 
@@ -72,7 +72,7 @@ const buildSearch = (conn, searchValue) => {
                 output = `
                   <div style="margin: 0 auto;">
                     <img src="/images/icons/nofound.png" class="emptyCart">
-                    <p class="dgray font18">Sajnos nincs ilyen termékünk...</p>
+                    <p class="dgray font18">Unfortunately we don’t have such a product...</p>
                   </div>
                 `;
               }

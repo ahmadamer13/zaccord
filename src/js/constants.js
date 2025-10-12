@@ -26,7 +26,7 @@ const PRINT_MATERIALS = ['PLA', 'ABS', 'PETG', 'TPU'];
 const LAYER_WIDTH_VALUES_SLA = [0.05, 0.07, 0.1];
 const INFILL_VALUES_SLA = ['Üreges', 'Tömör'];
 const PRINT_TECHS = ['FDM', 'SLA'];
-const MIN_PRICE = 1990;
+const MIN_PRICE = 1; // in JD
 const BOX_SIZES = [[18, 16, 5], [18, 7, 12], [15, 20, 15], [15, 20, 25], [30, 30, 20]];
 const BILLINGO_API_KEY = '42ea6f08-96ff-11eb-bf9a-06ac9760f844'; // 'a871aa56-9b93-11eb-8491-0254eb6072a0';
 const BILLINGO_PRODNUM_1 = 5221476; // 6821423 custom print
@@ -37,7 +37,7 @@ const BILLINGO_CARD_NUM = 88662 // 88880
 const BILLINGO_COD_ID = 5339382 // 6821455
 const BILLINGO_DELIVERY_ID = 4990219 // 6821453
 const PACKAGE_WIDTH = 3; // in cm
-const SLA_MULTIPLIER = 1.6;
+const SLA_MULTIPLIER = 5.0;
 const BA_NUM = "11773449-02809630";
 const BA_NAME = "Turcsán Edit";
 const PRINT_SIZES_PLA = [350, 350, 400];
@@ -96,7 +96,8 @@ const De = 0.2; // default infill in percentage
 const L = 0.2; // default layer height in mm
 const M = 12; // cost/min in forint
 const DENSITY = 1.24; // PLA density is 1.27 g/cm^3
-const PRICE_PER_GRAMM = 8.77;
+// PLA price per gram in JD
+const PRICE_PER_GRAMM = 0.07;
 
 // Return the correct shipping price depending on the choice of service
 function getShippingPrice(type) {

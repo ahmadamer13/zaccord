@@ -24,7 +24,7 @@ for (let lh of [0.05, 0.07, 0.10]) {
 }
 
 const INFILL_SLA = [];
-for (let inf of ['Tömör', 'Üreges']) {
+for (let inf of ['Solid', 'Hollow']) {
   INFILL_SLA.push(inf);
 }
 

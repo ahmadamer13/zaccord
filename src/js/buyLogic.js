@@ -409,7 +409,7 @@ const buildBuySection = (conn, paramObj, req) => {
               <div style="padding-bottom: 0;">Utánvétel</div>
               <div class="lh sel">
                 Ez esetben a csomag kiszállítása után történik meg a fizetés készpénzzel vagy
-                bankkártyával és a futárcég ${MONEY_HANDLE} JOD kezelési költséget számol fel.
+                bankkártyával és a futárcég ${MONEY_HANDLE} JD kezelési költséget számol fel.
               </div>
               <input type="radio" name="radio" id="uvet">
               <span class="checkmark"></span>
@@ -484,8 +484,8 @@ const buildBuySection = (conn, paramObj, req) => {
               <p class="align">
                 <label class="chCont note ddgray"
                   style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  Elolvastam és elfogadom az
-                  <a href="/aszf" class="blueLink font14">Általános Szerződési Feltételeket</a>
+                  I have read and accept the
+                  <a href="/aszf" class="blueLink font14">General Terms and Conditions</a>
                   <input type="checkbox" id="agree">
                   <span class="cbMark"></span>
                 </label>
@@ -493,8 +493,8 @@ const buildBuySection = (conn, paramObj, req) => {
               <p class="align">
                 <label class="chCont note ddgray"
                   style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  Elolvastam és elfogadom az
-                  <a href="/nyilatkozat" class="blueLink font14">Adatvédelmi Nyilatkozatot</a>
+                  I have read and accept the
+                  <a href="/nyilatkozat" class="blueLink font14">Privacy Policy</a>
                   <input type="checkbox" id="agree2">
                   <span class="cbMark"></span>
                 </label>
@@ -502,23 +502,23 @@ const buildBuySection = (conn, paramObj, req) => {
               <p class="align">
                 <label class="chCont note ddgray"
                   style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  Elektronikus számlát kérek
+                  I request an electronic invoice
                   <input type="checkbox" id="einvoice" checked>
                   <span class="cbMark"></span>
                 </label>
               </p>
               <p class="align bold" id="finalPrice">
                 <span style="color: #4285f4;">
-                  Végösszeg:
+                  Total:
                 </span>
                 <span id="fPrice">${Math.round(finalPrice + charge)}</span>
-                JOD ${discountText}
-                (szállítással együtt)
+                JD ${discountText}
+                (including shipping)
               </p>
               <div id="submitBtnCont">
                 <button class="fillBtn btnCommon centerBtn" style="margin-top: 20px;"
                   onclick="submitOrder()" id="submitBtn">
-                  Megrendelés
+                  Place order
                 </button>
               </div>
             </span>
@@ -528,7 +528,7 @@ const buildBuySection = (conn, paramObj, req) => {
           resolve(output);
         }).catch(err => {
           console.log(err);
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+          reject('An unexpected error occurred, please try again');
           return;
         });
       });
