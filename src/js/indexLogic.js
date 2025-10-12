@@ -131,7 +131,7 @@ const buildMainSection = (conn, cat) => {
                     We are proud to print your models on Bamboo Lab printers.
                   </span>
                   <button class="fillBtn instantQuote gotham" onclick="location.href = '/print'">
-                    Instant quotation
+                    Print Now your 3d modals
                   </button>
                 </h1>
               </div>
