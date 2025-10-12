@@ -14,11 +14,11 @@ _('submitBtn').addEventListener('click', function loginSubmit(e) {
   // Validation on client side
   console.log('rr')
   if (!email || !pass) {
-    statusFill('errStatus', 'Kérlek tölts ki minden mezőt');
+  statusFill('errStatus', 'Please fill out all fields');
     _('submitBtn').disabled = false;
     return;
   } else if (Math.round(timeDiff) >= 300) {
-    statusFill('errStatus', 'Túllépted az időkorlátot, kérlek frissítsd az oldalt');
+  statusFill('errStatus', 'Time limit exceeded, please refresh the page');
     _('submitBtn').disabled = false;
     return;
   }
@@ -50,7 +50,7 @@ _('submitBtn').addEventListener('click', function loginSubmit(e) {
     _('submitBtn').disabled = false;
   }).catch(err => {
     // Something went wrong
-    statusFill('errStatus', 'Egy nem várt hiba történt, kérlek próbáld újra');
+  statusFill('errStatus', 'An unexpected error occurred, please try again');
     _('submitBtn').disabled = false;
     _('lstatus').innerHTML = '';
   });

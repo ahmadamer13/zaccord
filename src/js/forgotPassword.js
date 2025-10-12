@@ -10,10 +10,10 @@ const forgotPassword = (conn, email) => {
 
     conn.query(cQuery, [email], function (err, result, fields) {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       } else if (result.length === 0) {
-        reject('Nincs ilyen email cím a rendszerben');
+        reject('No such email address in the system');
         return;
       }
 
@@ -26,12 +26,12 @@ const forgotPassword = (conn, email) => {
       let iQuery = 'UPDATE users SET temp_password = ? WHERE email = ? LIMIT 1';
       conn.query(iQuery, [hash, email], (err, result, field) => {
         if (err) {
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+          reject('An unexpected error occurred, please try again');
           return;
         }
 
         // Now send email
-        let subject = 'Ideiglenes jelszó igénylés';
+        let subject = 'Temporary password request';
         let emailContent = `
           <p style="font-size: 22px;">Ideiglenes jelszó igénylés</p>
           <p>

@@ -12,7 +12,7 @@ _('submitBtn').addEventListener('click', function sendCredentials(e) {
   _('pstatus').innerHTML = '';
   _('succstat').innerHTML = '';
   if (!name || !email || !tel) {
-    statusFill('pstatus', 'Kérlek add meg a neved, telefonszámod és email címed');
+    statusFill('pstatus', 'Please enter your name, phone number, and email address');
   } else {
     let data = {
       'name': name,
@@ -38,12 +38,12 @@ _('submitBtn').addEventListener('click', function sendCredentials(e) {
       if (data.hasOwnProperty('success')) {
         statusFill('succstat', data.success);
       } else {
-        statusFill('pstatus', 'Egy nem várt hiba történt, kérlek próbáld újra');
+        statusFill('pstatus', 'An unexpected error occurred, please try again');
         resetBtn();
       }
     }).catch(err => {
       // Something went wrong
-      statusFill('pstatus', 'Egy nem várt hiba történt, kérlek próbáld újra');
+      statusFill('pstatus', 'An unexpected error occurred, please try again');
       resetBtn();
     });
   }

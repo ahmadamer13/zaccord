@@ -8,13 +8,13 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
     let mQuery = 'SELECT uid FROM orders WHERE unique_id = ? LIMIT 1';
     conn.query(mQuery, [uid], (err, result, fields) => {
       if (err) {
-        reject('Egy nem várt hiba történt');
+        reject('An unexpected error occurred');
         return;
       }
       
       // If there is no order with such uid report an error
       if (result.length < 1) {
-        reject('Nincs ilyen rendelés');
+        reject('No such order');
         return;
       }
 
@@ -24,7 +24,7 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
       let uQuery = 'SELECT email FROM users WHERE id = ? LIMIT 1';
       conn.query(uQuery, [userID], (err, result, fields) => {
         if (err) {
-          reject('Egy nem várt hiba történt');
+          reject('An unexpected error occurred');
           return;
         }
 
@@ -87,7 +87,7 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
               </p>
             </div>
           `;
-          let subject = 'A csomagod átadtuk a futárszolgálatnak! - Azonosító: ' + uid;
+          let subject = 'Your package has been handed to the courier! - ID: ' + uid;
           sendEmail('info@jordan3dprint.store', emailContent, emailAddr, subject);
           
           resolve('success');

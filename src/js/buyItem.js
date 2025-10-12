@@ -112,11 +112,11 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
     // Make sure both fields are set and valid
     if ((!normalCompname && normalCompnum) || (normalCompname && !normalCompnum)) {
-      reject('Kérlek add meg mindkét adatot a cégről');
+      reject('Please provide both company name and tax number');
       return;
     }
 
-    let billingEmail = 'Megegyezik a szállítási címmel';
+    let billingEmail = 'Same as shipping address';
     if (billingType !== 'same') {
       billingEmail = `
         <div><b>Név: </b>${billingName}</div>
@@ -142,17 +142,17 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
     if (billingType != 'same') {      
       if (!billingName || !billingCountry || !billingPcode || !billingCity || !billingAddress) {
-        reject('Kérlek tölts ki minden számlázási adatot');
+        reject('Please fill out all billing details');
         return;
       } else if (COUNTRIES.indexOf(billingCountry) < 0) {
         // Make sure the country is in the list of supported countries
-        reject('Kérlek válassz egy érvényes országot');
+        reject('Please select a valid country');
         return;
       }
       
       if (billingType == 'diffYes') {
         if (!billingCompname || !billingCompnum) {
-          reject('Kérlek tölts ki minden céges számlázási adatot');
+          reject('Please fill out all company billing details');
           return;
         }
       }
@@ -184,7 +184,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
         // Validate prices
         for (let d of dDataArr) {
           if (!validatePrices(PRINT_MULTS, d)) {
-            return reject('Hibás ár');
+            return reject('Invalid price');
           }
           let p = d.price;
           localFinalPrice += p * d.quantity;
@@ -195,32 +195,32 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
         // Make sure the final price is valid
         if (Math.round(finalPrice) != Math.round(localFinalPrice * discount)) {
-          reject('Hibás végösszeg');
+          reject('Invalid total amount');
           return;
         }
 
         let priceWithoutDiscount = localFinalPrice; 
 
         if (!name || !city || !address || !mobile || !pcode || !payment) {
-          reject('Hiányzó szállítási információ'); 
+          reject('Missing shipping information'); 
           return;
         } else if (payment == 'credit' && !transactionID) {
-          reject('Add hozzá a bankkártyádat a fizetéshez'); 
+          reject('Please add your bank card to proceed with payment'); 
         // Skip strict postal code validation on server
         // Make sure there is a valid shipping price
         } else if ((priceWithoutDiscount <= FREE_SHIPPING_LIMIT && shippingPrice != SHIPPING_PRICE)
           || (priceWithoutDiscount > FREE_SHIPPING_LIMIT && shippingPrice != 0)) {
           console.log(shippingPrice, SHIPPING_PRICE);
-          reject('Hibás szállítási ár');
+          reject('Invalid shipping price');
           return;
         // Make sure delivery type is valid
         } else if (DELIVERY_TYPES.indexOf(deliveryType) < 0) {
-          reject('Válassz szállítási módot');
+          reject('Please select a shipping method');
           return;
         // Make sure that the necessary packet point fields are set
         } else if (isPP
           && (!packetID || !packetName || !packetZipcode || !packetCity || !packetAddress)) {
-          reject('Hiányzó csomagpont adatok');
+          reject('Missing pickup point details');
           return; 
         }
 
@@ -281,7 +281,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 resolve([v[0] * scale * quantity, v[1]]);
               }).catch(err => {
                 console.log(err);
-                reject('Hiba történt a fix termék térfogat lekérése közben', err);
+                reject('Error while fetching fixed product volume', err);
                 return;
               });
             }));
@@ -294,22 +294,22 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           Promise.all([normalValidate, litValidate]).then(vals => {
             let [validNormal, validLit] = vals;
             if (!isProdLit && !validNormal && prodType != 'zprod') {
-              reject('Hibás paraméterek');
+              reject('Invalid parameters');
               return;
             }
 
             if (payment != 'uvet' && payment != 'transfer' && payment != 'credit') {
-              reject('Hibás fizetési mód');
+              reject('Invalid payment method');
               return;
             // Check validity of order ID
             } else if (orderID.length !== 4) {
-              reject('Hibás utalási azonosító');
+              reject('Invalid transfer reference');
               return;
             // Make sure SLA printing can be only applied to smaller models
             } else if (!fixProduct && printTech == 'SLA' &&
               !shouldAllowSLA(path.join(__dirname.replace(path.join('src', 'js'), ''),
               'printUploads', formData.itemID + '.stl'))) {
-              reject('SLA nyomtatáshoz a maximális méret 115mm x 65mm x 150mm');
+              reject('For SLA printing the maximum size is 115mm x 65mm x 150mm');
               return;
             // Validate lithophane parameters
             } else if (isProdLit) {
@@ -322,7 +322,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
               };
 
               if (!validLit) {
-                reject('Hibás paraméter érték');
+                reject('Invalid parameter value');
                 return;
               }
             }
@@ -340,7 +340,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   let originalPrice = data[0].price;
                   if (calcPrice(PRINT_MULTS, originalPrice, rvas, suruseg, scale, fvas) != price) {
                     // Check if price is correct with the given parameters
-                    reject('Hibás ár'); 
+                    reject('Invalid price'); 
                     return;
                   }
                 }
@@ -398,7 +398,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 conn.query(iQuery, valueArr, (err, result, field) => {
                   if (err) {
                     console.log(err, 'asd');
-                    reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                    reject('An unexpected error occurred, please try again');
                     return;
                   }
 
@@ -414,7 +414,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
                     conn.query(mQuery, [packetID], (err, result, fields) => {
                       if (err) {
-                        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                        reject('An unexpected error occurred, please try again');
                         return;
                       } 
 
@@ -434,7 +434,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
                         conn.query(updateQuery, updateParams, (err, result, fields) => {
                           if (err) {
-                            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                            reject('An unexpected error occurred, please try again');
                             return;
                           }                    
 
@@ -459,7 +459,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                         ppUpdated = true;
                         conn.query(pQuery, pValues, function packetInsert(err, result, field) {
                           if (err) {
-                            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+                            reject('An unexpected error occurred, please try again');
                             return;
                           }                    
                           
@@ -477,13 +477,13 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
               });
             }).catch(err => {
               console.log(err);
-              reject('Nincs ilyen termék');
+              reject('No such product');
             });
 
             promises.push(process);
           }).catch(err => {
             console.log(err);
-            reject('Nincs ilyen termék'); 
+            reject('No such product'); 
           });
         }
 
@@ -508,7 +508,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           conn.query(dQuery, deliveryArr, (err, result, field) => {
             if (err) {
               console.log(err);
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             }
            
@@ -546,8 +546,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                       <div><b>Telefonszám: </b>${mobile}</div>
                       <div>
                         <b>Fizetési mód: </b>
-                        ${payment == 'transfer' ? 'előre utalás' : (payment == 'credit' ?
-                        'bankkártyás fizetés' : 'utánvét')}
+                        ${payment == 'transfer' ? 'bank transfer' : (payment == 'credit' ? 'card payment' : 'cash on delivery')}
                         ${
                           payment == 'transfer' ? `<div>
                                                       <div><b>Számlaszám:</b> ${BA_NUM}</div>
@@ -565,7 +564,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                         }
                       </div>
                       <div>
-                        <b>Átvétel: </b> ${!isPP ? 'házhozszállítás' : 'csomagpont átvétel'}
+                        <b>Delivery: </b> ${!isPP ? 'home delivery' : 'pickup point'}
                       </div>
                       ${compInfo}
                     </div>
@@ -597,7 +596,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   </p>
                 `;
 
-                let subject = 'Megkaptuk a rendelésed! - Azonosító: ' + uniqueID;
+                let subject = 'We received your order! - ID: ' + uniqueID;
                 
                 // If customer selects the e-invoice option generate the invoice first
                 // Then download it from the server and send it as an attachment
@@ -625,8 +624,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 }
 
                 // Send a notification email to us about every new order
-                let sj = 'Dől a zsé, jönnek a rendelők! - Azonosító: ' + uniqueID;
-                let cnt = '<p style="font-size: 18px;">Új rendelés érkezett!</p>';
+                let sj = 'New order received! - ID: ' + uniqueID;
+                let cnt = '<p style="font-size: 18px;">New order received!</p>';
                 sendOwnerEmails(sj, cnt);
 
                 // Also record user & order credentials in an excel spreadsheet
@@ -652,7 +651,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                         amount = 0;
                       }
                       let rowContent = [
-                        name, normalCompname, pcode, city, address, mobile, email, 'Alkatrészek',
+                        name, normalCompname, pcode, city, address, mobile, email, 'Parts',
                         ...packageDimensions, 0.5, '', amount
                       ];
                       let worksheet = workbook.getWorksheet('Shipping');
@@ -661,7 +660,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                     });
                   }).catch(err => {
                     console.log(err);
-                    reject('Hiba történt, kérlek próbáld újra');
+                    reject('An error occurred, please try again');
                     return;
                   });
                 }

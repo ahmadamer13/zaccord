@@ -81,7 +81,7 @@ function displayFiles() {
   if (fileCount >= 5 || files.length > 5) {
     _('fileInput').files = subFirstN(5, _('fileInput').files);
     _('prew').innerHTML = prewContent;
-    errorMsg('Egyszerre maximum 5db fájl tölthető fel');
+    errorMsg('You can upload at most 5 files at once');
     return;
   }
 
@@ -90,7 +90,7 @@ function displayFiles() {
     let size = formatBytes(file.size);
     if (file.size > 100 * 1048576) {
       // Make sure none of the files are above 100MB
-      errorMsg('A maximum fájlméret 100MB');
+      errorMsg('Maximum file size is 100MB');
       return;
     }
 
@@ -115,11 +115,11 @@ function displayFiles() {
 
     // Make sure images for lithophane and STLs for custom print are not mixed
     if (hasStl && hasImg) {
-      errorMsg('Egyszerre vagy csak képeket vagy csak STL fájlokat tölthtesz fel');
+      errorMsg('Upload only images or only STL files at a time');
       return;
     // Make sure only STls and images (PNG, JPG/JPEG) are uploaded
     } else if (wrongFileType) {
-      errorMsg('Csak STL fájlok és képek (PNG, JPG, JPEG) tölthetők fel');
+      errorMsg('Only STL files and images (PNG, JPG, JPEG) are allowed');
       return;
     }
 
@@ -127,7 +127,7 @@ function displayFiles() {
     if (hasImg && files.length > 1) {
       _('fileInput').files = subFirstN(1, _('fileInput').files);
       _('prew').innerHTML = prewContent;
-      errorMsg('Egyszerre csak 1 képet tölthetsz fel');
+      errorMsg('You can upload only 1 image at a time');
       return;
     }
 
@@ -236,7 +236,7 @@ function dropFile(e) {
   let uploadedFiles = savedContent.files.length;
   if (getCookie('cartItems') && (numOfItemsSoFar + uploadedFiles) > 15) {
     _('bigPrew').innerHTML = '';     
-    errorMsg('A fájlok feltöltésével több mint 15 termék lenne a kosaradban')
+    errorMsg('Uploading these files would exceed 15 items in your cart')
     return;
   }
 

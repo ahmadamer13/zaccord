@@ -14,10 +14,10 @@ const userLogin = (conn, formData, req) => {
     (err, result, fields) => {
       if (err) {
         console.log(err);
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       } else if (result.length === 0) {
-        reject('Hibás e-mail vagy jelszó');
+        reject('Invalid email or password');
         return;
       }
 
@@ -28,7 +28,7 @@ const userLogin = (conn, formData, req) => {
       let isCorrect = bcrypt.compareSync(password, passHash);
       let isCorrectTmp = bcrypt.compareSync(password, tempPassword);
       if (!isCorrect && !isCorrectTmp) {
-        reject('Hibás e-mail vagy jelszó');
+        reject('Invalid email or password');
         return;
       }
 
@@ -40,7 +40,7 @@ const userLogin = (conn, formData, req) => {
       conn.query(sQuery, [userAgent, ip, email], function (err, result, fields) {
         if (err) {
           console.log(err)
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+          reject('An unexpected error occurred, please try again');
           return;
         }
 

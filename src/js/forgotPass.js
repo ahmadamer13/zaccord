@@ -3,7 +3,7 @@ _('submitBtn').addEventListener('click', function submitEmail(e) {
   let email = _('email').value;
   _('email').style.marginBottom = '0px';
   if (!email.length) {
-    _('errStatus').innerHTML = '<p>Adj meg egy email címet</p>';
+  _('errStatus').innerHTML = '<p>Please provide an email address</p>';
     return;
   } else {
     let data = {

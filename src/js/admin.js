@@ -18,7 +18,7 @@ if (_('ok')) {
         let p = encodeURIComponent(_('pass').value);
         window.location.href = '/lick_weebshit?user=' + u + '&pass=' + p;
       } else {
-        _('status').innerHTML = '<p>Hibás bejelentkezési adatok</p>';
+        _('status').innerHTML = '<p>Invalid login credentials</p>';
       }
     });
   });
@@ -100,7 +100,7 @@ _('genZprod').addEventListener('click', (e) => {
   let expiry = Number(_('zprodExpiry').value);
 
   if (!re.test(price) || !re.test(expiry)) {
-    _('genStatus').innerText = 'Az ár és az érvényesség csak számok lehetnek'; 
+    _('genStatus').innerText = 'Price and validity must be numbers'; 
     return false;
   }
 
@@ -203,7 +203,7 @@ function sendConfEmail(uid, delType) {
   // Make sure GLS packet tracker code is not empty 
   let glsCode = _('glsCode_' + uid).value;
   if (!glsCode) {
-    alert('Add meg a csomagkövetési kódot!');
+    alert('Enter the tracking code!');
     return false;
   } else {
     data.glsCode = glsCode;
@@ -217,9 +217,9 @@ function sendConfEmail(uid, delType) {
     body: JSON.stringify(data)
   }).then(response => response.json()).then(data => {
     if (data.success) {
-      _('seHolder_' + uid).innerHTML = 'Email sikeresen elküldve';
+      _('seHolder_' + uid).innerHTML = 'Email sent successfully';
     } else {
-      _('seHolder_' + uid).innerHTML = 'Hiba történt';
+      _('seHolder_' + uid).innerHTML = 'An error occurred';
     }
   }).catch(err => {
     console.log(err);
@@ -301,7 +301,7 @@ function delFromExcel(id) {
 }
 
 function downloadSTLs() {
-  _('downloadStatus').innerHTML = 'Várjál mert csomagol';
+  _('downloadStatus').innerHTML = 'Preparing archive…';
   fetch('/downloadSTLs', {
     headers: {
       'Content-Type': 'application/json'
@@ -363,7 +363,7 @@ function createPacket(id, n, ppID, isPP, dt) {
     eshop: 'Jordan3DPrint'
   };
 
-  if (_('paymentType_' + id).innerText == 'utánvét') {
+  if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
     data['cod'] = val;
   }
 
@@ -387,7 +387,7 @@ function createPacket(id, n, ppID, isPP, dt) {
     data['addressId'] = dt == 'DPD' ? 805 : 4159;
   }
 
-  _('plink_' + id).innerHTML = 'Feldolgozás';
+  _('plink_' + id).innerHTML = 'Processing';
 
   fetch('/createPacket', {
     headers: {
@@ -397,10 +397,10 @@ function createPacket(id, n, ppID, isPP, dt) {
     body: JSON.stringify(data)
   }).then(resp => resp.json()).then(data => {
     if (data.success) {
-      _('plink_' + id).innerHTML = 'Elküldve';
-      alert('Sikeresen elküldve');
+      _('plink_' + id).innerHTML = 'Sent';
+      alert('Sent successfully');
     } else {
-      alert('Hiba történt');
+      alert('An error occurred');
       console.log(data);
     }
   });

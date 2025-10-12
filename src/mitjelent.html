@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
   <head>
-    <title>Zaccord - Fogalmak és Jelentésük</title>
+    <title>Zaccord - Terms and Meanings</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/animate/animate.css">
     <link rel="stylesheet" href="/style/nprogress.css">
     <link rel="stylesheet" href="/style/style.css">
-    <meta name="description" content="Segítség a paraméterek beállításához">
-    <meta name="keywords" content="Zaccord, paraméter, mit jelent">
+    <meta name="description" content="Help understanding 3D printing parameters">
+    <meta name="keywords" content="Zaccord, parameter, what it means">
     <meta name="author" content="Mark Frankli">
     <script src="/js/includes/mobileCheck.js" defer></script>
     <script src="/js/includes/short.js" defer></script>
@@ -30,61 +30,53 @@
   </head>
   <body>   
     <section class="keepBottom lh">
-      <p class="mainTitle">Fogalmak &amp; Jelentésük</p>
-      <p class="blueHead">Rétegvastagság</p>
+      <p class="mainTitle">Terms &amp; Their Meanings</p>
+      <p class="blueHead">Layer height</p>
       <p class="shiftRight">
-        A 3D nyomtatás egy additív gyártási folyamat, tehát a modellek rétegekből épülnek fel.
-        Az egymást követő rétegeknek vastagsága van, ezt hívjuk rétegvastagságnak. Minél kisebb
-        a rétegek közötti távolság, annál pontosabb és részletesebb lesz a kívánt modell,
-        viszont ezzel együtt drasztikusan megemelkedik a nyomtatási idő. Nagyobb vastagságú
-        rétegek használatával a modell gyorsabban elkészül, habár ezt nem javasoljuk pontos,
-        részletes tárgyaknál.
+        3D printing is an additive manufacturing process; models are built from layers.
+        The distance between successive layers is the layer height. The smaller the distance,
+        the more precise and detailed the model will be, but print time increases significantly.
+        Using larger layer heights speeds up printing, though we don’t recommend it for precise,
+        detailed objects.
       </p>
 
-      <p class="blueHead">Sűrűség</p>
+      <p class="blueHead">Infill density</p>
       <p class="shiftRight">
-        A 3D-s modell belső telítettségét jelenti. Ahogy nő a sűrűség értéke, annál több anyag
-        kell a termék elkészítéséhez, de annál masszívabb is lesz. Szoborszerű vagy kevésbé
-        használatos tárgyaknál felesleges a termék sűrű kitötlése, viszont rendszeresen
-        használt eszközöknél érdemes beállítani egy nagyobb értéket. A sűrűség növelésével nő
-        a nyomtatási idő és a modell tömege is.
+        The internal fill of the 3D model. Higher density uses more material and makes the part
+        stronger. For decorative items, dense infill is unnecessary; for functional parts,
+        choose a higher value. Increasing density raises both print time and part weight.
       </p>
 
-      <p class="blueHead">Szín</p>
+      <p class="blueHead">Color</p>
       <p class="shiftRight">
-        A nyomtatási anyag színe. Jelenleg egy terméket csak egy színnel tudunk nyomtatni,
-        vagyis egy modellen belül csak egy szín alkalmazható.
+        The filament color. Currently we print one color per part — a single color per model.
       </p>
 
-      <p class="blueHead">Méretezés</p>
+      <p class="blueHead">Scaling</p>
       <p class="shiftRight">
-        A tárgy méreteinek kicsinyítését, nagyítását jelenti az alapértelmezetthez képest.
-        Az összes tengely mentén való méretváltozással járó folyamat.
-        Például egy 10mm x 10mm x 10mm-es termék x0.5-ös méretezéssel
-        5mm x 5mm x 5mm-es lesz.
+        Changing the size of the object relative to its default. Scaling applies along all axes.
+        For example, a 10mm × 10mm × 10mm model scaled by 0.5 becomes 5mm × 5mm × 5mm.
       </p>
 
-      <p class="blueHead">Falvastagság</p>
+      <p class="blueHead">Wall thickness</p>
       <p class="shiftRight">
-        A termék külső, tömör falának vastagsága. A nagyobb falvastagság stabilitást ad a
-        tárgynak, de növeli a nyomtatási időt. Fontos hogy ezen érték változtatása nem
-        befolyásolja a termék méreteit, hiszen a nyomtató befelé vastagítja meg a falakat.
+        The thickness of the model’s solid outer wall. Thicker walls add strength but increase
+        print time. This does not change the part’s external dimensions because the printer
+        thickens towards the inside.
       </p>
 
-      <p class="blueHead">FDM Technológia</p>
+      <p class="blueHead">FDM technology</p>
       <p class="shiftRight">
-        Az FDM nyomtatók precízen, a megolvadt filamentből, rétegről rétegre készítik el a kívánt
-        modellt egy digitális fájlból. A nyomtató feje képes mindhárom tengelyen (X, Y, Z) mozogni, így
-        szinte bármilyen alakzatot képes elkészíteni. Ez egy gyors és költséghatékony eljárás,
-        ami tökéletes választás prototípusok és nullsorozatok gyártására.
+        FDM printers precisely extrude molten filament layer by layer from a digital file. The
+        print head moves on X, Y, and Z axes to create almost any shape. It’s a fast and
+        cost‑effective method ideal for prototypes and small runs.
       </p>
 
-      <p class="blueHead">SLA Technológia</p>
+      <p class="blueHead">SLA technology</p>
       <p class="shiftRight">
-        Az SLA nyomtatók a kívánt terméket fényre keményedő műgyanta alapanyagból állítják elő,
-        ami a levilágítás helyén megszilárdul és így rétegről rétegre épül fel a végeredmény.
-        Ezzel a technológiával sokkal pontosabb termékeket (50 mikron vagy alatta) lehet
-        nyomtatni, viszont költségesebb és lassabb az FDM nyomtatásnál. 
+        SLA printers use photosensitive resin that solidifies where exposed to light, building
+        the object layer by layer. This technology achieves very fine detail (50 microns or less),
+        but it’s typically slower and more expensive than FDM.
       </p>
     </section>
   </body>

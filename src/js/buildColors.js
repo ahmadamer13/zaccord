@@ -1,22 +1,22 @@
 const buildColors = (conn) => {
   const furtherInfo = `
-    További információt a <a class="blueLink font16" href="/materialHelp">Nyomtatási Anyagok</a> oldalon és a
-    <a class="blueLink font16" href="https://www.3djake.hu">beszállító</a> oldalán találsz.
+    For more details see <a class="blueLink font16" href="/materialHelp">Printing Materials</a> and our
+    <a class="blueLink font16" href="https://www.3djake.hu">supplier</a>.
   `;
 
   const desc = [
-    `A népszerű, sokoldalú, standrad FDM nyomtatási anyag számos színben és textúrában.`,
-    `Egyszerűen használható nyomtatási anyag, a PLA-nál erősebb, hőállóbb és tartósabb.`,
-    `Könnyen csiszolható és megmunkálható, a felületét acetonnal lehet kezelni a sima felület elérése végett.`,
-    `Rugalmas és erős nyomtatási anyag, amely megtartja az eredeti formát és alakot.`,
-    `Az ABS-hez hasonló anyag, viszont attól szebb nyomatot eredményez, emellett UV-fény álló is.`,
-    'Fa részecskék és PLA keveréke, ami nyomtatás után élethű fa hatást eredményez.',
-    'Fémforgács és PLA keveréke, ami nyomtatás után élethű fém hatást eredményez.',
-    'Kőzet részecskék és PLA keveréke, ami nyomtatás után élethű kőzetes hatást eredményez.',
-    'Színátmenetes PLA anyagok, így egy modellen belül több szín is alkalmazható.',
-    'Az SLA technológiájú nyomtatók standard alapanyaga.',
-    'Rugalmas és erős nyomtatási anyag, amely megtartja az eredeti formát és alakot.',
-    'Rugalmas és erős nyomtatási anyag, amely megtartja az eredeti formát és alakot.',
+    `Popular, versatile standard FDM material available in many colors and textures.`,
+    `Easy to use, stronger and more heat‑resistant than PLA.`,
+    `Easy to sand and post‑process; can be acetone‑smoothed for a glossy finish.`,
+    `Flexible and strong material that keeps its shape.`,
+    `Similar to ABS with improved surface finish and UV resistance.`,
+    'PLA blended with wood particles for a realistic wood look.',
+    'PLA blended with metal particles for a metallic effect.',
+    'PLA blended with stone particles for a stone‑like appearance.',
+    'Gradient/multicolor PLA allowing multiple hues within one model.',
+    'Standard resin material for SLA printers.',
+    'Flexible and strong material that keeps its shape.',
+    'Flexible and strong material that keeps its shape.',
     'Magas olvadáspontú, nagy szakítószilárdságú és erős anyag ipari alkalmazásra, funkcionális alkatrészekhez.',
     'Szénszálas, erős és tartós anyag ipari alkalmazásra.'
   ];
@@ -46,7 +46,7 @@ const buildColors = (conn) => {
               reject(err);
               return;
             } else {
-              let filamentsText = currentMaterial == 'gyanta (resin)' ? '' : 'Filamentek';
+              let filamentsText = currentMaterial == 'gyanta (resin)' ? '' : 'Filaments';
               let filamentText = currentMaterial == 'gyanta (resin)' ? '' : 'Filament';
               let output = `
                 <h2 class="fontNorm gotham ${i == 0 ? 'mtz' : 'mtf'}">
@@ -62,7 +62,7 @@ const buildColors = (conn) => {
                 let inStock = result[i].in_stock;
                 let info = result[i].info;
                 let stockClass = inStock ? 'inStock' : 'notInStock';
-                let stockText = inStock ? 'Raktáron' : 'Nincs raktáron';
+                let stockText = inStock ? 'In stock' : 'Out of stock';
                 output += `
                   <span id="${colorName}_${currentMaterial.toUpperCase()}"></span>
                   <div class="colorBox trans">
