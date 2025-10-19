@@ -248,8 +248,28 @@ function sendCompressedFile(fname, response, request, contentType, append, userI
       'headerLogged.html');
   }
 
-  response.writeHead(200, {'Content-Type': contentType,
-                           'Cache-control': 'max-age=31536000, ' + cacheType});
+  // Strong client caching for static assets with basic ETag handling
+  const stat = fs.statSync(fname);
+  const etag = `W/"${stat.size}-${Number(stat.mtimeMs)}"`;
+  const ifNoneMatch = request.headers ? request.headers['if-none-match'] : undefined;
+  // Build cache-control with immutable for public assets
+  const ccBase = cacheType === 'public' ? 'public, max-age=31536000, immutable' : 'no-cache';
+
+  if (ifNoneMatch && ifNoneMatch === etag) {
+    response.writeHead(304, {
+      'ETag': etag,
+      'Cache-Control': ccBase
+    });
+    response.end();
+    return;
+  }
+
+  response.writeHead(200, {
+    'Content-Type': contentType,
+    'Cache-Control': ccBase,
+    'ETag': etag
+  });
+
   if (append) {
     // Append footer and header to html files
     let combinedStream = CombinedStream.create();

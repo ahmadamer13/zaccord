@@ -702,19 +702,20 @@ const server = http.createServer((req, res) => {
         } else {
           // Cache page for faster load
           // Also compress text-based resources
-          let cacheType;
           if (FILES_TO_CACHE.indexOf(filePath) > -1) {
-            // Cache constant files and resources
+            // Cache constant files and resources with immutable policy
             responseCache(contentType, res, true, 'public');
             res.end(content, 'utf8');
           } else if (['text/javascript', 'text/css', 'text/html'].indexOf(contentType) > -1) {
-            let appendAsset = contentType == 'text/html';
-            let cc = 'no-cache';
-            if (FILES_TO_CACHE.indexOf(filePath) > -1) cc = 'public';
+            const appendAsset = contentType == 'text/html';
+            const cc = (FILES_TO_CACHE.indexOf(filePath) > -1) ? 'public' : 'no-cache';
             sendCompressedFile(filePath, res, req, contentType, appendAsset, userID, cc);
           } else { 
-            // Check resource in cache and if it's unchanged load if from there
-            responseCache(contentType, res, true, 'no-cache');
+            // Static binary assets: images, fonts, video -> cache aggressively
+            const publicTypes = ['image/', 'font/', 'video/'];
+            const isPublic = publicTypes.some(p => contentType.startsWith(p));
+            const cc = isPublic ? 'public' : 'no-cache';
+            responseCache(contentType, res, true, cc);
             res.end(content, 'utf8');
           }
         }
