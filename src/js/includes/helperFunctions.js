@@ -96,7 +96,9 @@ function fileResponse(contentType, url, res) {
   } catch (e) {
     console.log(e);
     if (typeof userID === 'undefined') var userID;
+    // Send a friendly 404 page and stop further writes to the response
     imgError(res, userID, '404error');
+    return;
   }
   res.end(content);
 }
