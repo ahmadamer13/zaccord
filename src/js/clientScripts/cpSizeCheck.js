@@ -3,11 +3,29 @@
   Remove / add the option for SLA printing when changing the scale of the model
 */
 function toggleSLAAllowance(scaleContID, cookieIDs, callback, params = null) {
-  let scale = Number(_(scaleContID).value); 
-  let cartItems = JSON.parse(getCookie('cartItems'));
+  let scale = Number(_(scaleContID).value);
+  // Safely parse cookies; if missing, allow SLA by default
+  let raw = getCookie('cartItems');
+  let cartItems = {};
+  try {
+    cartItems = raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    cartItems = {};
+  }
+
+  // If we lack cookie data or ids, don't block SLA
+  if (!cookieIDs || !cookieIDs.length || Object.keys(cartItems).length === 0) {
+    if (params) callback(false, ...params);
+    else callback(false);
+    return;
+  }
+
   let shouldSkip = false;
   for (let id of cookieIDs) {
-    let size = cartItems['content_' + id]['size_' + id].split(',').map(x => Number(x) * scale);
+    if (!id) continue;
+    let content = cartItems['content_' + id];
+    if (!content || !content['size_' + id]) continue;
+    let size = content['size_' + id].split(',').map(x => Number(x) * scale);
 
     // Disable the option to print with SLA
     size.sort((a, b) => b - a);
@@ -16,6 +34,7 @@ function toggleSLAAllowance(scaleContID, cookieIDs, callback, params = null) {
       break;
     }
   }
+
   if (params) callback(shouldSkip, ...params);
   else callback(shouldSkip);
 }

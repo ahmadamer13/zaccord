@@ -44,6 +44,15 @@ const buildAdminSection = (conn) => {
           const del = getDeliveryTitle(r.del_type);
           const t = total(r.quantity, r.aPrice);
           const checked = isDone ? 'checked' : '';
+          const specs = [
+            r.printTech ? `Tech: ${r.printTech}` : null,
+            r.printMat ? `Mat: ${r.printMat}` : null,
+            r.color ? `Color: ${r.color}` : null,
+            r.rvas ? `Layer: ${r.rvas}` : null,
+            r.fvas ? `Walls: ${r.fvas}` : null,
+            r.suruseg ? `Infill: ${r.suruseg}` : null,
+            r.scale ? `Scale: ${r.scale}` : null
+          ].filter(Boolean).join(' · ');
           let files = '';
           if (r.cp_fname) {
             files += `<a class="btn" download href="/printUploads/${r.cp_fname}.stl">STL</a>`;
@@ -57,6 +66,7 @@ const buildAdminSection = (conn) => {
               <td>${when}</td>
               <td>${r.customerName || '-'}</td>
               <td>${contact || '-'}</td>
+              <td>${specs || '-'}</td>
               <td><span class=\"status-badge ${isDone?'status-done':'status-new'}\">${del}</span></td>
               <td><b id=\"allp_${i}\">${t}</b> JD</td>
               <td class=\"actions\">
@@ -81,14 +91,14 @@ const buildAdminSection = (conn) => {
 
       html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">New Orders</h2>`;
       html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr>
-        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Delivery</th><th>Total</th><th>Actions</th>
+        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
       </tr></thead><tbody>`;
       html += render(newOrders, 0, false);
       html += `</tbody></table></div></div>`;
 
       html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">Completed Orders</h2>`;
       html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr>
-        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Delivery</th><th>Total</th><th>Actions</th>
+        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
       </tr></thead><tbody>`;
       html += render(doneOrders, 10000, true);
       html += `</tbody></table></div></div>`;

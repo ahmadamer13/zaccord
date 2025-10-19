@@ -480,12 +480,9 @@ const buildCartSection = (conn, req) => {
         }
 
         let ePriceText = '<span id="extraPrice"></span>';
-        let extraPrice = 0; 
-        if (finalPrice < 800) {
-          extraPrice = 800 - finalPrice;
-          finalPrice += extraPrice;
-          ePriceText = `<span id="extraPrice">(+${extraPrice} JD surcharge included)</span>`;
-        }
+        // Removed legacy minimum-order surcharge. Final price equals
+        // the sum of items (plus any eligible discounts), without
+        // forcing an artificial bump to a threshold.
 
         finalPrice = `
           <span id="fPrice">

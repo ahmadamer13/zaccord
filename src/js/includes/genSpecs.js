@@ -13,6 +13,15 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
     getColors(conn).then(([colors, hex_codes]) => {
       const PRINT_COLORS = colors;
       const PRINT_MATERIALS = Object.keys(colors).map(e => e.toUpperCase()).filter(e => e != 'GYANTA (RESIN)');
+      const COLOR_LABELS = {
+        'Fehér': 'White',
+        'Fekete': 'Black',
+        'Kék': 'Blue',
+        'Zöld': 'Green',
+        'Arany': 'Gold',
+        'Piros': 'Red',
+        'Citromsárga': 'Lemon Yellow'
+      };
       let output = '';
       if (!isLit) {
         output += `
@@ -58,7 +67,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
         `;
         
         for (let infill of INFILL_VALUES_SLA) {
-          let selected = infill == 'Tömör' ? 'selected' : '';
+          let selected = infill == 'Solid' ? 'selected' : '';
           output += `
             <option value="${infill}" ${selected}>${infill}</option>
           `;
@@ -94,8 +103,9 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
         
         for (let c of PRINT_COLORS['pla']) {
           let selected = c == 'Fehér' ? 'selected' : '';
+          let label = COLOR_LABELS[c] || c;
           output += `
-            <option value="${c}" ${selected}>${c}</option>
+            <option value="${c}" ${selected}>${label}</option>
           `;
         }
 

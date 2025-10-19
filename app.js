@@ -644,7 +644,9 @@ const server = http.createServer((req, res) => {
               } else {
                 let extension = path.extname(fname);
                 let contentType = getContentType(extension);
-                res.end(content, contentType);
+                // Set proper headers before sending raw content (e.g., mp4)
+                responseCache(contentType, res, true, 'no-cache');
+                res.end(content);
               }
             });
             return;

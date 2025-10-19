@@ -2,6 +2,7 @@ const util = require('util');
 const fs = require('fs').promises;
 const path = require('path');
 const helpers = require('./includes/helperFunctions.js');
+const blogTranslations = require('./includes/blogTranslations.js');
 const addCookieAccept = helpers.addCookieAccept;
 
 async function buildBlog(conn, blogID, req) {
@@ -9,11 +10,20 @@ async function buildBlog(conn, blogID, req) {
   const query = util.promisify(conn.query).bind(conn);
 
   let res = (await query('SELECT * FROM blog WHERE id = ?', [blogID]))[0];
-  let title = res.title;
+  // Apply English translations for known posts on page header/meta
+  const t = blogTranslations[res.id] || {};
+  let title = t.title || res.title;
   let author = res.author;
-  let categories = res.categories.split(',').map(e => e.trim()).join(', ');
+  // Normalize author name to English presentation
+  if (typeof author === 'string') {
+    const a = author.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+    if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
+      author = 'Mark Frankli';
+    }
+  }
+  let categories = (t.categories || res.categories).split(',').map(e => e.trim()).join(', ');
   let htmlPath = res.content_path;
-  let summary = res.summary;
+  let summary = t.summary || res.summary;
   let lastUpdate = res.last_update.split(' ')[0];
   let date = res.date;
 

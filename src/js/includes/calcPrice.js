@@ -16,12 +16,19 @@ function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, f
     (Math.sin(surusegVal) / 1.3 + 0.73690758206) +
     (Math.sin(fvasVal) * 8 + 0.83246064094) - 2));
   
-  let multiplier = 1;
+  // For custom print: scale base price by selected infill and wall thickness relative to baseline
   if (filamentMaterial) {
-    multiplier = PRINT_MULTS[filamentMaterial.toLowerCase()];
+    const baseInfill = 20.0; // baseline infill used in server mass calc
+    const baseWall = 1.2;    // baseline wall thickness (mm)
+    const infillFactor = Math.max(0.05, surusegVal * 180 / Math.PI / baseInfill);
+    const wallFactor = Math.max(0.25, fvasVal * 180 / Math.PI / baseWall);
+    const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
+    const mult = PRINT_MULTS[filamentMaterial.toLowerCase()];
+    let fp = smoothPrice(Math.round(price * scaleVal * massFactor * mult));
+    return fp < MIN_PRICE ? MIN_PRICE : fp;
   }
 
-  let fp = smoothPrice(Math.round(nPrice * multiplier)); 
+  let fp = smoothPrice(Math.round(nPrice)); 
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
 

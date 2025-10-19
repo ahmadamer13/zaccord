@@ -50,28 +50,85 @@ const buildMainSection = (conn, cat) => {
           return;
         }
 
-        // Create html output 
+        // Create html output (Modern hero + compact category strip)
         let output = `
-          <div class="topHolder">
+          <section class="hero animate__animated animate__fadeIn">
+            <video class="hero__video" autoplay muted loop playsinline poster="/images/serviceImages/fdmInfo.jpg">
+              <source src="/Untitled%20design%20(1).mp4" type="video/mp4">
+            </video>
+            <div class="hero__bg" aria-hidden="true"></div>
+            <div class="hero__content">
+              <h1 class="hero__title">Custom 3D Printing in Jordan</h1>
+              <p class="hero__sub">Instant pricing, fast turnaround, and expert support. Upload your STL to get a quote or chat for help. FDM and SLA available.</p>
+              <div class="hero__cta">
+                <button class="btn btn-primary" onclick="redirect('/print')">Get Instant Quote</button>
+                <a class="btn btn-secondary" href="https://wa.me/00962797479825" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="home-section">
+            <h2 class="home-title">Why 3DJordanPrint</h2>
+            <p class="home-sub">Reliable local service with transparent pricing. From prototypes to small-batch production, we help you move from idea to part quickly.</p>
+            <div class="features">
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/loader.svg" alt="Fast" />
+                <p class="feature-title">Fast Turnaround</p>
+                <p class="feature-desc">Typical jobs in 1–3 days.</p>
+              </div>
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/printer.svg" alt="Pricing" />
+                <p class="feature-title">Instant Pricing</p>
+                <p class="feature-desc">Upload STL, see price immediately.</p>
+              </div>
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/custom_print.svg" alt="Materials" />
+                <p class="feature-title">Materials</p>
+                <p class="feature-desc">PLA, PETG, ABS, resin (SLA).</p>
+              </div>
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/deliver.png" alt="Delivery" />
+                <p class="feature-title">Nationwide Delivery</p>
+                <p class="feature-desc">Jordan-wide delivery options.</p>
+              </div>
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/whatsapp.svg" alt="Support" />
+                <p class="feature-title">Local Support</p>
+                <p class="feature-desc">English and Arabic guidance.</p>
+              </div>
+              <div class="feature-card">
+                <img class="feature-ico" src="/images/icons/protBlack.svg" alt="Prototyping" />
+                <p class="feature-title">Prototyping</p>
+                <p class="feature-desc">Pilot runs and design help.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="home-section" style="margin-top: 24px;">
+            <h2 class="home-title" style="margin-bottom:12px;">How It Works</h2>
+            <div class="process">
+              <div class="step"><div class="badge">1</div><div><h4>Upload your model</h4><p>STL for FDM or image for lithophane.</p></div></div>
+              <div class="step"><div class="badge">2</div><div><h4>Configure options</h4><p>Choose material, color, and quality.</p></div></div>
+              <div class="step"><div class="badge">3</div><div><h4>See price instantly</h4><p>Transparent, instant quotes — no emails needed.</p></div></div>
+              <div class="step"><div class="badge">4</div><div><h4>We print and ship</h4><p>Pickup or nationwide delivery.</p></div></div>
+            </div>
+          </section>
+
+          <div class="topHolder" style="margin-top: 10px;">
             <div class="topShrink">
               <div class="topInner">
-                <input type="text" autocomplete="off" class="searchBox"
-                  placeholder="What are you looking for?"
-                  onkeyup="searchForItem()" id="sfi" />
+                <input type="text" autocomplete="off" class="searchBox" placeholder="Search products..." onkeyup="searchForItem()" id="sfi" />
                 <div class="categoryImg" onclick="toggleCategory()" id="categoryImg">
-                  <img src="/images/icons/vmenu.svg">
+                  <img src="/images/icons/vmenu.svg" alt="Categories">
                 </div>
               </div>
               <div class="cbCont flexDiv trans" id="cbCont">
                 <div class="arrows trans" id="larr" onclick="scrollHor('left')">
-                  <img src="/images/larr.png" width="25" height="25">
+                  <img src="/images/larr.png" width="25" height="25" alt="Left">
                 </div>
                 <div class="catBox" id="catBox">
                   <a href="/?cat=Most%20Popular" class="pseudoLink">
-                    <div onclick="sortByCat('Most Popular', 0)" class="scat"
-                      style="background-color: #ececec; color: #4285f4; border-color: #4285f4;">
-                      Most Popular
-                    </div>
+                    <div onclick="sortByCat('Most Popular', 0)" class="scat" style="background-color:#ececec;color:#4285f4;border-color:#4285f4;">Most Popular</div>
                   </a>
         `;
 
@@ -89,14 +146,10 @@ const buildMainSection = (conn, cat) => {
         }
 
         output += `
-                  <a href="/?cat=All" class="pseudoLink">
-                    <div onclick="sortByCat('All', ${res.length + 1})" class="scat">
-                      All
-                    </div>
-                  </a>
+                  <a href="/?cat=All" class="pseudoLink"><div onclick="sortByCat('All', ${res.length + 1})" class="scat">All</div></a>
                 </div>
                 <div class="arrows trans" id="rarr" onclick="scrollHor('right')">
-                  <img src="/images/rarr.png" width="25" height="25">
+                  <img src="/images/rarr.png" width="25" height="25" alt="Right">
                 </div>
               </div>
             </div>
@@ -179,9 +232,7 @@ const buildMainSection = (conn, cat) => {
               <div class="darken keepRounded"></div>
               <div class="textCenter pad lh">
                 <h2 class="serviceTxt align font26 gotham fontNorm">Printed on Bambu Lab A1 Combo</h2>
-                <h3 class="serviceTxt align gotham fontNorm font16">
-                  High quality, speed and reliability thanks to our Bamboo Lab printers.
-                </h3>
+                <h3 class="serviceTxt align gotham fontNorm font16">High quality, speed and reliability thanks to our Bambu Lab printers.</h3>
               </div>
             </div>
           </div>

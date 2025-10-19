@@ -66,7 +66,8 @@ const buildCustomPrint = (conn, userID, filePaths) => {
     
     for (let i = 0; i < filePaths.length; i++) {
       let path = filePaths[i];
-      let stl = new NodeStl(path, {density: 1.27}); // PLA has 1.27 g/cm^3 density
+      // Keep density consistent with DENSITY used in pricing
+      let stl = new NodeStl(path, {density: 1.24}); // PLA density in g/cm^3
       let volume = (stl.volume).toFixed(2); // cm^3
       let weight = (stl.weight).toFixed(2); // gramm
       subVolumes.push(volume);
@@ -80,6 +81,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       let subSize = stl.boundingBox.map(a => a.toFixed(2) + 'mm x ').join(' ');
       subSize = subSize.substr(0, subSize.length - 3);
 
+      // NodeStl.area is in mm^2; convert to cm^2 by dividing by 100
       let basePrice = calcCPPrice(volume, area / 100);
       let subpriceText = '';
       if (isMoreFiles) {
@@ -338,7 +340,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
-            <p data-value="Fehér" id="chcolor">Fehér</p>
+            <p data-value="Fehér" id="chcolor">White</p>
             <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
@@ -346,16 +348,27 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         <div class="specChDD" id="specChColorDD" data-open="closed">
       `;
 
+      const COLOR_LABELS = {
+        'Fehér': 'White',
+        'Fekete': 'Black',
+        'Kék': 'Blue',
+        'Zöld': 'Green',
+        'Arany': 'Gold',
+        'Piros': 'Red',
+        'Citromsárga': 'Lemon Yellow'
+      };
+
       for (let pair of CMAT['pla']) {
         let color = Object.keys(pair)[0];
         let highlight = color == 'Fehér' ? 'specChHl' : '';
+        let label = COLOR_LABELS[color] || color;
         content += `
           <div class="specChDDItem trans ${highlight}" data-value="${color}">
             <div>
               <img src="/images/colors/${pair[color]}">
             </div>
             <div class="gothamNormal font20 p10">
-              ${color}
+              ${label}
             </div>
             <div class="gothamNormal"></div>
             <div>
@@ -509,25 +522,22 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChInfSLA" style="display: none">
-          <div class="specChBoxTitle gothamBold font22">Sűrűség</div>
+          <div class="specChBoxTitle gothamBold font22">Infill</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/sla_infill.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A 3D-s modell belső telítettségét jelenti. Ahogy nő a sűrűség értéke,
-            annál több anyag kell a termék elkészítéséhez, de annál masszívabb is
-            lesz. Szoborszerű vagy kevésbé használatos tárgyaknál felesleges a
-            termék sűrű kitötlése, viszont rendszeresen használt eszközöknél
-            érdemes beállítani egy nagyobb értéket. A sűrűség növelésével nő a
-            nyomtatási idő és a modell tömege is.
+            The internal fill of the model. Higher infill increases material usage and strength
+            but also adds weight and print time. For decorative items, lower infill is usually
+            sufficient; for functional parts, choose a higher infill value.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Stabilitás</div>
-            <div>Nyomtatási idő</div>
-            <div>Tömeg</div>
+            <div>Stability</div>
+            <div>Print time</div>
+            <div>Weight</div>
           </div>
           <div class="specChValBox font32 blue">
-            <p data-value="Tömör" id="chinfSLA">Tömör</p>
+            <p data-value="Solid" id="chinfSLA">Solid</p>
             <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
@@ -536,8 +546,8 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       `;
 
       for (let s of INFILL_SLA) {
-        let highlight = s == 'Tömör' ? 'specChHl' : '';
-        let i = s == 'Tömör' ? 100 : 10;
+        let highlight = s == 'Solid' ? 'specChHl' : '';
+        let i = s == 'Solid' ? 100 : 10;
         content += `
           <div class="specChDDItem trans ${highlight}" data-value="${s}">
             <div>
@@ -572,24 +582,24 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         </div>
 
         <div class="specChBox trans" id="specChShell">
-          <div class="specChBoxTitle gothamBold font22">Falvastagság</div>
+          <div class="specChBoxTitle gothamBold font22">Wall thickness</div>
           <div class="specChImgBox">
             <img src="/images/specChImg/wall_thickness.jpg">
           </div>
           <div class="specChLongDesc gothamNormal">
-            A termék külső, tömör falának vastagsága. A nagyobb falvastagság
-            stabilitást ad a tárgynak, de növeli a nyomtatási időt. Fontos hogy
-            ezen érték változtatása nem befolyásolja a termék méreteit, hiszen a
-            nyomtató befelé vastagítja meg a falakat.
+            The thickness of the product’s outer, solid wall. A larger wall thickness increases
+            the part’s stability but also increases printing time. Note that changing this value
+            does not affect the overall part dimensions, as the printer increases wall thickness
+            inwards.
           </div>
           <div class="specChProps gothamNormal">
-            <div>Stabilitás</div>
-            <div>Nyomtathatóság</div>
-            <div>Tartás</div>
+            <div>Stability</div>
+            <div>Printability</div>
+            <div>Strength</div>
           </div>
           <div class="specChValBox font32 blue">
             <p data-value="1.2" id="chshell">1.2mm</p>
-            <p class="otherPrice">Ár: ${Math.round(totalPrice)} Ft</p>
+            <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
 
@@ -624,24 +634,23 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       content += `
           <div class="specBox" style="justify-content: center;">
             <button class="fillBtn btnCommon threeBros" id="buyCP">
-              Vásárlás
+              Buy
             </button> 
             <button class="fillBtn btnCommon threeBros" id="toCart">
-              Tovább a kosárhoz
+              Go to cart
             </button>
             <button class="fillBtn btnCommon threeBros" id="newFile">
-              Új fájl feltöltése 
+              Upload new file 
             </button>
           </div>
           <div id="infoStat" class="infoBox"></div>
 
           <p class="align">
-            <a href="/mitjelent" target="_blank" class="blueLink">Segítség a specifikációkhoz</a>
+            <a href="/mitjelent" target="_blank" class="blueLink">Help with specifications</a>
           </p>
 
           <p class="align note ddgray">
-            A specifikációk megváltoztatása árváltozást vonhat maga után és
-            több termék esetén ezek változtatása minden egyes termékre értendő!
+            Changing the specifications may affect the price, and for multiple items these changes apply to each item individually.
           </p>
         </section>
       `;

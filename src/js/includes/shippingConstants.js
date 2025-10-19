@@ -1,8 +1,10 @@
-const PACKETA_POINT = 1390;
-const POST_TO_ADDR = 1890;
-const GLS_POINT = 1990;
-const GLS_TO_ADDR = 2490;
-const FREE_SHIPPING_LIMIT = 30000;
+// Flat shipping: 3 JD for any method/location
+const PACKETA_POINT = 3;
+const POST_TO_ADDR = 3;
+const GLS_POINT = 3;
+const GLS_TO_ADDR = 3;
+// Disable free-shipping/discount threshold by setting a very large limit
+const FREE_SHIPPING_LIMIT = 1e15;
 const MONEY_HANDLE = 390;
 const PACKET_POINT_TYPES = ['packetaPoint', 'glsPoint'];
 const PACKET_POINT_TYPES_R = ['pointPacketa', 'pointGls'];
@@ -11,7 +13,7 @@ const SHIPPING_OBJ = {
   'packeta': {
     title: 'Packeta pickup point',
     desc: 'Courier partnered with Packeta will deliver your package to the selected pickup point.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${PACKETA_POINT} JD, above: free.`,
+    price: `Shipping cost: ${PACKETA_POINT} JD`,
     actualPrice: PACKETA_POINT,
     divID: 'packetaPoint',
     radioID: 'pointPacketa',
@@ -23,7 +25,7 @@ const SHIPPING_OBJ = {
   'mpl': {
     title: 'MPL home delivery',
     desc: 'Courier will deliver your order to the specified address.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${POST_TO_ADDR} JD, above: free.`,
+    price: `Shipping cost: ${POST_TO_ADDR} JD`,
     actualPrice: POST_TO_ADDR,
     divID: 'mplToAddr',
     radioID: 'toAddrMpl',
@@ -35,7 +37,7 @@ const SHIPPING_OBJ = {
   'glsAddr': {
     title: 'GLS home delivery',
     desc: 'Courier will deliver your order to the specified address.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${GLS_TO_ADDR} JD, above: free.`,
+    price: `Shipping cost: ${GLS_TO_ADDR} JD`,
     actualPrice: GLS_TO_ADDR,
     divID: 'glsToAddr',
     radioID: 'toAddrGls',
@@ -47,7 +49,7 @@ const SHIPPING_OBJ = {
   'glsPoint': {
     title: 'GLS pickup point',
     desc: 'Courier will deliver your order to the selected pickup point.',
-    price: `Shipping cost: ${FREE_SHIPPING_LIMIT} JD and below: ${GLS_POINT} JD, above: free.`,
+    price: `Shipping cost: ${GLS_POINT} JD`,
     actualPrice: GLS_POINT,
     divID: 'glsPoint',
     radioID: 'pointGls',

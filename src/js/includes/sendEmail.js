@@ -17,6 +17,11 @@ function sendEmail(from, content, email, subject, attachmentPath = null) {
       return resolve('skipped');
     }
 
+    if (!EMAIL_HOST_NAME || !EMAIL_USER_NAME || !EMAIL_PASSWORD) {
+      console.log('Email not configured; skipping send.');
+      return resolve('skipped');
+    }
+
     var transporter = nodemailer.createTransport({
       host: EMAIL_HOST_NAME,
       port: 465,
@@ -67,12 +72,11 @@ function sendEmail(from, content, email, subject, attachmentPath = null) {
 
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
-        console.log(error);
-        reject('An unexpected error occurred, please try again (email)');
-        return;
-      } else {
-        resolve('success');
+        console.log('Email send failed:', error && error.message ? error.message : error);
+        // Do not propagate email transport errors to critical flows
+        return resolve('skipped');
       }
+      resolve('success');
     });
   });
 }

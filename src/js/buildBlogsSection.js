@@ -1,8 +1,22 @@
 const util = require('util');
 const constants = require('./includes/constants.js');
 const LAZY_LOAD = constants.lazyLoad;
+const blogTranslations = require('./includes/blogTranslations.js');
+
+function applyTranslations(blog) {
+  const t = blogTranslations[blog.id];
+  if (!t) return blog;
+  return {
+    ...blog,
+    title: t.title || blog.title,
+    categories: t.categories || blog.categories,
+    summary: t.summary || blog.summary,
+    img_url: t.img_url || blog.img_url
+  };
+}
 
 function buildBlogItem(currentBlog) {
+  currentBlog = applyTranslations(currentBlog);
   let id = currentBlog.id;
   let title = currentBlog.title; 
   let categories = currentBlog.categories.split(',').map(e => e.trim()).join(', ');

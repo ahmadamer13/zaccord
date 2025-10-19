@@ -37,12 +37,12 @@ const buildLithophane = (conn, userID, filePaths, width, height) => {
     // Build output
     output += `
       <p class="align note ddgray" style="display: none;" id="clickNote">
-        Nyomj a képre a litofán nézetért
+        Click the image to toggle lithophane view
       </p>
       <div class="flexDiv" id="customProps" style="flex-wrap: wrap; margin-top: 10px;">
         <div>
           <p>
-            <span class="blue gotham">Egységár:</span>
+            <span class="blue gotham">Unit price:</span>
             <span id="priceHolder">${totalPrice}</span> JD 
           </p>
         </div>
@@ -54,7 +54,7 @@ const buildLithophane = (conn, userID, filePaths, width, height) => {
         </div>
       </div>
       <p class="align note ddgray" id="chargeNote" style="margin-bottom: 30px;">
-        A litofánia (dombornyomott) nézethez kattints a képre
+        Click the image to see the embossed lithophane view
       </p>
     `;
 
@@ -64,23 +64,23 @@ const buildLithophane = (conn, userID, filePaths, width, height) => {
       output += `
         <p class="align">
           <a href="/lithophaneHelp" target="_blank" class="blueLink">
-            Mit jelent a litofánia formája?
+            What does the lithophane shape mean?
           </a>
         </p>
 
         <p class="align note ddgray">
-          A specifikációk megváltoztatása árváltozást vonhat maga után!
+          Changing the specifications may affect the price.
         </p>
 
         <div class="specBox" style="justify-content: center;">
           <button class="fillBtn btnCommon threeBros" id="buyLit">
-            Vásárlás
+            Buy
           </button> 
           <button class="fillBtn btnCommon threeBros" id="toCart">
-            Tovább a kosárhoz
+            Go to cart
           </button>
           <button class="fillBtn btnCommon threeBros" id="newFile">
-            Új fájl feltöltése 
+            Upload new file 
           </button>
         </div>
       `;

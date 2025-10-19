@@ -130,6 +130,10 @@ function getContentType(extension) {
       return 'text/plain';
     case '.zip':
       return 'application/zip';
+    case '.mp4':
+      return 'video/mp4';
+    case '.webm':
+      return 'video/webm';
   }
   return 'text/html';
 }

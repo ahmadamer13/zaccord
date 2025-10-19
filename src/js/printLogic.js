@@ -124,26 +124,20 @@ async function buildPrintSection(conn, req) {
 
       <div id="infoFadeHolder" class="mtsix flowBox flexDiv flBoxSp flexWrap" style="opacity: 0;">
         <div>
-          <h2 class="gotham font26 align fontNorm">Bérnyomtatás menete</h2>
+          <h2 class="gotham font26 align fontNorm">How custom printing works</h2>
           <h2 class="align font18 lh fontNorm">
-            Ha rendelkezel a modell STL fájljával, akkor az
-            <a class="jumpToPrint blueLink font18">oldalon</a> ezt fel tudod
-            tölteni.
-            Ellenkező esetben lehetőség van számos weboldalról letölteni előre
-            elkészített tárgyak modelljét, ilyen például a népszerű és ingyenes
-            <a class="font18 blueLink" href="https://www.thingiverse.com">Thingiverse</a>.
+            If you already have an STL file, you can upload it on the
+            <a class="jumpToPrint blueLink font18">printing section</a> below. Otherwise, you can
+            download ready‑made models from popular sites such as the free
+            <a class="font18 blueLink" href="https://www.thingiverse.com" target="_blank">Thingiverse</a>.
             <br><br>
-            Ezután a feltöltött modell a böngészőben is megjelenik
-            interaktív formában, ahol 3D-ben is megtekintheted a terméket. Itt
-            lehetőség van különböző paraméterek beállítására is, viszont ha a
-            tudásod hiányos e téren, érdemes lehet az alapbeállításokkal
-            továbbhaladni. A legtöbb esetben ez megfelelő minőséget fog
-            biztosítani.
+            After uploading, your model appears in the browser with an interactive 3D preview.
+            You can adjust parameters there, but if you’re unsure, proceeding with the default
+            settings is usually a safe choice and yields great quality.
             <br><br>
-            Amenyiben eltérő fájlformátummal rendelkezel vagy egyedi megrendelést szeretnél leadni, akkor
-            kérj személyre szabott árajánlatot az <a class="blueLink font18 goToQuote">oldal alján</a> vagy
-            írj nekünk emailt az <a href="mailto:info@jordan3dprint.store" class="blueLink font18">info@jordan3dprint.store</a>
-            címre.
+            If you have a different file format or need a fully custom order,
+            request a personalized quote at the <a class="blueLink font18 goToQuote">bottom of this page</a>
+            or email us at <a href="mailto:info@jordan3dprint.store" class="blueLink font18">info@jordan3dprint.store</a>.
           </h2>
         </div>
         <div>
@@ -158,9 +152,9 @@ async function buildPrintSection(conn, req) {
     <div id="fdmFadeHolder" style="opacity: 0;">
       <h2 class="gotham font26 align fontNorm">FDM technology</h2>
         <h2 class="align font18 lh fontNorm">
-          Az FDM technológia jelenleg a legelterjettebb és legköltséghatákonyabb nyomtatási
-          eljárás, rengeteg elérhető anyaggal és textúrával. Kiváló választás a végső termék piacra dobása előtti
-          prototípusgyártásra.
+          FDM is the most widespread and cost‑effective 3D printing method, with a wide
+          variety of materials and surface finishes. It is an excellent choice for prototyping
+          before launching a final product.
         </h2>
         <p class="align">
           <a href="https://en.wikipedia.org/wiki/Fused_filament_fabrication" target="_blank" class="blueLink align">
@@ -200,9 +194,9 @@ async function buildPrintSection(conn, req) {
     <div id="slaFadeHolder" style="opacity: 0;">
       <h2 class="gotham font26 align fontNorm">SLA technology</h2>
         <h2 class="align font18 lh fontNorm">
-          Az SLA technológia az FDM-nél sokkal pontosabb, viszont ezzel együtt drágább is. Gyakran használják orvosi és
-          gyógyászati célokra, például fogsor prototípus nyomtatásához vagy anatómai modellezéshez,
-          és apróbb modellek készítéséhez, ahol fontos a felületi minőség.
+          SLA offers much higher precision than FDM, but typically at a higher cost. It is widely
+          used for medical and dental applications (e.g., denture prototypes or anatomical models)
+          and for small detailed parts where surface quality matters most.
         </h2>
         <p class="align">
           <a href="https://en.wikipedia.org/wiki/Stereolithography" target="_blank" class="blueLink align">
@@ -252,12 +246,12 @@ async function buildPrintSection(conn, req) {
         </h2>
         <p class="align">
           <a href="/materialHelp" class="blueLink align">
-            További információ
+            Learn more
             ${rightArrow}
           </a>
-          <span class="orSep">vagy</span>
+          <span class="orSep">or</span>
           <a class="blueLink align jumpToPrint">
-            Ugrás a nyomtatáshoz
+            Jump to printing
             ${rightArrow}
           </a>
         </p>

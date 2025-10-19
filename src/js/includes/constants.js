@@ -94,9 +94,12 @@ function smoothPrice(price) {
 }
 
 function calcCPPrice(volume, area) {
-  let outerShellVolume = 0.12 * area; // 100% infill
-  let innerVolume = volume - outerShellVolume; // 20% infill
-  let finalPrice = Math.round(outerShellVolume * DENSITY + innerVolume * DENSITY * 0.2) * PRICE_PER_GRAMM * 7;
+  // Estimate grams from volume with shell + 20% infill assumption
+  let outerShellVolume = 0.12 * area; // area expected in cm^2
+  let innerVolume = Math.max(0, volume - outerShellVolume);
+  let grams = Math.round(outerShellVolume * DENSITY + innerVolume * DENSITY * 0.2);
+  // Strict price per gram in JD without extra multiplier
+  let finalPrice = grams * PRICE_PER_GRAMM;
   return finalPrice < MIN_PRICE ? MIN_PRICE : finalPrice;
 }
 

@@ -73,24 +73,27 @@ function changeIndex(type, index, mod) {
 }
 
 // Custom print
-let titleSources = ['Gyors prototípusgyártás FDM nyomtatással',
-  'Tipikus felhasználási területek', 'Intelligens algoritmus, kényelmes vásárlás',
-  'Kisszériás prototípusgyártás, egyedi rendelések'];
+let titleSources = [
+  'Fast prototyping with FDM printing',
+  'Typical use cases',
+  'Smart pricing, seamless ordering',
+  'Small‑batch prototyping and custom orders'
+];
 let textSources = [
-  `A technológia kiváló választás lehet nullsorozatok gyártására a kész termék piacra dobása előtt. Így rengeteg időt és pénzt lehet megspórolni, ha még a termékfejlesztés korai szakaszában feltárulnak az esetleges hibák.`,
-  `Gyakori felhasználási terület lehet épületek látványtervének a kinyomtatása vagy telefontokok, hétköznapi használati eszközök és alkatrészek prototípusának a gyors elkészítése. Kisszériás prototípusgyártás esetén így lehetőség nyílik a leendő felhasználók kezébe nyújtani egy tesztterméket.`,
-  `Nincs szükség kapcsolatfelvételre, sem egyedi árajánlatra, ehelyett egyeszerűen csak töltsd fel a kinyomtatni kívánt STL fájlokat és igény szerint állítsd be a paramétereket. Az algoritmus azonnal ad egy árajánlatot, így feleslegessé téve a hosszas egyeztetést.`,
- `Kisszériás prototípusgyártás vagy egyedi megrendelés esetén lehetőség van a Prototípusgyártás oldalon a kapcsolatfelvételre és a további egyeztetésre.`
+  `This technology is an excellent choice for small runs before launching a final product. Catching potential issues early saves significant time and money during product development.`,
+  `Common applications include printing architectural models, phone cases, everyday tools, and component prototypes. For small‑series prototyping, you can hand a test product to users early for feedback.`,
+  `No need for back‑and‑forth or manual quotes — just upload your STL files and adjust parameters as needed. Our algorithm instantly calculates pricing, streamlining the process.`,
+  `For small‑batch prototyping or entirely custom requests, use the Prototyping page to get in touch and coordinate the details.`
 ];
 
 let cpSegment = new ImageSegment(_('cpLeftButton'), _('cpRightButton'), 0, titleSources, textSources);
 cpSegment.attachHandlers(3, 'cpShow', 'cp', 'capTitle', 'scText');
 
 // Lithophane
-let titleSourcesLit = ['Kinyomtatott litofán és az eredeti kép', 'Hogyan működik?'];
+let titleSourcesLit = ['Printed lithophane next to the original photo', 'How does it work?'];
 let textSourcesLit = [
-  `A kész litofán alapesetben egy nehezen kivehető, dombornyomott képed ad. Háttérvilágítással viszont kristálytisztán előtűnik maga a kép. A feltöltött digitális képből a 3D nyomtató készít egy valódi, tapintható litofánt, ami a technológiának köszönhetően valósághűen ábrázolja az eredeti képet.`,
-  `A különböző vastagságú rétegek különböző mértékben engedik át a fényt és ezért tűnnek bizonyos részek sötétnek, mások pedig világosnak. A 3D nyomtató pontosságának köszönhetően a kinyomtatott litofánia élethűen adja vissza az eredeti képet.`,
+  `A lithophane looks like a faint, embossed image in normal light, but reveals a crisp picture when backlit. From your digital image, the 3D printer creates a tangible lithophane that faithfully represents the original photo.`,
+  `Layers of different thickness let different amounts of light through, which is why some parts appear darker and others lighter. Thanks to printing precision, the resulting lithophane closely reproduces the original image.`,
 ];
 
 let litSegment = new ImageSegment(_('litLeftButton'), _('litRightButton'), 0, titleSourcesLit, textSourcesLit);

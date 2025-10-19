@@ -183,6 +183,9 @@ function calculatePrice(price, id = '', isLit, isCP) {
     let surusegVal = Number(_('suruseg' + id).value);
     let scaleVal = Number(_('scale' + id).value);
     let fvasVal = Number(_('fvas' + id).value);
+    // Keep raw values before radian conversion for CP mass scaling
+    const rawInfill = surusegVal;
+    const rawWall = fvasVal;
    
     // Convert degrees to radians
     rvasVal *= Math.PI / 180;
@@ -196,10 +199,17 @@ function calculatePrice(price, id = '', isLit, isCP) {
       (Math.sin(surusegVal) / 1.3 + 0.73690758206) +
       (Math.sin(fvasVal) * 8 + 0.83246064094) - 2));
 
-    // When calculating the price of a custom printed model also consider the filament material
+    // For custom print (isCP), scale base mass‑based price by selected infill and wall thickness
+    // Baseline in server calc uses ~20% infill and ~1.2 mm walls
     if (isCP) {
       let filamentMaterial = _('printMat' + id).value.toLowerCase();
-      let fp = smoothPrice(Math.round(nPrice * PRINT_MULTS[filamentMaterial]));
+      const baseInfill = 20.0;
+      const baseWall = 1.2;
+      const infillFactor = Math.max(0.05, rawInfill / baseInfill);
+      const wallFactor = Math.max(0.25, rawWall / baseWall);
+      // Heavier weight on infill proportion; wall contributes but less
+      const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
+      let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial]));
       return fp < MIN_PRICE ? MIN_PRICE : fp;
     }
 

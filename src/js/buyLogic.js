@@ -56,18 +56,10 @@ const buildBuySection = (conn, paramObj, req) => {
 
     // Build html output
     let output = `
-      <script type="text/javascript">
-        const SHIPPING_DIV_IDS = ${JSON.stringify(getIDs(SHIPPING_OBJ, 'divID'))};
-        const SHIPPING_RADIO_IDS = ${JSON.stringify(getIDs(SHIPPING_OBJ, 'radioID'))};
-        const SHIPPING_OBJ = ${JSON.stringify(SHIPPING_OBJ)};
-        const DELIVERY_TO_MONEY = ${JSON.stringify(DELIVERY_TO_MONEY)};
-        const PACKET_POINT_TYPES_R = ${JSON.stringify(PACKET_POINT_TYPES_R)};
-        const MONEY_HANDLE = ${MONEY_HANDLE};
-
-      </script>
+      <script type="text/javascript"></script>
       <section class="keepBottom">
         <span id="main">
-          <p class="blueHead" style="font-size: 24px; margin-top: 0;">1. Termékek</p>
+          <p class="blueHead" style="font-size: 24px; margin-top: 0;">1. Products</p>
           <div id="emlHolder">
     `;
 
@@ -78,7 +70,7 @@ const buildBuySection = (conn, paramObj, req) => {
 
       if (price > FREE_SHIPPING_LIMIT) {
         discount = DISCOUNT;
-        discountText = `(${Math.round((1 - DISCOUNT) * 100)}% kedvezmény)`;
+        discountText = `(${Math.round((1 - DISCOUNT) * 100)}% discount)`;
       }
 
       let actualShippingPrice = (price > FREE_SHIPPING_LIMIT) ? 0 : DEFAULT_SHIPPING_PRICE;
@@ -92,20 +84,20 @@ const buildBuySection = (conn, paramObj, req) => {
         let cQuery = 'SELECT * FROM fix_products WHERE id = ? LIMIT 1'; 
         conn.query(cQuery, [product], (err, result, field) => {
           if (err) {
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           }
 
           // Product does not exist
           if (result.length < 1) {
-            reject('Nincs ilyen termék');
+            reject('No such product');
             return;
           }
 
           // Product exists, now validate params
           validateParams(conn, paramObj).then(res => {
             if (!res) {
-              reject('Hibás paraméter érték');
+              reject('Invalid parameter value');
               return;
             }
 
@@ -163,7 +155,7 @@ const buildBuySection = (conn, paramObj, req) => {
         // Validate params
         validateParams(conn, paramObj).then(res => {
           if (!res) {
-            reject('Hibás paraméter érték');
+            reject('Invalid parameter value');
             return;
           }
           
@@ -188,13 +180,13 @@ const buildBuySection = (conn, paramObj, req) => {
             let thPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
               'printUploads', 'thumbnails', file + '.png');
             if (!fs.existsSync(filePath) || !fs.existsSync(thPath)) {
-              reject('Nincs ilyen fájl');
+              reject('File not found');
               return;
             }
 
             // If model is printed with SLA make sure that it's not too large
             if (tech == 'SLA' && !shouldAllowSLA(filePath, scale)) {
-              reject('Az STL file túl nagy az SLA nyomtatáshoz'); 
+              reject('The STL file is too large for SLA printing'); 
               return;
             }
 
@@ -214,8 +206,8 @@ const buildBuySection = (conn, paramObj, req) => {
             thPath = (thPath[thPath.length - 3] + '/' + thPath[thPath.length - 2] + '/' +
                 thPath[thPath.length - 1]); 
 
-            let pName = 'Bérnyomtatott Termék #' + (i + 1);
-            if (isFromCrt) pName = 'Bérnyomtatott Termék';
+            let pName = 'Custom printed item #' + (i + 1);
+            if (isFromCrt) pName = 'Custom printed item';
 
             var data = {
               'orderID': orderID,
@@ -261,14 +253,14 @@ const buildBuySection = (conn, paramObj, req) => {
         
         validateLitParams(conn, params).then(res => {
           if (!res) {
-            reject('Hibás paraméter érték heheheh');
+            reject('Invalid parameter value');
             return;
           }
 
           let prodURL = '';
           let imgURL = 'printUploads/lithophanes/' + file;
           let price = calcLitPrice(size);
-          let name = 'Litofánia'
+          let name = 'Lithophane'
 
           let data = {
             'orderID': orderID,
@@ -293,7 +285,7 @@ const buildBuySection = (conn, paramObj, req) => {
         });
       }).catch(err => {
         console.log(err);
-        reject('Egy nem várt hiba történt, kérlek próbáld újra');
+        reject('An unexpected error occurred, please try again');
         return;
       });
     }
@@ -303,7 +295,7 @@ const buildBuySection = (conn, paramObj, req) => {
         let data = {
           prodURL: '#',
           imgURL: 'images/defaultStl.png',
-          name: '3D nyomtatott termékek',
+          name: '3D printed products',
           price,
           quantity: 1,
           prodType: 'zprod',
@@ -328,46 +320,14 @@ const buildBuySection = (conn, paramObj, req) => {
     // Build the delivery info section
     function buildLastSection(userID, finalPrice, discountText) {
       return new Promise((resolve, reject) => {
+        // Delivery method removed; proceed directly to shipping/billing info
         let output = `
           </div>
-          <p class="blueHead" style="font-size: 24px;">2. Szállítás Módja</p>
+          <p class="blueHead" style="font-size: 24px;">2. Shipping & Billing Information</p>
         `;
 
-        let sortedKeys = [];
-        for (let key of Object.keys(SHIPPING_OBJ)) {
-          sortedKeys.push([key, SHIPPING_OBJ[key]['prior']])
-        }
-
-        sortedKeys.sort((a, b) => a[1] - b[1]);
-
-        for (let pair of sortedKeys) {
-          let curObj = SHIPPING_OBJ[pair[0]];
-          output += `
-            <label class="container" id="${curObj['divID']}"
-              style="${curObj['prior'] == 1 ? 'border-color: #c1c1c1;' : ''}">
-              <div style="padding-bottom: 0;">${curObj['title']}</div>
-              <div class="lh sel">
-                ${curObj['desc']}<br>
-                ${curObj['price']}
-              </div>
-              ${curObj['more']}
-              <input type="radio" name="radio2" id="${curObj['radioID']}"
-                ${curObj['prior'] == 1 ? 'checked' : ''}>
-              <span class="checkmark"></span>
-            </label>
-          <div id="glsBigBox"></div>
-          <div class="overlay" id="overlay"></div>
-          <img src="/images/icons/closeLight.svg" class="exitBtn trans" id="exitBtn"
-            onclick="exitCont('glsBigBox')">
-          `;
-        }
-
-        output += `
-          <p class="blueHead" style="font-size: 24px;">3. Szállítási & Számlázási Adatok</p>
-        `;
-
+        // No shipping method or extra charge
         let charge = 0;
-        if (discountText != '(3% kedvezmény)') charge += DEFAULT_SHIPPING_PRICE;
 
         genDelivery(conn, userID, !!userID).then(result => {
           output += result;
@@ -375,7 +335,7 @@ const buildBuySection = (conn, paramObj, req) => {
           // Provide 'different billing address' form
           output += `
             <div class="align" style="margin: 10px 0 20px 0;" id="normalBac">
-              <label class="chCont">Cégként vásárolok
+          <label class="chCont">Buy as a company
                 <input type="checkbox" id="compNormal"
                   onchange="companyBilling('normalCompname', 'normalCompnum', 'normal',
                     'normalDiv')">
@@ -384,7 +344,7 @@ const buildBuySection = (conn, paramObj, req) => {
             </div>
  
             <button class="btnCommon fillBtn pad centr" id="diffBilling">
-              Eltérő számlázási cím
+            Different billing address
             </button>
             <div id="billingHolder">
               <div id="billingForm" class="flexDiv"
@@ -393,91 +353,14 @@ const buildBuySection = (conn, paramObj, req) => {
               </div>
             </div>
 
-            <textarea placeholder="Megjegyzés a rendeléshez (nem kötelező)" id="comment" class="dFormField"></textarea>
+            <textarea placeholder="Order note (optional)" id="comment" class="dFormField"></textarea>
             
             <p class="align" style="color: #676767">
-              Ha szeretnéd követni a rendelésed státuszát, akkor <a href="/register" class="blueLink font16">regisztrálj</a>
-              egy fiókot.
-              Ellenkező esetben csak emailen keresztül fogunk értesíteni a csomag állapotáról.
+              To track your order status, please <a href="/register" class="blueLink font16">create an account</a>.
+              Otherwise, we will notify you via email about your package.
             </p>
 
-            <p class="blueHead" style="font-size: 24px;">
-              4. Válassz Fizetési Módot
-            </p>
-
-            <label class="container trans" id="uvetCont">
-              <div style="padding-bottom: 0;">Utánvétel</div>
-              <div class="lh sel">
-                Ez esetben a csomag kiszállítása után történik meg a fizetés készpénzzel vagy
-                bankkártyával és a futárcég ${MONEY_HANDLE} JD kezelési költséget számol fel.
-              </div>
-              <input type="radio" name="radio" id="uvet">
-              <span class="checkmark"></span>
-            </label>
-            
-            <div class="plOuter" id="plOuter">
-              <div class="plBlueHeader gotham align font28">
-                Fizetés 
-              </div>
-              <div class="plFormCont align">
-                <form id="checkout" action="#" method="POST">
-                  <div class="plCardHolder">
-                    <label for="card-number" class="gotham plLabel">Kártyaszám</label>
-                    <input type="text" id="card-number" class="card-number dFormField plField"
-                      placeholder="0000  0000  0000  0000" pattern="[0-9]{4}  [0-9]{4}  [0-9]{4}  .*" required />
-                    <img class="cardLogos mcard" src="/images/paylikeImages/mastercard.svg">
-                    <img class="cardLogos visa" src="/images/paylikeImages/visa.svg">
-                  </div>
-                  <div>
-                    <label for="card-expiry" class="gotham plLabel">Lejárati Dátum</label>
-                    <input type="text" id="card-expiry" class="card-expiry dFormField plField"
-                      placeholder="HH  /  ÉÉ" pattern="[0-9]{2}  /  ([0-9]{2}|[0-9]{4})" required />
-                  </div>
-                  <div>
-                    <label for="card-code" class="gotham plLabel">CVC</label>
-                    <input type="text" id="card-code" class="card-code dFormField plField" placeholder="***" maxlength="4"
-                      pattern="[0-9]{3,4}" required />
-                  </div>
-                  <div id="plErrorStat" class="errorBox"></div>
-                  <input type="submit" class="fillBtn btnCommon" id="plBtn" value="Fizetés" />
-                </form>
-                <div class="align" id="unsuccAuth">
-                  <p style="color: red;" id="unsuccAuthTxt" class="font24 gotham"></p>
-                </div>
-              </div>
-              <div class="plBlueBottom gotham flexDiv trans" id="plBtnUI">
-                <div>Fizetés</div>
-                <div id="plAmountDyn"></div>
-              </div>
-            </div>
-
-            <label class="container trans" id="paylikeCont">
-              <div style="padding-bottom: 0;">Bankkártyás fizetés</div>
-              <div class="lh sel">
-                Visa és Mastercard bankkártyával való fizetés a Paylike rendszerén
-                keresztül.
-                Az összeg csak a megrendelés után lesz levéve a kártyáról.
-                <span id="plInfoHolder">
-                </span>
-              </div>
-              <input type="radio" name="radio" id="paylikeCb">
-              <span class="checkmark"></span>
-            </label>
-            
-            <label class="container trans" id="btransfer" style="margin-bottom: 30px;">
-              <div style="padding-bottom: 0;">Banki előre utalás</div>
-              <div class="lh sel">
-                Ilyenkor az alábbi számlára való utalással fizethetsz:
-                <span class="blue">${BA_NUM}</span><br>
-                Kedvezményezett neve: <span class="blue">${BA_NAME}</span><br>
-                Fontos, hogy a közleményben tüntetsd fel az alábbi azonosítót:
-                <span class="blue">${orderIDDisplay}</span>
-                <br>
-                A termékek nyomtatását csak az összeg megérkezése után kezdjük el.
-              </div>
-              <input type="radio" name="radio" id="transfer">
-              <span class="checkmark"></span>
-            </label>
+            <!-- Payment method removed -->
           `;
 
           output += `
@@ -513,7 +396,6 @@ const buildBuySection = (conn, paramObj, req) => {
                 </span>
                 <span id="fPrice">${Math.round(finalPrice + charge)}</span>
                 JD ${discountText}
-                (including shipping)
               </p>
               <div id="submitBtnCont">
                 <button class="fillBtn btnCommon centerBtn" style="margin-top: 20px;"
@@ -584,7 +466,7 @@ const buildBuySection = (conn, paramObj, req) => {
                 <script type="text/javascript">
                   let data = ${JSON.stringify(data[2])};
                   data[0].finalPrice = Math.round(${finalPrice});
-                  data[0].shippingPrice = ${shippingPrice};
+                  data[0].shippingPrice = 0;
                   let isFromCart = true;
                   let isFromCP = true;
                   let isLoggedIn = ${userID ? true : false};
@@ -593,12 +475,12 @@ const buildBuySection = (conn, paramObj, req) => {
               resolve(output);
             }).catch(err => {
               console.log(err);
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             });
           }).catch(err => {
             console.log(err);
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           });
           return;
@@ -617,7 +499,7 @@ const buildBuySection = (conn, paramObj, req) => {
                 <script type="text/javascript">
                   let data = [${JSON.stringify(data[1])}];
                   data[0].finalPrice = Math.round(${finalPrice});
-                  data[0].shippingPrice = ${data[4]};
+                  data[0].shippingPrice = 0;
                   let isFromCart = false;
                   let isFromCP = false;
                   let isLoggedIn = ${userID ? true : false};
@@ -626,12 +508,12 @@ const buildBuySection = (conn, paramObj, req) => {
               resolve(output);
             }).catch(err => {
               console.log(err);
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             });
           }).catch(err => {
             console.log(err);
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           });
         } else {
@@ -653,7 +535,7 @@ const buildBuySection = (conn, paramObj, req) => {
                 <script type="text/javascript">
                   let data = [${JSON.stringify(data[2])}];
                   data[0].finalPrice = Math.round(${finalPrice});
-                  data[0].shippingPrice = ${shippingPrice};
+                  data[0].shippingPrice = 0;
                   let isFromCart = false;
                   let isFromCP = false;
                   let isLit = true;
@@ -663,11 +545,11 @@ const buildBuySection = (conn, paramObj, req) => {
               output += '</section>';
               resolve(output);
             }).catch(err => {
-              reject('Egy nem várt hiba történt, kérlek próbáld újra');
+              reject('An unexpected error occurred, please try again');
               return;
             });
           }).catch(err => {
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           });        
         }
@@ -683,7 +565,7 @@ const buildBuySection = (conn, paramObj, req) => {
         }
 
         if (!Object.keys(JSON.parse(cItems)).length && !isZprod) {
-          reject('Üres a kosarad');
+          reject('Your cart is empty');
           return;
         }
 
@@ -771,7 +653,7 @@ const buildBuySection = (conn, paramObj, req) => {
                 let data = ${JSON.stringify(pData)};
                 console.log(data)
                 data[0].finalPrice = Math.round(${finalPrice});
-                data[0].shippingPrice = ${actualShippingPrice};
+                data[0].shippingPrice = 0;
                 let isFromCart = true;
                 let isFromCP = false;
                 let isLoggedIn = ${userID ? true : false};
@@ -780,12 +662,12 @@ const buildBuySection = (conn, paramObj, req) => {
             resolve(output);
           }).catch(err => {
             console.log(err);
-            reject('Egy nem várt hiba történt, kérlek próbáld újra');
+            reject('An unexpected error occurred, please try again');
             return;
           });
         }).catch(err => {
           console.log(err);
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+          reject('An unexpected error occurred, please try again');
           return;
         });
       }

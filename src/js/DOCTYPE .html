@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Zaccord - Contract Printing</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/animate/animate.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/nprogress.css">
+    <link rel="stylesheet" href="/style/quantity.css">
+    <script src="/js/includes/mobileCheck.js" defer></script>
+    <script src="/js/includes/short.js" defer></script>
+    <script src="/js/includes/year.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/item.js" defer></script>
+    <script src="/js/includes/registerSW.js"></script>
+    <script src="/js/print.js" defer></script>
+    <script src="/js/clientScripts/cpSizeCheck.js" defer></script>
+    <script src="/js/includes/cookie.js" defer></script>
+    <script src="/js/stlViewer/stl_viewer.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/images/icons/logo.svg">
+    <link rel="shortcut icon" href="/images/icons/logo.svg" type="image/x-icon">
+    <script src="/js/includes/nprogress.js"></script>
+    <script src="/js/includes/hload.js"></script>
+    <script src="/js/clientScripts/quantityChecker.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="Zaccord">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>   
+  </body>
+</html>
+
+    <section class="keepBottom flexDiv" style="align-items: center;">
+      <div>
+        <img src="/images/404error.png" class="emptyCart">
+        <p class="align" style="font-size: 32px; color: #ccc;"></p>
+      </div>
+    </section>
+  <header>
+  <div class="itemContainer animate__animated animate__fadeIn">
+    <div>
+      <p id="removeMargin">
+        <a href="/">
+          <img class="logo" src="/images/icons/logo.svg" width="55" height="55" />
+        </a>
+      </p> 
+    </div>
+
+    <div>
+      <p class="hideText">
+        <a href="/cart" id="cart">Cart</a>
+        <sup id="cartItemNum" class="cartNumItems"></sup>
+      </p> 
+      <p class="hideSeek">
+        <a href="/cart">
+          <img src="/images/icons/cart.svg" width="25" height="25">
+          <sup id="cartItemNumMob" class="cartNumItems"></sup>
+        </a>
+      </p>
+      <div class="hoverNavbar animate__animated" id="cart_anim"></div>
+    </div>
+
+    <div>
+      <p class="hideText">
+        <a href="/print" id="bny">Custom Printing & Lithophanes</a>
+      </p> 
+      <p class="hideSeek">
+        <a href="/print">
+          <img src="/images/icons/printer.svg" width="25" height="25">
+        </a>
+      </p>
+      <div class="hoverNavbar animate__animated" id="bny_anim"></div>
+    </div>
+
+    <div>
+      <p class="hideText">
+        <a href="/prototype" id="login">Prototyping</a>
+      </p> 
+      <p class="hideSeek">
+        <a href="/prototype">
+          <img src="/images/icons/protBlack.svg" width="25" height="25">
+        </a>
+      </p>
+      <div class="hoverNavbar animate__animated" id="login_anim"></div>
+    </div>
+
+    <div id="loginMenuBtn">
+      <p class="hideText">
+        <a href="/register" id="register">Register</a>
+      </p> 
+      <p class="hideSeek">
+        <a href="/register">
+          <img src="/images/icons/account.svg" width="25" height="25">
+        </a>
+      </p>  
+      <div class="hoverNavbar animate__animated" id="register_anim"></div>
+    </div>
+
+    <div id="mmHolder">
+      <img src="/images/icons/moreMenu.svg" class="mMenu trans" id="moreMenu"
+        data-status="open" width="25" height="25">
+    </div>
+  </div>
+</header>
+
+<div class="mmContainer" id="mmContainer" data-status="closed">
+  <div class="mmInnerTop">
+    <p class="gotham">More Pages</p> 
+    <div>
+      <img src="/images/icons/moreClose.svg" class="mmClose trans" id="mmClose"> 
+    </div>
+  </div>
+
+  <div class="mainMenuCont">
+    <div id="dynamicBtn" class="trans" style="display: none;"></div>
+    <div>
+      <a href="/login" class="gothamNormal trans">Login</a>
+    </div>
+    <div>
+      <a href="/printHelp" class="gothamNormal trans">Printing Help</a>
+    </div>
+    <div>
+      <a href="/lithophaneHelp" class="gothamNormal trans">Lithophane Help</a>
+    </div>
+    <div>
+      <a href="/mitjelent" class="gothamNormal trans">Glossary</a>
+    </div>
+    <div>
+      <a href="/materialHelp" class="gothamNormal trans">Materials</a>
+    </div>
+    <div>
+      <a href="/colors" class="gothamNormal trans">Colors</a>
+    </div>
+    <div>
+      <a href="/blogs" class="gothamNormal trans">Blog</a>
+    </div>
+    <div>
+      <a href="/forgotPassword" class="gothamNormal trans">Forgot Password</a>
+    </div>
+    <div>
+      <a href="/references" class="gothamNormal trans">References</a>
+    </div>
+  </div>
+
+  <div class="relDiv">
+    <div class="mmFooter">
+      <p class="align ddgray gothamNormal font14"><span class="yearHolder"></span> 3DJordanPrint</p>
+    </div>
+  </div>
+</div>
+
+<div class="mmOverlay" id="mmOverlay"></div>
+<div class="installPrompt" id="installPrompt">
+  <button class="btnCommon fillBtn" id="pwaBtn" style="margin-right: 0;">
+    Install 3DJordanPrint
+  </button>
+  <img src="/images/icons/moreClose.svg" width="16" height="16" class="exitPwa trans" id="exitPwa">
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172408841-1"></script>
+<script src="/js/includes/pwainstall.js" async></script>
+<script src="/js/includes/cartItemNum.js" defer></script>
+<script src="/js/includes/safari.js"></script>
+<script src="/js/clientScripts/constants.js"></script>
+<script src="/js/clientScripts/common.js"></script>
+<script src="/js/includes/thirdParty.js" async></script>
+<script src="/js/includes/jq.js"></script>
+<script src="/js/includes/clickedOutside.js" async></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "3DJordanPrint",
+  "url": "https://3djordanprint.com/",
+  "logo": "https://3djordanprint.com/images/icons/logo.svg",
+  "email": "info@3djordanprint.com",
+  "telephone": "+962797479825",
+  "sameAs": [
+    "https://twitter.com/3djordanprint",
+    "https://www.facebook.com/3djordanprint",
+    "https://www.instagram.com/3djordanprint",
+    "https://github.com/squancy/zaccord"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "3DJordanPrint",
+  "image": "https://3djordanprint.com/images/icons/logo.svg",
+  "url": "https://3djordanprint.com/",
+  "telephone": "+962797479825",
+  "email": "info@3djordanprint.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "JO"
+  },
+  "areaServed": [{"@type":"Country","name":"Jordan"},{"@type":"City","name":"Amman"}],
+  "availableLanguage": ["en", "ar"],
+  "priceRange": "$$",
+  "makesOffer": [
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"3D Printing Service"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Prototyping"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Design Assistance"}},
+    {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lithophane Printing"}}
+  ]
+}
+</script>
+<link rel="preload" href="/fonts/gothamMedium.woff2" as="font" type="font/woff2"
+  crossorigin>
+<link rel="preload" href="/fonts/gotham.woff2" as="font" type="font/woff2"
+  crossorigin>
+<link rel="preload" href="/fonts/gothamNormal.woff2" as="font" type="font/woff2"
+  crossorigin>
+
+<!--
+<noscript>
+  <img height="1" width="1"
+    src="https://www.facebook.com/tr?id=405507547313452&ev=PageView&noscript=1" />
+</noscript>
+--!>
+
+<!-- Floating WhatsApp moved to footer include to avoid duplicates -->
+<footer class="animate__animated animate__fadeIn" id="zFooter">
+  <div>
+    <div>
+      <b>Information</b>
+      <div>
+        <a href="/aszf">Terms & Conditions</a>       
+      </div>
+      <div>
+        <a href="/nyilatkozat">Privacy Policy</a>       
+      </div>
+      <div>
+        <a href="/elallas">Withdrawal Statement</a>       
+      </div>
+    </div>
+
+    <div>
+      <b>Help</b>
+      <div>
+        <a href="/gyik">FAQ</a>       
+      </div>
+      <div>
+        <a href="/vasarlas">How to Order</a>       
+      </div>
+      <div>
+        <a href="/about">About</a>       
+      </div>
+    </div>
+
+    <div>
+      <b>Contribute</b>
+      <div>
+        <a href="/feedback">Feedback</a>
+      </div>
+      <div>
+        <a href="/openSource">Open Source</a>
+      </div>
+      <div>
+        <a href="/getInvolved">Get Involved</a>
+      </div>
+    </div>
+
+    <div>
+      <b>Contact</b>
+      <div>
+        <a href="mailto:info@3djordanprint.com" class="contactLinks">info@3djordanprint.com</a>       
+      </div>
+      <div>
+        <a href="tel:+962797479825" class="contactLinks">+962 79 747 9825</a>       
+      </div>
+      <div></div>
+    </div>
+    
+    <div class="footerSocialMedia">
+      <a href="https://twitter.com/3djordanprint" target="_blank" rel="noreferrer">
+        <div class="bgCommon socialMediaIcon trans"
+          style="background-image: url('/images/icons/twitter.svg')"></div>
+      </a>
+
+      <a href="https://www.facebook.com/3djordanprint" target="_blank" rel="noreferrer">
+        <div class="bgCommon socialMediaIcon trans"
+          style="background-image: url('/images/icons/facebook.svg')"></div>
+      </a>
+
+      <a href="https://www.instagram.com/3djordanprint" target="_blank" rel="noreferrer">
+        <div class="bgCommon socialMediaIcon trans"
+          style="background-image: url('/images/icons/instagram.svg')"></div>
+      </a>
+
+      <a href="https://github.com/squancy/zaccord" target="_blank" rel="noreferrer">
+        <div class="bgCommon socialMediaIcon trans"
+          style="background-image: url('/images/icons/github.svg')"></div>
+      </a>
+    </div>
+
+    
+   
+    <p class="copyright gothamMedium align note" style="margin-bottom: 0;">
+      <span class="yearHolder"></span> 3DJordanPrint
+    </p>
+  </div>
+  <a href="https://wa.me/00962797479825" target="_blank" rel="noreferrer" id="waFloat" aria-label="Chat on WhatsApp"></a>
+</footer>
+<style>
+  #waFloat{position:fixed;right:18px;bottom:18px;width:84px;height:84px;border-radius:50%;
+    background:#25D366 url('/images/icons/whatsapp.svg') no-repeat 50% 50%;background-size:42px 42px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.2);z-index:9999}
+  #waFloat:hover{transform:scale(1.05)}
+</style>
+<!--
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v9.0'
+    });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/hu_HU/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-customerchat"
+  attribution=install_email
+  page_id="101011711690241"
+theme_color="#4389F6">
+</div>
+--!>

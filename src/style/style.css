@@ -62,6 +62,13 @@
 
 .specChHl {
   background-color: #4285f4;
+  color: #fff;
+}
+
+/* Ensure text inside highlighted choice is readable */
+.specChDDItem.specChHl div,
+.specChDDItem.specChHl div * {
+  color: #fff !important;
 }
 
 .specChDD {
@@ -560,6 +567,12 @@ input[type=number] {
 
 .techChosen:hover {
   background-color: #0f6aff
+}
+
+/* Ensure all text inside the selected tech pill shows as white */
+.techChosen *,
+.techChosen .printTechTitle {
+  color: #fff !important;
 }
 
 .techOther {

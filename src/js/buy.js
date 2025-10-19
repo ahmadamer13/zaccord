@@ -86,12 +86,10 @@ function submitOrder() {
       class="animate__animated animate__fadeIn">
   `;
 
-  // Gather form values
-  let uvet = _('uvet').checked; 
-  let transfer = _('transfer').checked;
-  let creditCard = _('paylikeCb').checked;
+  // Gather form values (payment/delivery options removed)
   let name = _('name').value;
-  let pcode = Number(_('pcode').value);
+  // ZIP/Postal code removed from checkout
+  let pcode = 0;
   let city = _('city').value;
   let address = _('address').value;
   let mobile = _('mobile').value;
@@ -121,20 +119,12 @@ function submitOrder() {
   let isAgree = _('agree').checked;
   let isAgree2 = _('agree2').checked;
   let eInvoice = _('einvoice').checked;
-  let isPP = isChecked(PACKET_POINT_TYPES_R);
-  if (!uvet && !transfer && !creditCard) {
-    statusFill('errStatus', 'Please select a payment method');
-    resetSubmitBtn();
-    return;
-  } else if (!name || !pcode || !city || !address || !mobile) {
+  // Payment and delivery method checks removed
+  if (!name || !city || !address || !mobile) {
     statusFill('errStatus', 'Please fill in the delivery details');
     resetSubmitBtn();
     return;
   // Skip strict postal code validation on client; accept any value provided
-  } else if (creditCard && !transactionID) {
-    statusFill('errStatus', 'Please add your credit card to proceed with payment');
-    resetSubmitBtn();
-    return;
   } else if (!isAgree || !isAgree2) {
     // Did not accept the terms & policy
     statusFill('errStatus', 'Please accept the Terms and the Privacy Policy');
@@ -157,32 +147,11 @@ function submitOrder() {
     if (!validateComp(isComp)) return;
     else if (!isComp) billingType = 'diffNo';
     else billingType = 'diffYes';
-  } else if (!isChecked(SHIPPING_RADIO_IDS)) {
-    statusFill('errStatus', 'Please select a shipping method');
-    resetSubmitBtn();
-    return;
-  } else if (isPP && !infoArr && !packetaArr) {
-    statusFill('errStatus', 'Please choose a pickup point');
-    resetSubmitBtn();
-    return;
   }
   
 
   // Handle delivery to address & delivery to packet point
-  data[0].delivery = isChecked(SHIPPING_RADIO_IDS);
-  if (isPP) {
-    let type = _('pointGls').checked ? 'gls' : 'packeta';
-    data[0].ppID = getPPAttr('id', type); 
-    data[0].ppName = getPPAttr('name', type); 
-    data[0].ppZipcode = getPPAttr('zip', type); 
-    data[0].ppCity = getPPAttr('city', type);
-    data[0].ppAddress = getPPAttr('address', type);
-    data[0].ppContact = getPPAttr('contact', type);
-    data[0].ppPhone = getPPAttr('phone', type);
-    data[0].ppEmail = getPPAttr('email', type);
-    data[0].ppLat = getPPAttr('lat', type);
-    data[0].ppLon = getPPAttr('lon', type);
-  }
+  data[0].delivery = '';
 
   /*
    Add payment & delivery data + login/registration credentials to the 1st element of the
@@ -220,9 +189,8 @@ function submitOrder() {
     data[0].isLit = false;
   }
 
-  if (uvet) data[0].payment = 'uvet';
-  else if (transfer) data[0].payment = 'transfer';
-  else data[0].payment = 'credit';
+  // Default payment method
+  data[0].payment = 'transfer';
   console.log(data);
 
   // Send data to server for further validation
@@ -259,19 +227,18 @@ function submitOrder() {
         _('main').innerHTML = `
           <img src="/images/icons/deliver.png" width="100">
 
-          <p class="gotham font24" style="color: #4285f4;">Sikeres rendelés!</p>
+          <p class="gotham font24" style="color: #4285f4;">Order placed successfully!</p>
           <p class="align dgray lh">
-            A termékek legkésőbb a rendelés napjától számított 10. munkanapon házhoz lesznek
-            szállítva.<br>
-            Köszönjük, hogy a Jordan3DPrintet választottad!
+            Your items will be delivered within 10 business days from the order date.<br>
+            Thank you for choosing Jordan3DPrint!
           </p>
           <button class="btnCommon fillBtn" style="margin: 20px auto;"
           onclick="window.location.href='/'">
-            Vissza a főoldalra
+            Back to home
           </button>
         `;
         updateCartNum();
-        window.history.replaceState('home', 'Jordan3DPrint - 3D Nyomtatás', '/');
+        window.history.replaceState('home', 'Jordan3DPrint - 3D Printing', '/');
         // fbq('track', 'AddPaymentInfo');
         /*
         fbq('track', 'Purchase', {
@@ -279,12 +246,12 @@ function submitOrder() {
         });
         */
     } else {
-      _('errStatus').innerHTML = '<p>Egy nem várt hiba történt, kérlek próbáld újra</p>';
+      _('errStatus').innerHTML = '<p>An unexpected error occurred, please try again</p>';
       resetSubmitBtn();
     }
   }).catch(err => {
     console.log(err);
-    _('errStatus').innerHTML = '<p>Egy nem várt hiba történt, kérlek próbáld újra</p>';
+    _('errStatus').innerHTML = '<p>An unexpected error occurred, please try again</p>';
     resetSubmitBtn();
   });
 }
@@ -294,10 +261,10 @@ function validateComp(isComp) {
   let [billingName, billingPcode, billingCountry, billingCity, billingAddress,
     billingCompname] = getBillingFields();
   if (!billingName || !billingCountry || !billingPcode || !billingCity || !billingAddress) {
-    statusFill('errStatus', 'Kérlek tölts ki minden számlázási adatot'); 
+    statusFill('errStatus', 'Please fill in all billing details'); 
     return false;
-  } else if (!Number.isInteger(billingPcode) || billingPcode < 1000 || billingPcode > 9985) {
-    statusFill('errStatus', 'Kérlek valós irányítószámot adj meg'); 
+  } else if (!Number.isInteger(billingPcode)) {
+    statusFill('errStatus', 'Please enter a valid ZIP/postal code'); 
     return false;
   }
 
@@ -305,7 +272,7 @@ function validateComp(isComp) {
     return true;
   } else {
     if (!billingCompname || !billingCompnum) {
-      statusFill('errStatus', 'Kérlek tölts ki minden céges számlázási adatot'); 
+      statusFill('errStatus', 'Please provide all company billing details'); 
       return false; 
     }
     return true;
@@ -318,7 +285,7 @@ let compAdded = false;
 _('diffBilling').addEventListener('click', function toggleForm(e) { 
   if (this.getAttribute('data-status') != 'close') {
     console.log('up')
-    _('diffBilling').innerText = 'Megegyező számlázási cím';
+    _('diffBilling').innerText = 'Same billing address';
     _('billingForm').style.display = 'flex';
     if (_('bac')) _('bac').style.display = 'block';
     _('diffBilling').classList = `
@@ -326,7 +293,7 @@ _('diffBilling').addEventListener('click', function toggleForm(e) {
     `;
 
     _('billingForm').innerHTML = `
-      <input type="text" class="dFormField" id="billingName" placeholder="Név"> 
+      <input type="text" class="dFormField" id="billingName" placeholder="Name"> 
     `; 
 
     _('billingHolder').classList = `animate__animated animate__fadeIn`;
@@ -334,22 +301,22 @@ _('diffBilling').addEventListener('click', function toggleForm(e) {
     let res = '<select id="billingCountry" class="dFormField" style="margin-top: 0;">';
     for (let i = 0; i < countries.length; i++) {
       let selected = '';
-      if (countries[i] === 'Magyarország') selected = 'selected';
+      if (countries[i] === 'Magyarország' || countries[i] === 'Hungary') selected = 'selected';
       res += `<option value="${countries[i]}" ${selected}>${countries[i]}</option>`;
     }
 
     res += '</section>';
     res += `
-      <input type="text" class="dFormField" id="billingPcode" placeholder="Irányítószám"> 
-      <input type="text" class="dFormField" id="billingCity" placeholder="Város"> 
+      <input type="text" class="dFormField" id="billingPcode" placeholder="ZIP/Postal code"> 
+      <input type="text" class="dFormField" id="billingCity" placeholder="City"> 
       <input type="text" class="dFormField" id="billingAddress"
-      placeholder="Cím (hsz., em., ajtó)"> 
+      placeholder="Address (house no., floor, door)"> 
     `;
 
     if (!compAdded) {
       _('billingHolder').innerHTML += `
         <div class="align" style="margin: 10px 0 20px 0;" id="bac">
-          <label class="chCont">Cégként vásárolok
+          <label class="chCont">Buy as a company
             <input type="checkbox" id="buyAsComp"
               onchange="companyBilling('billingCompname', 'billingCompnum', 'billing',
                 'billingForm')">
@@ -364,7 +331,7 @@ _('diffBilling').addEventListener('click', function toggleForm(e) {
     _('billingForm').classList = 'animate__animated animate__fadeIn';
     this.setAttribute('data-status', 'close');
   } else {
-    _('diffBilling').innerText = 'Eltérő számlázási cím';
+    _('diffBilling').innerText = 'Different billing address';
     _('billingHolder').classList = `animate__animated animate__fadeOut`;
     _('diffBilling').classList = `
       btnCommon fillBtn pad centr animate__animated animate__fadeIn
@@ -413,8 +380,8 @@ let toggleStates = {
 
 function companyBilling(nameID, numID, id, container) {
   if (!toggleStates[id]) {
-    let compName = createInput(nameID, 'Cégnév');
-    let compNum = createInput(numID, 'Adószám');
+    let compName = createInput(nameID, 'Company name');
+    let compNum = createInput(numID, 'Tax number');
     _(container).appendChild(compName); 
     _(container).appendChild(compNum); 
     toggleStates[id] = true;
@@ -508,7 +475,7 @@ function showMap(e) {
   if (!isInit) {
     glsMap.init('HU', 'glsBigBox', '1116,Budapest,HU', 1);
     _('searchinput').classList = 'glsSearchInput';
-    _('searchinput').placeholder = 'Csomagpont keresése...';
+    _('searchinput').placeholder = 'Search pickup point...';
 
     var target = document.querySelector('#psitems-canvas')
 
@@ -572,10 +539,7 @@ function exitCont(cont) {
   document.body.style.overflow = 'auto';
 }
 
-_('uvetCont').addEventListener('click', (e) => handleUvet(e, true));
-_('btransfer').addEventListener('click', (e) => handleUvet(e, false));
-_('paylikeCont').addEventListener('click', (e) => handleUvet(e, false));
-_('glsPoint').addEventListener('click', (e) => showMap(e));
+// Payment and delivery method UI removed; no event listeners needed
 
 // The following functions are used for selecting a packet point by GLS
 var glsMap;
@@ -594,40 +558,4 @@ function testclick(obj) {
   glsMap.initAddress($('#testinput').val());
 }
 
-function getShippingPrice(price, show) {
-  if (price < FREE_SHIPPING_LIMIT) {
-    return DELIVERY_TO_MONEY[show];
-  }
-
-  return 0;
-}
-
-function highlightLabel(show, all) {
-  _(show).style.borderColor = '#c1c1c1';
-  for (let el of all) {
-    if (el != show) {
-      _(el).style.borderColor = '#dfdfdf';
-    }
-
-    if (show == 'btransfer' || show == 'uvetCont') {
-      _('plInfoHolder').innerHTML = '';
-    }
-  }
-
-  if (show != 'btransfer' && show != 'uvetCont' && show != 'paylikeCont') {
-    _('fPrice').innerHTML = data[0].finalPrice + getShippingPrice(data[0].finalPrice, show);
-    data[0].shippingPrice = getShippingPrice(data[0].finalPrice, show);
-  }
-
-  _('plAmountDyn').innerText = _('fPrice').innerText + ' Ft';
-}
-
-const paymentOptions = ['btransfer', 'uvetCont', 'paylikeCont']
-
-for (let po of paymentOptions) {
-  _(po).addEventListener('click', (e) => highlightLabel(po, paymentOptions));
-}
-
-for (let so of SHIPPING_DIV_IDS) {
-  _(so).addEventListener('click', (e) => highlightLabel(so, SHIPPING_DIV_IDS));
-}
+// Shipping price and label highlight logic removed

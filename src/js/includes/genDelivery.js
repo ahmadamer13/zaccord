@@ -26,8 +26,6 @@ function genDelivery(conn, userID, isLoggedIn = true) {
         <div class="flexDiv" style="flex-wrap: wrap; justify-content: space-evenly;" id="normalDiv">
           <input type="text" class="dFormField" id="name" placeholder="Name"
             value="${name}">
-          <input type="text" class="dFormField" id="pcode" placeholder="ZIP code"
-            value="${postalCode}">
           <input type="text" class="dFormField" id="city" placeholder="City"
             value="${city}">
           <input type="text" class="dFormField" id="address"

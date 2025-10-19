@@ -18,7 +18,7 @@ function changeTech(techBefore, tid, price) {
     cookieVals['content_' + tid]['color_' + tid] = encodeURIComponent(PCOLORS['pla'][0]);
   } else {
     cookieVals['content_' + tid]['rvas_' + tid] = '0.05';
-    cookieVals['content_' + tid]['suruseg_' + tid] = encodeURIComponent('Tömör');
+    cookieVals['content_' + tid]['suruseg_' + tid] = encodeURIComponent('Solid');
     cookieVals['content_' + tid]['color_' + tid] = encodeURIComponent(PCOLORS['gyanta (resin)'][0]);
   }
   setCookie('cartItems', JSON.stringify(cookieVals), 365);
@@ -59,7 +59,7 @@ function changeTech(techBefore, tid, price) {
   let postfix = isSLA ? '' : '%';
   for (let inf of infillValues) {
     let selected = '';
-    if ((!isSLA && inf == 20) || (isSLA && inf == 'Tömör')) selected = 'selected';
+    if ((!isSLA && inf == 20) || (isSLA && inf == 'Solid')) selected = 'selected';
     content += `
       <option value="${inf}" ${selected}>${inf}${postfix}</option>
     `;
@@ -153,7 +153,7 @@ function changeTech(techBefore, tid, price) {
 
   let newPrice;
   if (isSLA) {
-    newPrice = calcSLAPrice(Math.round(originalPrice * SLA_MULTIPLIER), 0.05, 'Tömör', scaleVal);
+    newPrice = calcSLAPrice(Math.round(originalPrice * SLA_MULTIPLIER), 0.05, 'Solid', scaleVal);
   } else {
     _('fvas' + tid).value = '1.2';
     newPrice = calculatePrice(originalPrice, tid, false, true);

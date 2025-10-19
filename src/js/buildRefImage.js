@@ -33,19 +33,19 @@ const buildRefImage = (conn, id) => {
           <div class="refInfoHolder">
             <p class="prodName refName">${title}</p>
             <p style="color: #696969" class="lh">${description}</p>
-            <p><span class="gotham">Rétegvastagság:</span> ${rvas}mm</p>
-            <p><span class="gotham">Falvastagság:</span> ${fvas}mm</p>
-            <p><span class="gotham">Sűrűség:</span> ${infill}%</p>
+            <p><span class="gotham">Layer height:</span> ${rvas}mm</p>
+            <p><span class="gotham">Wall thickness:</span> ${fvas}mm</p>
+            <p><span class="gotham">Infill:</span> ${infill}%</p>
             <p><span class="gotham">Size:</span> ${sizeReadable}</p>
             <div class="downloadHolder gotham align blue trans" style="margin-top: 40px;">
               <a href="/images/referenceImages/${imgUrl}" download="${imgUrl}"class="blue">
-                Letöltés
+                Download
               </a>
             </div>
             <p class="align lh" style="margin-top: 40px;">
-              Ha szeretnéd kinyomtatni a saját terméked, akkor válaszd a
-              <a href="/print" class="blueLink font16">bérnyomtatás</a> funkciót vagy válogass
-              <a href="/" class="blueLink font16">előre kinyomtatott</a> termékek között.
+              If you want to print your own model, use the
+              <a href="/print" class="blueLink font16">custom printing</a> feature, or browse our
+              <a href="/" class="blueLink font16">ready‑to‑print</a> products.
             </p>
           </div>
         </section>

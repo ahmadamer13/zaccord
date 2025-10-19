@@ -150,7 +150,8 @@ function getSLAParams() {
 
 function updateSLAPrice() {
   let [lw, infill, scale] = getSLAParams();
-  let nPrice = calcSLAPrice(basePrice, lw, infill, scale);
+  // Use the SLA base price snapshot to avoid relying on a possibly undefined basePrice
+  let nPrice = calcSLAPrice(bpSave[1], lw, infill, scale);
   priceChange();
 }
 
@@ -276,25 +277,21 @@ var bwSave = baseWeight;
 
 // Calculate the price of the custom print based on its parameters and initial price
 function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null) {
+  // Selected parameters (raw values)
   let rvasVal = rv == null ? Number(_('rvas').value) : Number(rv);
   let surusegVal = sv == null ? Number(_('suruseg').value) : Number(sv);
   let scaleVal = scv == null ? Number(_('scale').value) : Number(scv);
   let fvasVal = fv == null ? Number(_('fvas').value) : Number(fv);
- 
-  // Convert degrees to radians
-  rvasVal *= Math.PI / 180;
-  surusegVal *= Math.PI / 180;
-  fvasVal *= Math.PI / 180;
 
-  // Formula for calculating the price with the given params
-  // Parameters values in the formula are degrees (converted to rads)
-  let nPrice = (price * scaleVal *
-    ((1 / (Math.sin(rvasVal) * 140 + 0.51130880187)) +
-    (Math.sin(surusegVal) / 1.3 + 0.73690758206) +
-    (Math.sin(fvasVal) * 8 + 0.83246064094) - 2));
+  // Mass‑based scaling relative to baseline (20% infill, 1.2mm shell)
+  const baseInfill = 20.0;
+  const baseWall = 1.2;
+  const infillFactor = Math.max(0.05, surusegVal / baseInfill);
+  const wallFactor = Math.max(0.25, fvasVal / baseWall);
+  const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
 
   let filamentMaterial = mv == null ? _('printMat').value.toLowerCase() : mv.toLowerCase();
-  let fp = smoothPrice(Math.round(nPrice * PRINT_MULTS[filamentMaterial]));
+  let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial]));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
 

@@ -52,7 +52,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     let city = dDataArr[0].city;
     let address = dDataArr[0].address;
     let mobile = dDataArr[0].mobile;
-    let pcode = Number(dDataArr[0].pcode);
+    // ZIP/Postal code optional in checkout; default to 0
+    let pcode = Number(dDataArr[0].pcode || 0);
     let payment = dDataArr[0].payment;
     let transactionID = dDataArr[0].transactionID;
     let promises = [];
@@ -92,7 +93,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     // Because of async queries a track variable is needed for packet point checking in db
     let ppUpdated = false;
 
-    const SHIPPING_PRICE = DELIVERY_TO_MONEY_R[deliveryType];
+    // Allow flows without an explicit delivery type (no shipping/payment UI)
+    const SHIPPING_PRICE = DELIVERY_TO_MONEY_R[deliveryType] || 0;
 
     // Validate billing info & credentials
     let billingType = dDataArr[0].billingType;
@@ -201,27 +203,27 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
         let priceWithoutDiscount = localFinalPrice; 
 
-        if (!name || !city || !address || !mobile || !pcode || !payment) {
+        if (!name || !city || !address || !mobile || !payment) {
           reject('Missing shipping information'); 
           return;
         } else if (payment == 'credit' && !transactionID) {
           reject('Please add your bank card to proceed with payment'); 
         // Skip strict postal code validation on server
-        // Make sure there is a valid shipping price
-        } else if ((priceWithoutDiscount <= FREE_SHIPPING_LIMIT && shippingPrice != SHIPPING_PRICE)
-          || (priceWithoutDiscount > FREE_SHIPPING_LIMIT && shippingPrice != 0)) {
-          console.log(shippingPrice, SHIPPING_PRICE);
-          reject('Invalid shipping price');
-          return;
-        // Make sure delivery type is valid
-        } else if (DELIVERY_TYPES.indexOf(deliveryType) < 0) {
-          reject('Please select a shipping method');
-          return;
-        // Make sure that the necessary packet point fields are set
-        } else if (isPP
-          && (!packetID || !packetName || !packetZipcode || !packetCity || !packetAddress)) {
-          reject('Missing pickup point details');
-          return; 
+        // Validate shipping only when a delivery type is provided
+        } else if (deliveryType) {
+          if ((priceWithoutDiscount <= FREE_SHIPPING_LIMIT && shippingPrice != SHIPPING_PRICE)
+            || (priceWithoutDiscount > FREE_SHIPPING_LIMIT && shippingPrice != 0)) {
+            console.log(shippingPrice, SHIPPING_PRICE);
+            reject('Invalid shipping price');
+            return;
+          } else if (DELIVERY_TYPES.indexOf(deliveryType) < 0) {
+            reject('Please select a shipping method');
+            return;
+          } else if (isPP
+            && (!packetID || !packetName || !packetZipcode || !packetCity || !packetAddress)) {
+            reject('Missing pickup point details');
+            return; 
+          }
         }
 
         console.log('huuuu');
@@ -540,7 +542,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                     </p>
                     <div style="font-size: 14px;">
                       <div><b>Name: </b>${name}</div>
-                      <div><b>Address: </b>${pcode} ${city}, ${address}</div>
+                      <div><b>Address: </b>${city}, ${address}</div>
                       <div><b>Phone number: </b>${mobile}</div>
                       <div>
                         <b>Payment method: </b>
