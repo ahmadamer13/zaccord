@@ -67,6 +67,39 @@ const buildMainSection = (conn, cat) => {
             </div>
           </section>
 
+          <!-- Combined Bilingual Special Offer Banner with subtle animation -->
+          <style>
+            @keyframes promoPulse { from { transform: translateY(0); opacity: 0.96; }
+                                    to   { transform: translateY(-2px); opacity: 1; } }
+          </style>
+          <section class="promo-offer animate__animated animate__fadeIn"
+            style="box-sizing:border-box; width:100%; background:linear-gradient(90deg,#0ea5e9,#22c55e); color:#fff; padding:18px 12px; animation: promoPulse 1.6s ease-in-out infinite alternate;">
+            <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <img src="/images/icons/discount.svg" alt="Discount" width="36" height="36" style="filter:brightness(0) invert(1);"/>
+                <span class="gotham" style="font-size:28px; font-weight:800; letter-spacing:0.3px;">Special Offer</span>
+              </div>
+              <div class="gothamNormal" style="font-size:20px; line-height:1.2; text-align:center;">
+                FDM Printing at <strong style="font-size:26px;">0.07 JD</strong> per gram — limited time!
+              </div>
+              <button class="btn btn-primary" onclick="redirect('/print')" style="background:#111827; border:0; color:#fff; padding:10px 16px; border-radius:8px; font-size:16px;">
+                Get Discounted Quote
+              </button>
+            </div>
+            <div dir="rtl" lang="ar" style="max-width:1200px; margin:8px auto 0; display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <img src="/images/icons/discount.svg" alt="خصم" width="30" height="30" style="filter:brightness(0) invert(1);"/>
+                <span class="gotham" style="font-size:24px; font-weight:800;">عرض خاص</span>
+              </div>
+              <div class="gothamNormal" style="font-size:18px; line-height:1.2; text-align:center;">
+                طباعة FDM بسعر <strong style="font-size:22px;">0.07 دينار</strong> لكل غرام — لفترة محدودة!
+              </div>
+              <button class="btn btn-primary" onclick="redirect('/print')" style="background:#111827; border:0; color:#fff; padding:8px 14px; border-radius:8px; font-size:15px;">
+                احصل على السعر المخفض
+              </button>
+            </div>
+          </section>
+
           <section class="home-section">
             <h2 class="home-title">Why 3DJordanPrint</h2>
             <p class="home-sub">Reliable local service with transparent pricing. From prototypes to small-batch production, we help you move from idea to part quickly.</p>
@@ -127,9 +160,6 @@ const buildMainSection = (conn, cat) => {
                   <img src="/images/larr.png" width="25" height="25" alt="Left">
                 </div>
                 <div class="catBox" id="catBox">
-                  <a href="/?cat=Most%20Popular" class="pseudoLink">
-                    <div onclick="sortByCat('Most Popular', 0)" class="scat" style="background-color:#ececec;color:#4285f4;border-color:#4285f4;">Most Popular</div>
-                  </a>
         `;
 
         for (let i = 0; i < res.length; i++) {
@@ -159,7 +189,7 @@ const buildMainSection = (conn, cat) => {
 
         // Only further products on a category page
         // Only display the top of the landing page on the index page
-        let popProdsStyle = 'display: inline-block;';
+        let popProdsStyle = 'display: none;';
         let catToggle = 'display: none;';
         let moreShow = 'diplay: none;';
         let furtherShow = 'display: flex;';
@@ -174,7 +204,11 @@ const buildMainSection = (conn, cat) => {
 
         output += `
           <div class="wideShowcase" id="wideShowcase" style="${showcaseStyle}">
-            <div class="bgShowcase bgCommon">
+            <div class="bgShowcase bgCommon" style="position:relative; overflow:hidden;">
+              <video class="bgVideo" autoplay muted loop playsinline
+                style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+                <source src="/Untitled%20design%20(1).mp4" type="video/mp4">
+              </video>
               <div class="darken"></div>
               <div class="textCenter">
                 <h1 class="mainText lh gotham align fontNorm" style="padding: 10px;">
@@ -381,7 +415,7 @@ const buildMainSection = (conn, cat) => {
         `;
 
         output += `
-          <section class="mainShowcase keepBottom animate__animated animate__fadeIn" id="ms">
+          <section class="mainShowcase keepBottom animate__animated animate__fadeIn" id="ms" style="display:none;">
             <div class="dynamicShowcase" id="dynamicShowcase">
         `;
          

@@ -457,6 +457,46 @@ const server = http.createServer((req, res) => {
       returnToClient(genOrder, [conn, req.user.id], null, res);
     });
   } else {
+    // Dynamic sitemap.xml
+    if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
+      const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
+      const staticPaths = ['/', '/print', '/account', '/cart', '/prototype', '/blogs', '/colors', '/references'];
+      let urls = staticPaths.map(p => ({ loc: host + p, lastmod: new Date().toISOString().split('T')[0] }));
+
+      const addUrl = (arr, path, dateStr) => arr.push({ loc: host + path, lastmod: dateStr || new Date().toISOString().split('T')[0] });
+
+      // Collect dynamic URLs
+      const prom1 = new Promise((resolve) => {
+        conn.query('SELECT url, date_added FROM fix_products', (err, rows) => {
+          if (!err && Array.isArray(rows)) {
+            for (const r of rows) addUrl(urls, '/' + r.url, (r.date_added || new Date()).toISOString ? (r.date_added.toISOString ? r.date_added.toISOString().split('T')[0] : new Date(r.date_added).toISOString().split('T')[0]) : new Date().toISOString().split('T')[0]);
+          }
+          resolve();
+        });
+      });
+
+      const prom2 = new Promise((resolve) => {
+        conn.query('SELECT id, date_added FROM blog', (err, rows) => {
+          if (!err && Array.isArray(rows)) {
+            for (const r of rows) addUrl(urls, '/blog?id=' + r.id, r.date_added ? new Date(r.date_added).toISOString().split('T')[0] : undefined);
+          }
+          resolve();
+        });
+      });
+
+      Promise.all([prom1, prom2]).then(() => {
+        const urlset = urls.map(u => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n');
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlset}\n</urlset>\n`;
+        res.writeHead(200, { 'Content-Type': 'application/xml' });
+        res.end(xml);
+      }).catch(() => {
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`;
+        res.writeHead(200, { 'Content-Type': 'application/xml' });
+        res.end(xml);
+      });
+      return;
+    }
+
     /*
       Render files that are either stored directly on the server or not fetched via a POST
       request

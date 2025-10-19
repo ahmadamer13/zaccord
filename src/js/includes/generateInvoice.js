@@ -15,11 +15,23 @@ const BILLINGO_DELIVERY_ID = constants.billingoDeliveryID;
 const BILLINGO_API_KEY = constants.billingoAPIKey;
 const MONEY_HANDLE = shipping.moneyHandle;
 
-const createBillingoClient = require('@codingsans/billingo-client').createBillingoClient;
-
-const client = createBillingoClient({
-  apiKey: BILLINGO_API_KEY
-});
+// Lazy init Billingo client to avoid startup crashes in dev envs
+let billingoClient = null;
+function getBillingoClient() {
+  if (billingoClient) return billingoClient;
+  try {
+    const mod = require('@codingsans/billingo-client');
+    const createBillingoClient = mod && (mod.createBillingoClient || mod.default || mod);
+    if (typeof createBillingoClient !== 'function') {
+      throw new Error('createBillingoClient not available');
+    }
+    billingoClient = createBillingoClient({ apiKey: BILLINGO_API_KEY });
+    return billingoClient;
+  } catch (e) {
+    console.log('Billingo client unavailable:', e && e.message ? e.message : e);
+    return null;
+  }
+}
 
 function getData(result) {
   let name = result[0].name;
@@ -139,6 +151,11 @@ const generateInvoice = (conn, formData) => {
 
           console.log(billingCompname, compname, name);
 
+          const client = getBillingoClient();
+          if (!client) {
+            reject('Invoice service unavailable');
+            return;
+          }
           client.partners.create(invoiceData).then(data => {
             let pid = data.id;
             let dt = new Date();
@@ -206,6 +223,11 @@ const generateInvoice = (conn, formData) => {
         });
       }).then(fdata => {
         console.log(fdata);
+        const client = getBillingoClient();
+        if (!client) {
+          reject('Invoice service unavailable');
+          return;
+        }
         client.documents.create(fdata).then(resp => {
           console.log(resp);
           if (!isElectronic) {
