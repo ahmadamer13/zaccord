@@ -410,9 +410,9 @@ function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null, cv
   const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
 
   let filamentMaterial = mv == null ? _('printMat').value.toLowerCase() : mv.toLowerCase();
-  // Color multiplier: Black (Fekete) and White (Fehér) are standard; others +15%
+  // Color multiplier disabled: all colors priced equally
   let selectedColor = cv == null ? _('color').value : cv;
-  let colorMultiplier = (selectedColor === 'Fehér' || selectedColor === 'Fekete') ? 1.0 : 1.15;
+  let colorMultiplier = 1.0;
   let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial] * colorMultiplier));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
@@ -553,14 +553,8 @@ function updateColorSurchargeHint() {
       hint.style.margin = '6px 0 0 0';
       container.appendChild(hint);
     }
-    const c = _('color').value;
-    const surcharge = (c !== 'Fehér' && c !== 'Fekete');
-    if (tval === 'FDM' && surcharge) {
-      hint.textContent = '+15% color surcharge applies';
-      hint.style.display = 'block';
-    } else {
-      hint.style.display = 'none';
-    }
+    // Color surcharge disabled: no hint shown
+    hint.style.display = 'none';
   } catch(e) { /* no-op */ }
 }
 
