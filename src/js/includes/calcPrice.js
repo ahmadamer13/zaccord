@@ -3,7 +3,7 @@ const MIN_PRICE = constants.minPrice;
 const smoothPrice = constants.smoothPrice;
 
 // Calculate the final price of a product, given its initial price + parameters
-function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, filamentMaterial = false) {
+function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, filamentMaterial = false, colorVal = null) {
   // Convert degrees to radians
   rvasVal *= Math.PI / 180
   surusegVal *= Math.PI / 180
@@ -24,7 +24,12 @@ function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, f
     const wallFactor = Math.max(0.25, fvasVal * 180 / Math.PI / baseWall);
     const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
     const mult = PRINT_MULTS[filamentMaterial.toLowerCase()];
-    let fp = smoothPrice(Math.round(price * scaleVal * massFactor * mult));
+    // Color surcharge: Black (Fekete) and White (Fehér) are standard; others +15%
+    let colorMultiplier = 1.0;
+    if (colorVal && !['Fehér', 'Fekete'].includes(colorVal)) {
+      colorMultiplier = 1.15;
+    }
+    let fp = smoothPrice(Math.round(price * scaleVal * massFactor * mult * colorMultiplier));
     return fp < MIN_PRICE ? MIN_PRICE : fp;
   }
 

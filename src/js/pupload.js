@@ -65,7 +65,20 @@ const DEFAULT_CONTENT  = _('bigPrew').innerHTML;
 function displayFiles() {
   let fileCount = 0;
   let hasStl = false;
-  let hasImg = false;
+  // Start with the current selection
+  let originalFiles = _('fileInput').files;
+  // Filter to STL-only
+  let filtered = new DataTransfer();
+  for (let i = 0; i < originalFiles.length; i++) {
+    const name = originalFiles[i].name || '';
+    const parts = name.split('.');
+    const ext = parts.length > 1 ? parts[parts.length - 1].toLowerCase() : '';
+    if (ext === 'stl') filtered.items.add(originalFiles[i]);
+  }
+  // If we removed anything, update the input to the STL-only list
+  if (filtered.files.length !== originalFiles.length) {
+    _('fileInput').files = filtered.files;
+  }
   let files = _('fileInput').files;
   let prewContent = _('prew').innerHTML;
   _('prew').innerHTML = '';
@@ -74,6 +87,14 @@ function displayFiles() {
   let errors = document.getElementsByClassName('errorMessage');
   for (let el of Array.from(errors)) {
     el.remove();
+  }
+
+  // If nothing STL was selected, show error and reset UI
+  if (!files.length) {
+    _('bigPrew').innerHTML = DEFAULT_CONTENT;
+    sBtnAdded = false;
+    errorMsg('Only STL files are allowed');
+    return;
   }
 
   // Handle selected files & display them in the right div
@@ -94,42 +115,9 @@ function displayFiles() {
       return;
     }
 
-    // Get file extension and display the proper icon for file
-    let parts = file.name.split('.');
-    let imgPrew;
-    let wrongFileType = false;
-    if (parts[parts.length - 1].toLowerCase() === 'stl') {
-      imgPrew = '<img src="/images/icons/icostl.png" width="50">'; 
-      hasStl = true;
-    } else if (parts[parts.length - 1].toLowerCase() === 'png') {
-      imgPrew = '<img src="/images/icons/icopng.png" width="50">'; 
-      hasImg = true;
-    } else if (parts[parts.length - 1].toLowerCase() === 'jpg' ||
-      parts[parts.length - 1].toLowerCase() === 'jpeg') {
-      imgPrew = '<img src="/images/icons/icojpg.png" width="50">'; 
-      hasImg = true;
-    } else {
-      imgPrew = '<img src="/images/icons/icoother.png" width="50">'; 
-      wrongFileType = true;
-    }
-
-    // Make sure images for lithophane and STLs for custom print are not mixed
-    if (hasStl && hasImg) {
-      errorMsg('Upload only images or only STL files at a time');
-      return;
-    // Make sure only STls and images (PNG, JPG/JPEG) are uploaded
-    } else if (wrongFileType) {
-      errorMsg('Only STL files and images (PNG, JPG, JPEG) are allowed');
-      return;
-    }
-
-    // Do not allow the user to upload more than 1 img, only STLs
-    if (hasImg && files.length > 1) {
-      _('fileInput').files = subFirstN(1, _('fileInput').files);
-      _('prew').innerHTML = prewContent;
-      errorMsg('You can upload only 1 image at a time');
-      return;
-    }
+    // Always STL here, show STL icon
+    let imgPrew = '<img src="/images/icons/icostl.png" width="50">';
+    hasStl = true;
 
     let indicator = `
       <img src="/images/icons/moreClose.svg" width="16" height="16" class="trans delFile"

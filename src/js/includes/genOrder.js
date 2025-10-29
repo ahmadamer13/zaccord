@@ -56,11 +56,11 @@ const genOrder = (conn, userID, limit = '3, 2147483647', threeLimit = false) => 
         
         let finalPO;
         if (transID) {
-          finalPO = 'bankkártyás fizetés';
+finalPO = 'bankkártyás fizetés';
         } else if (paymentOption) {
-          finalPO = 'előre utalás';
+finalPO = 'előre utalás';
         } else {
-          finalPO = 'utánvét';
+finalPO = 'utánvét';
         }
 
         /*

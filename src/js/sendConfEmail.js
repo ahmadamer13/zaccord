@@ -69,7 +69,7 @@ const sendConfEmail = (conn, uid, delType, glsCode) => {
                 Selected shipping method: <span style="color: #4285f4;">${delText}</span>
                 <br>
                 For more information about your order, please visit the
-                <span style="color: #4285f4;">Account</span> menüpont alatt található.
+<span style="color: #4285f4;">Account</span> menüpont alatt található.
               </p>
               <p style="font-size: 16px;">
                 You can view the package status in the

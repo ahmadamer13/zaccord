@@ -94,7 +94,7 @@ const buildAccountSection = (conn, userID) => {
         });
       });
     }).catch(err => {
-      reject('Nincs ilyen felhasználó');
+reject('Nincs ilyen felhasználó');
     });
   });
 }

@@ -122,14 +122,14 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     if (billingType !== 'same') {
       billingEmail = `
         <div><b>Name: </b>${billingName}</div>
-        <div><b>Ország: </b>${billingCountry}</div>
+<div><b>Ország: </b>${billingCountry}</div>
         <div><b>Address: </b>${billingPcode} ${billingCity}, ${billingAddress}</div>
       `;    
 
       if (billingCompname) {
         billingEmail += `
-          <div><b>Cégnév: </b>${billingCompname}</div>
-          <div><b>Adószám: </b>${billingCompnum}</div>
+<div><b>Cégnév: </b>${billingCompname}</div>
+<div><b>Adószám: </b>${billingCompnum}</div>
         `;
       }
     }
@@ -137,8 +137,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     let compInfo = '';
     if (normalCompname) {
       compInfo = `
-        <div><b>Cégnév: </b>${normalCompname}</div>
-        <div><b>Adószám: </b>${normalCompnum}</div>
+<div><b>Cégnév: </b>${normalCompname}</div>
+<div><b>Adószám: </b>${normalCompnum}</div>
       `;
     }
 

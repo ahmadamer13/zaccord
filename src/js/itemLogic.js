@@ -51,9 +51,9 @@ const buildItemSection = (conn, itemId, req) => {
       `;
       description = result[0].description.replace('<!--GBTN-->', gbtn);
       let replaceFor = `Shock‑resistant packaging
-        <li>Ajándék a csomagban</li>
+<li>Ajándék a csomagban</li>
       `;
-      description = description.replace('Környezetbarát csomagolás', replaceFor);
+description = description.replace('Környezetbarát csomagolás', replaceFor);
       let stlPath = result[0].stl_path;
       let showcaseImgs = result[0].img_showcase.split(',');
       let firstImage = result[0].img_url;

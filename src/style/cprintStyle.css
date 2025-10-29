@@ -98,3 +98,11 @@
     right: -15px;
   }
 }
+
+/* Contact CTA row and buttons */
+.ctaRow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 4px; }
+.btnPill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; font-size: 16px; text-decoration: none; line-height: 1; }
+.btnPill:hover { opacity: .95; }
+.btnWhats { background: #25D366; color: #fff; border: 1px solid #1eb25a; }
+.btnEmail { background: #111827; color: #fff; border: 1px solid #0f1623; }
+.btnPill img { width: 18px; height: 18px; display: inline-block; }

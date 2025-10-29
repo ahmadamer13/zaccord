@@ -35,6 +35,21 @@
         <h1 class="mainTitle" style="margin:0">Admin Dashboard</h1>
         <div class="metrics" id="dashMetrics"></div>
       </div>
+      <div class="actions" style="margin:8px 0">
+        <a id="colorsLink" class="btn" href="#">Manage Colors</a>
+      </div>
+      <script>
+        (function(){
+          try {
+            var p = location.pathname; // e.g., /lick_weebshit
+            var q = new URLSearchParams(location.search);
+            var user = q.get('user') || '';
+            var pass = q.get('pass') || '';
+            var link = p + '?user=' + encodeURIComponent(user) + '&pass=' + encodeURIComponent(pass) + '&view=colors';
+            document.getElementById('colorsLink').setAttribute('href', link);
+          } catch(e) {}
+        })();
+      </script>
       <!-- buildAdminSection() appends the orders markup here -->
     </div>
   </body>

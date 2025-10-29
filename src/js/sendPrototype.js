@@ -21,8 +21,8 @@ const sendPrototype = (conn, formData) => {
     });
 
     // Send email to owners
-    let subject = 'Új prototípus kapcsolatfelvétel érkezett!';
-    let content = 'Már nagyon dől a zsé, ez nagy rendelés lesz!';
+let subject = 'Új prototípus kapcsolatfelvétel érkezett!';
+let content = 'Már nagyon dől a zsé, ez nagy rendelés lesz!';
     content += `
       ${name}
       <br>

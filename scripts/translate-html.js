@@ -38,7 +38,7 @@ const G_PROJECT_ID = process.env.GOOGLE_PROJECT_ID || '';
 const G_PROJECT_NUM = process.env.GOOGLE_PROJECT_NUMBER || '';
 
 async function translateText(text) {
-  if (!text || !/[ÁÉÍÓÖŐÚÜŰáéíóöőúüűA-Za-z]/.test(text)) return text;
+if (!text || !/[ÁÉÍÓÖŐÚÜŰáéíóöőúüűA-Za-z]/.test(text)) return text;
   if (hasDeepl) return deeplTranslate(text, 'HU', 'EN');
   if (hasGoogle) return (G_PROJECT_ID || G_PROJECT_NUM)
     ? googleTranslateV3(text, 'hu', 'en')
@@ -183,7 +183,7 @@ async function translateHtmlContent(content) {
       for (const c of chunks) {
         if (/^\s*$/.test(c)) { buf.push(c); continue; }
         // Only translate text containing letters
-        if (/[A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]/.test(c)) {
+if (/[A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]/.test(c)) {
           // eslint-disable-next-line no-await-in-loop
           const tr = await translateText(c);
           buf.push(tr);

@@ -21,7 +21,7 @@ _('submitBtn').addEventListener('click', function submitEmail(e) {
       body: JSON.stringify(data)
     }).then(response => response.json()).then(data => {
       if (data.success) {
-        _('succStatus').innerHTML = `<p>Ideiglenes jelszó sikeresen idényelve</p>`;
+_('succStatus').innerHTML = `<p>Ideiglenes jelszó sikeresen idényelve</p>`;
         _('email').value = '';
       } else {
         _('errStatus').innerHTML = data.error;

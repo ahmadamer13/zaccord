@@ -14,11 +14,13 @@ const path = require('path');
 // Response with optional caching options
 function responseCache(contentType, res, isCache, cacheType = 'no-cache', forceReload = false) {
   if (!isCache) {
-    res.writeHead(200, {'Content-Type': contentType});
+    const ct = contentType === 'text/html' ? 'text/html; charset=UTF-8' : contentType;
+    res.writeHead(200, {'Content-Type': ct});
   } else {
     if (!forceReload) {
+      const ct = contentType === 'text/html' ? 'text/html; charset=UTF-8' : contentType;
       res.writeHead(200, {
-        'Content-Type': contentType,
+        'Content-Type': ct,
         'Cache-Control': 'max-age=31536000, ' + cacheType,
         'Vary': 'ETag, Content-Encoding'
       });
@@ -152,7 +154,7 @@ function errorFormResponse(res, msg) {
   let responseData = {
     'error': `<p>${msg}</p>`
   };
-  responseCache('application/json', res, false);
+  responseCache('application/json; charset=UTF-8', res, false);
   res.end(JSON.stringify(responseData));
 }
 
@@ -264,8 +266,9 @@ function sendCompressedFile(fname, response, request, contentType, append, userI
     return;
   }
 
+  const ct = contentType === 'text/html' ? 'text/html; charset=UTF-8' : contentType;
   response.writeHead(200, {
-    'Content-Type': contentType,
+    'Content-Type': ct,
     'Cache-Control': ccBase,
     'ETag': etag
   });

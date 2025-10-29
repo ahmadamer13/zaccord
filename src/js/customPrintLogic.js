@@ -257,57 +257,26 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         <div class="specChDD" id="specChMatDD" data-open="closed">
       `;
 
+      // Limit to PLA, PETG, TPU (use tpu_medium image and label as TPU)
       let matPairs = [
         {
           'npair': ['pla', 'PLA'],
-          'desc': 'Low-cost plastic for prototypes that are not load-bearing or exposed to heat'
+          'desc': 'Low‑cost plastic for prototypes not exposed to heat'
         },
         {
           'npair': ['petg', 'PETG'],
-          'desc': 'Low-cost plastic for functional parts'
+          'desc': 'Durable plastic for functional parts'
         },
         {
-          'npair': ['tpu_soft', 'TPU (SOFT - A70)'],
-          'desc': 'Flexible material with Shore A70 hardness for flexible objects'
-        },
-        {
-          'npair': ['tpu_medium', 'TPU (MEDIUM - A85)'],
-          'desc': 'Flexible material with Shore A85 hardness for flexible objects'
-        },
-        {
-          'npair': ['tpu_hard', 'TPU (HARD - A95)'],
-          'desc': 'Flexible material with Shore A95 hardness for flexible objects'
-        },
-        {
-          'npair': ['asa', 'ASA'],
-          'desc': 'Strong, UV‑resistant material for outdoor prototypes'
-        },
-        {
-          'npair': ['wood', 'WOOD'],
-          'desc': 'PLA filament with wood particles for a wood‑like effect'
-        },
-        {
-          'npair': ['metal', 'METAL'],
-          'desc': 'PLA filament with metal particles for a metallic effect'
-        },
-        {
-          'npair': ['magicpla', 'MAGIC PLA'],
-          'desc': 'Multicolor, rainbow PLA filament'
-        },
-        {
-          'npair': ['nylon', 'NYLON'],
-          'desc': 'Strong, heat‑resistant material for functional prototypes'
-        },
-        {
-          'npair': ['carbon_fiber', 'CARBON FIBER'],
-          'desc': 'Strong, carbon‑fiber reinforced material for functional prototypes'
+          'npair': ['tpu_medium', 'TPU'],
+          'desc': 'Flexible material for elastic parts'
         }
       ];
 
       for (let obj of matPairs) {
         let highlight = obj['npair'][0] == 'pla' ? 'specChHl' : '';
         content += `
-          <div class="specChDDItem trans ${highlight}" data-value="${obj['npair'][1]}">
+          <div class="specChDDItem trans ${highlight}" data-value="${obj['npair'][0].toUpperCase()}">
             <div>
               <img src="/images/specChImg/${obj['npair'][0]}.jpg">
             </div>
@@ -340,7 +309,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
-            <p data-value="Fehér" id="chcolor">White</p>
+<p data-value="Fehér" id="chcolor">White</p>
             <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
@@ -349,23 +318,54 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       `;
 
       const COLOR_LABELS = {
-        'Fehér': 'White',
-        'Fekete': 'Black',
-        'Kék': 'Blue',
-        'Zöld': 'Green',
-        'Arany': 'Gold',
-        'Piros': 'Red',
-        'Citromsárga': 'Lemon Yellow'
+        'Fehér': 'Pearl White',
+        'Fekete': 'Matte Black',
+        'Kék': 'Royal Blue',
+        'Sötétkék': 'Royal Blue',
+        'Világoskék': 'Sky Blue',
+        'Zöld': 'Emerald Green',
+        'Sötétzöld': 'Emerald Green',
+        'Piros': 'Crimson Red',
+        'Sötétszürke': 'Gunmetal Gray',
+        'Szürke': 'Gunmetal Gray',
+        'Átlátszó': 'Transparent (Clear)',
+        'Arany': 'Gold Metallic',
+        'Ezüst': 'Silver Metallic',
+        'Barna': 'Copper Bronze',
+        'Neon Narancssárga': 'Neon Orange',
+        'Lila': 'Deep Purple'
       };
+      const ALLOWED_COLOR_EN = new Set([
+        'Matte Black',
+        'Pearl White',
+        'Royal Blue',
+        'Crimson Red',
+        'Emerald Green',
+        'Gunmetal Gray',
+        'Transparent (Clear)',
+        'Gold Metallic',
+        'Silver Metallic',
+        'Copper Bronze',
+        'Neon Orange',
+        'Sky Blue',
+        'Beige Sandstone',
+        'Deep Purple',
+        'Glow-in-the-Dark Green'
+      ]);
 
       for (let pair of CMAT['pla']) {
         let color = Object.keys(pair)[0];
+        if (!COLOR_IN_STOCK['pla'] || !Number(COLOR_IN_STOCK['pla'][color])) continue;
         let highlight = color == 'Fehér' ? 'specChHl' : '';
         let label = COLOR_LABELS[color] || color;
+        if (!ALLOWED_COLOR_EN.has(label)) continue;
+        // append hex code beside the name for initial PLA list
+        let hex = (hex_codes['pla'] && hex_codes['pla'][color]) ? hex_codes['pla'][color] : '';
+        if (hex && !hex.startsWith('#')) hex = '#' + hex;
         content += `
           <div class="specChDDItem trans ${highlight}" data-value="${color}">
             <div>
-              <img src="/images/colors/${pair[color]}">
+              ${hex ? `<span style=\"display:inline-block;width:24px;height:24px;border:1px solid #dfdfdf;border-radius:4px;background-color:${hex};\"></span>` : ''}
             </div>
             <div class="gothamNormal font20 p10">
               ${label}
@@ -780,7 +780,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             let soFar = JSON.parse(getCookie('cartItems'));
             let id = getID(i);
             let colorVal = decodeURIComponent(soFar['content_' + id]['color_' + id]);
-            if (_('color').value.toLowerCase().includes('átlátszó')) {
+if (_('color').value.toLowerCase().includes('átlátszó')) {
               models[i].set_opacity(0, 0.5);
             } 
             chooseColor('#' + colorMaps[colorVal]);
@@ -794,7 +794,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           }
 
           function setOpacityAll() {
-            if (_('color').value.toLowerCase().includes('átlátszó')) {
+if (_('color').value.toLowerCase().includes('átlátszó')) {
               setOpacity(0.5);
             } else {
               setOpacity(1);
@@ -814,9 +814,9 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             }
 
             let hexToName = {
-              '#ffffff': 'Fehér',
+'#ffffff': 'Fehér',
               '#ff0000': 'Piros',
-              '#0089ff': 'Kék'
+'#0089ff': 'Kék'
             };
 
             if (isRev) {

@@ -36,22 +36,22 @@ function getPPAttr(attr, type) {
 
 // Countries for billing
 let countries = ["Albánia", "Andorra", "Argentína", "Ausztrália", "Ausztria", "Azerbajdzsán",
-    "Belgium", "Bosznia-Hercegovina", "Brazília", "Bulgária", "Kanada", "Chile", "Kína",
-    "Horvátország", "Kuba", "Ciprus", "Cseh köztársaság", "Dánia", "Egyiptom", "Észtország",
-    "Faroe-szigetek", "Finnország", "Franciaország", "Grúzia", "Németország", "Gibraltár",
-    "Görögország", "Hong Kong", "Magyarország", "Izland", "India", "Indonézia", "Irán", "Irak",
-    "Írország", "Izrael", "Olaszország", "Japán", "Kazahsztán", "Dél-Koreai Köztársaság",
+"Belgium", "Bosznia-Hercegovina", "Brazília", "Bulgária", "Kanada", "Chile", "Kína",
+"Horvátország", "Kuba", "Ciprus", "Cseh köztársaság", "Dánia", "Egyiptom", "Észtország",
+"Faroe-szigetek", "Finnország", "Franciaország", "Grúzia", "Németország", "Gibraltár",
+"Görögország", "Hong Kong", "Magyarország", "Izland", "India", "Indonézia", "Irán", "Irak",
+"Írország", "Izrael", "Olaszország", "Japán", "Kazahsztán", "Dél-Koreai Köztársaság",
     "Kuwait",
-    "Lettország", "Liechtenstein", "Litvánia", "Luxemburg", "Makedónia", "Malajzia", "Málta",
-    "Mexikó", "Monaco", "Marokkó", "Hollandia", "Új-Zéland", "Norvégia", "Paraguay",
-    "Fülöp-szigetek", "Lengyelország", "Portugália", "Katar", "Románia", "Oroszország",
-    "San Marino", "Szaud-Arábia", "Szlovákia", "Szlovénia", "Dél-afrikai Köztársaság",
-    "Spanyolország", "Svédország", "Svájc", "Thaiföld", "Tunézia", "Törökország",
-    "Türkmenisztán",
-    "Ukrajna", "Egyesült Arab Emirátusok", "Egyesült Királyság", "Amerikai Egyesült Államok",
-    "Uruguay", "Üzbégisztán", "Vatikáni városállam", "Venezuela", "Vietnám", "Szerbia",
-    "Koszovó",
-    "Montenegró"];
+"Lettország", "Liechtenstein", "Litvánia", "Luxemburg", "Makedónia", "Malajzia", "Málta",
+"Mexikó", "Monaco", "Marokkó", "Hollandia", "Új-Zéland", "Norvégia", "Paraguay",
+"Fülöp-szigetek", "Lengyelország", "Portugália", "Katar", "Románia", "Oroszország",
+"San Marino", "Szaud-Arábia", "Szlovákia", "Szlovénia", "Dél-afrikai Köztársaság",
+"Spanyolország", "Svédország", "Svájc", "Thaiföld", "Tunézia", "Törökország",
+"Türkmenisztán",
+"Ukrajna", "Egyesült Arab Emirátusok", "Egyesült Királyság", "Amerikai Egyesült Államok",
+"Uruguay", "Üzbégisztán", "Vatikáni városállam", "Venezuela", "Vietnám", "Szerbia",
+"Koszovó",
+"Montenegró"];
 let transactionID = null;
 
 function getBillingFields() {
@@ -301,7 +301,7 @@ _('diffBilling').addEventListener('click', function toggleForm(e) {
     let res = '<select id="billingCountry" class="dFormField" style="margin-top: 0;">';
     for (let i = 0; i < countries.length; i++) {
       let selected = '';
-      if (countries[i] === 'Magyarország' || countries[i] === 'Hungary') selected = 'selected';
+if (countries[i] === 'Magyarország' || countries[i] === 'Hungary') selected = 'selected';
       res += `<option value="${countries[i]}" ${selected}>${countries[i]}</option>`;
     }
 
@@ -452,7 +452,7 @@ function packetaSelectPoint(point) {
   if (point && point.error !== null) {
     _('selectedPacketaPoint').style.display = 'block';
     _('selectedPacketaPoint').style.color = 'red';
-    _('selectedPacketaPoint').innerHTML = 'Ez a csomagpont jelenleg nem elérhető';  
+_('selectedPacketaPoint').innerHTML = 'Ez a csomagpont jelenleg nem elérhető';
   } else if (point !== null) {
     _('selectedPacketaPoint').style.display = 'block';
     _('selectedPacketaPoint').innerHTML = point.place;

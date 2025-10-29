@@ -253,7 +253,7 @@ function generateInvoice(ID, p) {
     if (msg.success) {
       _('invGen_' + ID).innerHTML = 'siker';
     } else {
-      _('invGen_' + ID).innerHTML = 'úú ezt nagyon elbasztam';
+_('invGen_' + ID).innerHTML = 'úú ezt nagyon elbasztam';
     }
   });
 }
@@ -363,7 +363,7 @@ function createPacket(id, n, ppID, isPP, dt) {
     eshop: 'Jordan3DPrint'
   };
 
-  if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
+if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
     data['cod'] = val;
   }
 

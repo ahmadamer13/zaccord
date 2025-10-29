@@ -36,9 +36,9 @@ function buildPage(req, res, conn, userID, buildFunc, htmlPath) {
 function validateParams(formData) {
   // Validates prototype parameters
   if (!formData.email || !formData.name || !formData.tel || !formData.message) {
-    return 'Kérlek tölts ki minden mezőt';
+return 'Kérlek tölts ki minden mezőt';
   } else if (!validateEmail.validate(formData.email)) {
-    return 'Kérlek valós e-mailt adj meg';
+return 'Kérlek valós e-mailt adj meg';
   } else {
     return 'success';
   }
@@ -47,13 +47,13 @@ function validateParams(formData) {
 function validateRegisterParams(formData) {
   // Validate params for user sign up
   if (!formData.email || !formData.pass || !formData.passConf) {
-    return 'Kérlek tölts ki minden mezőt';
+return 'Kérlek tölts ki minden mezőt';
   } else if (!validateEmail.validate(formData.email)) {
-    return 'Kérlek valós e-mailt adj meg'
+return 'Kérlek valós e-mailt adj meg'
   } else if (formData.pass != formData.passConf) {
     return 'A jelszavak nem egyeznek';
   } else if (formData.pass.length < 6) {
-    return 'A jelszónak minimum 6 karakterből kell állnia';
+return 'A jelszónak minimum 6 karakterből kell állnia';
   } else {
     return 'success';
   }
@@ -66,7 +66,7 @@ function toClientPrototype(res, stat, req, formData) {
   } else {
     sendPrototype(conn, formData, req).then(data => {
       // Auto log in user after successful registration
-      responseData.success = 'Sikeres kapcsolatfelvétel<br>Hamarosan részletes árajánlattal jelentkezünk számodra';
+responseData.success = 'Sikeres kapcsolatfelvétel<br>Hamarosan részletes árajánlattal jelentkezünk számodra';
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.end(JSON.stringify(responseData));
     }).catch(err => {
@@ -84,7 +84,7 @@ function toClientRegister(res, stat, req, formData, userSession) {
       // Auto log in user after successful registration
       userSession(req, res, function uSession() {
         req.user.id = data;
-        responseData.success = '<p>Sikeres regisztráció</p>';
+responseData.success = '<p>Sikeres regisztráció</p>';
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(responseData));
       });
@@ -107,7 +107,7 @@ function validateUploadFile(cFile, err) {
   if (!Array.isArray(cFile) && !cFile.size) {
     return ['cFile', 'Choose a file'];
   } else if (cFile.length > 5) {
-    return ['sfupload', 'Maximum 5db fájlt tölthetsz fel'];
+return ['sfupload', 'Maximum 5db fájlt tölthetsz fel'];
   } else if (err) {
     return ['sfupload', 'An error occurred'];
   }
@@ -156,7 +156,7 @@ function createDefaultThumbnail(fname) {
       fname + '.png');
     fs.copyFile(source, destination, (err) => {
       if (err) {
-        reject('Hiba az alapértelmezett thumbnail készítése közben');
+reject('Hiba az alapértelmezett thumbnail készítése közben');
       }
       resolve('success');
     });
@@ -187,7 +187,7 @@ function createThumbnail(fname) {
       thumbnails[0].toBuffer(function(err, buf) {      
         fs.writeFile(path.join(basePath(__dirname), 'printUploads', 'thumbnails',
           fname + '.png'), buf, function (err) {
-          if (err) reject('Hiba a thumbnail készítése közben');
+if (err) reject('Hiba a thumbnail készítése közben');
           resolve('success');
         });
       });
@@ -252,8 +252,8 @@ function parseUploadFiles(form, req, res, userID) {
 
       // Make sure that only 1 image is uploaded
       if (isMoreImages(cFile, allImgs)) {
-        imgError(res, userID, 'sfupload', 'Egyszerre csak 1 képet tölthetsz fel');
-        reject('Egyszerre csak 1 képet tölthetsz fel');
+imgError(res, userID, 'sfupload', 'Egyszerre csak 1 képet tölthetsz fel');
+reject('Egyszerre csak 1 képet tölthetsz fel');
         return;
       }
 
@@ -266,7 +266,7 @@ function parseUploadFiles(form, req, res, userID) {
         
         // Make sure the extension is valid
         if (['png', 'jpg', 'jpeg', 'stl'].indexOf(extension) < 0) {
-          reject('Hibás fájlkiterjesztés');
+reject('Hibás fájlkiterjesztés');
           return;
         } 
 
@@ -285,7 +285,7 @@ function parseUploadFiles(form, req, res, userID) {
           mv(oldpath, newpath, err => {
             if (err) {
               console.log(err);
-              reject('Hiba a fájlok átvitelekor');
+reject('Hiba a fájlok átvitelekor');
               return;
             }
 
@@ -300,13 +300,13 @@ function parseUploadFiles(form, req, res, userID) {
                   resolve('success');
                 }).catch(err => {
                   console.log(err);
-                  reject('Hiba az alapértelmezett thumbnail készítése közben');
+reject('Hiba az alapértelmezett thumbnail készítése közben');
                 });
               } else {
                 createThumbnail(uploadFnames[i]).then(res => {
                   resolve('success');
                 }).catch(err => {
-                  reject('Hiba a thumbnail készítése közben');
+reject('Hiba a thumbnail készítése közben');
                 });
               }
             } else {
@@ -315,7 +315,7 @@ function parseUploadFiles(form, req, res, userID) {
               resizeLitImage(newpath).then(res => {
                 resolve('success');
               }).catch(err => {
-                reject('Hiba a litofán kép átméretezése közben');
+reject('Hiba a litofán kép átméretezése közben');
               });
             }
           });

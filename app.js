@@ -26,6 +26,7 @@ const buildCustomPrint = require('./src/js/customPrintLogic.js');
 const buildBuySection = require('./src/js/buyLogic.js');
 const buildAdminPage = require('./src/js/adminLogic.js');
 const buildAdminSection = require('./src/js/adminSectionLogic.js');
+const buildAdminColorsSection = require('./src/js/adminColorsSection.js');
 const buildLithophane = require('./src/js/buildLithophane.js');
 const buildCategory = require('./src/js/buildCategory.js');
 const buildSearch = require('./src/js/buildSearch.js');
@@ -282,7 +283,33 @@ const server = http.createServer((req, res) => {
       let responseData = {};
       let xmlBody = getXMLPacketa(formData, 'createPacket');
 
-      returnToClient(packetaXML, [formData, xmlBody], null, res, successReturn);
+    returnToClient(packetaXML, [formData, xmlBody], null, res, successReturn);
+    });
+  } else if (req.url === '/admin/updateColorStock' && req.method === 'POST') {
+    // Update color stock availability in DB
+    let body = [];
+    gatherData(body, req);
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(body.join(''));
+        const { material, color, in_stock } = data || {};
+        if (typeof material !== 'string' || typeof color !== 'string') {
+          errorFormResponse(res, 'Invalid params');
+          return;
+        }
+        const q = 'UPDATE colors SET in_stock = ? WHERE material = ? AND color = ?';
+        conn.query(q, [Number(in_stock) ? 1 : 0, material, color], (err) => {
+          if (err) {
+            console.log(err);
+            errorFormResponse(res, 'DB error');
+          } else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({status: 'success'}));
+          }
+        });
+      } catch(e) {
+        errorFormResponse(res, 'Invalid JSON');
+      }
     });
   } else if (req.url === '/delValidation' && req.method === 'POST') {
     // Make sure user is logged in
@@ -460,7 +487,7 @@ const server = http.createServer((req, res) => {
     // Dynamic sitemap.xml
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
       const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
-      const staticPaths = ['/', '/print', '/account', '/cart', '/prototype', '/blogs', '/colors', '/references'];
+      const staticPaths = ['/', '/print', '/account', '/cart', '/blogs', '/colors', '/references'];
       let urls = staticPaths.map(p => ({ loc: host + p, lastmod: new Date().toISOString().split('T')[0] }));
 
       const addUrl = (arr, path, dateStr) => arr.push({ loc: host + path, lastmod: dateStr || new Date().toISOString().split('T')[0] });
@@ -666,19 +693,50 @@ const server = http.createServer((req, res) => {
             if (user != ADMIN_UNAME || pass != ADMIN_PASSWORD) {
               responseCache('text/html', res, true);
               res.end('hiba', 'utf8');
+              // Prevent further handling which would attempt to write again
+              return;
             }
 
-            // Build output
-            let content = fs.readFileSync('src/adminOrders.html');
-            buildAdminSection(conn).then(data => {
+            // If view=colors -> render color management page; else orders
+            if (qdata.view === 'colors') {
+              let content = fs.readFileSync('src/adminColors.html');
+              buildAdminColorsSection(conn).then(data => {
+                content += data;
+                responseCache('text/html', res, true);
+                res.end(content, 'utf8');
+              }).catch(() => pageCouldNotLoad(res, userID));
+            } else {
+              // Build orders admin by default
+              let content = fs.readFileSync('src/adminOrders.html');
+              buildAdminSection(conn).then(data => {
+                content += data;
+                responseCache('text/html', res, true);
+                res.end(content, 'utf8');
+              });
+            }
+          } else if (req.url === '/adminColors') {
+            // Alternative entry path: /adminColors?user=...&pass=...
+            let q = url.parse(req.url, true); 
+            let qdata = q.query;
+            let user = decodeURIComponent(qdata.user || '');
+            let pass = decodeURIComponent(qdata.pass || '');
+            if (user != ADMIN_UNAME || pass != ADMIN_PASSWORD) {
+              responseCache('text/html', res, true);
+              res.end('hiba', 'utf8');
+              return;
+            }
+            let content = fs.readFileSync('src/adminColors.html');
+            buildAdminColorsSection(conn).then(data => {
               content += data;
               responseCache('text/html', res, true);
               res.end(content, 'utf8');
-            });
+            }).catch(() => pageCouldNotLoad(res, userID));
           } else {
             // File is not found in src/path/to/file so it may be under path/to/file
             let fname = filePath.replace('src/', '');
             fs.readFile(fname, (err, content) => {
+              // Avoid double-send if response already ended elsewhere
+              if (res.writableEnded) return;
               if (err) {
                 imgError(res, userID, '404error');
               } else {

@@ -104,7 +104,8 @@ function changeTech(techBefore, tid, price) {
             onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
     `;
 
-    for (let pm of Object.keys(PCOLORS).filter(e => e != 'gyanta (resin)').map(e => e.toUpperCase())) {
+    const ALLOWED = new Set(['PLA','ABS','PETG','TPU']);
+    for (let pm of Object.keys(PCOLORS).filter(e => e != 'gyanta (resin)').map(e => e.toUpperCase()).filter(e => ALLOWED.has(e))) {
       content += `<option value="${pm}">${pm}</option>`;
     }
     
@@ -117,10 +118,48 @@ function changeTech(techBefore, tid, price) {
   
   let colorContent = '';
   let ind = isSLA ? 'gyanta (resin)' : 'pla';
+  const COLOR_LABELS = {
+    'Fekete': 'Matte Black',
+    'Fehér': 'Pearl White',
+    'Kék': 'Royal Blue',
+    'Sötétkék': 'Royal Blue',
+    'Világoskék': 'Sky Blue',
+    'Zöld': 'Emerald Green',
+    'Sötétzöld': 'Emerald Green',
+    'Arany': 'Gold',
+    'Piros': 'Crimson Red',
+    'Sötétszürke': 'Gunmetal Gray',
+    'Szürke': 'Gunmetal Gray',
+    'Neon Narancssárga': 'Neon Orange',
+    'Lila': 'Deep Purple',
+    'Ezüst': 'Silver',
+    'Átlátszó': 'Transparent (Clear)',
+    'Barna': 'Copper Bronze'
+  };
+  const ALLOWED_COLOR_EN = new Set([
+    'Matte Black',
+    'Pearl White',
+    'Royal Blue',
+    'Crimson Red',
+    'Emerald Green',
+    'Gunmetal Gray',
+    'Transparent (Clear)',
+    'Gold Metallic',
+    'Silver Metallic',
+    'Copper Bronze',
+    'Neon Orange',
+    'Sky Blue',
+    'Beige Sandstone',
+    'Deep Purple',
+    'Glow-in-the-Dark Green'
+  ]);
   for (let i = 0; i < PCOLORS[ind].length; i++) {
     let color = PCOLORS[ind][i];
+    if (!COLOR_IN_STOCK[ind] || !Number(COLOR_IN_STOCK[ind][color])) continue;
+    let label = COLOR_LABELS[color] || color;
+    if (!ALLOWED_COLOR_EN.has(label)) continue;
     let selected = i == 0 ? 'selected' : '';
-    colorContent += `<option value="${color}" ${selected}>${color}</option>`;
+    colorContent += `<option value="${color}" ${selected}>${label}</option>`;
   }
 
   content += `

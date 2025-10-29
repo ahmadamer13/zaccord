@@ -197,7 +197,7 @@ const buildBuySection = (conn, paramObj, req) => {
             if (tech == 'SLA') {
               price = calcSLAPrice(basePrice * SLA_MULTIPLIER, rvas, suruseg, scale); 
             } else {
-              price = calcPrice(PRINT_MULTS, basePrice, rvas, suruseg, scale, fvas, printMat);
+              price = calcPrice(PRINT_MULTS, basePrice, rvas, suruseg, scale, fvas, printMat, color);
             }
             finalPrice += price * quantity;
 
@@ -355,11 +355,7 @@ const buildBuySection = (conn, paramObj, req) => {
 
             <textarea placeholder="Order note (optional)" id="comment" class="dFormField"></textarea>
             
-            <p class="align" style="color: #676767">
-              To track your order status, please <a href="/register" class="blueLink font16">create an account</a>.
-              Otherwise, we will notify you via email about your package.
-            </p>
-
+            <!-- Removed account creation notice per request -->
             <!-- Payment method removed -->
           `;
 

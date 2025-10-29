@@ -90,6 +90,16 @@ INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summ
 (34, '3D Printing in the Sports Industry: From Custom Equipment to Performance Wear', 'Kis Péter', '3D Printing,Sports,Customization,Personalization', '3D_nyomtatas_a_sportiparban', 'The sports industry has always led the way in adopting new technologies to improve performance and enhance the sporting experience. In recent years, 3D printing has emerged as a promising technology that could revolutionize the sports sector.', 'sport_bor.jpg', '2022-02-28 19:19:08', '2022-02-22 07:18:17'),
 (35, 'The Benefits of 3D Printing for Small Businesses and Startups', 'Kis Péter', '3D Printing,Business,Startup,Advantages', 'A_3D_nyomtatas_elonyei_a_kisvallalkozasok_es_a_startupok_szamara', 'In recent years, 3D printing has emerged as a promising technology capable of revolutionizing many industries. For small businesses and startups, 3D printing offers numerous advantages that can help them succeed and grow.', 'startup_bor.jpg', '2022-02-28 19:19:08', '2022-02-20 07:18:17'),
 (36, '3D Printing in the Packaging Industry: From Prototypes to Final Products', 'Kis Péter', '3D Printing,Packaging,Sustainability', '3D_nyomtatas_a_csomagoloiparban', '3D printing is revolutionizing how products are designed and manufactured across various industries, and packaging is no exception. From prototyping new packaging designs to producing final products, 3D printing plays an increasingly important role in the packaging industry.', 'csomag_bor.jpg', '2022-02-27 03:06:05', '2022-02-26 07:18:17');
+-- Jordan-focused posts (English)
+INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summary`, `img_url`, `last_update`, `date`) VALUES
+(37, '3D Printing in Jordan: Overview & Opportunities', 'Mark Frankli', '3D Printing,Jordan,Startups,Education', '3d_printing_in_jordan_overview', 'Jordan’s 3D printing landscape is expanding across startups, education, and small manufacturing. Practical tips to get started and deliver results locally.', 'proto_bor.jpg', NOW(), NOW()),
+(38, 'How the Jordanian Government Supports 3D Printing', 'Mark Frankli', '3D Printing,Jordan,Government,Funding', 'jordan_government_support_for_3d_printing', 'Education, entrepreneurship, and access programs are helping individuals and SMEs adopt 3D printing faster and more safely across Jordan.', 'startup_bor.jpg', NOW(), NOW()),
+(39, 'Best 3D Printing Websites in Jordan (3DJordanPrint First)', 'Mark Frankli', '3D Printing,Jordan,Services,Guide', 'best_3d_printing_websites_in_jordan', 'How to choose a reliable 3D printing service in Jordan, with 3DJordanPrint as the top pick for fast quotes, local turnaround, and clear guidance.', 'elektronika_bor.jpg', NOW(), NOW());
+-- Training-focused posts (English)
+INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summary`, `img_url`, `last_update`, `date`) VALUES
+(30, 'Getting Started with Online 3D Printing Training', 'Mark Frankli', '3D Printing,Training,Online Learning,Beginners', 'online_3d_printing_training_intro', 'A concise guide to the very first topics to learn online: FDM vs SLA, slicer basics, materials, safety, and a 4‑week starter plan.', 'startup_bor.jpg', NOW(), NOW()),
+(31, 'Top Free Online 3D Printing Courses', 'Mark Frankli', '3D Printing,Training,Courses,Free', 'top_free_online_3d_printing_courses', 'Hand‑picked free tracks and how to use them effectively with weekly goals and practice prints for faster results.', 'softborito.jpg', NOW(), NOW()),
+(32, '30‑Day CAD‑to‑Print Learning Path', 'Mark Frankli', '3D Printing,Training,CAD,Workflow', '30_day_cad_to_print_path', 'A structured month to build a reliable CAD‑to‑print workflow with clear milestones, test prints, and documentation.', 'fdm_printer.jpg', NOW(), NOW());
 -------------------------------------------------------
 
 --
@@ -311,13 +321,13 @@ CREATE TABLE `orders` (
   `item_id` int(11) NOT NULL,
   `price` float NOT NULL,
   `rvas` enum('0.05','0.07','0.10','0.1','0.12','0.20','0.28','0.2') COLLATE utf8mb4_bin DEFAULT NULL,
-  `suruseg` enum('Tömör','Üreges','10','20','30','40','50','60','70','80','90') COLLATE utf8mb4_bin DEFAULT NULL,
+`suruseg` enum('Tömör','Üreges','10','20','30','40','50','60','70','80','90') COLLATE utf8mb4_bin DEFAULT NULL,
   `scale` enum('0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0','1.3','1') COLLATE utf8mb4_bin DEFAULT NULL,
   `color` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `printMat` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `printTech` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `fvas` enum('0.8','1.2','1.6','2.0','2.4','2','2.8','3.2','3.6','4.0','4') COLLATE utf8mb4_bin DEFAULT NULL,
-  `lit_sphere` enum('Domború','Homorú','Sima','') COLLATE utf8mb4_bin DEFAULT NULL,
+`lit_sphere` enum('Domború','Homorú','Sima','') COLLATE utf8mb4_bin DEFAULT NULL,
   `lit_size` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `lit_fname` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `quantity` int(11) NOT NULL,

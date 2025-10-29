@@ -58,14 +58,26 @@ const buildMainSection = (conn, cat) => {
             </video>
             <div class="hero__bg" aria-hidden="true"></div>
             <div class="hero__content">
-              <h1 class="hero__title">Custom 3D Printing in Jordan</h1>
-              <p class="hero__sub">Instant pricing, fast turnaround, and expert support. Upload your STL to get a quote or chat for help. FDM and SLA available.</p>
-              <div class="hero__cta">
-                <button class="btn btn-primary" onclick="redirect('/print')">Get Instant Quote</button>
-                <a class="btn btn-secondary" href="https://wa.me/00962797479825" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+              <h1 class="hero__title fancyTitle">Custom 3D Printing in Jordan</h1>
+              <p class="hero__sub">Instant pricing, fast turnaround, and expert support. Professional makers, trusted in Jordan. Upload your STL to get a quote or chat for help. FDM and SLA available.</p>
+              <div class="hero__cta" style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <button class="btn btn-primary" onclick="redirect('/print')">Print Now — اطبع الان</button>
+                <a class="btn btn-whatsapp" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on WhatsApp — تواصل واتساب</a>
               </div>
             </div>
           </section>
+
+          <!-- Sticky instant quote bar (Craftcloud-like) -->
+          <div class="quoteBar">
+            <div class="quoteInner">
+              <div class="quoteTitle">Get an instant quote • احصل على سعر فوري</div>
+              <a class="quoteCTA" href="/print">
+                <img src="/images/icons/whatsapp.svg" alt="Upload" style="display:none">
+                Upload STL & Get Price • ارفع STL واحصل على السعر
+              </a>
+              <div class="quoteHint">FDM & SLA • Multiple materials • Jordan‑wide delivery</div>
+            </div>
+          </div>
 
           <!-- Combined Bilingual Special Offer Banner with subtle animation -->
           <style>
@@ -76,27 +88,60 @@ const buildMainSection = (conn, cat) => {
             style="box-sizing:border-box; width:100%; background:linear-gradient(90deg,#0ea5e9,#22c55e); color:#fff; padding:18px 12px; animation: promoPulse 1.6s ease-in-out infinite alternate;">
             <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center;">
               <div style="display:flex; align-items:center; gap:10px;">
-                <img src="/images/icons/discount.svg" alt="Discount" width="36" height="36" style="filter:brightness(0) invert(1);"/>
                 <span class="gotham" style="font-size:28px; font-weight:800; letter-spacing:0.3px;">Special Offer</span>
               </div>
               <div class="gothamNormal" style="font-size:20px; line-height:1.2; text-align:center;">
-                FDM Printing at <strong style="font-size:26px;">0.07 JD</strong> per gram — limited time!
+                FDM Printing at <strong style="font-size:32px; color:#111827;">0.07 JD</strong> per gram — limited time!
               </div>
-              <button class="btn btn-primary" onclick="redirect('/print')" style="background:#111827; border:0; color:#fff; padding:10px 16px; border-radius:8px; font-size:16px;">
-                Get Discounted Quote
-              </button>
             </div>
             <div dir="rtl" lang="ar" style="max-width:1200px; margin:8px auto 0; display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center;">
               <div style="display:flex; align-items:center; gap:10px;">
-                <img src="/images/icons/discount.svg" alt="خصم" width="30" height="30" style="filter:brightness(0) invert(1);"/>
                 <span class="gotham" style="font-size:24px; font-weight:800;">عرض خاص</span>
               </div>
-              <div class="gothamNormal" style="font-size:18px; line-height:1.2; text-align:center;">
-                طباعة FDM بسعر <strong style="font-size:22px;">0.07 دينار</strong> لكل غرام — لفترة محدودة!
+              <div class="gothamNormal" style="font-size:18px; line-height:1.8; text-align:center;">
+                ✨ عرض خاص!<br>
+                طباعة مجسّمات ثلاثية الأبعاد بسعر يبدأ من <strong>0.07 قرش للغرام</strong><br>
+                ابدأ الآن في طباعة أحلامك إلى واقع ملموس!
               </div>
-              <button class="btn btn-primary" onclick="redirect('/print')" style="background:#111827; border:0; color:#fff; padding:8px 14px; border-radius:8px; font-size:15px;">
-                احصل على السعر المخفض
-              </button>
+            </div>
+          </section>
+
+          <!-- How it works (3 steps) -->
+          <section class="stepsBand animate__animated animate__fadeIn">
+            <div class="stepsInner">
+              <div class="stepCard">
+                <div class="stepNum">1</div>
+                <div class="stepText">
+                  <h4>Upload STL • ارفع ملف STL</h4>
+                  <p>Drag & drop or browse. يدعم ملفات STL فقط للطباعة.</p>
+                </div>
+              </div>
+              <div class="stepCard">
+                <div class="stepNum">2</div>
+                <div class="stepText">
+                  <h4>Configure • إعداد الخيارات</h4>
+                  <p>Choose material and quality. اختر المادة والجودة.</p>
+                </div>
+              </div>
+              <div class="stepCard">
+                <div class="stepNum">3</div>
+                <div class="stepText">
+                  <h4>Instant price • سعر فوري</h4>
+                  <p>Checkout and we print & ship. الدفع والطباعة والتوصيل.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Trusted by section -->
+          <section class="home-section animate__animated animate__fadeIn" style="margin-top:28px;">
+            <h2 class="home-sub" style="margin-bottom:12px;">Trusted by makers and SMEs across Jordan • موثوق من قبل المبدعين والشركات في الأردن</h2>
+            <div class="trustedBar">
+              <div class="trustBadge">Fast Turnaround</div>
+              <div class="trustBadge">Bambu Lab Printers</div>
+              <div class="trustBadge">FDM & SLA</div>
+              <div class="trustBadge">Expert Support</div>
+              <div class="trustBadge">Jordan‑wide Delivery</div>
             </div>
           </section>
 
@@ -167,7 +212,7 @@ const buildMainSection = (conn, cat) => {
           catToNum[res[i].category] = (i + 1);
 
           output += `
-            <a href="/?cat=${res[i].category}" class="pseudoLink">
+            <a href="/?cat=${res[i].category}" class="pseudoLink" rel="nofollow">
               <div onclick="sortByCat('${res[i].category}', ${i + 1})" class="scat">
                 ${res[i].category}
               </div>
@@ -176,7 +221,7 @@ const buildMainSection = (conn, cat) => {
         }
 
         output += `
-                  <a href="/?cat=All" class="pseudoLink"><div onclick="sortByCat('All', ${res.length + 1})" class="scat">All</div></a>
+                  <a href="/?cat=All" class="pseudoLink" rel="nofollow"><div onclick="sortByCat('All', ${res.length + 1})" class="scat">All</div></a>
                 </div>
                 <div class="arrows trans" id="rarr" onclick="scrollHor('right')">
                   <img src="/images/rarr.png" width="25" height="25" alt="Right">
@@ -211,7 +256,7 @@ const buildMainSection = (conn, cat) => {
               </video>
               <div class="darken"></div>
               <div class="textCenter">
-                <h1 class="mainText lh gotham align fontNorm" style="padding: 10px;">
+                <h2 class="mainText lh gotham align fontNorm" style="padding: 10px;">
                   Precise 3D printing at Jordan3DPrint
                   <br>
                   <span class="gothamNormal font18" style="display:inline-block; margin-top:6px;">
@@ -220,7 +265,7 @@ const buildMainSection = (conn, cat) => {
                   <button class="fillBtn instantQuote gotham" onclick="location.href = '/print'">
                     Print Now your 3d modals
                   </button>
-                </h1>
+                </h2>
               </div>
             </div>
           </div>
@@ -250,10 +295,10 @@ const buildMainSection = (conn, cat) => {
                   runs. For custom orders, feel free to contact us.
                 </h3>
                 <div class="flexDiv btnAlign">
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/prototype')">
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/print')">
                     Learn more
                   </button>
-                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/prototype#getInCont')">
+                  <button class="whiteBtn gotham font18 trans" onclick="redirect('/print#getQuote')">
                     Contact
                   </button>
                 </div>
@@ -349,7 +394,7 @@ const buildMainSection = (conn, cat) => {
                 <p class="gotham boxTitle">Manufacturing</p>
                 <div class="greyBoxText">
                   <p class="gothamNormal lh">
-                    For product development, <a href="/prototype" class="blueLink">prototyping and short‑run production</a>, rely on our experienced team.
+                    For product development, <a href="/print" class="blueLink">custom printing and short‑run production</a>, rely on our experienced team.
                   </p>
                   <br>
                   <p class="gothamNormal lh">

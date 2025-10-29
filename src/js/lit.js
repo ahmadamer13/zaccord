@@ -124,14 +124,10 @@ function updateLit() {
   _('sizeHolder').innerText = sizesObj[firstCoord];
 }
 
-// Redirect to buy page if btn is clicked
+// Go directly to cart page when Buy is clicked
 _('buyLit').addEventListener('click', function buyLithophane(e) {
-  let sphere = encodeURIComponent(_('sphere').value);
-  let size = _('size').value;
-  let color = _('color').value;
-  let q = _('quantity').value;
-  window.location.href =
-    `/buy?product=lit&sphere=${sphere}&size=${size}&color=${color}&file=${fileBuy}&q=${q}`;
+  if (e && e.preventDefault) e.preventDefault();
+  goToURL('/cart');
 });
 
 // Update the changed values in cookies as well
@@ -146,5 +142,10 @@ function goToURL(url) {
   window.location.href = url;
 }
 
-_('toCart').addEventListener('click', (e) => goToURL('/cart'));
+if (_('toCart')) {
+  _('toCart').addEventListener('click', (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    goToURL('/cart');
+  });
+}
 _('newFile').addEventListener('click', (e) => goToURL('/print'));

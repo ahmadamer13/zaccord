@@ -20,6 +20,13 @@ function getAttrVal(id) {
 function setAttrVal(id, v) {
   _(id).setAttribute('data-value', v);
   let val = v;
+  if (id == 'chcolor') {
+    // Display color name in English for the selected swatch
+    try { val = require('./includes/translateColor.js')(v); } catch(e) { /* keep raw */ }
+    // Simplify marketing names
+    if (val === 'Gold Metallic') val = 'Gold';
+    if (val === 'Silver Metallic') val = 'Silver';
+  }
   if (id == 'chlh' || id == 'chlhSLA' || id == 'chshell') {
     val = v + 'mm';
   } else if (id == 'chinf') {
@@ -62,8 +69,46 @@ function updateSubPrices() {
 
 function genUIColors(selectedColor, mat) {
   let ncolors = '';
+  const COLOR_LABELS = {
+    'Fekete': 'Matte Black',
+    'Fehér': 'Pearl White',
+    'Kék': 'Royal Blue',
+    'Sötétkék': 'Royal Blue',
+    'Világoskék': 'Sky Blue',
+    'Zöld': 'Emerald Green',
+    'Sötétzöld': 'Emerald Green',
+    'Arany': 'Gold',
+    'Piros': 'Crimson Red',
+    'Sötétszürke': 'Gunmetal Gray',
+    'Szürke': 'Gunmetal Gray',
+    'Neon Narancssárga': 'Neon Orange',
+    'Lila': 'Deep Purple',
+    'Ezüst': 'Silver',
+    'Átlátszó': 'Transparent (Clear)',
+    'Barna': 'Copper Bronze'
+  };
+  const ALLOWED_COLOR_EN = new Set([
+    'Matte Black',
+    'Pearl White',
+    'Royal Blue',
+    'Crimson Red',
+    'Emerald Green',
+    'Gunmetal Gray',
+    'Transparent (Clear)',
+    'Gold Metallic',
+    'Silver Metallic',
+    'Copper Bronze',
+    'Neon Orange',
+    'Sky Blue',
+    'Beige Sandstone',
+    'Deep Purple',
+    'Glow-in-the-Dark Green'
+  ]);
   for (let pair of CMAT[mat]) {
     let currentColor = Object.keys(pair)[0];
+    if (!COLOR_IN_STOCK[mat] || !Number(COLOR_IN_STOCK[mat][currentColor])) continue;
+    let label = COLOR_LABELS[currentColor] || currentColor;
+    if (!ALLOWED_COLOR_EN.has(label)) continue;
     let highlight = currentColor == selectedColor ? 'specChHl' : '';
     if (Number(COLOR_IN_STOCK[mat][currentColor])) {
       var stockColor = 'green'; 
@@ -76,13 +121,16 @@ function genUIColors(selectedColor, mat) {
     if (mat == 'gyanta (resin)') {
       imgStyle = 'width: auto; height: 60px;';
     }
+    // Hex code beside the name
+    let hexCode = (HEX_COLORS[mat] && HEX_COLORS[mat][currentColor]) ? HEX_COLORS[mat][currentColor] : '';
+    if (hexCode && !hexCode.startsWith('#')) hexCode = '#' + hexCode;
     ncolors += `
       <div class="specChDDItem trans ${highlight}" data-value="${currentColor}">
         <div>
-          <img src="/images/colors/${pair[currentColor]}" style="${imgStyle}">
+          ${hexCode ? `<span style="display:inline-block;width:24px;height:24px;border:1px solid #dfdfdf;border-radius:4px;background-color:${hexCode};"></span>` : ''}
         </div>
         <div class="gothamNormal font20 p10">
-          ${currentColor}
+          ${label}
         </div>
         <div class="gothamNormal"></div>
         <div class="gothamNormal">
@@ -105,16 +153,57 @@ function chgMat(currentColor) {
   currentMat = _('printMat').value.toLowerCase();
   colorMaps = HEX_COLORS[currentMat];
   let newColors = '';
+  const COLOR_LABELS = {
+    'Fekete': 'Matte Black',
+    'Fehér': 'Pearl White',
+    'Kék': 'Royal Blue',
+    'Sötétkék': 'Royal Blue',
+    'Világoskék': 'Sky Blue',
+    'Zöld': 'Emerald Green',
+    'Sötétzöld': 'Emerald Green',
+    'Arany': 'Gold',
+    'Piros': 'Crimson Red',
+    'Sötétszürke': 'Gunmetal Gray',
+    'Szürke': 'Gunmetal Gray',
+    'Neon Narancssárga': 'Neon Orange',
+    'Lila': 'Deep Purple',
+    'Ezüst': 'Silver',
+    'Átlátszó': 'Transparent (Clear)',
+    'Barna': 'Copper Bronze'
+  };
+  const ALLOWED_COLOR_EN = new Set([
+    'Matte Black',
+    'Pearl White',
+    'Royal Blue',
+    'Crimson Red',
+    'Emerald Green',
+    'Gunmetal Gray',
+    'Transparent (Clear)',
+    'Gold Metallic',
+    'Silver Metallic',
+    'Copper Bronze',
+    'Neon Orange',
+    'Sky Blue',
+    'Beige Sandstone',
+    'Deep Purple',
+    'Glow-in-the-Dark Green'
+  ]);
   let selectedColor;
-  if (PCOLORS[currentMat].indexOf(currentColor) > -1) {
+  const allowedList = PCOLORS[currentMat].filter(c => ALLOWED_COLOR_EN.has(COLOR_LABELS[c] || c));
+  if (allowedList.length === 0) {
+    selectedColor = PCOLORS[currentMat][0];
+  } else if (allowedList.indexOf(currentColor) > -1) {
     selectedColor = currentColor; 
   } else {
-    selectedColor = PCOLORS[currentMat][0];
+    selectedColor = allowedList[0];
   }
 
   for (let color of PCOLORS[currentMat]) {
+    if (!COLOR_IN_STOCK[currentMat] || !Number(COLOR_IN_STOCK[currentMat][color])) continue;
     let selected = color == selectedColor ? 'selected' : '';
-    newColors += `<option value="${color}" ${selected}>${color}</option>`;
+    let label = COLOR_LABELS[color] || color;
+    if (!ALLOWED_COLOR_EN.has(label)) continue;
+    newColors += `<option value="${color}" ${selected}>${label}</option>`;
   }
 
   _('color').innerHTML = newColors;
@@ -190,10 +279,40 @@ function toggleTechs(ids1, ids2, box1, box2) {
 function fillTechColor(mat, sel) {
   let newColors = '';
   let ncolors = '';
+  const COLOR_LABELS = {
+    'Fekete': 'Black',
+    'Fehér': 'White',
+    'Kék': 'Blue',
+    'Zöld': 'Green',
+    'Arany': 'Gold',
+    'Piros': 'Red',
+    'Citromsárga': 'Lemon Yellow',
+    'Szürke': 'Gray',
+    'Sötétszürke': 'Dark Gray',
+    'Világosszürke': 'Light Gray',
+    'Sötétzöld': 'Dark Green',
+    'Világoszöld': 'Light Green',
+    'Narancssárga': 'Orange',
+    'Neon Narancssárga': 'Neon Orange',
+    'Neon Sárga': 'Neon Yellow',
+    'Neon Zöld': 'Neon Green',
+    'Lila': 'Purple',
+    'Barna': 'Brown',
+    'Rózsaszín': 'Pink',
+    'Pasztellrózsaszín': 'Pastel Pink',
+    'Pasztellzöld': 'Pastel Green',
+    'Világoskék': 'Light Blue',
+    'Sötétkék': 'Dark Blue',
+    'Ezüst': 'Silver',
+    'Átlátszó': 'Transparent',
+    'Sárga': 'Yellow'
+  };
   for (let i = 0; i < PCOLORS[mat].length; i++) {
     let color = PCOLORS[mat][i];
+    if (!COLOR_IN_STOCK[mat] || !Number(COLOR_IN_STOCK[mat][color])) continue;
     let selected = color == sel ? 'selected' : '';
-    newColors += `<option value="${color}" ${selected}>${color}</option>`;
+    let label = COLOR_LABELS[color] || color;
+    newColors += `<option value="${color}" ${selected}>${label}</option>`;
   }
 
   _('color').innerHTML = newColors;
@@ -276,7 +395,7 @@ var baseWeight = Number(_('weightHolder').innerText.replace('cm3', ''));
 var bwSave = baseWeight;
 
 // Calculate the price of the custom print based on its parameters and initial price
-function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null) {
+function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null, cv = null) {
   // Selected parameters (raw values)
   let rvasVal = rv == null ? Number(_('rvas').value) : Number(rv);
   let surusegVal = sv == null ? Number(_('suruseg').value) : Number(sv);
@@ -291,7 +410,10 @@ function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null) {
   const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
 
   let filamentMaterial = mv == null ? _('printMat').value.toLowerCase() : mv.toLowerCase();
-  let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial]));
+  // Color multiplier: Black (Fekete) and White (Fehér) are standard; others +15%
+  let selectedColor = cv == null ? _('color').value : cv;
+  let colorMultiplier = (selectedColor === 'Fehér' || selectedColor === 'Fekete') ? 1.0 : 1.15;
+  let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial] * colorMultiplier));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
 
@@ -303,6 +425,9 @@ _('color').addEventListener('change', function changeColor(e) {
   chooseColor('#' + colorMaps[v].toLowerCase());
   setOpacityAll();
   //if (typeof fbq !== 'undefined') fbq('track', 'CustomizeProduct');
+  updateColorSurchargeHint();
+  // Color now affects price; refresh pricing and side labels
+  priceChange();
 });
 
 function updateSubVolumes() {
@@ -341,6 +466,8 @@ function priceChange() {
       p += Number(_('subprice_' + i).innerText); 
     }
   }
+  // Update the per‑unit price text next to spec sections (class otherPrice)
+  updateOtherPrices(p);
   let v = _('quantity').value;
   if (subPrices.length > 1 && hasBelow800()) {
     // Loop through subprices to calc final price
@@ -361,6 +488,17 @@ function priceChange() {
   }
   updateSubVolumes();
   updateSubSizes();
+  updateColorSurchargeHint();
+}
+
+// Update all side labels showing the unit price next to spec boxes
+function updateOtherPrices(unitPrice) {
+  try {
+    const els = document.getElementsByClassName('otherPrice');
+    for (let i = 0; i < els.length; i++) {
+      els[i].innerText = `Price: ${Math.round(unitPrice)} JD`;
+    }
+  } catch(e) { /* noop */ }
 }
 
 function chgMatColor(selectedColor) {
@@ -397,6 +535,33 @@ if (_('printMat')) {
   _('printMat').addEventListener('change', () => updateCookie('printMat'));
   _('printMat').addEventListener('change', () => chgMat(_('color').value));
   _('printMat').addEventListener('change', () => chgMatColor(_('color').value));
+  _('printMat').addEventListener('change', updateColorSurchargeHint);
+}
+
+// Show a small UI hint when non‑black/white color is selected (FDM only)
+function updateColorSurchargeHint() {
+  try {
+    const tval = _('techVal').value;
+    const container = document.getElementById('specChColor');
+    if (!container) return;
+    let hint = document.getElementById('colorSurchargeHint');
+    if (!hint) {
+      hint = document.createElement('p');
+      hint.id = 'colorSurchargeHint';
+      hint.className = 'gothamNormal ddgray';
+      hint.style.fontSize = '12px';
+      hint.style.margin = '6px 0 0 0';
+      container.appendChild(hint);
+    }
+    const c = _('color').value;
+    const surcharge = (c !== 'Fehér' && c !== 'Fekete');
+    if (tval === 'FDM' && surcharge) {
+      hint.textContent = '+15% color surcharge applies';
+      hint.style.display = 'block';
+    } else {
+      hint.style.display = 'none';
+    }
+  } catch(e) { /* no-op */ }
 }
 
 // Change the value in the cookies as well
@@ -512,31 +677,12 @@ window.addEventListener('DOMContentLoaded', function() {
   updatePriceDiffs();
 });
 
-// If user buys the model redirect them to the buy page
+// If user buys the model go directly to the cart page
 _('buyCP').addEventListener('click', function buyProduct(e) {
-  // Get all parameters for custom printing
-  let tech = document.getElementsByClassName('techChosen')[0].innerText.replace(/\s+/, '').slice(0, 3);
-  if (tech == 'FDM') {
-    var rvas = _('rvas').value;
-    var suruseg = _('suruseg').value;
-    var fvas = _('fvas').value;
-    var printMat = _('printMat').value;
-  } else {
-    var rvas = _('rvasSLA').value;
-    var suruseg = _('infillSLA').value;
-    var fvas = null;
-    var printMat = 'Gyanta (Resin)';
-  }
-
-  let paths = arr.map(v => v.split('/')[2].replace('.stl', ''));
-  let size = _('sizeHolder').innerText.replace(/(mm)|(x)/g, '').replace(/\s+/g, ',');
-  let color = _('color').value;
-  let scale = _('scale').value;
-  let quantity = _('quantity').value;
-
-  window.location.href =
-  `/buy?product=cp&rvas=${rvas}&suruseg=${suruseg}&color=${color}&scale=${scale}&fvas=${fvas}&q=${quantity}&printMat=${printMat}&size=${size}&tech=${tech}&files=${paths}`;
-  //fbq('track', 'InitiateCheckout');
+  if (e && e.preventDefault) e.preventDefault();
+  // Parameters are already persisted via cookies/localStorage during configuration,
+  // so we can navigate straight to the cart.
+  goToURL('/cart');
 });
 
 function goToURL(url) {
@@ -638,7 +784,13 @@ function handleDropDown(ddID) {
   }
 }
 
-_('toCart').addEventListener('click', (e) => goToURL('/cart'));
+// Be defensive: only bind if button exists
+if (_('toCart')) {
+  _('toCart').addEventListener('click', (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    goToURL('/cart');
+  });
+}
 _('newFile').addEventListener('click', (e) => goToURL('/print'));
 
 const ORIG_TEXTS = [];
@@ -695,7 +847,11 @@ function updatePriceDiffs() {
       let v = child.getAttribute('data-value');
       if (tval == 'FDM') {
         if (contID == 'specChColorDD') {
-          var newPrice = currentPrice;
+          // Recalculate with color override
+          var newPrice = 0;
+          for (let sp of subPrices) {
+            newPrice += calcP(sp, null, null, null, null, null, v) * Number(_('quantity').value);
+          }
         } else {
           let id = _(contID).getAttribute('id');
           var newPrice = 0;
@@ -705,6 +861,7 @@ function updatePriceDiffs() {
         }
       } else {
         if (contID == 'specChColorDD') {
+          // SLA price does not change with color (no surcharge)
           var newPrice = currentPrice;
         } else {
           let id = _(contID).getAttribute('id');

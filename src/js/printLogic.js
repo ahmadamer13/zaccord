@@ -23,8 +23,10 @@ async function buildPrintSection(conn, req) {
   let src = req.headers['user-agent'];
   let ua = useragent.parse(src);
   let isMobile = ua.isMobile;
-  let dragDropText = isMobile ? 'Upload files' : 'Drag files here';
-  let connWord = isMobile ? 'and' : 'or';
+  let dragDropText = isMobile
+    ? 'Upload STL files • ارفع ملفات STL'
+    : 'Drag STL files here • اسحب ملفات STL هنا';
+  let connWord = isMobile ? 'or • أو' : 'or • أو';
 
   // Select relevant blogs
   let res = await query('SELECT * FROM blog WHERE id IN (9, 10, 7)');
@@ -44,33 +46,54 @@ async function buildPrintSection(conn, req) {
             <p class="gotham font18" style="margin-top: 0;" id="or">${connWord}</p>
             <div class="btnCommon fillBtn" id="fdzB" style="width: 60%; margin: 0 auto;
               max-width: 320px;">
-              Browse
+              Browse STL • تصفح ملفات STL
             </div>
-            <input type="file" name="file[]" style="display: none;" id="fileInput" multiple
-              >
+            <input type="file" name="file[]" style="display: none;" id="fileInput" multiple accept=".stl">
             <input type="submit" id="submitForm" style="display: none;">
             <br>
-            <p class="gotham lh">
-              You can also
-              <a href="/print#getQuote" class="blueLink font16">request a custom quote</a>
-              if you don’t have a printable file yet
-            </p>
+            <div class="contactBlock">
+              <p class="gotham lh" style="font-size: 18px; margin: 8px 0 6px;">
+                Don’t have a printable file?
+                <a href="/print#getQuote" class="blueLink" style="font-size: 18px;">Request a custom quote</a>
+              </p>
+              <p class="gotham lh" style="font-size: 18px; margin: 0 0 10px;">
+                هل تحتاج مصمم 3D؟ لدينا مصممون جاهزون لمساعدتك.
+              </p>
+              <div class="ctaRow">
+                <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="btnPill btnWhats" aria-label="Chat on WhatsApp">
+                  <img src="/images/icons/whatsapp.svg" alt="WhatsApp">
+                  Chat on WhatsApp • تحدث عبر واتساب
+                </a>
+                <a href="mailto:info@jordan3dprint.store" class="btnPill btnEmail" aria-label="Email">
+                  info@jordan3dprint.store
+                </a>
+              </div>
+              <p class="gotham lh" style="font-size: 16px; margin: 6px 0 0; opacity:.9;">
+                ليس لديك ملف للطباعة؟
+                <a href="/print#getQuote" class="blueLink" style="font-size: 16px;">اطلب عرض سعر مخصص</a>
+              </p>
+            </div>
           </form>
         </div>
         <div class="cPrintDivs rightDiv flexDiv previews gotham" id="bigPrew">
           <div id="prew" class="lh">
-            <p class="gotham font24" style="color: #2d2d2d; margin-top: 0;">
-              3D printing from file
+            <p class="gotham font28" style="color: #2d2d2d; margin-top: 0;">
+              Print Your Dreams — You Choose
+              <br>
+              اطبع أحلامك — أنت تختار
             </p> 
             <p class="gotham font18" style="color: #2d2d2d;">
               Don’t have a file to print?<br>
-              <a class="blueLink" href="https://www.thingiverse.com" target="_blank">
-                Browse models on Thingiverse!
-              </a>
+              <a class="blueLink" href="https://www.thingiverse.com" target="_blank">Browse models on Thingiverse</a>
+              <br>
+              ليس لديك ملف جاهز؟<br>
+              <a class="blueLink" href="https://www.thingiverse.com" target="_blank">تصفح النماذج على Thingiverse</a>
             </p> 
 
             <p class="gotham font16" style="color: #2d2d2d;">
-              For lithophanes upload an image; for printing upload an STL file
+              Upload STL files only for 3D printing
+              <br>
+              الرجاء رفع ملفات STL فقط للطباعة ثلاثية الأبعاد
             </p> 
 
             <p class="gotham font16 hideOnMobile" style="color: #2d2d2d;">

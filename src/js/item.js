@@ -94,7 +94,7 @@ function addToCart(id) {
             // Maximum quantity for a single item is MAX_QUANTITY
             let tmpQuantity = Number(itemsSoFar['content_' + cid]['quantity_' + cid]);
             if (tmpQuantity + quantity > MAX_QUANTITY) {
-              displayErrorMsg(`Egyféle termékből maximum ${MAX_QUANTITY}db rendelhető`);
+displayErrorMsg(`Egyféle termékből maximum ${MAX_QUANTITY}db rendelhető`);
               return;
             }
             itemsSoFar['content_' + cid]['quantity_' + cid] = tmpQuantity + quantity;

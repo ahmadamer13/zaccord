@@ -17,7 +17,7 @@ async function buildBlog(conn, blogID, req) {
   // Normalize author name to English presentation
   if (typeof author === 'string') {
     const a = author.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
-    if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
+if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
       author = 'Mark Frankli';
     }
   }

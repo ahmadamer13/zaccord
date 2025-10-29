@@ -14,6 +14,8 @@ DB_NAME=${DB_NAME:-3d}
 NODE_CMD=${NODE_CMD:-node}
 # Default app port (app.js uses process.env.PORT || 5000)
 PORT=${PORT:-5000}
+# Kill any process using $PORT by default (can override: KILL_PORT=0)
+KILL_PORT=${KILL_PORT:-1}
 
 echo "[1/3] Installing npm dependencies..."
 cd "$PROJECT_DIR"
@@ -52,7 +54,7 @@ if command -v lsof >/dev/null 2>&1; then
   PIDS_ON_PORT=$(lsof -t -i :"$PORT" || true)
   if [ -n "$PIDS_ON_PORT" ]; then
     echo "  ! Detected process(es) using port $PORT: $PIDS_ON_PORT"
-    if [ "${KILL_PORT:-0}" = "1" ]; then
+    if [ "${KILL_PORT}" = "1" ]; then
       echo "  - KILL_PORT=1 set; terminating offending processes..."
       kill $PIDS_ON_PORT || true
       sleep 1
@@ -62,7 +64,7 @@ if command -v lsof >/dev/null 2>&1; then
         kill -9 $PIDS_ON_PORT || true
       fi
     else
-      echo "    To auto-kill them, re-run with: KILL_PORT=1 $0"
+      echo "    To auto-kill them, re-run with: KILL_PORT=1 $0 (default)"
       echo "    Or choose a different port: PORT=5001 $0"
       exit 1
     fi

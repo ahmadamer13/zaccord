@@ -16,8 +16,11 @@ function validatePrices(PRINT_MULTS, d) {
   let pt = d.prodType;
   if (tech == 'SLA' && p != calcSLAPrice(bp * SLA_MULTIPLIER, rvas, infill, scale)) {
     return false;
-  } else if (((pt == 'cp' && tech != 'SLA') || (pt == 'fp'))
-    && p != calcPrice(PRINT_MULTS, bp, rvas, infill, scale, fvas, printMat)) {
+  } else if (pt == 'cp' && tech != 'SLA'
+    && p != calcPrice(PRINT_MULTS, bp, rvas, infill, scale, fvas, printMat, d.color)) {
+    return false;
+  } else if (pt == 'fp'
+    && p != calcPrice(PRINT_MULTS, bp, rvas, infill, scale, fvas, false)) {
     return false;
   } else if (pt == 'lit' && p != calcLitPrice(d.size)) {
     return false;

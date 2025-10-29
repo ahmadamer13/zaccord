@@ -11,7 +11,7 @@ const buildRefImage = (conn, id) => {
         return;
       } else if (result.length < 1) {
         // No such image in db, report error
-        reject('Nincsen ilyen referencia kép');
+reject('Nincsen ilyen referencia kép');
         return;
       }
 

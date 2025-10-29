@@ -21,6 +21,7 @@ const buildColors = (conn) => {
     'Carbon‑fiber reinforced, strong and durable material for industrial applications.'
   ];
 
+  const translateColor = require('./includes/translateColor.js');
   return new Promise((resolve, reject) => {
     let colorQuery = 'SELECT DISTINCT material FROM colors';
     let promises = [];
@@ -59,6 +60,7 @@ const buildColors = (conn) => {
               for (let i = 0; i < result.length; i++) {
                 let imgPath = result[i].images.split(',')[0];
                 let colorName = result[i].color;
+                let colorLabel = translateColor(colorName);
                 let inStock = result[i].in_stock;
                 let info = result[i].info;
                 let stockClass = inStock ? 'inStock' : 'notInStock';
@@ -71,7 +73,7 @@ const buildColors = (conn) => {
                     </div>
                     
                     <div>
-                      <p class="gotham">${colorName} ${currentMaterial.toUpperCase()} ${filamentText}</p>
+                      <p class="gotham">${colorLabel} ${currentMaterial.toUpperCase()} ${filamentText}</p>
                       <p class="gothamNormal">${info}</p>
                       <p class="${stockClass} gothamNormal">${stockText}</p>
                     </div>

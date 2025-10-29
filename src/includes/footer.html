@@ -78,14 +78,42 @@
       <span class="yearHolder"></span> 3DJordanPrint
     </p>
   </div>
-  <a href="https://wa.me/00962797479825" target="_blank" rel="noreferrer" id="waFloat" aria-label="Chat on WhatsApp"></a>
+  <div id="waFab" class="waFab">
+    <button type="button" id="waFloat" aria-label="Contact options" class="waFabMain"></button>
+    <div id="waMenu" class="waFabMenu">
+      <a href="tel:+962797479825" class="waItem waCall" aria-label="Call"></a>
+      <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="waItem waWhats" aria-label="Chat on WhatsApp"></a>
+    </div>
+  </div>
 </footer>
 <style>
-  #waFloat{position:fixed;right:18px;bottom:18px;width:84px;height:84px;border-radius:50%;
+  .waFab{position:fixed;right:18px;bottom:18px;z-index:9999}
+  .waFabMain{width:84px;height:84px;border-radius:50%;cursor:pointer;border:0;
     background:#25D366 url('/images/icons/whatsapp.svg') no-repeat 50% 50%;background-size:42px 42px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.2);z-index:9999}
-  #waFloat:hover{transform:scale(1.05)}
+    box-shadow:0 6px 18px rgba(0,0,0,0.2);transition:transform .15s ease}
+  .waFabMain:hover{transform:scale(1.05)}
+  .waFabMenu{position:absolute;right:12px;bottom:96px;display:none;gap:12px;flex-direction:column;align-items:flex-end}
+  .waFab.open .waFabMenu{display:flex}
+  .waItem{width:64px;height:64px;border-radius:50%;background:#111827 no-repeat 50% 50%;background-size:34px 34px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.2)}
+  .waItem:hover{transform:translateY(-2px)}
+  .waCall{background-color:#0ea5e9;background-image:url('/images/icons/phone.svg')}
+  .waWhats{background-color:#25D366;background-image:url('/images/icons/whatsapp.svg')}
 </style>
+<script>
+  (function(){
+    var fab = document.getElementById('waFab');
+    if(!fab) return;
+    var main = document.getElementById('waFloat');
+    main.addEventListener('click', function(e){
+      e.preventDefault();
+      fab.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e){
+      if(!fab.contains(e.target)) fab.classList.remove('open');
+    });
+  })();
+</script>
 <!--
 <div id="fb-root"></div>
 <script>

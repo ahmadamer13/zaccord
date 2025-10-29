@@ -97,7 +97,7 @@ function sortByCat(cat, cid, isEye = false) {
   }
 
   // Do not display new products & more products when using 'All' category
-  if (cat === 'Összes') {
+if (cat === 'Összes') {
     toggleLower('none');
   } else {
     toggleLower('block');

@@ -18,7 +18,7 @@ const changeDeliveryInfo = (conn, userID, formData) => {
       `;
       conn.query(iQuery, [name, pcode, city, address, mobile, userID], (err, result, f) => {
         if (err) {
-          reject('Egy nem várt hiba történt, kérlek próbáld újra');
+reject('Egy nem várt hiba történt, kérlek próbáld újra');
           return;
         }
 

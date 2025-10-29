@@ -6,6 +6,7 @@ const shouldAllowSLA = require('./includes/allowSLA.js');
 const calcSLAPrice = require('./includes/calcSLAPrice.js');
 const getColors = require('./includes/getColors.js');
 const getMaterials = require('./includes/getMaterials.js');
+const colorInStock = require('./includes/colorInStock.js');
 const fs = require('fs');
 const path = require('path');
 const constants = require('./includes/constants.js');
@@ -41,10 +42,12 @@ const buildCartSection = (conn, req) => {
 
     let matPromise = getMaterials(conn);
     let colorsPromise = getColors(conn);
+    let stockPromise = colorInStock(conn);
 
-    Promise.all([matPromise, colorsPromise]).then(vals => {
+    Promise.all([matPromise, colorsPromise, stockPromise]).then(vals => {
       const PRINT_MULTS = vals[0];
       const [PCOLORS, _] = vals[1];
+      const COLOR_IN_STOCK = vals[2];
 
       // If not empty then loop through all items
       let cart = JSON.parse(cookies['cartItems']);
@@ -139,7 +142,7 @@ const buildCartSection = (conn, req) => {
               if (printTech == 'SLA') {
                 var actualPrice = calcSLAPrice(Math.round(price * SLA_MULTIPLIER), rvas, suruseg, scale);
               } else {
-                var actualPrice = calcPrice(PRINT_MULTS, price, rvas, suruseg, scale, fvas, cp);
+                var actualPrice = calcPrice(PRINT_MULTS, price, rvas, suruseg, scale, fvas, cp, content['color_' + tid]);
               }
               if (isFixProd) {
                 var selQuan = `updateSpecs(this, ${price}, '${tid}')`;
@@ -395,10 +398,51 @@ const buildCartSection = (conn, req) => {
               cols = PCOLORS[printMat.toLowerCase()];
             }
 
+            // Use same labels and filtering as upload page
+            const COLOR_LABELS_SRV = {
+              'Fekete': 'Matte Black',
+              'Fehér': 'Pearl White',
+              'Kék': 'Royal Blue',
+              'Sötétkék': 'Royal Blue',
+              'Világoskék': 'Sky Blue',
+              'Zöld': 'Emerald Green',
+              'Sötétzöld': 'Emerald Green',
+              'Arany': 'Gold',
+              'Piros': 'Crimson Red',
+              'Sötétszürke': 'Gunmetal Gray',
+              'Szürke': 'Gunmetal Gray',
+              'Neon Narancssárga': 'Neon Orange',
+              'Lila': 'Deep Purple',
+              'Ezüst': 'Silver',
+              'Átlátszó': 'Transparent (Clear)',
+              'Barna': 'Copper Bronze'
+            };
+            const ALLOWED_COLOR_EN_SRV = new Set([
+              'Matte Black',
+              'Pearl White',
+              'Royal Blue',
+              'Crimson Red',
+              'Emerald Green',
+              'Gunmetal Gray',
+              'Transparent (Clear)',
+              'Gold Metallic',
+              'Silver Metallic',
+              'Copper Bronze',
+              'Neon Orange',
+              'Sky Blue',
+              'Beige Sandstone',
+              'Deep Purple',
+              'Glow-in-the-Dark Green'
+            ]);
+
             for (let c of cols) {
+              let matKey = (printTech == 'SLA') ? 'gyanta (resin)' : (isLit || isFixProd) ? 'pla' : printMat.toLowerCase();
+              if (!COLOR_IN_STOCK[matKey] || !Number(COLOR_IN_STOCK[matKey][c])) continue;
+              let label = COLOR_LABELS_SRV[c] || c;
+              if (!ALLOWED_COLOR_EN_SRV.has(label)) continue;
               let selected = decodeURIComponent(color) == c ? 'selected' : '';
               output += `
-                <option value="${c}" ${selected}>${c}</option>
+                <option value="${c}" ${selected}>${label}</option>
               `;
             }
 
@@ -530,6 +574,42 @@ const buildCartSection = (conn, req) => {
             attachHandlers();
 
             const PCOLORS = ${JSON.stringify(PCOLORS)};
+            const COLOR_IN_STOCK = ${JSON.stringify(COLOR_IN_STOCK)};
+            const COLOR_LABELS = {
+              'Fekete': 'Matte Black',
+              'Fehér': 'Pearl White',
+              'Kék': 'Royal Blue',
+              'Sötétkék': 'Royal Blue',
+              'Világoskék': 'Sky Blue',
+              'Zöld': 'Emerald Green',
+              'Sötétzöld': 'Emerald Green',
+              'Arany': 'Gold',
+              'Piros': 'Crimson Red',
+              'Sötétszürke': 'Gunmetal Gray',
+              'Szürke': 'Gunmetal Gray',
+              'Neon Narancssárga': 'Neon Orange',
+              'Lila': 'Deep Purple',
+              'Ezüst': 'Silver',
+              'Átlátszó': 'Transparent (Clear)',
+              'Barna': 'Copper Bronze'
+            };
+            const ALLOWED_COLOR_EN = new Set([
+              'Matte Black',
+              'Pearl White',
+              'Royal Blue',
+              'Crimson Red',
+              'Emerald Green',
+              'Gunmetal Gray',
+              'Transparent (Clear)',
+              'Gold Metallic',
+              'Silver Metallic',
+              'Copper Bronze',
+              'Neon Orange',
+              'Sky Blue',
+              'Beige Sandstone',
+              'Deep Purple',
+              'Glow-in-the-Dark Green'
+            ]);
             const PRINT_MULTS = ${JSON.stringify(PRINT_MULTS)};
 
             function matChange(id) {
@@ -544,8 +624,11 @@ const buildCartSection = (conn, req) => {
               }
 
               for (let color of PCOLORS[currentMat]) {
+                if (!COLOR_IN_STOCK[currentMat] || !Number(COLOR_IN_STOCK[currentMat][color])) continue;
+                let label = COLOR_LABELS[color] || color;
+                if (!ALLOWED_COLOR_EN.has(label)) continue;
                 let selected = sel == color ? 'selected' : '';
-                newColors += '<option value="' + color + '" ' + selected + '>' + color + '</option>';
+                newColors += '<option value="' + color + '" ' + selected + '>' + label + '</option>';
               }
 
               document.getElementById('color' + id).innerHTML = newColors;

@@ -507,6 +507,17 @@ INSERT INTO `reference_images` (`id`, `img_url`, `title`, `description`, `rvas`,
 (7, 'exoskeleton.jpg', 'Exoskeleton', 'Hand -mounted exoskeleton. The product consists of several elements that the customer has to assemble, but the package is all available in the package. It can be used immediately after assembly and looks very cool. <br> \ r \ n Product <a class = \ "bluelink font16 \" href = \ "https: //wwww.zaccord.com/item/product=126 \"> zaccordon can be purchased </a> and within a few days.', '0.2', '0.4', '40', '130.90,100', '2020-06-00 00:00:00'),
 (8, 'Skull.jpg', 'Human skull', 'Anatomically authentic human skull. It can be an ideal choice for fanatic doctors or biology teachers at home.', '0.2', '0.4', '40', '130.90,100', '2020-06-00 00:00:00'),
 (9, 'vase.jpg', 'Spiral', 'Modern spiral vase. It can be a great choice for the apartment as a decoration, especially for the same, clean style homes. <br> \ r \ n Product <a class = \ "bluelink font16 \" href = \ "https: //www.zaccord.com/item/product=131 \"> zaccordon can be purchased </a> and in a few days.', '0.2', '0.4', '40', '130.90,100', '2020-06-00 00:00:00');
+-- Training-focused posts (English)
+INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summary`, `img_url`, `last_update`, `date`) VALUES
+(30, 'Getting Started with Online 3D Printing Training', 'Mark Frankli', '3D Printing,Training,Online Learning,Beginners', 'online_3d_printing_training_intro', 'A concise guide to the very first topics to learn online: FDM vs SLA, slicer basics, materials, safety, and a 4‑week starter plan.', 'startup_bor.jpg', NOW(), NOW()),
+(31, 'Top Free Online 3D Printing Courses', 'Mark Frankli', '3D Printing,Training,Courses,Free', 'top_free_online_3d_printing_courses', 'Hand‑picked free tracks and how to use them effectively with weekly goals and practice prints for faster results.', 'softborito.jpg', NOW(), NOW()),
+(32, '30‑Day CAD‑to‑Print Learning Path', 'Mark Frankli', '3D Printing,Training,CAD,Workflow', '30_day_cad_to_print_path', 'A structured month to build a reliable CAD‑to‑print workflow with clear milestones, test prints, and documentation.', 'fdm_printer.jpg', NOW(), NOW());
+
+-- Jordan-focused posts (English)
+INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summary`, `img_url`, `last_update`, `date`) VALUES
+(37, '3D Printing in Jordan: Overview & Opportunities', 'Mark Frankli', '3D Printing,Jordan,Startups,Education', '3d_printing_in_jordan_overview', 'Jordan’s 3D printing landscape is expanding across startups, education, and small manufacturing. Practical tips to get started and deliver results locally.', 'proto_bor.jpg', NOW(), NOW()),
+(38, 'How the Jordanian Government Supports 3D Printing', 'Mark Frankli', '3D Printing,Jordan,Government,Funding', 'jordan_government_support_for_3d_printing', 'Education, entrepreneurship, and access programs are helping individuals and SMEs adopt 3D printing faster and more safely across Jordan.', 'startup_bor.jpg', NOW(), NOW()),
+(39, 'Best 3D Printing Websites in Jordan (3DJordanPrint First)', 'Mark Frankli', '3D Printing,Jordan,Services,Guide', 'best_3d_printing_websites_in_jordan', 'How to choose a reliable 3D printing service in Jordan, with 3DJordanPrint as the top pick for fast quotes, local turnaround, and clear guidance.', 'elektronika_bor.jpg', NOW(), NOW());
 
 -- --------------------------------------------------------
 

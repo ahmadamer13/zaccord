@@ -6,7 +6,7 @@ function genDelivery(conn, userID, isLoggedIn = true) {
     `;
     conn.query(dQuery, [userID], (err, result, field) => {
       if (err) {
-        reject('Egy nem várt hiba történt, kérlek proóbáld újra');
+reject('Egy nem várt hiba történt, kérlek proóbáld újra');
         return;
       }
 
@@ -23,15 +23,15 @@ function genDelivery(conn, userID, isLoggedIn = true) {
 
       let output = `
         <div class="flexDiv" style="flex-wrap: wrap;">
-          <input type="text" class="dFormField" id="name" placeholder="Név"
+<input type="text" class="dFormField" id="name" placeholder="Név"
             value="${name}">
-          <input type="text" class="dFormField" id="pcode" placeholder="Irányítószám"
+<input type="text" class="dFormField" id="pcode" placeholder="Irányítószám"
             value="${postalCode}">
-          <input type="text" class="dFormField" id="city" placeholder="Város"
+<input type="text" class="dFormField" id="city" placeholder="Város"
             value="${city}">
-          <input type="text" class="dFormField" id="address" placeholder="Cím"
+<input type="text" class="dFormField" id="address" placeholder="Cím"
             value="${address}">
-          <input type="text" class="dFormField" id="mobile" placeholder="Telefonszám"
+<input type="text" class="dFormField" id="mobile" placeholder="Telefonszám"
             value="${mobile}">
           ${!isLoggedIn ? `<input type="text" class="dFormField" id="nlEmail"
             placeholder="Email">` : ''}

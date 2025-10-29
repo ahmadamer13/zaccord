@@ -56,13 +56,12 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
         // Change header to logged in
         _('register').innerText = 'Account';
         _('register').href = '/account';
-        _('login').innerText = 'Prototyping';
-        _('login').href = '/prototype';
+        _('login').innerText = 'Printing';
+        _('login').href = '/print';
 
         // Update highlighted icon color
         if (window.matchMedia("(max-width: 768px)").matches) {
-          document.querySelectorAll('.hideSeek > a > img')[2].src =
-            '/images/icons/protBlack.svg';
+          // no prototype icon anymore
         } else {
           _('register').style.color = '#000';
         }
