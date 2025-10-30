@@ -7,8 +7,11 @@ const userRegister = (conn, formData, req) => {
     // Gather data
     let email = formData.email;
     let password = formData.pass;
-    let userAgent = req.headers['user-agent'];
-    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    let userAgent = String(req.headers['user-agent'] || '').slice(0, 250);
+    let ipHeader = req.headers['x-forwarded-for'] || req.connection.remoteAddress || '';
+    let ip = Array.isArray(ipHeader) ? ipHeader[0] : String(ipHeader);
+    if (ip.includes(',')) ip = ip.split(',')[0].trim();
+    ip = ip.slice(0, 250);
 
     // Secure password
     const saltRounds = 10;

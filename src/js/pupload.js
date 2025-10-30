@@ -146,23 +146,35 @@ function displayFiles() {
     // Add submit button if not yet added
     if (!sBtnAdded) {
       _('bigPrew').innerHTML += `
-        <label for="submitForm" tabindex="0"
+        <button type="button"
           class="btnCommon fillBtn animate__animated animate__fadeIn"
           style="margin: 20px auto; width: 60%; max-width: 320px;" id="continue">
           Continue
-        </label> 
+        </button> 
       `; 
 
       sBtnAdded = true;
 
       _('continue').addEventListener('click', function showSpinner(e) {
+        e.preventDefault();
         if (!isSubmitted) {
           // Display loader and "disable" submit btn
-          _('bigPrew').innerHTML += `
-            <img src="/images/icons/loader.gif" width="24" style="margin: 0 auto"
-              class="animate__animated animate__fadeIn">
-            <p class="blue">This may take a few minutes...</p>
-          `;
+          if (!document.getElementById('uploadLoader')) {
+            _('bigPrew').innerHTML += `
+              <img src="/images/icons/loader.gif" width="24" style="margin: 0 auto"
+                class="animate__animated animate__fadeIn" id="uploadLoader">
+            `;
+          }
+          if (!document.getElementById('uploadProgressText')) {
+            let progressText = document.createElement('p');
+            progressText.id = 'uploadProgressText';
+            progressText.className = 'blue';
+            progressText.style.margin = '6px 0 0 0';
+            progressText.textContent = 'Preparing upload...';
+            _('bigPrew').appendChild(progressText);
+          } else {
+            _('uploadProgressText').textContent = 'Preparing upload...';
+          }
           _('continue').style.cursor = "not-allowed";
           _('continue').style.opacity = "0.8";
 
@@ -176,9 +188,7 @@ function displayFiles() {
             cnt++;
           }
 
-          // Submit form & do not allow further submissions
-          _('fdz').submit();
-          isSubmitted = true;
+          submitFilesWithProgress();
         }
       });
     }
@@ -188,6 +198,82 @@ function displayFiles() {
 
 let sBtnAdded = false;
 _('fileInput').addEventListener('change', displayFiles);
+
+function submitFilesWithProgress() {
+  const form = _('fdz');
+  if (!form) return;
+  const formData = new FormData(form);
+  const progressEl = _('uploadProgressText');
+
+  if (progressEl) {
+    progressEl.textContent = 'Uploading... 0%';
+    progressEl.style.color = '#1a73e8';
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', form.getAttribute('action') || '/uploadPrint', true);
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  xhr.upload.addEventListener('progress', (event) => {
+    if (!progressEl) return;
+    if (event.lengthComputable) {
+      const percent = Math.min(100, Math.round((event.loaded / event.total) * 100));
+      progressEl.textContent = `Uploading... ${percent}%`;
+    } else {
+      progressEl.textContent = 'Uploading...';
+    }
+  });
+
+  xhr.addEventListener('load', () => {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      if (progressEl) {
+        progressEl.textContent = 'Processing... 100%';
+      }
+      const contentType = xhr.getResponseHeader('Content-Type') || '';
+      if (contentType.includes('text/html')) {
+        document.open();
+        document.write(xhr.responseText);
+        document.close();
+      } else if (xhr.responseURL) {
+        window.location.href = xhr.responseURL;
+      } else {
+        window.location.reload();
+      }
+    } else {
+      handleUploadError('Upload failed. Please try again.');
+    }
+  });
+
+  xhr.addEventListener('error', () => {
+    handleUploadError('Network error. Please check your connection and try again.');
+  });
+
+  try {
+    xhr.send(formData);
+    isSubmitted = true;
+  } catch (err) {
+    console.error(err);
+    handleUploadError('Could not start upload. Please try again.');
+  }
+}
+
+function handleUploadError(message) {
+  const progressEl = _('uploadProgressText');
+  if (progressEl) {
+    progressEl.textContent = message;
+    progressEl.style.color = '#ff4a4a';
+  } else {
+    errorMsg(message);
+  }
+  if (_('uploadLoader')) {
+    _('uploadLoader').remove();
+  }
+  if (_('continue')) {
+    _('continue').style.cursor = 'pointer';
+    _('continue').style.opacity = '1';
+  }
+  isSubmitted = false;
+}
 
 // Implement drag & drop feature
 let drags = 0;

@@ -11,17 +11,21 @@ const getColors = (conn) => {
       }
 
       for (let i = 0; i < result.length; i++) {
-        if (result[i].material in colors) {
-          colors[result[i].material].push(result[i].color);
-        } else {
-          colors[result[i].material] = [result[i].color];
-        }
-        
+        let material = result[i].material;
+        let color = result[i].color;
+        let hex = result[i].hex_color;
 
-        if (result[i].material in hex_codes) {
-          hex_codes[result[i].material][result[i].color] = result[i].hex_color.toLowerCase();
+        if (material in colors) {
+          colors[material].push(color);
         } else {
-          hex_codes[result[i].material] = {[result[i].color]: result[i].hex_color.toLowerCase()};
+          colors[material] = [color];
+        }
+
+        if (!(material in hex_codes)) {
+          hex_codes[material] = {};
+        }
+        if (hex) {
+          hex_codes[material][color] = String(hex).toLowerCase();
         }
       }
 
