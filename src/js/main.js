@@ -171,7 +171,7 @@ function changeNavTextColor() {
   } else if (ending == 'print') {
     _('bny').style.color = '#4285f4';
   } else if (ending == 'register' || ending == 'account') {
-    _('register').style.color = '#4285f4';
+    _('register').style.color = '#25d366';
   } else if (ending == 'prototype') {
     _('login').style.color = '#4285f4';
   }
