@@ -5,6 +5,22 @@ const helpers = require('./includes/helperFunctions.js');
 const blogTranslations = require('./includes/blogTranslations.js');
 const addCookieAccept = helpers.addCookieAccept;
 
+function normalizeCategory(value = '') {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function stripHtml(value = '') {
+  return value.replace(/<[^>]*>/g, '');
+}
+
+function buildSummarySnippet(value = '', maxLength = 140) {
+  const plain = stripHtml(value).trim();
+  if (plain.length <= maxLength) {
+    return plain;
+  }
+  return `${plain.slice(0, maxLength - 1).trimEnd()}...`;
+}
+
 async function buildBlog(conn, blogID, req) {
   // Promisify conn.query so that it can be used with an async/await function
   const query = util.promisify(conn.query).bind(conn);
@@ -26,12 +42,60 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
   let summary = t.summary || res.summary;
   let lastUpdate = res.last_update.split(' ')[0];
   let date = res.date;
+  let relatedPosts = [];
+
+  try {
+    const targetCategories = categories
+      .split(',')
+      .map(entry => entry.trim())
+      .filter(Boolean)
+      .map(normalizeCategory);
+    const categorySet = new Set(targetCategories);
+
+    const candidates = await query(
+      'SELECT id, title, summary, categories, date FROM blog WHERE id != ?',
+      [blogID]
+    );
+
+    relatedPosts = candidates
+      .map(candidate => {
+        const translation = blogTranslations[candidate.id] || {};
+        const candidateTitle = translation.title || candidate.title;
+        const candidateSummary = translation.summary || candidate.summary;
+        const candidateCategories = (translation.categories || candidate.categories || '')
+          .split(',')
+          .map(entry => entry.trim())
+          .filter(Boolean);
+        const score = candidateCategories.reduce((acc, current) => {
+          return acc + (categorySet.has(normalizeCategory(current)) ? 1 : 0);
+        }, 0);
+        const timestamp = new Date(candidate.date).getTime();
+
+        return {
+          id: candidate.id,
+          title: candidateTitle,
+          summary: candidateSummary,
+          score,
+          timestamp: Number.isFinite(timestamp) ? timestamp : 0
+        };
+      })
+      .sort((a, b) => {
+        if (b.score !== a.score) {
+          return b.score - a.score;
+        }
+        return b.timestamp - a.timestamp;
+      })
+      .slice(0, 4);
+  } catch (err) {
+    console.log('Related blog selection failed', err);
+    relatedPosts = [];
+  }
 
   let content = `
     <!DOCTYPE html>
     <html lang="en">
       <head>
-        <title>${title} - Jordan3DPrint 3D Printing Blog</title>
+        <title>${title} – 3D Printing Service in Jordan | طباعة ثلاثية الابعاد في الاردن بجودة ممتازه</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/animate/animate.css">
@@ -75,6 +139,25 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
   `;
 
   content += await fs.readFile(path.join(__dirname, '..', 'blogContent', path.join(htmlPath) + '.html'), 'utf-8');
+  if (relatedPosts.length) {
+    content += `
+      <hr class="hrStyle">
+      <div class="blogRelated notoSans">
+        <h2 class="gotham fontNorm font24" style="margin-bottom: 12px;">More to explore</h2>
+        <ul class="dul font18">
+          ${relatedPosts.map(post => `
+            <li>
+              <a class="blueLink font18" href="/blog?id=${post.id}">${post.title}</a>
+              ${post.summary ? `<div class="font16 blogRelatedSummary">${buildSummarySnippet(post.summary)}</div>` : ''}
+            </li>
+          `).join('')}
+        </ul>
+        <p class="font16" style="margin-top: 12px;">
+          Want to dive deeper? Visit the <a class="blueLink font16" href="/blog">3D printing blog index</a> for every article.
+        </p>
+      </div>
+    `;
+  }
   content += `
     <hr class="hrStyle">
     <p class="font18 align ttt notoSans">

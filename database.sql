@@ -519,6 +519,12 @@ INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summ
 (38, 'How the Jordanian Government Supports 3D Printing', 'Mark Frankli', '3D Printing,Jordan,Government,Funding', 'jordan_government_support_for_3d_printing', 'Education, entrepreneurship, and access programs are helping individuals and SMEs adopt 3D printing faster and more safely across Jordan.', 'startup_bor.jpg', NOW(), NOW()),
 (39, 'Best 3D Printing Websites in Jordan (3DJordanPrint First)', 'Mark Frankli', '3D Printing,Jordan,Services,Guide', 'best_3d_printing_websites_in_jordan', 'How to choose a reliable 3D printing service in Jordan, with 3DJordanPrint as the top pick for fast quotes, local turnaround, and clear guidance.', 'elektronika_bor.jpg', NOW(), NOW());
 
+-- 2025 global and industry insights
+INSERT INTO `blog` (`id`, `title`, `author`, `categories`, `content_path`, `summary`, `img_url`, `last_update`, `date`) VALUES
+(40, 'Which Country Is Leading 3D Printing in 2024?', 'Mark Frankli', '3D Printing,Industry,Global Trends', 'global_leaders_in_3d_printing', 'The United States currently leads additive manufacturing thanks to deep public and private investment, while Europe and Asia quickly close the gap.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Robot_3D_print_timelapse_on_RepRapPro_Fisher.webm/1200px--Robot_3D_print_timelapse_on_RepRapPro_Fisher.webm.jpg', NOW(), NOW()),
+(41, 'How Much Can 1 kg of PLA Print for 70 JD?', 'Mark Frankli', '3D Printing,Materials,Costing', 'pla_spool_output_70jd', 'Break down how many real-world parts you can produce from a 1 kg spool priced at 70 JD, with cost-per-gram math and slicer efficiency tips.', 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg', NOW(), NOW()),
+(42, 'From the 45-Degree Rule to Nike\'s 3D Printing Lab', 'Mark Frankli', '3D Printing,Design,Footwear,R&D', 'fortyfive_rule_and_nike_3d_printing', 'Learn the 45-degree overhang rule for clean FDM prints and see how Nike leverages rapid additive workflows for athlete-ready footwear.', 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Nike_Shoes_3.jpg', NOW(), NOW());
+
 -- --------------------------------------------------------
 
 --

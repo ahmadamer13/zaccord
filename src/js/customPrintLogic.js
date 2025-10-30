@@ -177,6 +177,8 @@ const buildCustomPrint = (conn, userID, filePaths) => {
               <span class="blue gotham">Total price:</span>
               <span id="priceHolder">${Math.round(totalPrice)}</span> JD
             </p>
+            <p class="gothamNormal ddgray" id="totalPriceSurchargeNote"
+              style="font-size:12px; margin:4px 0 0 0; display:none;"></p>
           </div>
           <div>
             <p>
@@ -257,7 +259,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         <div class="specChDD" id="specChMatDD" data-open="closed">
       `;
 
-      // Limit to PLA, PETG, TPU (use tpu_medium image and label as TPU)
+      // Limit to PLA and PETG only
       let matPairs = [
         {
           'npair': ['pla', 'PLA'],
@@ -266,10 +268,6 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         {
           'npair': ['petg', 'PETG'],
           'desc': 'Durable plastic for functional parts'
-        },
-        {
-          'npair': ['tpu_medium', 'TPU'],
-          'desc': 'Flexible material for elastic parts'
         }
       ];
 
@@ -337,7 +335,9 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       };
       const ALLOWED_COLOR_EN = new Set([
         'Matte Black',
+        'Black',
         'Pearl White',
+        'White',
         'Royal Blue',
         'Crimson Red',
         'Emerald Green',
@@ -356,7 +356,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       for (let pair of CMAT['pla']) {
         let color = Object.keys(pair)[0];
         if (!COLOR_IN_STOCK['pla'] || !Number(COLOR_IN_STOCK['pla'][color])) continue;
-        let highlight = color == 'Fehér' ? 'specChHl' : '';
+        let highlight = (color == 'Fehér' || color == 'White') ? 'specChHl' : '';
         let label = COLOR_LABELS[color] || color;
         if (!ALLOWED_COLOR_EN.has(label)) continue;
         // append hex code beside the name for initial PLA list
@@ -684,6 +684,28 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           const HEX_COLORS = ${JSON.stringify(hex_codes)};
           const PRINT_MULTS = ${JSON.stringify(PRINT_MATS)};
           const COLOR_IN_STOCK = ${JSON.stringify(COLOR_IN_STOCK)};
+
+          (function enforceLimitedColors() {
+            const limitedMap = {
+              'petg': ['White', 'Black', 'Fehér', 'Fekete']
+            };
+            const mats = Object.keys(PCOLORS || {});
+            for (const mat of mats) {
+              const lower = mat.toLowerCase();
+              let base = limitedMap[lower];
+              if (!base) continue;
+              let list = Array.isArray(PCOLORS[mat]) ? PCOLORS[mat].slice() : [];
+              list = list.filter(c => base.indexOf(c) > -1);
+              if (!list.length) list = base.slice();
+              PCOLORS[mat] = list;
+              if (!COLOR_IN_STOCK[mat]) COLOR_IN_STOCK[mat] = {};
+              for (const color of list) {
+                if (COLOR_IN_STOCK[mat][color] === undefined) {
+                  COLOR_IN_STOCK[mat][color] = 1;
+                }
+              }
+            }
+          })();
 
           // Loop over file paths and extract file names used for thumbnails & .stl
           for (let f of Array.from('${filePaths}'.split(','))) {

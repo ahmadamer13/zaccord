@@ -12,14 +12,26 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
   return new Promise((resolve, reject) => {
     getColors(conn).then(([colors, hex_codes]) => {
       const PRINT_COLORS = colors;
-      // Limit materials to PLA, PETG, TPU (use TPU_MEDIUM as canonical option)
+      const limitedMap = {
+        'petg': ['White', 'Black', 'Fehér', 'Fekete']
+      };
+      const enforceLimited = (mat) => {
+        if (!mat) return;
+        const lower = mat.toLowerCase();
+        const base = limitedMap[lower];
+        if (!base) return;
+        let list = Array.isArray(PRINT_COLORS[mat]) ? PRINT_COLORS[mat].slice() : [];
+        list = list.filter(c => base.indexOf(c) > -1);
+        if (!list.length) list = base.slice();
+        PRINT_COLORS[mat] = list;
+      };
+
+      enforceLimited('petg');
+      // Limit materials to PLA and PETG only
       const MAT_KEYS = Object.keys(colors);
       const ALLOWED_MATS = [];
       if (MAT_KEYS.includes('pla')) ALLOWED_MATS.push('PLA');
       if (MAT_KEYS.includes('petg')) ALLOWED_MATS.push('PETG');
-      // prefer medium tpu variant if present, else fall back to any tpu_*
-      let tpuKey = MAT_KEYS.includes('tpu_medium') ? 'tpu_medium' : (MAT_KEYS.find(k => k.startsWith('tpu_')) || null);
-      if (tpuKey) ALLOWED_MATS.push(tpuKey.toUpperCase());
       const PRINT_MATERIALS = ALLOWED_MATS;
       const COLOR_LABELS = {
         'Fehér': 'Pearl White',
@@ -41,7 +53,9 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
       };
       const ALLOWED_COLOR_EN = new Set([
         'Matte Black',
+        'Black',
         'Pearl White',
+        'White',
         'Royal Blue',
         'Crimson Red',
         'Emerald Green',
@@ -138,7 +152,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
         for (let c of PRINT_COLORS['pla']) {
           let label = COLOR_LABELS[c] || c;
           if (!ALLOWED_COLOR_EN.has(label)) continue;
-          let selected = c == 'Fehér' ? 'selected' : '';
+          let selected = (c == 'Fehér' || c == 'White') ? 'selected' : '';
           output += `
             <option value="${c}" ${selected}>${label}</option>
           `;
@@ -233,7 +247,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
         `;
 
         for (let c of PRINT_COLORS['pla']) {
-let selected = c == 'Fehér' ? 'selected' : '';
+let selected = (c == 'Fehér' || c == 'White') ? 'selected' : '';
           output += `
             <option value="${c}" ${selected}>${c}</option>
           `;

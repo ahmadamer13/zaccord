@@ -43,9 +43,10 @@ function updateCookie(param, qty = null, cookieID = null) {
   //fbq('track', 'CustomizeProduct');
 }
 
-function updateOPrice(price) {
+function updateOPrice(price, hasColorSurcharge = false) {
+  const label = hasColorSurcharge ? 'Price (incl. +15% color surcharge)' : 'Price';
   for (let el of document.getElementsByClassName('otherPrice')) {
-    el.innerText = 'Price: ' + price + ' JD';
+    el.innerText = `${label}: ${Math.round(price)} JD`;
   }
 }
 

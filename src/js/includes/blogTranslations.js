@@ -50,14 +50,36 @@ const translations = {
     summary:
       'Before listing the best low-poly 3D model sources, let’s see what “low-poly” actually means.\r\nThe term “poly” comes from “polygon.” A polygon is a 2D shape made up of straight lines and angles. When we combine several polygons, we can create recognizable 3D shapes.\r\n',
     img_url: 'lowpolyrabbit.jpg'
-  }
-  ,
+  },
   29: {
     title: '3D Printing in Construction: From Prototyping to 3D-Printed Houses',
     categories: '3D Printing, Construction, Housing',
     summary:
       '3D printing, also known as additive manufacturing, can transform construction: enabling unique, complex designs, reducing waste and emissions, and accelerating builds. This article reviews key applications.',
     img_url: 'epites_bor.jpg'
+  },
+  40: {
+    title: 'Which Country Is Leading 3D Printing in 2024?',
+    categories: '3D Printing, Industry, Global Trends',
+    summary:
+      'The United States still leads global additive manufacturing, yet European and Asian ecosystems are scaling fast. Learn what the shift means for makers in Jordan.',
+    img_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Robot_3D_print_timelapse_on_RepRapPro_Fisher.webm/1200px--Robot_3D_print_timelapse_on_RepRapPro_Fisher.webm.jpg'
+  },
+  41: {
+    title: 'How Much Can 1 kg of PLA Print for 70 JD?',
+    categories: '3D Printing, Materials, Costing',
+    summary:
+      'Track grams per part, calculate cost-per-gram at 70 JD per spool, and apply slicer tactics that squeeze more value from every roll of filament.',
+    img_url:
+      'https://upload.wikimedia.org/wikipedia/commons/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg'
+  },
+  42: {
+    title: 'From the 45-Degree Rule to Nike\'s 3D Printing Lab',
+    categories: '3D Printing, Design, Footwear, R&D',
+    summary:
+      'Understand the 45-degree overhang rule for cleaner FDM output and explore how Nike applies additive workflows for athlete-ready shoes.',
+    img_url: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Nike_Shoes_3.jpg'
   }
 };
 

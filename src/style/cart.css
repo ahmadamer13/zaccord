@@ -1,0 +1,18 @@
+.cartActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.cartActions .fillBtn { flex: 0 0 auto; }
+
+.cartActions .waCartBtn {
+  background-color: #25D366;
+  border-color: #25D366;
+}
+
+.cartActions .waCartBtn:hover {
+  background-color: #1EB854;
+  border-color: #1EB854;
+}

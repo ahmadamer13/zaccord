@@ -25,6 +25,11 @@ const MAX_QUANTITY = constants.maxQuantity;
 const MIN_QUANTITY = constants.minQuantity;
 const DISCOUNT = constants.discount;
 const FREE_SHIPPING_LIMIT = shipping.freeShippingLimit;
+const ALLOWED_CART_MATERIALS = ['PLA', 'PETG'];
+const LIMITED_CART_COLORS = {
+  'petg': ['White', 'Black', 'Fehér', 'Fekete']
+};
+const STANDARD_COLORS = new Set(['Fehér', 'Fekete', 'White', 'Black']);
 
 // Build cart page from cookies & validate them on server side
 const buildCartSection = (conn, req) => {
@@ -49,6 +54,25 @@ const buildCartSection = (conn, req) => {
       const [PCOLORS, _] = vals[1];
       const COLOR_IN_STOCK = vals[2];
 
+      const ensureLimitedColors = (matKey) => {
+        const lower = (matKey || '').toLowerCase();
+        const limited = LIMITED_CART_COLORS[lower];
+        if (!limited) return;
+        let list = Array.isArray(PCOLORS[lower]) ? PCOLORS[lower].slice() : [];
+        if (!list.length) list = limited.map(c => c);
+        list = list.filter(c => limited.indexOf(c) > -1);
+        if (!list.length) list = limited.map(c => c);
+        PCOLORS[lower] = Array.from(new Set(list));
+        if (!COLOR_IN_STOCK[lower]) COLOR_IN_STOCK[lower] = {};
+        for (let color of PCOLORS[lower]) {
+          if (COLOR_IN_STOCK[lower][color] === undefined) {
+            COLOR_IN_STOCK[lower][color] = 1;
+          }
+        }
+      };
+
+      ensureLimitedColors('petg');
+
       // If not empty then loop through all items
       let cart = JSON.parse(cookies['cartItems']);
       let keys = Object.keys(cart).filter(prop => prop[0] != 'i');
@@ -69,13 +93,45 @@ const buildCartSection = (conn, req) => {
         let printMat = content['printMat_' + tid];
         let printTech = content['tech_' + tid];
 
-        //let isCP = printTech == 'FDM' || printTech == 'SLA';
-        let isSLA = printTech == 'SLA';
-
-        // Get the item from db & make sure it exists
         let isLit = content.hasOwnProperty('sphere_' + tid);
         let isCP = tid.split('_').length > 2 && !isLit;
         let isFixProd = !isLit && !isCP;
+        let isSLA = printTech == 'SLA';
+
+        let normalizedMat = (printMat || 'PLA').toUpperCase();
+        if (ALLOWED_CART_MATERIALS.indexOf(normalizedMat) === -1) {
+          normalizedMat = 'PLA';
+        }
+        printMat = normalizedMat;
+
+        let matKeyForColor;
+        if (printTech == 'SLA') {
+          matKeyForColor = 'gyanta (resin)';
+        } else if (isLit || isFixProd) {
+          matKeyForColor = 'pla';
+        } else {
+          matKeyForColor = printMat.toLowerCase();
+        }
+
+        let candidateColors = Array.isArray(PCOLORS[matKeyForColor]) ? PCOLORS[matKeyForColor].slice() : [];
+        const limitedColorList = LIMITED_CART_COLORS[matKeyForColor];
+        if (limitedColorList && limitedColorList.length) {
+          let filteredColors = candidateColors.filter(c => limitedColorList.indexOf(c) > -1);
+          if (!filteredColors.length) filteredColors = limitedColorList.slice();
+          candidateColors = Array.from(new Set(filteredColors));
+        } else if (!candidateColors.length) {
+          candidateColors = ['Fehér', 'Fekete', 'White', 'Black'];
+        }
+
+        let decodedColor = decodeURIComponent(color || '');
+        if (!candidateColors.includes(decodedColor)) {
+          decodedColor = candidateColors[0];
+          color = encodeURIComponent(decodedColor);
+          content['color_' + tid] = color;
+        }
+        const colorHasSurcharge = !STANDARD_COLORS.has(decodedColor) && !isSLA;
+
+        // Get the item from db & make sure it exists
         let allowSLA;
         let sqlQuery = new Promise((resolve, reject) => {
           conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [dbId],
@@ -189,6 +245,7 @@ const buildCartSection = (conn, req) => {
                 <div class="flexDiv prodInfo" id="uniqueCont_${tid}">
                   <div id="unitPrice_${tid}">
                     <p>Unit price: <span id="priceHolder_${tid}">${actualPrice}</span> JD</p>
+                    ${colorHasSurcharge ? '<p class="gothamNormal ddgray" style="font-size:12px;margin-top:4px;">Includes +15% color surcharge</p>' : ''}
                   </div>
             `;
             
@@ -322,7 +379,7 @@ const buildCartSection = (conn, req) => {
 
                   `;
                   
-                  for (let pm of Object.keys(PRINT_MULTS).map(e => e.toUpperCase())) {
+                  for (let pm of ALLOWED_CART_MATERIALS) {
                     let selected = pm == printMat ? 'selected' : '';
                     output += `<option value="${pm}" ${selected}>${pm}</option>`;
                   }
@@ -389,14 +446,26 @@ const buildCartSection = (conn, req) => {
                         onchange="chColor(this, '${tid}')">
             `;
             
-            let cols;
+            let matKey;
             if (printTech == 'SLA') {
-              cols = PCOLORS['gyanta (resin)'];
+              matKey = 'gyanta (resin)';
             } else if (isLit || isFixProd) {
-              cols = PCOLORS['pla'];
+              matKey = 'pla';
             } else {
-              cols = PCOLORS[printMat.toLowerCase()];
+              matKey = printMat.toLowerCase();
             }
+
+            let cols = Array.isArray(PCOLORS[matKey]) ? PCOLORS[matKey].slice() : [];
+            const limited = LIMITED_CART_COLORS[matKey];
+            if (limited && limited.length) {
+              let filtered = cols.filter(c => limited.indexOf(c) > -1);
+              if (!filtered.length) filtered = limited.slice();
+              cols = Array.from(new Set(filtered));
+            } else if (!cols.length) {
+              cols = ['Fehér', 'Fekete', 'White', 'Black'];
+            }
+
+            const selectedColorRaw = decodeURIComponent(color);
 
             // Use same labels and filtering as upload page
             const COLOR_LABELS_SRV = {
@@ -415,7 +484,9 @@ const buildCartSection = (conn, req) => {
               'Lila': 'Deep Purple',
               'Ezüst': 'Silver',
               'Átlátszó': 'Transparent (Clear)',
-              'Barna': 'Copper Bronze'
+              'Barna': 'Copper Bronze',
+              'White': 'White',
+              'Black': 'Black'
             };
             const ALLOWED_COLOR_EN_SRV = new Set([
               'Matte Black',
@@ -432,12 +503,15 @@ const buildCartSection = (conn, req) => {
               'Sky Blue',
               'Beige Sandstone',
               'Deep Purple',
-              'Glow-in-the-Dark Green'
+              'Glow-in-the-Dark Green',
+              'White',
+              'Black'
             ]);
 
+            const stockMap = COLOR_IN_STOCK[matKey] || {};
+
             for (let c of cols) {
-              let matKey = (printTech == 'SLA') ? 'gyanta (resin)' : (isLit || isFixProd) ? 'pla' : printMat.toLowerCase();
-              if (!COLOR_IN_STOCK[matKey] || !Number(COLOR_IN_STOCK[matKey][c])) continue;
+              if (stockMap[c] !== undefined && !Number(stockMap[c])) continue;
               let label = COLOR_LABELS_SRV[c] || c;
               if (!ALLOWED_COLOR_EN_SRV.has(label)) continue;
               let selected = decodeURIComponent(color) == c ? 'selected' : '';
@@ -552,7 +626,7 @@ const buildCartSection = (conn, req) => {
             ${ePriceText}
           </p>
           <div class="infoBox" id="infoLogin"></div>
-          <button class="fillBtn btnCommon centerBtn" id="buyCart">Proceed to Checkout</button> 
+          <button class="fillBtn btnCommon centerBtn" id="buyCart">Proceed to Checkout</button>
         `;
         output += '</section>';
         output += `
@@ -610,7 +684,8 @@ const buildCartSection = (conn, req) => {
               'Deep Purple',
               'Glow-in-the-Dark Green'
             ]);
-            const PRINT_MULTS = ${JSON.stringify(PRINT_MULTS)};
+const PRINT_MULTS = ${JSON.stringify(PRINT_MULTS)};
+const WHATSAPP_BASE = 'https://wa.me/962797479825';
 
             function matChange(id) {
               let newColors = '';
@@ -634,6 +709,7 @@ const buildCartSection = (conn, req) => {
               document.getElementById('color' + id).innerHTML = newColors;
               chColor(document.getElementById('color' + id), id);
             }
+
           </script>
         `;
         resolve(output);

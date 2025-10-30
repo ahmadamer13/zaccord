@@ -24,9 +24,9 @@ function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, f
     const wallFactor = Math.max(0.25, fvasVal * 180 / Math.PI / baseWall);
     const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
     const mult = PRINT_MULTS[filamentMaterial.toLowerCase()];
-    // Color surcharge: Black (Fekete) and White (Fehér) are standard; others +15%
+    // Color surcharge: Black/White (Hungarian or English) are standard; others +15%
     let colorMultiplier = 1.0;
-    if (colorVal && !['Fehér', 'Fekete'].includes(colorVal)) {
+    if (colorVal && !['Fehér', 'Fekete', 'White', 'Black'].includes(colorVal)) {
       colorMultiplier = 1.15;
     }
     let fp = smoothPrice(Math.round(price * scaleVal * massFactor * mult * colorMultiplier));

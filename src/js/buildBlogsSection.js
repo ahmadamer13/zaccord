@@ -22,11 +22,12 @@ function buildBlogItem(currentBlog) {
   let categories = currentBlog.categories.split(',').map(e => e.trim()).join(', ');
   let summary = currentBlog.summary;
   let imgUrl = currentBlog.img_url;
+  let bgUrl = /^https?:\/\//i.test(imgUrl) ? imgUrl : `/images/blog/${imgUrl}`;
   let date = currentBlog.date.split(' ')[0];
 
   return `
     <div class="blogCont trans">
-      <div class="upperImg bgCommon lazy" data-bg="/images/blog/${imgUrl}"
+      <div class="upperImg bgCommon lazy" data-bg="${bgUrl}"
        style="background-color: rgb(53, 54, 58);">
         <div class="darken"></div>
         <h2 class="blogTitle fontNorm gotham font20">${title}</h2>

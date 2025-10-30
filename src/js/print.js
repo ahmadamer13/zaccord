@@ -1,6 +1,45 @@
 let bpSave = [basePrice, basePriceSLA];
 let currentMat = _('printMat').value.toLowerCase();
 let colorMaps = HEX_COLORS[currentMat];
+const LIMITED_COLOR_MAP = {
+  'petg': ['Fehér', 'Fekete']
+};
+const STANDARD_COLORS = new Set(['Fehér', 'Fekete', 'White', 'Black']);
+
+function getLimitedColors(mat) {
+  const mk = (mat || '').toLowerCase();
+  let base = LIMITED_COLOR_MAP[mk] || null;
+  if (!base) return null;
+
+  const englishFallback = ['White', 'Black'];
+  let combined = base.slice();
+  if (typeof PCOLORS !== 'undefined' && PCOLORS) {
+    const candidates = [mk, mat, mk.toUpperCase()];
+    let existing = [];
+    for (let key of candidates) {
+      if (PCOLORS[key]) {
+        existing = PCOLORS[key];
+        break;
+      }
+    }
+    if (existing.length) {
+      const matchesBase = base.filter(c => existing.indexOf(c) > -1);
+      if (matchesBase.length) {
+        combined = matchesBase;
+      } else {
+        const matchesEnglish = englishFallback.filter(c => existing.indexOf(c) > -1);
+        if (matchesEnglish.length) combined = matchesEnglish;
+        else combined = englishFallback.slice();
+      }
+    } else {
+      combined = englishFallback.slice();
+    }
+  } else {
+    combined = englishFallback.slice();
+  }
+
+  return Array.from(new Set(combined));
+}
 
 let specChObj = {
   'specChLh': 'specChLhDD',
@@ -69,6 +108,7 @@ function updateSubPrices() {
 
 function genUIColors(selectedColor, mat) {
   let ncolors = '';
+  const limitedList = getLimitedColors(mat);
   const COLOR_LABELS = {
     'Fekete': 'Matte Black',
     'Fehér': 'Pearl White',
@@ -89,7 +129,9 @@ function genUIColors(selectedColor, mat) {
   };
   const ALLOWED_COLOR_EN = new Set([
     'Matte Black',
+    'Black',
     'Pearl White',
+    'White',
     'Royal Blue',
     'Crimson Red',
     'Emerald Green',
@@ -104,28 +146,17 @@ function genUIColors(selectedColor, mat) {
     'Deep Purple',
     'Glow-in-the-Dark Green'
   ]);
-  for (let pair of CMAT[mat]) {
-    let currentColor = Object.keys(pair)[0];
-    if (!COLOR_IN_STOCK[mat] || !Number(COLOR_IN_STOCK[mat][currentColor])) continue;
-    let label = COLOR_LABELS[currentColor] || currentColor;
-    if (!ALLOWED_COLOR_EN.has(label)) continue;
-    let highlight = currentColor == selectedColor ? 'specChHl' : '';
-    if (Number(COLOR_IN_STOCK[mat][currentColor])) {
-      var stockColor = 'green'; 
-      var stockText = 'In stock'
-    } else {
-      var stockColor = 'red'; 
-      var stockText = 'Out of stock'
-    }
-    let imgStyle = '';
-    if (mat == 'gyanta (resin)') {
-      imgStyle = 'width: auto; height: 60px;';
-    }
-    // Hex code beside the name
-    let hexCode = (HEX_COLORS[mat] && HEX_COLORS[mat][currentColor]) ? HEX_COLORS[mat][currentColor] : '';
+
+  const buildEntry = (color, inStock = 1) => {
+    let label = COLOR_LABELS[color] || color;
+    if (!ALLOWED_COLOR_EN.has(label)) return '';
+    const highlight = color === selectedColor ? 'specChHl' : '';
+    const stockColor = inStock ? 'green' : 'red';
+    const stockText = inStock ? 'In stock' : 'Out of stock';
+    let hexCode = (HEX_COLORS[mat] && HEX_COLORS[mat][color]) ? HEX_COLORS[mat][color] : '';
     if (hexCode && !hexCode.startsWith('#')) hexCode = '#' + hexCode;
-    ncolors += `
-      <div class="specChDDItem trans ${highlight}" data-value="${currentColor}">
+    return `
+      <div class="specChDDItem trans ${highlight}" data-value="${color}">
         <div>
           ${hexCode ? `<span style="display:inline-block;width:24px;height:24px;border:1px solid #dfdfdf;border-radius:4px;background-color:${hexCode};"></span>` : ''}
         </div>
@@ -137,9 +168,26 @@ function genUIColors(selectedColor, mat) {
           <p style="color: ${stockColor}">${stockText}</p>
         </div>
       </div>
-    `; 
+    `;
+  };
+
+  if (limitedList && limitedList.length) {
+    const uniqueLimited = Array.from(new Set(limitedList));
+    for (let color of uniqueLimited) {
+      ncolors += buildEntry(color, 1);
+    }
+    return ncolors;
   }
-  
+
+  const cm = CMAT[mat] || [];
+  const stockMap = COLOR_IN_STOCK[mat] || {};
+  for (let pair of cm) {
+    const currentColor = Object.keys(pair)[0];
+    if (stockMap[currentColor] !== undefined && !Number(stockMap[currentColor])) continue;
+    const inStock = stockMap[currentColor] === undefined ? 1 : Number(stockMap[currentColor]);
+    ncolors += buildEntry(currentColor, inStock);
+  }
+
   return ncolors;
 }
 
@@ -173,7 +221,9 @@ function chgMat(currentColor) {
   };
   const ALLOWED_COLOR_EN = new Set([
     'Matte Black',
+    'Black',
     'Pearl White',
+    'White',
     'Royal Blue',
     'Crimson Red',
     'Emerald Green',
@@ -188,21 +238,49 @@ function chgMat(currentColor) {
     'Deep Purple',
     'Glow-in-the-Dark Green'
   ]);
-  let selectedColor;
-  const allowedList = PCOLORS[currentMat].filter(c => ALLOWED_COLOR_EN.has(COLOR_LABELS[c] || c));
-  if (allowedList.length === 0) {
-    selectedColor = PCOLORS[currentMat][0];
-  } else if (allowedList.indexOf(currentColor) > -1) {
-    selectedColor = currentColor; 
+  const limited = getLimitedColors(currentMat);
+  let colorPool;
+
+  if (limited && limited.length) {
+    colorPool = Array.from(new Set(limited));
+    PCOLORS[currentMat] = colorPool.slice();
+    if (!COLOR_IN_STOCK[currentMat]) COLOR_IN_STOCK[currentMat] = {};
+    for (let color of colorPool) {
+      if (COLOR_IN_STOCK[currentMat][color] === undefined) {
+        COLOR_IN_STOCK[currentMat][color] = 1;
+      }
+    }
+  } else if (Array.isArray(PCOLORS[currentMat]) && PCOLORS[currentMat].length) {
+    colorPool = PCOLORS[currentMat].slice();
   } else {
-    selectedColor = allowedList[0];
+    colorPool = ['Fehér', 'Fekete', 'White', 'Black'];
+    PCOLORS[currentMat] = colorPool.slice();
   }
 
-  for (let color of PCOLORS[currentMat]) {
-    if (!COLOR_IN_STOCK[currentMat] || !Number(COLOR_IN_STOCK[currentMat][color])) continue;
-    let selected = color == selectedColor ? 'selected' : '';
+  const uniquePool = Array.from(new Set(colorPool));
+  const stockMap = COLOR_IN_STOCK[currentMat] || {};
+  let displayColors = [];
+  for (let color of uniquePool) {
+    if (!limited && stockMap[color] !== undefined && !Number(stockMap[color])) continue;
     let label = COLOR_LABELS[color] || color;
     if (!ALLOWED_COLOR_EN.has(label)) continue;
+    displayColors.push(color);
+  }
+  if (!displayColors.length) displayColors = uniquePool.slice();
+  if (!displayColors.length) displayColors = ['White'];
+
+  let selectedColor;
+  if (displayColors.indexOf(currentColor) > -1) {
+    selectedColor = currentColor;
+  } else if (displayColors.indexOf(_('color').value) > -1) {
+    selectedColor = _('color').value;
+  } else {
+    selectedColor = displayColors[0];
+  }
+
+  for (let color of displayColors) {
+    let label = COLOR_LABELS[color] || color;
+    let selected = color == selectedColor ? 'selected' : '';
     newColors += `<option value="${color}" ${selected}>${label}</option>`;
   }
 
@@ -410,9 +488,11 @@ function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null, cv
   const massFactor = 0.7 * infillFactor + 0.3 * wallFactor;
 
   let filamentMaterial = mv == null ? _('printMat').value.toLowerCase() : mv.toLowerCase();
-  // Color multiplier disabled: all colors priced equally
   let selectedColor = cv == null ? _('color').value : cv;
   let colorMultiplier = 1.0;
+  if (!STANDARD_COLORS.has(selectedColor) && filamentMaterial !== 'gyanta (resin)') {
+    colorMultiplier = 1.15;
+  }
   let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial] * colorMultiplier));
   return fp < MIN_PRICE ? MIN_PRICE : fp;
 }
@@ -456,6 +536,8 @@ function updateSubSizes() {
 function priceChange() {
   updateSubPrices();
   let p = calcP(subPrices[0]);
+  const selectedColorVal = _('color') ? _('color').value : null;
+  const hasColorSurcharge = (_('techVal').value === 'FDM') && selectedColorVal && !STANDARD_COLORS.has(selectedColorVal);
   if (_('techVal').value == 'SLA') {
     let [lw, infill, scale] = getSLAParams();
     p = calcSLAPrice(bpSave[1], lw, infill, scale);
@@ -467,7 +549,7 @@ function priceChange() {
     }
   }
   // Update the per‑unit price text next to spec sections (class otherPrice)
-  updateOtherPrices(p);
+  updateOtherPrices(p, hasColorSurcharge);
   let v = _('quantity').value;
   if (subPrices.length > 1 && hasBelow800()) {
     // Loop through subprices to calc final price
@@ -481,22 +563,25 @@ function priceChange() {
       }
     }
     _('priceHolder').innerHTML = totPrice;
-    updateOPrice(totPrice);
+    updateOPrice(totPrice, hasColorSurcharge);
   } else {
-    _('priceHolder').innerHTML = p * v;
-    updateOPrice(p * v);
+    const total = p * v;
+    _('priceHolder').innerHTML = total;
+    updateOPrice(total, hasColorSurcharge);
   }
   updateSubVolumes();
   updateSubSizes();
   updateColorSurchargeHint();
+  updateTotalSurchargeNote(hasColorSurcharge);
 }
 
 // Update all side labels showing the unit price next to spec boxes
-function updateOtherPrices(unitPrice) {
+function updateOtherPrices(unitPrice, hasColorSurcharge = false) {
   try {
     const els = document.getElementsByClassName('otherPrice');
     for (let i = 0; i < els.length; i++) {
-      els[i].innerText = `Price: ${Math.round(unitPrice)} JD`;
+      const label = hasColorSurcharge ? 'Price (incl. +15% color surcharge)' : 'Price';
+      els[i].innerText = `${label}: ${Math.round(unitPrice)} JD`;
     }
   } catch(e) { /* noop */ }
 }
@@ -553,8 +638,32 @@ function updateColorSurchargeHint() {
       hint.style.margin = '6px 0 0 0';
       container.appendChild(hint);
     }
-    // Color surcharge disabled: no hint shown
-    hint.style.display = 'none';
+    const selectedColor = _('color') ? _('color').value : null;
+    const hasSurcharge = (tval === 'FDM') && selectedColor && !STANDARD_COLORS.has(selectedColor);
+    if (hasSurcharge) {
+      hint.textContent = '+15% color surcharge applied for non-standard colors.';
+      hint.style.display = 'block';
+    } else if (tval === 'FDM') {
+      hint.textContent = 'Black/White colors have no surcharge.';
+      hint.style.display = 'block';
+    } else {
+      hint.style.display = 'none';
+    }
+    updateTotalSurchargeNote(hasSurcharge);
+  } catch(e) { /* no-op */ }
+}
+
+function updateTotalSurchargeNote(hasSurcharge) {
+  try {
+    const note = document.getElementById('totalPriceSurchargeNote');
+    if (!note) return;
+    if (hasSurcharge) {
+      note.textContent = 'Total includes +15% color surcharge.';
+      note.style.display = 'block';
+    } else {
+      note.textContent = '';
+      note.style.display = 'none';
+    }
   } catch(e) { /* no-op */ }
 }
 

@@ -59,7 +59,7 @@ async function buildPrintSection(conn, req) {
               <p class="gotham lh" style="font-size: 18px; margin: 0 0 10px;">
                 هل تحتاج مصمم 3D؟ لدينا مصممون جاهزون لمساعدتك.
               </p>
-              <div class="ctaRow">
+              <div class="ctaRow ctaRowPrimary">
                 <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="btnPill btnWhats" aria-label="Chat on WhatsApp">
                   <img src="/images/icons/whatsapp.svg" alt="WhatsApp">
                   Chat on WhatsApp • تحدث عبر واتساب
@@ -68,9 +68,20 @@ async function buildPrintSection(conn, req) {
                   info@jordan3dprint.store
                 </a>
               </div>
-              <p class="gotham lh" style="font-size: 16px; margin: 6px 0 0; opacity:.9;">
-                ليس لديك ملف للطباعة؟
-                <a href="/print#getQuote" class="blueLink" style="font-size: 16px;">اطلب عرض سعر مخصص</a>
+              <div class="ctaRow ctaRowSecondary">
+                <a href="https://wa.me/message/KQRSOE7ZSWJBK1?text=I%20need%20a%203D%20designer" target="_blank" rel="noreferrer" class="btnPill btnWhats btnPillLite" aria-label="Send WhatsApp message: I need a 3D designer">
+                  <img src="/images/icons/whatsapp.svg" alt="WhatsApp">
+                  Send &ldquo;I need a 3D designer&rdquo;
+                </a>
+                <a href="https://wa.me/message/KQRSOE7ZSWJBK1?text=%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A5%D9%84%D9%89%20%D9%85%D8%B5%D9%85%D9%85%20%D8%AB%D9%84%D8%A7%D8%AB%D9%8A%20%D8%A7%D9%84%D8%A3%D8%A8%D8%B9%D8%A7%D8%AF" target="_blank" rel="noreferrer" class="btnPill btnWhats btnPillLite" aria-label="إرسال رسالة واتساب: أحتاج إلى مصمم ثلاثي الأبعاد">
+                  <img src="/images/icons/whatsapp.svg" alt="واتساب">
+                  أرسل &quot;أحتاج إلى مصمم ثلاثي الأبعاد&quot;
+                </a>
+              </div>
+              <p class="gotham lh" style="font-size: 16px; margin: 6px 0 10px; opacity:.9;">
+                Do you need a 3D designer? Call us now or send a WhatsApp message.
+                <br>
+                هل تحتاج إلى مصمم ثلاثي الأبعاد؟ اتصل بنا الآن أو أرسل رسالة عبر واتساب.
               </p>
             </div>
           </form>
