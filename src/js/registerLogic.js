@@ -89,16 +89,30 @@ const userRegister = (conn, formData, req) => {
               return;
             }
             let userID = result[0].id;
-            let iQuery = 'INSERT INTO delivery_data (uid, date) VALUES (?, NOW())';
-            conn.query(iQuery, [userID], (err, result, field) => {
+            let dIdQuery = 'SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM delivery_data';
+            conn.query(dIdQuery, [], (err, idResult) => {
               if (err) {
                 console.log(err);
                 reject('An unexpected error occurred, please try again');
                 return;
               }
 
-              // Success
-              resolve(userID);
+              let deliveryId = 1;
+              if (idResult && idResult[0] && Number(idResult[0].nextId)) {
+                deliveryId = Number(idResult[0].nextId);
+              }
+
+              let iQuery = 'INSERT INTO delivery_data (id, uid, date) VALUES (?, ?, NOW())';
+              conn.query(iQuery, [deliveryId, userID], (err, result, field) => {
+                if (err) {
+                  console.log(err);
+                  reject('An unexpected error occurred, please try again');
+                  return;
+                }
+
+                // Success
+                resolve(userID);
+              });
             });
           });
         });

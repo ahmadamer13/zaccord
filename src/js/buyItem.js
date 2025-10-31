@@ -491,23 +491,41 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
         Promise.all(promises).then(data => {
           // Also update delivery info in db if needed
-          if (isLoggedIn) {
-            var dQuery = `
-              UPDATE delivery_data
-              SET name = ?, postal_code = ?, city = ?, address = ?, mobile = ?, nl_email = NULL,
-              order_id = NULL, date = NOW() WHERE uid = ?
-            `;
-            var deliveryArr = [name, pcode, city, address, mobile, UID];
-          } else {
-            var dQuery = `
-              INSERT INTO delivery_data (uid, name, postal_code, city, address, mobile,
-              nl_email, order_id, date)
-              VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NOW())
-            `;
-            var deliveryArr = [name, pcode, city, address, mobile, nlEmail, uniqueID];
-          }
+          const upsertDelivery = callback => {
+            if (isLoggedIn) {
+              const dQuery = `
+                UPDATE delivery_data
+                SET name = ?, postal_code = ?, city = ?, address = ?, mobile = ?, nl_email = NULL,
+                order_id = NULL, date = NOW() WHERE uid = ?
+              `;
+              const deliveryArr = [name, pcode, city, address, mobile, UID];
+              conn.query(dQuery, deliveryArr, callback);
+              return;
+            }
 
-          conn.query(dQuery, deliveryArr, (err, result, field) => {
+            const dIdQuery = 'SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM delivery_data';
+            conn.query(dIdQuery, [], (err, idResult) => {
+              if (err) {
+                callback(err);
+                return;
+              }
+
+              let deliveryId = 1;
+              if (idResult && idResult[0] && Number(idResult[0].nextId)) {
+                deliveryId = Number(idResult[0].nextId);
+              }
+
+              const dQuery = `
+                INSERT INTO delivery_data (id, uid, name, postal_code, city, address, mobile,
+                nl_email, order_id, date)
+                VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, NOW())
+              `;
+              const deliveryArr = [deliveryId, name, pcode, city, address, mobile, nlEmail, uniqueID];
+              conn.query(dQuery, deliveryArr, callback);
+            });
+          };
+
+          upsertDelivery((err, result) => {
             if (err) {
               console.log(err);
               reject('An unexpected error occurred, please try again');
