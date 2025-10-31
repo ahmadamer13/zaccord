@@ -91,18 +91,16 @@ function imgError(res, userID, fname, text = '') {
 
 // Server response for .stl and .png files: set proper content type
 function fileResponse(contentType, url, res) {
-  responseCache(contentType, res, true);
-  let path = url.substr(1);
+  const filePath = url.substr(1);
   try {
-    var content = fs.readFileSync(path);
+    const content = fs.readFileSync(filePath);
+    responseCache(contentType, res, true);
+    res.end(content);
   } catch (e) {
-    console.log(e);
-    if (typeof userID === 'undefined') var userID;
-    // Send a friendly 404 page and stop further writes to the response
-    imgError(res, userID, '404error');
-    return;
+    console.log('Static file missing:', filePath, e && e.code ? e.code : e);
+    res.writeHead(404, {'Content-Type': 'text/plain; charset=UTF-8'});
+    res.end('Not found');
   }
-  res.end(content);
 }
 
 // Get the content type of the file being served
