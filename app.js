@@ -600,7 +600,7 @@ const server = http.createServer((req, res) => {
               console.log(error);
               imgError(res, userID, 'parcel');
             });
-          } else if (req.url.substr(0, 5) === '/blog') {
+          } else if (req.url === '/blog' || req.url.indexOf('/blog?') === 0) {
             let blogID = NaN;
             try {
               const urlObj = new URL(req.url, 'http://localhost');
