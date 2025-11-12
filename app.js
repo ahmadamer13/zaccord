@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const { URL } = url;
 const mv = require('mv');
 const cron = require('node-cron');
 
@@ -599,8 +600,21 @@ const server = http.createServer((req, res) => {
               console.log(error);
               imgError(res, userID, 'parcel');
             });
-          } else if (req.url.substr(0, 9) === '/blog?id=') {
-            let blogID = Number(req.url.substr(9));
+          } else if (req.url.substr(0, 5) === '/blog') {
+            let blogID = NaN;
+            try {
+              const urlObj = new URL(req.url, 'http://localhost');
+              blogID = Number(urlObj.searchParams.get('id'));
+            } catch (e) {
+              blogID = NaN;
+            }
+
+            if (!Number.isInteger(blogID) || blogID < 0) {
+              res.writeHead(400, {'Content-Type': 'text/plain; charset=UTF-8'});
+              res.end('Invalid blog id');
+              return;
+            }
+
             let content = '';
             buildBlog(conn, blogID, req).then(data => {
               commonData(content, userID, data, res);
