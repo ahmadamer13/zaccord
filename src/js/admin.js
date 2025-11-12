@@ -50,14 +50,10 @@ if (_('box_0')) {
 
     if ((cuid != nuid || cot != not) && (cuid == puid && cot == pot)) {
       _('totpHolder_' + i).style.display = 'block';
-      let extraPrice = 0;
-      if (priceSum + Number(_('allp_' + i).innerText) < 800) {
-        extraPrice = 800 - (priceSum + Number(_('allp_' + i).innerText));
-      }
       let moneyHandle = 0;
       //if (priceSum + Number(_('allp_' + i).innerText) > 15000) moneyHandle = -390;
       _('totp_' + i).innerText = priceSum + Number(_('allp_' + i).innerText) + sprices[i]
-        + extraPrice + moneyHandle;
+        + moneyHandle;
       priceSum = 0;
     }
 

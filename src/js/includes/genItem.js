@@ -1,7 +1,10 @@
+const { normalizeColorLabel } = require('./colorUtils.js');
+
 // Generate an html box for an item
 function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, data,
   isLit = false, isUID = false, isCP = false, isZprod = false) {
   let printTech = data.tech;
+  const displayColor = normalizeColorLabel(data.color || '-');
   let output = `
     <div class="cartItemHolder">
       <div class="itemLeftCenter">
@@ -50,7 +53,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
 
     output += `
       <div>
-        <p>Color: ${decodeURIComponent(data.color)}</p>
+        <p>Color: ${displayColor || '-'}</p>
       </div>
     `;
 

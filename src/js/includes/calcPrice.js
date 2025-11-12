@@ -1,4 +1,5 @@
 const constants = require('./constants.js');
+const { isStandardColor } = require('./colorUtils.js');
 const MIN_PRICE = constants.minPrice;
 const smoothPrice = constants.smoothPrice;
 
@@ -26,7 +27,7 @@ function calcPrice(PRINT_MULTS, price, rvasVal, surusegVal, scaleVal, fvasVal, f
     const mult = PRINT_MULTS[filamentMaterial.toLowerCase()];
     // Color surcharge: Black/White (Hungarian or English) are standard; others +15%
     let colorMultiplier = 1.0;
-    if (colorVal && !['Fehér', 'Fekete', 'White', 'Black'].includes(colorVal)) {
+    if (colorVal && !isStandardColor(colorVal)) {
       colorMultiplier = 1.15;
     }
     let fp = smoothPrice(Math.round(price * scaleVal * massFactor * mult * colorMultiplier));

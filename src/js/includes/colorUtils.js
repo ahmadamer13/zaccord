@@ -2,49 +2,48 @@ const COLOR_NAME_MAP = {
   'fehér': 'White',
   'feher': 'White',
   'white': 'White',
+  'pearl white': 'White',
   'fekete': 'Black',
   'black': 'Black',
+  'matte black': 'Black',
   'kék': 'Blue',
   'kek': 'Blue',
+  'royal blue': 'Blue',
   'sötétkék': 'Dark Blue',
   'sotetkek': 'Dark Blue',
   'világoskék': 'Light Blue',
   'vilagoskek': 'Light Blue',
   'zöld': 'Green',
   'zold': 'Green',
+  'emerald green': 'Green',
   'sötétzöld': 'Dark Green',
   'sotetzold': 'Dark Green',
   'piros': 'Red',
+  'crimson red': 'Red',
   'sötétszürke': 'Dark Gray',
   'sotetszurke': 'Dark Gray',
   'szürke': 'Gray',
   'szurke': 'Gray',
+  'gunmetal gray': 'Gray',
   'átlátszó': 'Transparent',
   'atlatszo': 'Transparent',
+  'transparent (clear)': 'Transparent',
   'arany': 'Gold',
+  'gold': 'Gold',
   'ezüst': 'Silver',
   'ezust': 'Silver',
+  'silver': 'Silver',
   'barna': 'Brown',
+  'copper bronze': 'Bronze',
   'neon narancssárga': 'Neon Orange',
   'narancssárga': 'Orange',
-  'lila': 'Purple',
-  'gyanta (resin)': 'Resin',
-  'pearl white': 'Pearl White',
-  'matte black': 'Matte Black',
-  'emerald green': 'Emerald Green',
-  'royal blue': 'Royal Blue',
-  'crimson red': 'Crimson Red',
-  'gunmetal gray': 'Gunmetal Gray',
-  'transparent (clear)': 'Transparent (Clear)',
-  'gold': 'Gold',
-  'silver': 'Silver',
-  'copper bronze': 'Copper Bronze',
   'neon orange': 'Neon Orange',
-  'sky blue': 'Sky Blue',
-  'deep purple': 'Deep Purple'
+  'lila': 'Purple',
+  'deep purple': 'Purple',
+  'gyanta (resin)': 'Resin'
 };
 
-function normalizeColorLabel(value) {
+function decodeColor(value) {
   if (value === undefined || value === null) return '';
   let decoded = value;
   try {
@@ -52,13 +51,23 @@ function normalizeColorLabel(value) {
   } catch (_) {
     decoded = value;
   }
-  const trimmed = decoded.toString().trim();
-  if (!trimmed) return '';
-  const lookup = trimmed.toLowerCase();
-  return COLOR_NAME_MAP[lookup] || trimmed;
+  return decoded.toString().trim();
+}
+
+function normalizeColorLabel(value) {
+  const decoded = decodeColor(value);
+  if (!decoded) return '';
+  const lookup = decoded.toLowerCase();
+  return COLOR_NAME_MAP[lookup] || decoded;
+}
+
+function isStandardColor(value) {
+  const normalized = normalizeColorLabel(value).toLowerCase();
+  return normalized === 'white' || normalized === 'black';
 }
 
 module.exports = {
   normalizeColorLabel,
-  COLOR_NAME_MAP
+  isStandardColor,
+  decodeColor
 };

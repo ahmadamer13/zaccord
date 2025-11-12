@@ -1,5 +1,16 @@
 const ITEMCOUNT = 15;
 
+(function loadSeoHelper() {
+  if (typeof document === 'undefined') return;
+  const existing = document.querySelector('script[data-seo-helper="true"]');
+  if (existing) return;
+  const script = document.createElement('script');
+  script.src = '/js/includes/seo.js';
+  script.defer = true;
+  script.dataset.seoHelper = 'true';
+  document.head.appendChild(script);
+})();
+
 // Implement fade in/out animation of a blue strip when hovering over a menu item
 const items = ['cart', 'register', 'login', 'bny', 'descTitle', 'specsTitle'];
 for (let item of items) {
