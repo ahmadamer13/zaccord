@@ -12,6 +12,7 @@ const shouldAllowSLA = require('./includes/allowSLA.js');
 const calcSLAPrice = require('./includes/calcSLAPrice.js');
 const getMaterials = require('./includes/getMaterials.js');
 const NodeStl = require('node-stl');
+const { normalizeColorLabel } = require('./includes/colorUtils.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -423,7 +424,7 @@ const buildBuySection = (conn, paramObj, req) => {
           var tech = paramObj.tech;
           var rvas = Number(paramObj.rvas);
           var suruseg = tech != 'SLA' ? Number(paramObj.suruseg) : paramObj.suruseg;
-          var color = paramObj.color;
+          var color = normalizeColorLabel(paramObj.color);
           var scale = Number(paramObj.scale);
           var fvas = Number(paramObj.fvas);
           var quantity = Number(paramObj.q);
@@ -434,7 +435,7 @@ const buildBuySection = (conn, paramObj, req) => {
           ];
         } else {
           var sphere = paramObj.sphere;
-          var color = paramObj.color;
+          var color = normalizeColorLabel(paramObj.color);
           var size = paramObj.size;
           var quantity = paramObj.q;
           var file = paramObj.file;

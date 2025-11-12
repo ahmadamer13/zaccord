@@ -28,6 +28,7 @@ const path = require('path');
 const ExcelJS = require('exceljs');
 const sliceModel = require('./includes/slice.js');
 const generateInvoice = require('./includes/generateInvoice.js');
+const { normalizeColorLabel } = require('./includes/colorUtils.js');
 
 const COUNTRIES = constants.countries;
 const FREE_SHIPPING_LIMIT = shipping.freeShippingLimit;
@@ -236,7 +237,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           let suruseg = formData.suruseg ? formData.suruseg : 20;
           let scale = formData.scale ? formData.scale : 1;
           let fvas = formData.fvas ? formData.fvas : 1.2;
-          let color = formData.color;
+          let color = normalizeColorLabel(formData.color);
           let printMat = formData.printMat ? formData.printMat : null;
           let quantity = formData.quantity;
           var orderID = formData.orderID;

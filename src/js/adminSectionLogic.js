@@ -1,6 +1,7 @@
 const addHours = require('./includes/addHours.js');
 const EUDateFormat = require('./includes/EUDateFormat.js');
 const shipping = require('./includes/shippingConstants.js');
+const { normalizeColorLabel } = require('./includes/colorUtils.js');
 const SHIPPING_OBJ = shipping.shippingObj;
 
 // Simplified Admin Dashboard: lists New and Completed orders
@@ -48,10 +49,11 @@ const buildAdminSection = (conn) => {
           const del = getDeliveryTitle(r.del_type);
           const t = total(r.quantity, r.aPrice);
           const checked = isDone ? 'checked' : '';
+          const displayColor = normalizeColorLabel(r.color);
           const specs = [
             r.printTech ? `Tech: ${r.printTech}` : null,
             r.printMat ? `Mat: ${r.printMat}` : null,
-            r.color ? `Color: ${r.color}` : null,
+            displayColor ? `Color: ${displayColor}` : null,
             r.rvas ? `Layer: ${r.rvas}` : null,
             r.fvas ? `Walls: ${r.fvas}` : null,
             r.suruseg ? `Infill: ${r.suruseg}` : null,
