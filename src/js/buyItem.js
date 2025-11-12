@@ -491,26 +491,48 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
         Promise.all(promises).then(data => {
           // Also update delivery info in db if needed
-          const upsertDelivery = callback => {
-            if (isLoggedIn) {
-              const dQuery = `
-                UPDATE delivery_data
-                SET name = ?, postal_code = ?, city = ?, address = ?, mobile = ?, nl_email = NULL,
-                order_id = NULL, date = NOW() WHERE uid = ?
-              `;
-              const deliveryArr = [name, pcode, city, address, mobile, UID];
-              conn.query(dQuery, deliveryArr, callback);
-              return;
-            }
-
-            const dQuery = `
-              INSERT INTO delivery_data (uid, name, postal_code, city, address, mobile,
-              nl_email, order_id, date)
-              VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NOW())
+        const upsertDelivery = callback => {
+          // Always keep the latest shipping info for logged-in users
+          const updateUserAddress = () => {
+            if (!isLoggedIn) return Promise.resolve();
+            const updateQuery = `
+              UPDATE delivery_data
+              SET name = ?, postal_code = ?, city = ?, address = ?, mobile = ?, nl_email = NULL,
+                  order_id = NULL, date = NOW()
+              WHERE uid = ?
             `;
-            const deliveryArr = [name, pcode, city, address, mobile, nlEmail, uniqueID];
-            conn.query(dQuery, deliveryArr, callback);
+            const updateValues = [name, pcode, city, address, mobile, UID];
+            return new Promise((resolve, reject) => {
+              conn.query(updateQuery, updateValues, err => err ? reject(err) : resolve());
+            });
           };
+
+          const insertSnapshot = () => {
+            const snapshotQuery = `
+              INSERT INTO delivery_data (uid, name, postal_code, city, address, mobile,
+                nl_email, order_id, date)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
+            `;
+            const snapshotValues = [
+              isLoggedIn ? UID : null,
+              name,
+              pcode,
+              city,
+              address,
+              mobile,
+              nlEmail || null,
+              uniqueID
+            ];
+            return new Promise((resolve, reject) => {
+              conn.query(snapshotQuery, snapshotValues, err => err ? reject(err) : resolve());
+            });
+          };
+
+          updateUserAddress()
+            .then(insertSnapshot)
+            .then(() => callback(null, null))
+            .catch(err => callback(err));
+        };
 
           upsertDelivery((err, result) => {
             if (err) {

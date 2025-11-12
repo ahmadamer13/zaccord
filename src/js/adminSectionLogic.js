@@ -7,13 +7,18 @@ const SHIPPING_OBJ = shipping.shippingObj;
 const buildAdminSection = (conn) => {
   return new Promise((resolve, reject) => {
     const q = `
-      SELECT o.*, o.price AS aPrice, ud.email AS uemail, o.id AS oid, d.*,
-             d.name AS customerName, f.*, pp.name AS packet_name, pp.zipcode AS packet_zip,
+      SELECT o.*, o.price AS aPrice, ud.email AS uemail, o.id AS oid,
+             COALESCE(d_order.name, d_user.name) AS customerName,
+             COALESCE(d_order.mobile, d_user.mobile) AS mobile,
+             COALESCE(d_order.nl_email, d_user.nl_email) AS nl_email,
+             COALESCE(d_order.date, d_user.date) AS delivery_saved_at,
+             f.*, pp.name AS packet_name, pp.zipcode AS packet_zip,
              pp.city AS packet_city, pp.packet_id AS packet_point_id
         FROM orders AS o
-        LEFT JOIN delivery_data AS d ON (d.uid = o.uid OR d.order_id = o.unique_id)
+        LEFT JOIN delivery_data AS d_order ON d_order.order_id = o.unique_id
+        LEFT JOIN delivery_data AS d_user ON (d_user.uid = o.uid AND d_user.order_id IS NULL)
         LEFT JOIN fix_products AS f ON f.id = o.item_id
-        LEFT JOIN users AS ud ON ud.id = d.uid
+        LEFT JOIN users AS ud ON ud.id = o.uid
         LEFT JOIN packet_points AS pp ON o.packet_id = pp.packet_id
        ORDER BY o.status ASC, o.order_time DESC
        LIMIT 100`;
@@ -40,6 +45,7 @@ const buildAdminSection = (conn) => {
         let i = startIdx; let out = '';
         for (let r of list) {
           const when = EUDateFormat(addHours(r.order_time, 2));
+          const savedAt = r.delivery_saved_at ? EUDateFormat(addHours(r.delivery_saved_at, 2)) : '-';
           const contact = (r.uemail || r.nl_email || '') + (r.mobile ? ` / ${r.mobile}` : '');
           const del = getDeliveryTitle(r.del_type);
           const t = total(r.quantity, r.aPrice);
@@ -64,6 +70,7 @@ const buildAdminSection = (conn) => {
             <tr id=\"box_${i}\" style=\"${isDone ? 'opacity:0.5' : 'opacity:1'}\">
               <td>#${r.unique_id}</td>
               <td>${when}</td>
+              <td>${savedAt}</td>
               <td>${r.customerName || '-'}</td>
               <td>${contact || '-'}</td>
               <td>${specs || '-'}</td>
@@ -91,14 +98,14 @@ const buildAdminSection = (conn) => {
 
       html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">New Orders</h2>`;
       html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr>
-        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
+        <th>ID</th><th>Time</th><th>Saved</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
       </tr></thead><tbody>`;
       html += render(newOrders, 0, false);
       html += `</tbody></table></div></div>`;
 
       html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">Completed Orders</h2>`;
       html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr>
-        <th>ID</th><th>Time</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
+        <th>ID</th><th>Time</th><th>Saved</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
       </tr></thead><tbody>`;
       html += render(doneOrders, 10000, true);
       html += `</tbody></table></div></div>`;
