@@ -37,9 +37,7 @@ const buildAdminSection = (conn) => {
         return 'Delivery';
       }
       function total(qty, price) {
-        let t = Math.round(qty * price);
-        if (t < 800) t = 800; // display rule only
-        return t;
+        return Math.round(qty * price);
       }
       function render(list, startIdx, isDone) {
         let i = startIdx; let out = '';
