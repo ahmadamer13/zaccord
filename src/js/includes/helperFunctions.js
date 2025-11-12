@@ -189,22 +189,31 @@ function returnToClient(callback, paramArr, errorMsg = null, res, returnData = n
 }
 
 function fileServerResponse(extension, req, res, fileResponse) {
+  // Return true if the request was fully handled (response ended)
   if (extension === '.stl') {
     fileResponse('application/netfabb', req.url, res);
-  } else if (['.png', '.jpg', '.jpeg'].indexOf(extension) > - 1 
+    return true;
+  } else if (['.png', '.jpg', '.jpeg'].indexOf(extension) > -1
     && (req.url.includes('printUploads') || req.url.includes('icon-'))) {
     fileResponse('image/png', req.url, res);
+    return true;
   } else if (extension === '.json' && req.url.includes('manifest')) {
     fileResponse('application/json', req.url, res);
+    return true;
   } else if (extension === '.js' && req.url.includes('sworker')) {
     fileResponse('text/javascript', req.url, res);
+    return true;
   } else if (extension === '.xml') {
     fileResponse('application/xml', req.url, res);
+    return true;
   } else if (extension === '.pdf') {
     fileResponse('application/pdf', req.url, res);
+    return true;
   } else if (extension == '.txt') {
     fileResponse('text/plain', req.url, res);
+    return true;
   }
+  return false;
 }
 
 function loadStaticPage(callback, paramArr, content, userID, res, conn, forceReload = false) {

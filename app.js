@@ -565,8 +565,9 @@ const server = http.createServer((req, res) => {
       extension = '.html';
     }
 
-    // Set the proper content-type for server response
-    fileServerResponse(extension, req, res, fileResponse); 
+    // Set the proper content-type for server response. If it handled the response, stop here.
+    const handled = fileServerResponse(extension, req, res, fileResponse);
+    if (handled) return;
 
     // Make sure user is not logged in when visiting /login and /register pages
     if ((['/register', '/login'].indexOf(req.url) > -1 && req.user.id)
