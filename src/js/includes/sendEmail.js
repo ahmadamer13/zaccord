@@ -2,6 +2,8 @@ const constants = require('./constants.js');
 const EMAIL_HOST_NAME = constants.emailHostName;
 const EMAIL_USER_NAME = constants.emailUsername;
 const EMAIL_PASSWORD = constants.emailPassword;
+const EMAIL_PORT = constants.emailPort || 465;
+const EMAIL_SECURE = typeof constants.emailSecure === 'boolean' ? constants.emailSecure : true;
 
 // Send email from a specific addr with arbitrary content
 // NOTE: you may want to change nodemailer credentials to satisfy your needs
@@ -24,8 +26,8 @@ function sendEmail(from, content, email, subject, attachmentPath = null) {
 
     var transporter = nodemailer.createTransport({
       host: EMAIL_HOST_NAME,
-      port: 465,
-      secure: true, 
+      port: EMAIL_PORT,
+      secure: EMAIL_SECURE,
       auth: {
         user: EMAIL_USER_NAME,
         pass: EMAIL_PASSWORD

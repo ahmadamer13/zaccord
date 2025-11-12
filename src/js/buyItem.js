@@ -503,26 +503,13 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
               return;
             }
 
-            const dIdQuery = 'SELECT COALESCE(MAX(id), 0) + 1 AS nextId FROM delivery_data';
-            conn.query(dIdQuery, [], (err, idResult) => {
-              if (err) {
-                callback(err);
-                return;
-              }
-
-              let deliveryId = 1;
-              if (idResult && idResult[0] && Number(idResult[0].nextId)) {
-                deliveryId = Number(idResult[0].nextId);
-              }
-
-              const dQuery = `
-                INSERT INTO delivery_data (id, uid, name, postal_code, city, address, mobile,
-                nl_email, order_id, date)
-                VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, NOW())
-              `;
-              const deliveryArr = [deliveryId, name, pcode, city, address, mobile, nlEmail, uniqueID];
-              conn.query(dQuery, deliveryArr, callback);
-            });
+            const dQuery = `
+              INSERT INTO delivery_data (uid, name, postal_code, city, address, mobile,
+              nl_email, order_id, date)
+              VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NOW())
+            `;
+            const deliveryArr = [name, pcode, city, address, mobile, nlEmail, uniqueID];
+            conn.query(dQuery, deliveryArr, callback);
           };
 
           upsertDelivery((err, result) => {

@@ -503,15 +503,37 @@ const server = http.createServer((req, res) => {
       });
 
       const prom2 = new Promise((resolve) => {
-        conn.query('SELECT id, date_added FROM blog', (err, rows) => {
+        // Use available timestamp for blogs; prefer last_update then date
+        conn.query('SELECT id, COALESCE(last_update, date) AS lastmod FROM blog', (err, rows) => {
           if (!err && Array.isArray(rows)) {
-            for (const r of rows) addUrl(urls, '/blog?id=' + r.id, r.date_added ? new Date(r.date_added).toISOString().split('T')[0] : undefined);
+            for (const r of rows) {
+              const lm = r.lastmod ? new Date(r.lastmod).toISOString().split('T')[0] : undefined;
+              addUrl(urls, '/blog?id=' + r.id, lm);
+            }
           }
           resolve();
         });
       });
 
-      Promise.all([prom1, prom2]).then(() => {
+      // Include live z-products
+      const prom3 = new Promise((resolve) => {
+        conn.query('SELECT url, creation_date FROM z_prod WHERE is_live = 1', (err, rows) => {
+          if (!err && Array.isArray(rows)) {
+            for (const r of rows) {
+              let lastmod;
+              try {
+                lastmod = r.creation_date ? new Date(r.creation_date).toISOString().split('T')[0] : undefined;
+              } catch (e) {
+                lastmod = undefined;
+              }
+              addUrl(urls, '/z-product?id=' + r.url, lastmod);
+            }
+          }
+          resolve();
+        });
+      });
+
+      Promise.all([prom1, prom2, prom3]).then(() => {
         const urlset = urls.map(u => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n');
         const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlset}\n</urlset>\n`;
         res.writeHead(200, { 'Content-Type': 'application/xml' });

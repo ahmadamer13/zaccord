@@ -30,34 +30,6 @@ const translations = {
       'Learn the basics of Fused Deposition Modeling (FDM) 3D printing. Discover why this technology is so affordable and why it is an excellent choice for fast and low-cost prototyping. Explore FDM materials and understand the benefits and drawbacks for users.',
     img_url: 'fdm_printer.jpg'
   },
-  10: {
-    title: 'What Is SLA 3D Printing?',
-    categories: '3D Printing, SLA, Stereolithography',
-    summary:
-      'Learn about stereolithography, also known as SLA 3D printing, and find out why this printing technology is so popular and cost-effective. Understand how SLA printing works, its parameters, and discover how suitable this 3D printing method is for your parts, models, or projects.',
-    img_url: 'sla_print.jpg'
-  },
-  15: {
-    title: 'The Role of Layer Height in 3D Printing',
-    categories: '3D Printing, Technology, 3D Printer, Layer Height, Surface',
-    summary:
-      'Layer height in 3D printing is a simple setting that affects the printing speed and the level of detail of the model you want to print; it also impacts its durability, strength, and appearance.\r\nWhat and Why\r\nLayer height is exactly what it sounds like: the precise height of each layer of plastic extruded or cured by the 3D printer. This setting is controlled through slicing software and has much more influence on the final print than you might think at first glance. Properly adjusted layer height can significantly affect print quality.',
-    img_url: 'layer5.jpg'
-  },
-  16: {
-    title: 'Best Websites to Find Low-Poly Models',
-    categories: '3D Printing, Online, Models, Low-Poly',
-    summary:
-      'Before listing the best low-poly 3D model sources, let’s see what “low-poly” actually means.\r\nThe term “poly” comes from “polygon.” A polygon is a 2D shape made up of straight lines and angles. When we combine several polygons, we can create recognizable 3D shapes.\r\n',
-    img_url: 'lowpolyrabbit.jpg'
-  },
-  29: {
-    title: '3D Printing in Construction: From Prototyping to 3D-Printed Houses',
-    categories: '3D Printing, Construction, Housing',
-    summary:
-      '3D printing, also known as additive manufacturing, can transform construction: enabling unique, complex designs, reducing waste and emissions, and accelerating builds. This article reviews key applications.',
-    img_url: 'epites_bor.jpg'
-  },
   40: {
     title: 'Which Country Is Leading 3D Printing in 2024?',
     categories: '3D Printing, Industry, Global Trends',
@@ -80,6 +52,76 @@ const translations = {
     summary:
       'Understand the 45-degree overhang rule for cleaner FDM output and explore how Nike applies additive workflows for athlete-ready shoes.',
     img_url: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Nike_Shoes_3.jpg'
+  },
+  43: {
+    title: 'Reliable & Fast 3D Printer Repair Services Near You in Jordan',
+    categories: '3D Printing, Jordan, Repair, Service',
+    summary:
+      'Certified technicians cover Amman, Irbid, Zarqa, and Aqaba with same-week diagnostics for clogs, firmware faults, and electronics issues so production resumes quickly.',
+    img_url: 'blog_repair_service.jpg'
+  },
+  44: {
+    title: 'Affordable 3D Printer Maintenance in Amman for Businesses and Hobbyists',
+    categories: '3D Printing, Jordan, Maintenance, Amman',
+    summary:
+      'Budget-friendly tune-ups, lubrication, and calibration plans for FDM, SLA, and resin printers help schools, studios, and SMEs extend machine life.',
+    img_url: 'blog_maintenance_lab.jpg'
+  },
+  45: {
+    title: 'How to Choose the Right Local 3D Printer Service Provider in Jordan',
+    categories: '3D Printing, Jordan, Guide, Services',
+    summary:
+      'Evaluate experience, spare-part availability, and customer feedback before you book—Jordan 3D Print backs every repair with experts in four cities.',
+    img_url: 'blog_service_provider.jpg'
+  },
+  46: {
+    title: 'Top 3D Printer Servicing Options for Home Users in Jordan',
+    categories: '3D Printing, Jordan, Home Service, Support',
+    summary:
+      'Home users can schedule drop-off or on-site visits for Creality, Anycubic, Prusa, and more, covering deep cleaning, belt tensioning, and slicer help.',
+    img_url: 'blog_home_service.jpg'
+  },
+  47: {
+    title: 'Professional 3D Printer Calibration Services in Jordan',
+    categories: '3D Printing, Jordan, Calibration, Quality',
+    summary:
+      'Expert bed leveling, extrusion tuning, and axis alignment restore dimensional accuracy for both FDM and resin workflows while reducing scrap.',
+    img_url: 'blog_calibration.png'
+  },
+  48: {
+    title: 'Genuine 3D Printer Spare Parts and Service Centers in Jordan',
+    categories: '3D Printing, Jordan, Parts, Support',
+    summary:
+      'Keep downtime short with in-stock nozzles, belts, extruders, motors, sensors, and professional installation across the major Jordanian cities.',
+    img_url: 'blog_spare_parts.jpg'
+  },
+  49: {
+    title: 'Average Cost of 3D Printer Servicing in Jordan – Transparent & Fair Pricing',
+    categories: '3D Printing, Jordan, Pricing, Repair',
+    summary:
+      'Inspections start near 15 JOD, and detailed quotes outline labor plus parts for component swaps, industrial maintenance, or subscription plans.',
+    img_url: 'blog_service_costs.jpg'
+  },
+  50: {
+    title: 'Industrial 3D Printer Service Centers You Can Trust in Jordan',
+    categories: '3D Printing, Jordan, Industrial, Service',
+    summary:
+      'Engineers trained on large-format FDM and resin systems deliver maintenance contracts, on-call repairs, and process audits for factories and labs.',
+    img_url: 'blog_industrial_service.jpg'
+  },
+  51: {
+    title: 'How to Book Your Local 3D Printer Repair Appointment in Jordan',
+    categories: '3D Printing, Jordan, Support, Booking',
+    summary:
+      'Book via jordan3dprint.store or WhatsApp for flexible scheduling in Amman, Irbid, Zarqa, or Aqaba, and receive quick confirmation with ETA details.',
+    img_url: 'blog_booking.jpg'
+  },
+  52: {
+    title: 'On-Site 3D Printer Repair and Maintenance Services in Jordan',
+    categories: '3D Printing, Jordan, On-Site, Repair',
+    summary:
+      'Mobile technicians arrive with diagnostic gear, spare parts, and calibration tools so homes, schools, and companies avoid moving heavy equipment.',
+    img_url: 'blog_on_site.jpg'
   }
 };
 

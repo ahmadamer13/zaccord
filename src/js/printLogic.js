@@ -29,7 +29,7 @@ async function buildPrintSection(conn, req) {
   let connWord = isMobile ? 'or • أو' : 'or • أو';
 
   // Select relevant blogs
-  let res = await query('SELECT * FROM blog WHERE id IN (9, 10, 7)');
+  let res = await query('SELECT * FROM blog WHERE id IN (6, 7, 9) ORDER BY FIELD(id, 6, 7, 9)');
 
   // Build file upload form
   let output = `

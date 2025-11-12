@@ -4,10 +4,13 @@ const fs = require('fs');
 
 // Constant variables used for shopping & delivery, product customization
 // NOTE: change these values if you want to use these features
-const EMAIL_HOST_NAME = '';
+// Email SMTP configuration (prefer environment variables)
+const EMAIL_HOST_NAME = process.env.EMAIL_HOST_NAME || '';
 const DOWNLOAD_STLS_URL = '';
-const EMAIL_USER_NAME = '';
-const EMAIL_PASSWORD = '';
+const EMAIL_USER_NAME = process.env.EMAIL_USER_NAME || '';
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD || '';
+const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || '465', 10);
+const EMAIL_SECURE = (process.env.EMAIL_SECURE || 'true') === 'true';
 const PAYLIKE_ID = '';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'dev-secret';
 const LIT_FORMS = ['Convex', 'Concave', 'Flat'];
@@ -162,6 +165,8 @@ module.exports = {
   'emailHostName': EMAIL_HOST_NAME,
   'emailUsername': EMAIL_USER_NAME,
   'emailPassword': EMAIL_PASSWORD,
+  'emailPort': EMAIL_PORT,
+  'emailSecure': EMAIL_SECURE,
   'paylikeID': PAYLIKE_ID,
   'sessionSecret': SESSION_SECRET,
   'layerWidthValuesSLA': LAYER_WIDTH_VALUES_SLA,
