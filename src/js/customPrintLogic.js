@@ -889,6 +889,23 @@ if (_('color').value.toLowerCase().includes('átlátszó')) {
 
           window.addEventListener('DOMContentLoaded', toggleAllowance);
 
+          function goToURL(url) {
+            window.location.href = url;
+          }
+
+          if (_('toCart')) {
+            _('toCart').addEventListener('click', (e) => {
+              if (e && e.preventDefault) e.preventDefault();
+              goToURL('/cart');
+            });
+          }
+          if (_('newFile')) {
+            _('newFile').addEventListener('click', (e) => {
+              if (e && e.preventDefault) e.preventDefault();
+              goToURL('/print');
+            });
+          }
+
           // Make sure all file IDs exist in cookies: if not redirect to another page
           const FILE_IDS = window.location.href.split('?file=')[1].split(',');
           const COOKIE_IDS = Object.keys(JSON.parse(getCookie('cartItems'))).map(e => e.replace('content_', ''));
