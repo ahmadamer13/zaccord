@@ -224,7 +224,6 @@ const buildItemSection = (conn, itemId, req) => {
             output += `
               </section>
             `;
-            resolve(output);
           } else {
             // Provide suggestions
             output += `

@@ -363,32 +363,6 @@ const buildBuySection = (conn, paramObj, req) => {
           `;
 
           output += `
-              <p class="align">
-                <label class="chCont note ddgray"
-                  style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  I have read and accept the
-                  <a href="/aszf" class="blueLink font14">General Terms and Conditions</a>
-                  <input type="checkbox" id="agree">
-                  <span class="cbMark"></span>
-                </label>
-              </p>
-              <p class="align">
-                <label class="chCont note ddgray"
-                  style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  I have read and accept the
-                  <a href="/nyilatkozat" class="blueLink font14">Privacy Policy</a>
-                  <input type="checkbox" id="agree2">
-                  <span class="cbMark"></span>
-                </label>
-              </p>
-              <p class="align">
-                <label class="chCont note ddgray"
-                  style="font-family: 'Roboto', sans-serif; font-size: 14px;">
-                  I request an electronic invoice
-                  <input type="checkbox" id="einvoice" checked>
-                  <span class="cbMark"></span>
-                </label>
-              </p>
               <p class="align bold" id="finalPrice">
                 <span style="color: #4285f4;">
                   Total:

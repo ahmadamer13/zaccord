@@ -116,21 +116,13 @@ function submitOrder() {
 
   // Make sure payment option is selected & delivery data is filled in
   let billingType = 'same';
-  let isAgree = _('agree').checked;
-  let isAgree2 = _('agree2').checked;
-  let eInvoice = _('einvoice').checked;
   // Payment and delivery method checks removed
   if (!name || !city || !address || !mobile) {
     statusFill('errStatus', 'Please fill in the delivery details');
     resetSubmitBtn();
     return;
-  // Skip strict postal code validation on client; accept any value provided
-  } else if (!isAgree || !isAgree2) {
-    // Did not accept the terms & policy
-    statusFill('errStatus', 'Please accept the Terms and the Privacy Policy');
-    resetSubmitBtn();
-    return;
-  } else if (_('billingName') && (billingName || billingPcode.value || billingCity ||
+  }
+  if (_('billingName') && (billingName || billingPcode.value || billingCity ||
     billingAddress || _('billingCompname') && (billingCompname || billingCompnum))) {
     let isComp = false;
     let isCompNormal = false;
@@ -180,8 +172,6 @@ function submitOrder() {
   data[0].normalCompname = normalCompname;
   data[0].normalCompnum = normalCompnum;
   data[0].comment = comment;
-
-  data[0].eInvoice = eInvoice;
 
   if (typeof isLit !== 'undefined') {
     data[0].isLit = true;
