@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "source": "src/includes/header.html"
+  },
+  "strings": {
+    "3D printer": "",
+    "3DJordanPrint logo": "",
+    "Cart": "",
+    "Close": "",
+    "Close menu": "",
+    "Store": ""
+  }
+}

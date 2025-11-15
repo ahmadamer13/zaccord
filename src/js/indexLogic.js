@@ -1,5 +1,6 @@
 const produceShowcaseOutput = require('./includes/itemGenerator.js');
 const buildCategory = require('./buildCategory.js');
+const { translateRows } = require('./includes/productTranslations.js');
 
 const CONTACT_FORM = `
   <div class="mtsix" style="width: calc(100% - 40px); max-width: 1300px; margin: 0 auto;">
@@ -49,6 +50,8 @@ const buildMainSection = (conn, cat) => {
           reject('An unexpected error occurred, please try again 2');
           return;
         }
+        // Translate most-popular items
+        result = translateRows(result);
 
         // Create html output (Modern hero + compact category strip)
         let output = `
@@ -296,6 +299,7 @@ const buildMainSection = (conn, cat) => {
                 <div class="dynamicShowcase newies">
             `;
 
+            newRes = translateRows(newRes);
             for (let i = 0; i < newRes.length; i++) {
               let url = newRes[i].url;
               let imgUrl = newRes[i].img_url;
@@ -350,6 +354,8 @@ const buildMainSection = (conn, cat) => {
                     if (!innerRes.length) {
                       resolve('');
                     }
+
+                    innerRes = translateRows(innerRes);
 
                     output += `
                       <div style="width: 100%; justify-content: center; margin-bottom: 10px;"

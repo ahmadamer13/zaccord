@@ -1,7 +1,8 @@
 const produceShowcaseOutput = require('./includes/itemGenerator.js');
+const { translateRows } = require('./includes/productTranslations.js');
 
 // Display all items a certain category
-const buildCategory = (conn, category) => {
+const buildCategory = (conn, category, opts = {}) => {
   return new Promise((resolve, reject) => {
     let output = ''; 
 
@@ -29,8 +30,10 @@ if (category == 'Legnépszerűbb') {
       }
       
       // Build the output
-      for (let i = 0; i < result.length; i++) {
-        output += produceShowcaseOutput(result, true, i, false, true);
+      const rows = translateRows(result);
+      const limit = typeof opts.limit === 'number' ? Math.min(opts.limit, rows.length) : rows.length;
+      for (let i = 0; i < limit; i++) {
+        output += produceShowcaseOutput(rows, true, i, false, true, typeof opts.priceOverride === 'number' ? opts.priceOverride : null);
       }
 
       resolve(output);

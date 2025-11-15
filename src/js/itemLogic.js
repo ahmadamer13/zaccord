@@ -1,6 +1,7 @@
 const genSpecs = require('./includes/genSpecs.js');
 const escapeVars = require('./includes/escapeVars.js');
 const getColors = require('./includes/getColors.js');
+const { translateRow, translateRows } = require('./includes/productTranslations.js');
 
 // Build page for a specific item
 const buildItemSection = (conn, itemId, req) => {
@@ -31,17 +32,20 @@ const buildItemSection = (conn, itemId, req) => {
         <section class="keepBottom animate__animated animate__fadeIn">
       `;
 
-      // Get properties of item
-      let id = result[0].id;
-      let url = result[0].url;
-      let imgUrl = result[0].img_url;
-      let productName = result[0].name;
-      let category = result[0].category;
-      let price = result[0].price;
-      let size = result[0].size.replace(/x/g, 'mm x ');
+      // Apply product-level translations if available
+      const tr = translateRow(result[0]);
+
+      // Get properties of item (translated values if present)
+      let id = tr.id;
+      let url = tr.url;
+      let imgUrl = tr.img_url;
+      let productName = tr.name;
+      let category = tr.category;
+      let price = tr.price;
+      let size = tr.size.replace(/x/g, 'mm x ');
       size += 'mm';
       size = size.replace(/\smm/g, 'mm');
-      let description = result[0].description.replace('<!--DATE-->', new Date().getFullYear());
+      let description = tr.description.replace('<!--DATE-->', new Date().getFullYear());
       let gbtn = `
         <svg class="contSvg blue" style="margin-top: 0; margin-left: 3px;">
           <svg>
@@ -49,16 +53,35 @@ const buildItemSection = (conn, itemId, req) => {
           </svg>
         </svg>
       `;
-      description = result[0].description.replace('<!--GBTN-->', gbtn);
-      let replaceFor = `Shock‑resistant packaging
-<li>Ajándék a csomagban</li>
-      `;
-description = description.replace('Környezetbarát csomagolás', replaceFor);
-      let stlPath = result[0].stl_path;
-      let showcaseImgs = result[0].img_showcase.split(',');
-      let firstImage = result[0].img_url;
+      description = description.replace('<!--GBTN-->', gbtn);
+
+      // Clean repetitive boilerplate from descriptions for a cleaner product page
+      // 1) Remove Eco-friendly packaging list item
+      description = description.replace(/<li>\s*Eco-friendly packaging\s*<\/li>/gi, '');
+      // 2) Remove size line inside features list (we already show size separately)
+      description = description.replace(/<li>\s*\d+\s*mm\s*x\s*\d+\s*mm\s*x\s*\d+\s*mm\s*<\/li>/gi, '');
+      // 3) Remove license + view/modify paragraph (EN)
+      description = description.replace(/The product is available under a free <a [^>]+>license<\/a>[\s\S]*?modify it as you like\./gi, '');
+      // 4) Remove print-on-demand sentence
+      description = description.replace(/If you would like to print your own model, use the <a [^>]+>print-on-demand<\/a> function\./gi, '');
+      // 5) Remove product author/rights notice (EN)
+      description = description.replace(/Product by <a [^>]+>[^<]+<\/a>[\s\S]*?All rights reserved\./gi, '');
+      // 6) Remove Hungarian boilerplate license/links blocks (HU)
+      description = description.replace(/A term[é|e]k szabad <a [^>]+>licensszel<\/a>[\s\S]*?m[óo]dos[ií]thatod\.?/gi, '');
+      description = description.replace(/van forgalomban, [\s\S]*?m[óo]dos[ií]thatod\.?/gi, '');
+      description = description.replace(/Abban az esetben, [\s\S]*?<a [^>]+>b[é|e]rnyomtat[áa]s<\/a> funkci[óo]t\.?/gi, '');
+      description = description.replace(/A term[é|e]ket <a [^>]+>[^<]+<\/a>[\s\S]*?(Minden jog fenntartva\.|All rights reserved\.)/gi, '');
+      // 7) Remove stray Hungarian list items mentioning packaging with diacritics
+      description = description.replace(/<li>\s*K[öo]rnyezetbar[áa]t csomagol[áa]s\s*<\/li>/gi, '');
+      // 6) Remove empty feature lists if they became empty
+      description = description.replace(/<ul class=\"dul\">\s*<\/ul>/gi, '');
+      // 7) Tidy excess breaks
+      description = description.replace(/(\s*<br>\s*){3,}/gi, '<br><br>');
+      let stlPath = tr.stl_path;
+      let showcaseImgs = tr.img_showcase.split(',');
+      let firstImage = tr.img_url;
       let showcase = `<img src="/${firstImage}" style="height: 0;">`;
-      let isBest = result[0].is_best;
+      let isBest = tr.is_best;
       for (let img of showcaseImgs) {
         showcase += `<img src="/images/${img}" style="height: 0;">`;
       }
@@ -116,14 +139,14 @@ description = description.replace('Környezetbarát csomagolás', replaceFor);
                   <input type="button" value="+" class="plus" id="plus">
               </div>
 
-              <div class="broHolder flexDiv" id="broHolder">
-                <button class="fillBtn btnCommon bros" onclick="buyItem(${id})">
+              <div class="broHolder" id="broHolder">
+                <button class="btnCommon bros btn--secondary" onclick="buyItem(${id})" aria-label="Buy now">
                   Buy now
-                </button> 
-                <button class="fillBtn btnCommon bros" onclick="addToCart(${id})">
+                </button>
+                <button class="btnCommon bros btn--primary" onclick="addToCart(${id})" aria-label="Add to cart">
                   Add to cart
                 </button>
-                <button class="fillBtn btnCommon bros" id="view3D">
+                <button class="btnCommon bros bros--icon btn--ghost" id="view3D" aria-label="View in 3D">
                   3D
                 </button>
               </div>
@@ -212,9 +235,11 @@ description = description.replace('Környezetbarát csomagolás', replaceFor);
                 <div class="flexDiv" style="flex-wrap: wrap;">   
             `;
 
-            for (let i = 0; i < result.length; i++) {
-              let url = result[i].url;
-              let imgUrl = result[i].img_url;
+            // Translate suggestion rows too
+            const trows = translateRows(result);
+            for (let i = 0; i < trows.length; i++) {
+              let url = trows[i].url;
+              let imgUrl = trows[i].img_url;
 
               output += `
                 <div class="cartImgHolder bgCommon suggItem" 

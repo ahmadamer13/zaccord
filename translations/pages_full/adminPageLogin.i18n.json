@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "source": "src/adminPageLogin.html"
+  },
+  "strings": {
+    "Password": "",
+    "Username": ""
+  }
+}

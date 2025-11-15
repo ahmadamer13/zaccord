@@ -1,0 +1,32 @@
+{
+  "theme": {
+    "primaryColor": "#1f6feb",
+    "onPrimaryColor": "#ffffff",
+    "radiusXL": "20px",
+    "radiusButton": "999px",
+    "whatsappColor": "#25D366",
+    "whatsappBorderColor": "#1eb25a",
+    "emailColor": "#111827",
+    "emailBorderColor": "#0f1623",
+    "ctaLiteBg": "#effdf6",
+    "ctaLiteText": "#0f5132"
+  },
+  "printPage": {
+    "upload": {
+      "dragTextMobile": "Upload STL files • ارفع ملفات STL",
+      "dragTextDesktop": "Drop STL files to upload • اسحب ملفات STL هنا",
+      "orWord": "or • أو",
+      "browseLabel": "Choose STL Files • اختر ملفات STL"
+    },
+    "contact": {
+      "line1": "Don’t have a printable file?",
+      "ctaText": "Request a custom quote",
+      "line2": "هل تحتاج مصمم 3D؟ لدينا مصممون جاهزون لمساعدتك.",
+      "whatsPrimary": "Chat on WhatsApp • تحدث عبر واتساب",
+      "emailLabel": "info@jordan3dprint.store",
+      "whatsLiteEn": "Send \"I need a 3D designer\"",
+      "whatsLiteAr": "أرسل \"أحتاج إلى مصمم ثلاثي الأبعاد\"",
+      "helperNote": "Do you need a 3D designer? Call us now or send a WhatsApp message.\nهل تحتاج إلى مصمم ثلاثي الأبعاد؟ اتصل بنا الآن أو أرسل رسالة عبر واتساب."
+    }
+  }
+}

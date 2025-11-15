@@ -1,15 +1,21 @@
 // Produce general html output for a single item based on db results
-function produceShowcaseOutput(result, isDefault, i, isUneven = false, isBest = false) {
+function produceShowcaseOutput(result, isDefault, i, isUneven = false, isBest = false, priceOverride = null) {
   let id = result[i].id;
   let url = result[i].url;
-  let imgUrl = result[i].img_url;
   let productName = result[i].name;
   let price = result[i].price;
+  if (priceOverride !== null && priceOverride !== undefined) {
+    price = priceOverride;
+  }
   let size = result[i].size.replace(/x/g, 'mm x ') + 'mm';
   let desc = result[i].description.split('.')[0];
   if (desc.search('<a') > -1) {
 desc = result[i].description.split('Tulajdonságok')[0]
       .replace(/<a.*?>/, '').replace('</a>', '');
+  }
+  let imgUrl = result[i].img_url;
+  if (!imgUrl || !imgUrl.trim()) {
+    imgUrl = 'images/defaultStl.png';
   }
   if (isDefault) {
     var bgStyle = `style="background-color: rgb(53, 54, 58);" data-bg="/${imgUrl}"`;

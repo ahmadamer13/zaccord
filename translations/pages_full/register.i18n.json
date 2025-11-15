@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "source": "src/register.html"
+  },
+  "strings": {
+    "Confirm password": "",
+    "Email": "",
+    "Password": ""
+  }
+}

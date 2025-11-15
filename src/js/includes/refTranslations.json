@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "3D Printed Products",
+    "description": "3D printed products in various colors and levels of complexity. The selection includes simple items that can be printed in a few hours, as well as more complex mechanical products made of multiple components.<br> The movable and more complex products are printed with higher density and wall thickness to make them more durable, while sculpture-like objects have lower values for these settings."
+  },
+  {
+    "id": 2,
+    "title": "Einstein Bust",
+    "description": "A bust of Albert Einstein. The product is printed with a low layer height for higher accuracy and detail, and with low density since sculpture-like objects are not subject to heavy use.<br> A great decorative choice for your home."
+  },
+  {
+    "id": 3,
+    "title": "Mechanical Hand",
+    "description": "A mechanical hand composed of multiple parts and finger joints. The product accurately represents the anatomy of a human hand. The finger joints can be moved into desired positions.<br> Available for purchase on Zaccord, and the package includes everything needed for assembly."
+  },
+  {
+    "id": 4,
+    "title": "Phosphorescent Tree",
+    "description": "A tree that glows in the dark. Printed with a special filament that glows green in the dark and appears white and rubber-like in daylight. Custom prints using this filament are available upon request through Zaccord."
+  },
+  {
+    "id": 6,
+    "title": "COVID-19 Mask and Filter",
+    "description": "COVID-19 mask and matching filter for use during the coronavirus pandemic. The mask comes in different sizes and can be printed in flexible filament for a more comfortable fit. The included filter is medically tested and commercially available.<br> The mask has not undergone official testing, so it is used at your own risk. However, it is significantly more reliable and safer than the loosely woven textile masks currently available on the market."
+  },
+  {
+    "id": 7,
+    "title": "Exoskeleton",
+    "description": "A wearable hand exoskeleton. The product consists of multiple components that the buyer must assemble, but all necessary tools are included in the package. Once assembled, it's ready for immediate use and looks very cool.<br> Also available for purchase on Zaccord and delivered within a few days."
+  },
+  {
+    "id": 8,
+    "title": "Human Skull",
+    "description": "An anatomically accurate human skull. Ideal for passionate doctors or biology teachers as a display piece at home."
+  },
+  {
+    "id": 9,
+    "title": "Spiral Vase",
+    "description": "A modern spiral vase. A great decorative piece for homes, especially those with a minimalist style.<br> Available for purchase on Zaccord and delivered within a few days."
+  }
+]

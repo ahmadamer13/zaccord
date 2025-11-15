@@ -32,6 +32,8 @@ const buildLithophane = require('./src/js/buildLithophane.js');
 const buildCategory = require('./src/js/buildCategory.js');
 const buildSearch = require('./src/js/buildSearch.js');
 const buildBlog = require('./src/js/buildBlog.js');
+const buildStoreSection = require('./src/js/storeLogic.js');
+const buildProdeutsSection = require('./src/js/prodeutsLogic.js');
 const sendOpinion = require('./src/js/sendOpinion.js');
 const delCartFile = require('./src/js/delCartFile.js');
 const buildReferencePage = require('./src/js/referenceLogic.js');
@@ -488,7 +490,7 @@ const server = http.createServer((req, res) => {
     // Dynamic sitemap.xml
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
       const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
-      const staticPaths = ['/', '/print', '/account', '/cart', '/blogs', '/colors', '/references'];
+      const staticPaths = ['/', '/print', '/account', '/cart', '/blogs', '/colors', '/references', '/store', '/prodeuts'];
       let urls = staticPaths.map(p => ({ loc: host + p, lastmod: new Date().toISOString().split('T')[0] }));
 
       const addUrl = (arr, path, dateStr) => arr.push({ loc: host + path, lastmod: dateStr || new Date().toISOString().split('T')[0] });
@@ -826,6 +828,14 @@ const server = http.createServer((req, res) => {
           let content = fs.readFileSync(path.join('src', 'account.html'));
           content += addCookieAccept(req);
           loadStaticPage(buildAccountSection, [conn, userID], content, userID, res);
+        } else if (req.url === '/store') {
+          let content = fs.readFileSync(path.join('src', 'store.html'));
+          content += addCookieAccept(req);
+          loadStaticPage(buildStoreSection, [conn], content, userID, res);
+        } else if (req.url === '/prodeuts') {
+          let content = fs.readFileSync(path.join('src', 'prodeuts.html'));
+          content += addCookieAccept(req);
+          loadStaticPage(buildProdeutsSection, [conn], content, userID, res);
         } else if (req.url === '/print') {
           /*
             User does not need to be logged in for experimenting with custom print only for

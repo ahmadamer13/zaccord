@@ -1,6 +1,7 @@
 const useragent = require('express-useragent');
 const util = require('util');
 const buildBlogItem = require('./buildBlogsSection.js').buildBlogItem;
+const loadDesign = require('./includes/loadDesign.js');
 const constants = require('./includes/constants.js');
 const LAZY_LOAD = constants.lazyLoad;
 const PRINT_SIZES_PLA = constants.printSizesPLA;
@@ -10,6 +11,21 @@ console.log(PRINT_SIZES_PLA, PRINT_SIZES_SLA)
 // Custom printing for users if they have an .stl file
 async function buildPrintSection(conn, req) {
   const query = util.promisify(conn.query).bind(conn);
+  // Load design overrides (safe on empty/invalid file)
+  const design = loadDesign() || {};
+  const dp = design.printPage || {};
+  const theme = design.theme || {};
+  const pick = (obj, keys, fallback) => {
+    try {
+      return keys.reduce((a, k) => (a && a[k] !== undefined ? a[k] : undefined), obj);
+    } catch (_) {
+      return undefined;
+    }
+  };
+  const val = (pathArr, fallback) => {
+    const v = pick(dp, pathArr, undefined);
+    return (v === undefined || v === null || v === '') ? fallback : v;
+  };
 
   const rightArrow = `
     <svg class="contSvg blue">
@@ -24,9 +40,54 @@ async function buildPrintSection(conn, req) {
   let ua = useragent.parse(src);
   let isMobile = ua.isMobile;
   let dragDropText = isMobile
-    ? 'Upload STL files • ارفع ملفات STL'
-    : 'Drag STL files here • اسحب ملفات STL هنا';
-  let connWord = isMobile ? 'or • أو' : 'or • أو';
+    ? (val(['upload', 'dragTextMobile'], 'Upload STL files • ارفع ملفات STL'))
+    : (val(['upload', 'dragTextDesktop'], 'Drag STL files here • اسحب ملفات STL هنا'));
+  let connWord = val(['upload', 'orWord'], 'or • أو');
+  let browseLabel = val(['upload', 'browseLabel'], 'Browse STL • تصفح ملفات STL');
+  let contactLine1 = val(['contact', 'line1'], 'Don’t have a printable file?');
+  let contactCTA = val(['contact', 'ctaText'], 'Request a custom quote');
+  let contactLine2 = val(['contact', 'line2'], 'هل تحتاج مصمم 3D؟ لدينا مصممون جاهزون لمساعدتك.');
+  let whatsPrimary = val(['contact', 'whatsPrimary'], 'Chat on WhatsApp • تحدث عبر واتساب');
+  let emailLabel = val(['contact', 'emailLabel'], 'info@jordan3dprint.store');
+  let whatsLiteEn = val(['contact', 'whatsLiteEn'], 'Send “I need a 3D designer”');
+  let whatsLiteAr = val(['contact', 'whatsLiteAr'], 'أرسل "أحتاج إلى مصمم ثلاثي الأبعاد"');
+  let helperNote = val(['contact', 'helperNote'], 'Do you need a 3D designer? Call us now or send a WhatsApp message.\nهل تحتاج إلى مصمم ثلاثي الأبعاد؟ اتصل بنا الآن أو أرسل رسالة عبر واتساب.');
+
+  // Build theme override CSS (scoped to print page)
+  const themeCSS = (() => {
+    const cPrimary = theme.primaryColor || null;
+    const cOnPrimary = theme.onPrimaryColor || null;
+    const radiusXL = theme.radiusXL || null; // e.g., '24px'
+    const radiusBtn = theme.radiusButton || null; // e.g., '999px'
+    const cWhats = theme.whatsappColor || null;
+    const cWhatsBorder = theme.whatsappBorderColor || null;
+    const cEmail = theme.emailColor || null;
+    const cEmailBorder = theme.emailBorderColor || null;
+    const cLiteBg = theme.ctaLiteBg || null;
+    const cLiteText = theme.ctaLiteText || null;
+    let css = '';
+    css += '#cprintHolder .btnCommon.fillBtn{';
+    if (cPrimary) css += `background:${cPrimary};`;
+    if (cOnPrimary) css += `color:${cOnPrimary};`;
+    if (radiusBtn) css += `border-radius:${radiusBtn};`;
+    css += '}'
+    css += '#cprintHolder .styleHolder, #cprintHolder .wideDynamicShowcase, #cprintHolder .wideDynamicShowcaseLit, #cprintHolder .wideDynamicShowcaseFdm, #cprintHolder .wideHidden, #cprintHolder .innerImg{';
+    if (radiusXL) css += `border-radius:${radiusXL};`;
+    css += '}'
+    css += '#cprintHolder .btnWhats{';
+    if (cWhats) css += `background:${cWhats};`;
+    if (cWhatsBorder) css += `border-color:${cWhatsBorder};`;
+    css += '}'
+    css += '#cprintHolder .btnEmail{';
+    if (cEmail) css += `background:${cEmail};`;
+    if (cEmailBorder) css += `border-color:${cEmailBorder};`;
+    css += '}'
+    css += '#cprintHolder .btnPillLite{';
+    if (cLiteBg) css += `background:${cLiteBg};`;
+    if (cLiteText) css += `color:${cLiteText};`;
+    css += '}'
+    return css.trim() ? `<style id="design-theme">${css}</style>` : '';
+  })();
 
   // Select relevant blogs
   let res = await query('SELECT * FROM blog WHERE id IN (6, 7, 9) ORDER BY FIELD(id, 6, 7, 9)');
@@ -34,6 +95,7 @@ async function buildPrintSection(conn, req) {
   // Build file upload form
   let output = `
     <section class="keepBottom flexDiv ofv" id="cprintHolder" style="padding-bottom: 0px;">
+      ${themeCSS}
       <div class="flexDiv styleHolder" style="border-radius: 30px; width: 100%;">
         <div class="cPrintDivs leftDiv flexDiv" id="dropDiv" ondrop="dropFile(event)">
           <form action="/uploadPrint" enctype="multipart/form-data" method="post" id="fdz"
@@ -46,42 +108,40 @@ async function buildPrintSection(conn, req) {
             <p class="gotham font18" style="margin-top: 0;" id="or">${connWord}</p>
             <div class="btnCommon fillBtn" id="fdzB" style="width: 60%; margin: 0 auto;
               max-width: 320px;">
-              Browse STL • تصفح ملفات STL
+              ${browseLabel}
             </div>
             <input type="file" name="file[]" style="display: none;" id="fileInput" multiple accept=".stl">
             <input type="submit" id="submitForm" style="display: none;">
             <br>
             <div class="contactBlock">
               <p class="gotham lh" style="font-size: 18px; margin: 8px 0 6px;">
-                Don’t have a printable file?
-                <a href="/print#getQuote" class="blueLink" style="font-size: 18px;">Request a custom quote</a>
+                ${contactLine1}
+                <a href="/print#getQuote" class="blueLink" style="font-size: 18px;">${contactCTA}</a>
               </p>
               <p class="gotham lh" style="font-size: 18px; margin: 0 0 10px;">
-                هل تحتاج مصمم 3D؟ لدينا مصممون جاهزون لمساعدتك.
+                ${contactLine2}
               </p>
               <div class="ctaRow ctaRowPrimary">
                 <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="btnPill btnWhats" aria-label="Chat on WhatsApp">
                   <img src="/images/icons/whatsapp.svg" alt="WhatsApp">
-                  Chat on WhatsApp • تحدث عبر واتساب
+                  ${whatsPrimary}
                 </a>
                 <a href="mailto:info@jordan3dprint.store" class="btnPill btnEmail" aria-label="Email">
-                  info@jordan3dprint.store
+                  ${emailLabel}
                 </a>
               </div>
               <div class="ctaRow ctaRowSecondary">
                 <a href="https://wa.me/message/KQRSOE7ZSWJBK1?text=I%20need%20a%203D%20designer" target="_blank" rel="noreferrer" class="btnPill btnWhats btnPillLite" aria-label="Send WhatsApp message: I need a 3D designer">
                   <img src="/images/icons/whatsapp.svg" alt="WhatsApp">
-                  Send &ldquo;I need a 3D designer&rdquo;
+                  ${whatsLiteEn}
                 </a>
                 <a href="https://wa.me/message/KQRSOE7ZSWJBK1?text=%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A5%D9%84%D9%89%20%D9%85%D8%B5%D9%85%D9%85%20%D8%AB%D9%84%D8%A7%D8%AB%D9%8A%20%D8%A7%D9%84%D8%A3%D8%A8%D8%B9%D8%A7%D8%AF" target="_blank" rel="noreferrer" class="btnPill btnWhats btnPillLite" aria-label="إرسال رسالة واتساب: أحتاج إلى مصمم ثلاثي الأبعاد">
                   <img src="/images/icons/whatsapp.svg" alt="واتساب">
-                  أرسل &quot;أحتاج إلى مصمم ثلاثي الأبعاد&quot;
+                  ${whatsLiteAr}
                 </a>
               </div>
               <p class="gotham lh" style="font-size: 16px; margin: 6px 0 10px; opacity:.9;">
-                Do you need a 3D designer? Call us now or send a WhatsApp message.
-                <br>
-                هل تحتاج إلى مصمم ثلاثي الأبعاد؟ اتصل بنا الآن أو أرسل رسالة عبر واتساب.
+                ${helperNote.split('\n').map(s => s.trim()).join('<br>')}
               </p>
             </div>
           </form>

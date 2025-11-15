@@ -1,0 +1,207 @@
+{
+  "generatedAt": "2025-11-13T18:55:15.173Z",
+  "strings": {
+    "”The debris loading isn't particularly extensive, but the color is usual.”": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "09-28-2001 in New York City": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "3D printer": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "3DJordanPrint logo": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "A display of the Polish Army. Both the soldier, and the vehicle belong to the 7th Pomeranian Coastal Defence Brigade, a part of the Szczecin-based 12th Mechanized Division ”Bolesław Krzywousty”": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Account": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "Araña": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Call": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/footer.html",
+        "src/js/DOCTYPE .html"
+      ]
+    },
+    "Cart": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "Chat on WhatsApp": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/footer.html",
+        "src/js/DOCTYPE .html"
+      ]
+    },
+    "Close": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "Close menu": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "Confirm password": {
+      "translation": "",
+      "occurrences": [
+        "src/register.html"
+      ]
+    },
+    "Contact options": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/footer.html",
+        "src/js/DOCTYPE .html"
+      ]
+    },
+    "Email": {
+      "translation": "",
+      "occurrences": [
+        "src/forgotPassword.html",
+        "src/login.html",
+        "src/register.html"
+      ]
+    },
+    "Grjótagjá caves in summer 2009": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Icebergs in the High Arctic": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Locomotives Roundhouse": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Museo storia naturale": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "New York, NY, September 28, 2001 -- Debris on surrounding roofs at the site of the World Trade Center. Photo by Andrea Booher/ FEMA News Photo": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Password": {
+      "translation": "",
+      "occurrences": [
+        "src/adminPageLogin.html",
+        "src/login.html",
+        "src/register.html"
+      ]
+    },
+    "Polish Army Kołobrzeg": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Steam locomotives of the Chicago & North Western Railway.": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Store": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/header.html",
+        "src/includes/headerLogged.html"
+      ]
+    },
+    "Thermes": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Username": {
+      "translation": "",
+      "occurrences": [
+        "src/adminPageLogin.html"
+      ]
+    },
+    "Xanthi hot-spa springs, Xanthi Prefecture, Greece": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Xysticus cristatus, A Estrada, Galicia, Spain": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Zlatograd Bulgaria": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    }
+  }
+}

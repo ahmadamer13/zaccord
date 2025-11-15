@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Store | 3DJordanPrint</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse the full store of curated 3D prints from 3DJordanPrint in Jordan.">
+    <meta name="keywords" content="3D print store, 3DJordanPrint, product catalog, Jordan 3D printing">
+    <link rel="canonical" href="https://www.jordan3dprint.store/store">
+    <meta property="og:title" content="Store | 3DJordanPrint">
+    <meta property="og:description" content="Explore all products available from 3DJordanPrint in Jordan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.jordan3dprint.store/store">
+    <meta property="og:image" content="/images/icons/logo.svg">
+    <link rel="stylesheet" href="/animate/animate.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/prot.css">
+    <link rel="stylesheet" href="/style/index_style.css">
+    <link rel="stylesheet" href="/style/home.css">
+    <script src="/js/includes/mobileCheck.js" async></script>
+    <script src="/js/includes/short.js" defer></script>
+    <script src="/js/includes/year.js" defer></script>
+    <script src="/js/includes/nprogress.js" defer></script>
+    <script src="/js/includes/hload.js" defer></script>
+    <script src="/js/includes/colors.js" async></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/search.js" async></script>
+    <script src="/js/includes/statusFill.js" defer></script>
+    <script src="/js/includes/registerSW.js" async></script>
+    <script src="/js/includes/cookie.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/images/icons/logo.svg">
+    <link rel="shortcut icon" href="/images/icons/logo.svg" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="3DJordanPrint">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="alternate" hreflang="en" href="https://www.jordan3dprint.store/store" />
+    <style>
+      :root {
+        --store-grid-gap: 24px;
+        --store-border: rgba(15, 23, 42, 0.08);
+      }
+
+      body {
+        background: #f5f5f7;
+        color: #0f172a;
+        font-family: 'SF Pro Display', 'Inter', 'Segoe UI', system-ui, sans-serif;
+      }
+
+      .store-hero {
+        padding: 80px 20px 40px;
+        background: linear-gradient(145deg, #0ea5e9, #22c55e);
+        color: #fff;
+      }
+
+      .store-hero__inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .store-hero__title {
+        margin: 10px 0 0;
+        font-size: clamp(36px, 4vw, 52px);
+        letter-spacing: -1px;
+      }
+
+      .store-hero__eyebrow {
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 13px;
+        opacity: .9;
+        letter-spacing: 3px;
+      }
+
+      .store-hero__description {
+        max-width: 680px;
+        margin: 14px auto;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .store-hero__cta {
+        display: inline-flex;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .store-hero__cta--ghost {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.5);
+      }
+
+      .store-hero__meta {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        font-size: 14px;
+        letter-spacing: .2px;
+      }
+
+      .store-hero__meta span {
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+      }
+
+      .store-featured {
+        margin: 0 auto;
+        margin-top: 30px;
+        padding: 40px 20px 10px;
+        max-width: 1240px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .store-featured__panel {
+        background: #fff;
+        border-radius: 20px;
+        padding: 24px;
+        border: 1px solid var(--store-border);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .store-featured__label {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 11px;
+        color: #64748b;
+      }
+
+      .store-featured__panel h3 {
+        margin: 0;
+        font-size: 20px;
+        color: #0f172a;
+      }
+
+      .store-featured__panel p {
+        color: #475569;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+
+      .store-products {
+        padding: 40px 20px 80px;
+        max-width: 1240px;
+        margin: 0 auto;
+      }
+
+      .store-products__header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .store-products__title {
+        font-size: clamp(28px, 3vw, 36px);
+        margin-bottom: 6px;
+      }
+
+      .store-products__subtitle {
+        color: #475569;
+        font-size: 16px;
+      }
+
+      .store-arrange {
+        margin-bottom: 28px;
+        text-align: center;
+        color: #475569;
+      }
+
+      .store-arrange__label {
+        letter-spacing: 3px;
+        font-size: 11px;
+        color: #0ea5e9;
+        margin-bottom: 10px;
+      }
+
+      .store-arrange__meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .store-arrange__meta span {
+        background: #fff;
+        border-radius: 999px;
+        padding: 10px 18px;
+        border: 1px solid #e5e7eb;
+        color: #0f172a;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .store-grid {
+        display: grid;
+        gap: var(--store-grid-gap);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-auto-rows: minmax(340px, auto);
+        align-items: stretch;
+      }
+
+      .store-grid--arranged {
+        margin-top: 10px;
+      }
+
+      .store-grid > a {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        align-self: stretch;
+        height: 100%;
+        border-radius: 28px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        padding: 20px;
+        padding-top: 18px;
+        box-sizing: border-box;
+        transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+      }
+
+      .store-grid > a:hover {
+        border-color: #0ea5e9;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .store-grid > a .priceShow {
+        min-height: 60px;
+      }
+
+      .store-grid span.gotham {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+        margin-top: 16px;
+        min-height: 72px;
+        flex: 1 0 auto;
+        width: 100%;
+        gap: 4px;
+      }
+
+      .store-grid span.gotham p {
+        margin: 2px 0;
+        line-height: 1.3;
+      }
+
+      .store-grid span.gotham p:first-child {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-weight: 600;
+        color: #111;
+      }
+
+      .store-grid span.gotham p:last-child {
+        color: #0f172a;
+        font-weight: 700;
+        white-space: nowrap;
+        margin-top: auto;
+      }
+
+      .store-grid > a .productItem {
+        border-radius: 24px;
+        flex: 1 0 280px;
+        background-size: cover;
+        background-position: center;
+        border: 1px solid transparent;
+        transition: border-color 160ms ease;
+      }
+
+      .store-grid > a:hover .productItem {
+        border-color: rgba(15, 23, 42, 0.12);
+      }
+
+      @media (max-width: 768px) {
+        .store-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 540px) {
+        .store-grid {
+          grid-template-columns: 1fr;
+        }
+        .store-hero__meta {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+  </body>
+</html>

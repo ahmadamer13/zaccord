@@ -30,6 +30,7 @@ const LIMITED_CART_COLORS = {
   'petg': ['White', 'Black', 'Fehér', 'Fekete']
 };
 const STANDARD_COLORS = new Set(['Fehér', 'Fekete', 'White', 'Black']);
+const { translateRow } = require('./includes/productTranslations.js');
 
 // Build cart page from cookies & validate them on server side
 const buildCartSection = (conn, req) => {
@@ -185,11 +186,12 @@ const buildCartSection = (conn, req) => {
               reject('An unexpected error occurred, please try again');
               return;
             } else {
-              var id = result[0]['id'];
-              var url = result[0]['url'];
-              var imgUrl = result[0]['img_url'];
-              var productName = result[0]['name'];
-              var price = result[0]['price'];
+              const tr = translateRow(result[0]);
+              var id = tr['id'];
+              var url = tr['url'];
+              var imgUrl = tr['img_url'];
+              var productName = tr['name'];
+              var price = tr['price'];
             }
 
             // Calculate the actual price of the product with all extras

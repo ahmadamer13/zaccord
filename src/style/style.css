@@ -1754,24 +1754,36 @@ select {
 
 .broHolder {
   margin-top: 20px;
-  -ms-flex-wrap: wrap;
+  display: flex;
   flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 40px
 }
 
 .bros {
-  width: calc(33% - 10px);
-  margin-right: 5px;
-  font-weight: 500;
-  padding: 10px
+  flex: 1 1 0;
+  min-width: 180px;
+  font-weight: 600;
+  padding: 12px 16px;
+  transition: transform .12s ease, box-shadow .12s ease;
 }
 
-.bros:last-child {
-  margin-right: 0
-}
+.bros:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+
+/* Compact icon/utility button (e.g., 3D) */
+.bros--icon { flex: 0 0 56px; min-width: 56px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 10px; font-weight: 600; }
+
+/* Button visual styles */
+.btn--primary { background: #2563eb; color: #fff; border: 2px solid #2563eb; }
+.btn--primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+
+.btn--secondary { background: #ffffff; color: #2563eb; border: 2px solid #2563eb; }
+.btn--secondary:hover { background: #eff6ff; }
+
+.btn--ghost { background: #f3f4f6; color: #111827; border: 1px solid #e5e7eb; }
+.btn--ghost:hover { background: #e5e7eb; }
 
 .fillBtn {
   background-color: #4285f4;
@@ -3010,5 +3022,3 @@ select {
     display: none;
   }
 }
-
-

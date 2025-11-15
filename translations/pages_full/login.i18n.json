@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "source": "src/login.html"
+  },
+  "strings": {
+    "Email": "",
+    "Password": ""
+  }
+}

@@ -1,12 +1,31 @@
 const constants = require('./includes/constants.js');
+const REF_TRANSLATIONS = require('./includes/refTranslations.json');
 const NUM_OF_COLS = constants.numOfCols;
 const NUM_OF_IMGS = constants.numOfImgs;
 const REF_BG = constants.refBg;
+const REF_TRANSLATION_MAP = REF_TRANSLATIONS.reduce((map, entry) => {
+  map[entry.id] = entry;
+  return map;
+}, {});
+
+const formatShortDesc = (description) => {
+  const sentences = description
+    .split('.')
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length);
+  if (sentences.length >= 2) {
+    return `${sentences[0]}. ${sentences[1]}.`;
+  }
+  if (sentences.length === 1) {
+    return `${sentences[0]}.`;
+  }
+  return description;
+};
 
 const buildReferencePage = (conn) => {
   return new Promise((resolve, reject) => {
     // First gather the photos from db
-    let iQuery = 'SELECT * FROM reference_images';
+    let iQuery = "SELECT * FROM reference_images WHERE title <> 'Meztelen Női Test'";
     conn.query(iQuery, (err, result, fields) => {
       if (err) {
         reject('Problem during reference image fetch from database');
@@ -30,9 +49,12 @@ const buildReferencePage = (conn) => {
         for (let j = initial; j < upperLimit; j++) {
           let id = result[j].id;
           let imgUrl = result[j].img_url;
-          let title = result[j].title;
-          let description = result[j].description;
-          let shortDesc = description.split('.')[0] + '.' + description.split('.')[1] + '.';
+          const translation = REF_TRANSLATION_MAP[id];
+          let title = translation ? translation.title : result[j].title;
+          let description = translation
+            ? translation.description
+            : result[j].description;
+          let shortDesc = formatShortDesc(description);
 
           content += `
             <div class="refCont">
@@ -75,4 +97,3 @@ const buildReferencePage = (conn) => {
 }
 
 module.exports = buildReferencePage;
-

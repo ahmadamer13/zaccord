@@ -15,6 +15,7 @@ const NodeStl = require('node-stl');
 const { normalizeColorLabel } = require('./includes/colorUtils.js');
 const fs = require('fs');
 const path = require('path');
+const { translateRow } = require('./includes/productTranslations.js');
 
 // Shipping and money handle prices constants are used throughout the page
 const shipping = require('./includes/shippingConstants.js');
@@ -102,11 +103,12 @@ const buildBuySection = (conn, paramObj, req) => {
               return;
             }
 
-            let prodURL = result[0]['url'];
-            let itemID = result[0]['id'];
-            let imgURL = result[0]['img_url'];
-            let price = result[0]['price'];
-            let name = result[0]['name'];
+            const tr = translateRow(result[0]);
+            let prodURL = tr['url'];
+            let itemID = tr['id'];
+            let imgURL = tr['img_url'];
+            let price = tr['price'];
+            let name = tr['name'];
 
             let data = {
               'orderID': orderID,

@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "source": "src/includes/footer.html"
+  },
+  "strings": {
+    "Call": "",
+    "Chat on WhatsApp": "",
+    "Contact options": ""
+  }
+}

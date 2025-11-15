@@ -1,5 +1,10 @@
 const constants = require('./includes/constants.js');
+const REF_TRANSLATIONS = require('./includes/refTranslations.json');
 const REF_BG = constants.refBg;
+const REF_TRANSLATION_MAP = REF_TRANSLATIONS.reduce((map, entry) => {
+  map[entry.id] = entry;
+  return map;
+}, {});
 
 const buildRefImage = (conn, id) => {
   return new Promise((resolve, reject) => {
@@ -17,8 +22,11 @@ reject('Nincsen ilyen referencia kép');
 
       // Image exists, now let's build the output
       let imgUrl = result[0].img_url;
-      let title = result[0].title;
-      let description = result[0].description;
+      const translation = REF_TRANSLATION_MAP[id];
+      let title = translation ? translation.title : result[0].title;
+      let description = translation
+        ? translation.description
+        : result[0].description;
       let rvas = result[0].rvas;
       let fvas = result[0].fvas;
       let infill = result[0].infill;

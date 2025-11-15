@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2025-11-13T18:51:32.734Z",
+  "strings": {
+    "”The debris loading isn't particularly extensive, but the color is usual.”": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "A display of the Polish Army. Both the soldier, and the vehicle belong to the 7th Pomeranian Coastal Defence Brigade, a part of the Szczecin-based 12th Mechanized Division ”Bolesław Krzywousty”": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Araña": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Grjótagjá caves in summer 2009": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    },
+    "Polish Army Kołobrzeg": {
+      "translation": "",
+      "occurrences": [
+        "src/includes/galleria/dist/plugins/history/demo.html",
+        "src/includes/galleria/src/plugins/history/demo.html"
+      ]
+    }
+  }
+}

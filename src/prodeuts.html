@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Prodeuts | 3DJordanPrint</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prodeuts catalog covering every curated 3D print that 3DJordanPrint offers for Jordan and beyond.">
+    <meta name="keywords" content="3D prints, catalog, printed products, Jordan 3DJordanPrint">
+    <link rel="canonical" href="https://www.jordan3dprint.store/prodeuts">
+    <meta property="og:title" content="Prodeuts | 3DJordanPrint">
+    <meta property="og:description" content="Browse the complete Prodeuts catalog from 3DJordanPrint—professional 3D prints ready for you.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.jordan3dprint.store/prodeuts">
+    <meta property="og:image" content="/images/icons/logo.svg">
+    <link rel="stylesheet" href="/animate/animate.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/prot.css">
+    <link rel="stylesheet" href="/style/index_style.css">
+    <link rel="stylesheet" href="/style/home.css">
+    <script src="/js/includes/mobileCheck.js" async></script>
+    <script src="/js/includes/short.js" defer></script>
+    <script src="/js/includes/year.js" defer></script>
+    <script src="/js/includes/nprogress.js" defer></script>
+    <script src="/js/includes/hload.js" defer></script>
+    <script src="/js/includes/colors.js" async></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/search.js" async></script>
+    <script src="/js/includes/statusFill.js" defer></script>
+    <script src="/js/includes/registerSW.js" async></script>
+    <script src="/js/includes/cookie.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/images/icons/logo.svg">
+    <link rel="shortcut icon" href="/images/icons/logo.svg" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="3DJordanPrint">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="theme-color" content="#ffffff" />
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #0ea5e9, #14b8a6, #22c55e);
+        --card-bg: #ffffff;
+        --muted: #6b7280;
+        --border-radius: 18px;
+      }
+
+      body {
+        background: #f6f7fb;
+        color: #111827;
+        font-family: 'Inter', 'IBM Plex Sans', sans-serif;
+      }
+
+      .prodeuts-hero {
+        background: var(--primary-gradient);
+        color: #fff;
+        padding: 60px 20px 40px;
+        text-align: center;
+      }
+
+      .prodeuts-hero__inner {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      .prodeuts-hero__eyebrow {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 14px;
+        margin-bottom: 16px;
+        opacity: 0.85;
+      }
+
+      .prodeuts-hero__title {
+        font-size: clamp(34px, 4vw, 54px);
+        margin: 0;
+      }
+
+      .prodeuts-hero__subtitle {
+        margin-top: 18px;
+        font-size: 18px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .prodeuts-hero__cta {
+        margin-top: 28px;
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .prodeuts-hero__cta a {
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .prodeuts-hero__cta .fillBtn {
+        background: #fff;
+      }
+
+      .prodeuts-hero__cta .outlineBtn {
+        border: 1px solid rgba(255,255,255,0.5);
+        background: transparent;
+        color: #fff;
+      }
+
+      .prodeuts-highlights {
+        max-width: 1080px;
+        margin: -40px auto 32px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        padding: 0 20px;
+      }
+
+      .highlight-card {
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        min-height: 160px;
+      }
+
+      .highlight-card h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      .highlight-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .prodeuts-products {
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        padding: 0 20px;
+      }
+
+      .prodeuts-products__header {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      .prodeuts-products__title {
+        font-size: clamp(26px, 3vw, 36px);
+        margin: 0;
+      }
+
+      .prodeuts-products__subtitle {
+        margin: 6px auto 0;
+        color: var(--muted);
+      }
+
+      .prodeuts-grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .prodeuts-grid > a {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+      }
+
+      .prodeuts-grid > a .productItem {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: transform 160ms ease, box-shadow 160ms ease;
+      }
+
+      .prodeuts-grid > a:hover .productItem {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2);
+      }
+
+      .prodeuts-grid span.gotham {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 70px;
+        margin-top: 12px;
+      }
+
+      .prodeuts-grid span.gotham p {
+        margin: 2px 0;
+        line-height: 1.2;
+      }
+
+      .prodeuts-grid span.gotham p:first-child {
+        font-weight: 600;
+        color: #111;
+      }
+
+      .prodeuts-grid span.gotham p:last-child {
+        color: #0ea5e9;
+        font-weight: 700;
+      }
+
+      .prodeuts-grid .priceShow {
+        min-height: 60px;
+      }
+
+      @media (max-width: 640px) {
+        .prodeuts-hero__cta {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 const produceShowcaseOutput = require('./includes/itemGenerator.js');
+const { translateRows } = require('./includes/productTranslations.js');
 const escapeVars = require('./includes/escapeVars.js');
 
 // Search in fixed products
@@ -25,9 +26,10 @@ const buildSearch = (conn, searchValue) => {
       }
 
       let searchIds = [];
-      for (let i = 0; i < result.length; i++) {
-        searchIds.push(result[i].id);
-        output += produceShowcaseOutput(result, true, i);
+      let trows = translateRows(result);
+      for (let i = 0; i < trows.length; i++) {
+        searchIds.push(trows[i].id);
+        output += produceShowcaseOutput(trows, true, i);
       }
 
       // If no result so far try to search in "non-strict" mode & description
@@ -43,10 +45,11 @@ const buildSearch = (conn, searchValue) => {
             return;
           }
 
-          for (let i = 0; i < result.length; i++) {
-            if (searchIds.indexOf(result[i].id) > -1) continue;
-            searchIds.push(result[i].id);
-            output += produceShowcaseOutput(result, true, i);
+          let trows = translateRows(result);
+          for (let i = 0; i < trows.length; i++) {
+            if (searchIds.indexOf(trows[i].id) > -1) continue;
+            searchIds.push(trows[i].id);
+            output += produceShowcaseOutput(trows, true, i);
           }
 
           if (searchIds.length < 4) {
@@ -62,10 +65,11 @@ const buildSearch = (conn, searchValue) => {
                 return;
               }
 
-              for (let i = 0; i < result.length; i++) {
-                if (searchIds.indexOf(result[i].id) > -1) continue;
-                output += produceShowcaseOutput(result, true, i);
-              }                
+              let trows = translateRows(result);
+              for (let i = 0; i < trows.length; i++) {
+                if (searchIds.indexOf(trows[i].id) > -1) continue;
+                output += produceShowcaseOutput(trows, true, i);
+              }
               
               // If still no result display error msg
               if (!output) {

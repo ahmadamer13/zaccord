@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const sendEmail = require('./includes/sendEmail.js');
 
 // Handle user registration; push data to db
 const userRegister = async (conn, formData, req) => {
@@ -42,22 +41,6 @@ const userRegister = async (conn, formData, req) => {
       VALUES (?, ?, ?, ?, ?, NOW())
     `;
     await q(insertUserSQL, [nextId, email, hash, userAgent, ip]);
-
-    // Fire-and-forget welcome email (non-fatal on failure)
-    const emailContent = `
-      <p style="font-size: 22px;">Welcome to Jordan3DPrint!</p>
-      <p style="line-height: 1.4;">
-        You are receiving this email because you recently registered on Jordan3DPrint.
-        Jordan3DPrint is a service where customers can purchase 3D printed
-        items or submit their existing designs and we will
-        print them for you.
-        Our mission is to bring every idea to life and popularize 3D‑printed
-        products.
-      </p>
-    `;
-    const subject = 'Welcome to Jordan3DPrint!';
-    Promise.resolve(sendEmail('info@jordan3dprint.store', emailContent, email, subject))
-      .catch(e => console.log('Registration email failed (non-fatal):', e));
 
     // Create delivery_data row for this user (AUTO_INCREMENT id)
     await q('INSERT INTO delivery_data (uid, date) VALUES (?, NOW())', [nextId]);
