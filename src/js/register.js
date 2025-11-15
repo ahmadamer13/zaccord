@@ -53,19 +53,8 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
         _('passConf').value = '';
         successStatus.innerHTML = data.success;
 
-        // Change header to logged in
-        _('register').innerText = 'Account';
-        _('register').href = '/account';
-        _('login').innerText = 'Printing';
-        _('login').href = '/print';
-
-        // Update highlighted icon color
-        if (window.matchMedia("(max-width: 768px)").matches) {
-          // no prototype icon anymore
-        } else {
-          _('register').style.color = '#000';
-        }
-        //fbq('track', 'CompleteRegistration');
+        // Refresh page so the logged-in state and navigation links update
+        window.location.reload();
       }
     }).catch(err => {
       // Something unexpected happened, report error

@@ -84,7 +84,7 @@ function toClientRegister(res, stat, req, formData, userSession) {
       // Auto log in user after successful registration
       userSession(req, res, function uSession() {
         req.user.id = data;
-responseData.success = '<p>Sikeres regisztráció</p>';
+        responseData.success = '<p>register succsfully</p>';
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(responseData));
       });
