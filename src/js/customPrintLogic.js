@@ -71,18 +71,16 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       let volume = (stl.volume).toFixed(2); // cm^3
       let weight = (stl.weight).toFixed(2); // gramm
       subVolumes.push(volume);
-      let area = stl.area;
       totVolume += Number(volume);
-      let [W, H, D] = getCoords(path);
       let boxVolume = stl.boundingBox.reduce((a, c) => a * c);
+      let [calcVolume, calcArea] = getCoords(path);
       sizeMM = stl.boundingBox.map(a => a.toFixed(2) + 'mm x ').join(' ');
 
       if (allowSLA) allowSLA = shouldAllowSLA(stl.boundingBox);
       let subSize = stl.boundingBox.map(a => a.toFixed(2) + 'mm x ').join(' ');
       subSize = subSize.substr(0, subSize.length - 3);
 
-      // NodeStl.area is in mm^2; convert to cm^2 by dividing by 100
-      let basePrice = calcCPPrice(volume, area / 100);
+      let basePrice = calcCPPrice(calcVolume, calcArea);
       let subpriceText = '';
       if (isMoreFiles) {
         subpriceText = `
