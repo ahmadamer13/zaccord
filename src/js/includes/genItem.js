@@ -126,7 +126,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
     if (isOrderTime) {
       output += `
         <div>
-<p>Rendelési idő: ${data.orderTime}</p>
+<p>Order time: ${data.orderTime}</p>
         </div>
       `;
     }
@@ -134,7 +134,7 @@ function genItem(isOrderTime = false, isStat = false, isPaymentOption = false, d
     if (isUID) {
       output += `
         <div>
-<p>Azonosító: <span class="blue">${data.uid}</span></p>
+<p>Identifier: <span class="blue">${data.uid}</span></p>
         </div>
       `;
     }
