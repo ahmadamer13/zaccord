@@ -57,7 +57,8 @@ _('submitBtn').addEventListener('click', function validateForm(e) {
         window.location.reload();
       }
     }).catch(err => {
-      // Something unexpected happened, report error
+      // Log the fetch error so we can inspect why the request failed
+      console.log('Registration fetch failed:', err);
       errStatus.innerHTML = '<p>An unexpected error occurred, please try again</p>'; 
       _('loader').innerHTML = '';
       _('submitBtn').disabled = false;
