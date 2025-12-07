@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | Admin</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/index.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-submit {
+            background: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <h1>Add New Product</h1>
+        <form id="addProductForm" action="/admin/saveProduct" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="form-label">Product Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select name="category" class="form-control" required>
+                    <option value="Other">Other</option>
+                    <option value="Holders, systemators">Holders, systemators</option>
+                    <option value="Telephone holders">Telephone holders</option>
+                    <option value="Bathroom accessories">Bathroom accessories</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Decor">Decor</option>
+                    <option value="Toys">Toys</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Price (JD)</label>
+                <input type="number" name="price" class="form-control" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Size (e.g., 100x100x100)</label>
+                <input type="text" name="size" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Product Image</label>
+                <input type="file" name="image" class="form-control" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">STL File (Optional)</label>
+                <input type="file" name="stl" class="form-control" accept=".stl">
+            </div>
+
+            <button type="submit" class="btn-submit">Save Product</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -4,23 +4,23 @@ const { translateRows } = require('./includes/productTranslations.js');
 // Display all items a certain category
 const buildCategory = (conn, category, opts = {}) => {
   return new Promise((resolve, reject) => {
-    let output = ''; 
+    let output = '';
 
     /*
       Tackle 3 cases:
         - category is an ordinary category in db
 - category is 'Legnépszerűbb' which is marked as is_best in db
-- catgegory is 'Összes' when we list all products from every category
+- catgegory is 'All' when we list all products from every category
     */
-  
+
     let sQuery;
-if (category == 'Legnépszerűbb') {
+    if (category == 'Most Popular') {
       sQuery = `SELECT * FROM fix_products WHERE is_best = 1 ORDER BY priority ASC`;
-} else if (category == 'Összes') {
+    } else if (category == 'All') {
       sQuery = `SELECT * FROM fix_products ORDER BY priority ASC`;
     } else {
       sQuery = `SELECT * FROM fix_products WHERE category = '${category}' ORDER BY
-        priority ASC`; 
+        priority ASC`;
     }
 
     conn.query(sQuery, (err, result, field) => {
@@ -28,7 +28,7 @@ if (category == 'Legnépszerűbb') {
         reject('An unexpected error occurred, please try again');
         return;
       }
-      
+
       // Build the output
       const rows = translateRows(result);
       const limit = typeof opts.limit === 'number' ? Math.min(opts.limit, rows.length) : rows.length;
@@ -37,7 +37,7 @@ if (category == 'Legnépszerűbb') {
       }
 
       resolve(output);
-    }); 
+    });
   });
 }
 

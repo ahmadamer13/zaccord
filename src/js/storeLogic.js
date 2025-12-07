@@ -18,7 +18,7 @@ const highlightCopy = [
 
 const buildStoreSection = (conn) => {
   return new Promise((resolve, reject) => {
-    buildCategory(conn, 'Összes', { priceOverride: 5, limit: 5 })
+    buildCategory(conn, 'All', { priceOverride: 5, limit: 5 })
       .then(data => {
         const highlightPanels = highlightCopy.map(item => `
           <article class="store-featured__panel">

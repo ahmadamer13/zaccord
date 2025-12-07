@@ -5,278 +5,365 @@ const { translateRow, translateRows } = require('./includes/productTranslations.
 
 // Build page for a specific item
 const buildItemSection = (conn, itemId, req) => {
-  return new Promise((resolve, reject) => {
-    // Select the item from db & make sure it exists
-    itemId = Number(escapeVars(itemId));
-    conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [itemId],
-    function (err, result, fields) {
-      if (err) {
-        reject('An unexpected error occurred, please try again')
-        return;
-      }
+    return new Promise((resolve, reject) => {
+        // Select the item from db & make sure it exists
+        itemId = Number(escapeVars(itemId));
+        conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [itemId],
+            function (err, result, fields) {
+                if (err) {
+                    reject('An unexpected error occurred, please try again')
+                    return;
+                }
 
-      // Invalid item id
-      if (result.length === 0) {
-        reject('No such product');
-        return;
-      }
+                // Invalid item id
+                if (result.length === 0) {
+                    reject('No such product');
+                    return;
+                }
 
-      // Create html output 
-      let output = `
-        <div class="overlay" id="overlay"></div>
-        <img src="/images/icons/moreClose.svg" class="exitBtn trans" id="exitBtn"
-          onclick="viewIn3D()">
-        <div class="item3DViewer" id="viewBox">
-          <img src="/images/icons/loader.gif" id="stlLoader" /> 
-        </div>
-        <section class="keepBottom animate__animated animate__fadeIn">
-      `;
+                const tr = translateRow(result[0]);
 
-      // Apply product-level translations if available
-      const tr = translateRow(result[0]);
+                const escapeBackticks = (str) => str ? String(str).replace(/`/g, '\\`') : '';
 
-      // Get properties of item (translated values if present)
-      let id = tr.id;
-      let url = tr.url;
-      let imgUrl = tr.img_url;
-      let productName = tr.name;
-      let category = tr.category;
-      let price = tr.price;
-      let size = tr.size.replace(/x/g, 'mm x ');
-      size += 'mm';
-      size = size.replace(/\smm/g, 'mm');
-      let description = tr.description.replace('<!--DATE-->', new Date().getFullYear());
-      let gbtn = `
-        <svg class="contSvg blue" style="margin-top: 0; margin-left: 3px;">
-          <svg>
-            <path d="M9,1.5C4.8,1.5,1.5,4.8,1.5,9s3.3,7.5,7.5,7.5s7.5-3.3,7.5-7.5S13.2,1.5,9,1.5z M9,14.5l-1-1 l3.8-3.8H3.5V8.3h8.4L8.1,4.5L9,3.5L14.5,9L9,14.5z"></path>
-          </svg>
-        </svg>
-      `;
-      description = description.replace('<!--GBTN-->', gbtn);
+                let id = tr.id;
+                let imgUrl = tr.img_url;
+                let productName = escapeBackticks(tr.name);
+                let category = escapeBackticks(tr.category);
+                let price = tr.price;
+                let size = escapeBackticks(tr.size); // e.g. "100x100x100"
+                let description = escapeBackticks(tr.description);
+                let stlPath = tr.stl_path;
+                let showcaseImgs = tr.img_showcase ? tr.img_showcase.split(',') : [];
 
-      // Clean repetitive boilerplate from descriptions for a cleaner product page
-      // 1) Remove Eco-friendly packaging list item
-      description = description.replace(/<li>\s*Eco-friendly packaging\s*<\/li>/gi, '');
-      // 2) Remove size line inside features list (we already show size separately)
-      description = description.replace(/<li>\s*\d+\s*mm\s*x\s*\d+\s*mm\s*x\s*\d+\s*mm\s*<\/li>/gi, '');
-      // 3) Remove license + view/modify paragraph (EN)
-      description = description.replace(/The product is available under a free <a [^>]+>license<\/a>[\s\S]*?modify it as you like\./gi, '');
-      // 4) Remove print-on-demand sentence
-      description = description.replace(/If you would like to print your own model, use the <a [^>]+>print-on-demand<\/a> function\./gi, '');
-      // 5) Remove product author/rights notice (EN)
-      description = description.replace(/Product by <a [^>]+>[^<]+<\/a>[\s\S]*?All rights reserved\./gi, '');
-      // 6) Remove Hungarian boilerplate license/links blocks (HU)
-      description = description.replace(/A term[é|e]k szabad <a [^>]+>licensszel<\/a>[\s\S]*?m[óo]dos[ií]thatod\.?/gi, '');
-      description = description.replace(/van forgalomban, [\s\S]*?m[óo]dos[ií]thatod\.?/gi, '');
-      description = description.replace(/Abban az esetben, [\s\S]*?<a [^>]+>b[é|e]rnyomtat[áa]s<\/a> funkci[óo]t\.?/gi, '');
-      description = description.replace(/A term[é|e]ket <a [^>]+>[^<]+<\/a>[\s\S]*?(Minden jog fenntartva\.|All rights reserved\.)/gi, '');
-      // 7) Remove stray Hungarian list items mentioning packaging with diacritics
-      description = description.replace(/<li>\s*K[öo]rnyezetbar[áa]t csomagol[áa]s\s*<\/li>/gi, '');
-      // 6) Remove empty feature lists if they became empty
-      description = description.replace(/<ul class=\"dul\">\s*<\/ul>/gi, '');
-      // 7) Tidy excess breaks
-      description = description.replace(/(\s*<br>\s*){3,}/gi, '<br><br>');
-      let stlPath = tr.stl_path;
-      let showcaseImgs = tr.img_showcase.split(',');
-      let firstImage = tr.img_url;
-      let showcase = `<img src="/${firstImage}" style="height: 0;">`;
-      let isBest = tr.is_best;
-      for (let img of showcaseImgs) {
-        showcase += `<img src="/images/${img}" style="height: 0;">`;
-      }
-      
-      let stlPaths = [];
-      let pathList = stlPath.replace(/\s/g, '').split(',');
-      for (let i = 0; i < pathList.length; i++) {
-        stlPaths.push({
-          'id': i,
-          'filename': '/fixedStl/' + pathList[i] + '.stl',
-          'color': '#999999',
-          'x': i * 150
-        });
-      }
+                // Fetch colors
+                getColors(conn).then(([colors, hex_codes]) => {
+                    const plaColors = colors['pla'] || [];
+                    const plaHex = hex_codes['pla'] || {};
 
-      let pathArg = JSON.stringify(stlPaths);
+                    // Default color
+                    let defaultColor = plaColors.includes('White') ? 'White' : plaColors[0];
 
-      let popularTxt = '';
-      if (isBest) {
-        popularTxt = `
-          <p class="gotham ddgray">Popular product</p>
-        `;
-      } else {
-        popularTxt = `
-          <p class="gotham ddgray">Category: ${category}</p>
-        `;
-      }
-      
-      output += `
-        <div class="centerBox">
-          <div class="leftAlignBox">
-            <div class="galleria" id="galleria">
-              ${showcase}
-            </div>
+                    // Generate Color Options
+                    let colorOptionsHtml = plaColors.map(c => {
+                        let hex = plaHex[c] || '#cccccc';
+                        let isSelected = c === defaultColor ? 'selected' : '';
+                        return `<div class="color-option ${isSelected}" data-color="${c}" style="background-color: ${hex};" onclick="selectColor(this, '${c}')" title="${c}"></div>`;
+                    }).join('');
 
-            <p class="prodName hideSeek align lh" id="pname">${productName}</p>
-            <div class="itemInfo">
-              <p class="prodName hideText">${productName}</p>
-              <p class="itemPrice">
-                <span id="priceHolder">${price}</span> JD
-              </p>
-              <p class="gotham">
-                <span id="sizeHolder">${size}</span>
-              </p>
-              ${popularTxt}
-              <p class="gotham font14 qty" style="margin-bottom: 0;">
-                Quantity
-              </p> 
-              <div class="quantity buttons_added">
-                <input type="button" value="-" class="minus" id="minus">
-                <input type="number" step="1" min="1" max="100" name="quantity" value="1"
-                  title="Qty"
-                  class="input-text qty text" size="4" pattern="" inputmode="" id="quantity"
-                  >
-                  <input type="button" value="+" class="plus" id="plus">
-              </div>
+                    // Modern Apple-style Product Page Layout
+                    let output = `
+            <script src="/js/includes/cookie.js"></script>
+            <script src="/js/includes/short.js"></script>
+            <style>
+                .product-container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 40px 20px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 60px;
+                    font-family: 'Inter', sans-serif;
+                }
+                .product-gallery {
+                    position: sticky;
+                    top: 100px;
+                    height: fit-content;
+                }
+                .main-image {
+                    width: 100%;
+                    border-radius: 20px;
+                    background: #f5f5f7;
+                    margin-bottom: 20px;
+                    aspect-ratio: 1;
+                    object-fit: contain;
+                    padding: 40px;
+                    box-sizing: border-box;
+                }
+                .gallery-thumbs {
+                    display: flex;
+                    gap: 10px;
+                    overflow-x: auto;
+                }
+                .thumb {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 10px;
+                    background: #f5f5f7;
+                    object-fit: contain;
+                    cursor: pointer;
+                    padding: 10px;
+                    box-sizing: border-box;
+                    border: 2px solid transparent;
+                    transition: border-color 0.2s;
+                }
+                .thumb:hover, .thumb.active {
+                    border-color: #0071e3;
+                }
+                
+                .product-details {
+                    padding-top: 20px;
+                }
+                .new-badge {
+                    color: #bf4800;
+                    font-weight: 600;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                    display: block;
+                }
+                .product-title {
+                    font-size: 48px;
+                    font-weight: 700;
+                    margin: 0 0 10px;
+                    line-height: 1.1;
+                    color: #1d1d1f;
+                }
+                .product-price {
+                    font-size: 24px;
+                    color: #1d1d1f;
+                    margin-bottom: 30px;
+                    font-weight: 500;
+                }
+                .product-desc {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    color: #1d1d1f;
+                    margin-bottom: 40px;
+                }
+                
+                .action-box {
+                    background: #f5f5f7;
+                    padding: 30px;
+                    border-radius: 18px;
+                    margin-bottom: 40px;
+                }
+                .qty-selector {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 20px;
+                }
+                .qty-btn {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    border: 1px solid #d2d2d7;
+                    background: #fff;
+                    cursor: pointer;
+                    font-size: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .qty-input {
+                    width: 40px;
+                    text-align: center;
+                    font-size: 16px;
+                    border: none;
+                    background: transparent;
+                }
+                
+                .color-picker {
+                    margin-bottom: 25px;
+                }
+                .color-label {
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                    display: block;
+                }
+                .color-options {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                }
+                .color-option {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    border: 2px solid #fff;
+                    box-shadow: 0 0 0 1px #d2d2d7;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .color-option:hover {
+                    transform: scale(1.1);
+                }
+                .color-option.selected {
+                    box-shadow: 0 0 0 2px #0071e3;
+                    transform: scale(1.1);
+                }
 
-              <div class="broHolder" id="broHolder">
-                <button class="btnCommon bros btn--secondary" onclick="buyItem(${id})" aria-label="Buy now">
-                  Buy now
-                </button>
-                <button class="btnCommon bros btn--primary" onclick="addToCart(${id})" aria-label="Add to cart">
-                  Add to cart
-                </button>
-                <button class="btnCommon bros bros--icon btn--ghost" id="view3D" aria-label="View in 3D">
-                  3D
-                </button>
-              </div>
+                .btn-primary {
+                    background: #0071e3;
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 980px;
+                    font-size: 17px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    transition: background 0.2s;
+                }
+                .btn-primary:hover { background: #0077ed; }
+                
+                .btn-secondary {
+                    background: #e8e8ed;
+                    color: #1d1d1f;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 980px;
+                    font-size: 17px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    width: 100%;
+                    transition: background 0.2s;
+                }
+                .btn-secondary:hover { background: #d2d2d7; }
 
-              <div id="status" class="errorBox"></div>
-              <div id="succBox" class="successBox"></div>
-              <div id="info" class="infoBox"></div>
-            </div>
-          </div>
-          <div class="clear"></div>
+                .specs-list {
+                    margin-top: 40px;
+                    border-top: 1px solid #d2d2d7;
+                    padding-top: 40px;
+                }
+                .spec-item {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 15px 0;
+                    border-bottom: 1px solid #e5e5e5;
+                    font-size: 14px;
+                }
+                .spec-label { color: #86868b; }
+                .spec-value { font-weight: 500; }
 
-          <div class="contHolder flexDiv gotham">
-            <div class="contTitle" id="descTitle">
-              <div>
-                Description            
-              </div>
-              <div class="hoverItem" id="descTitle_anim" style="display: block;"></div>
-            </div>
-            <div class="contTitle" id="specsTitle">
-              <div>
-                Specifications
-              </div>
-              <div class="hoverItem animate__animated animate__fadeOut" id="specsTitle_anim">
-              </div>
-            </div>
-          </div>
-          <hr class="hrStyle">
-          <div id="descHS" class="descHS trans">
-            <p>
-              ${description}
-            </p>
-            <p class="ddgray">
-              Except for live photos, product images are for illustration only!
-              The product is made with a 3D printer!
-            </p>
-          </div>
-          <div id="specsHS" class="specsHS trans">
-      `;  
+                @media (max-width: 768px) {
+                    .product-container {
+                        grid-template-columns: 1fr;
+                        gap: 30px;
+                    }
+                    .product-gallery {
+                        position: static;
+                    }
+                    .product-title {
+                        font-size: 36px;
+                    }
+                }
+            </style>
 
-      let specsPromise = genSpecs(conn, price, size);
-      let colorPromise = getColors(conn);
-
-      Promise.all([specsPromise, colorPromise]).then(vals => {
-        let specs = vals[0];
-        const PCOLORS = vals[1][0];
-        output += specs;
-        output += `
-          <div class="clear"></div> 
-
-          <p class="align">
-            <a href="/mitjelent" class="blueLink">Specification help</a>
-          </p>
-
-          <p class="align note ddgray">
-            Changing specifications may affect the price!
-          </p>
-
-          <p class="align note ddgray">
-            If you don’t want to fuss with parameters, leave the defaults!
-          </p>
-        </div>
-        `;
-
-        // Give product suggestion from the same category
-        let sQuery = `SELECT * FROM fix_products WHERE category = ? AND id != ? ORDER BY RAND()
-          LIMIT 6`;
-        conn.query(sQuery, [category, itemId], (err, result, fields) => {
-          if (err) {
-            reject('An unexpected error occurred, please try again');
-            return;
-          }
-
-          // If there are no more items in the category do not display suggestions at all
-          if (result.length === 0) {
-            output += `
-              </section>
-            `;
-          } else {
-            // Provide suggestions
-            output += `
-              <hr class="hrStyle">
-                <p id="spec" class="align gotham" style="font-weight: 500;">
-                  You may also like
-                </p>
-                <div class="flexDiv" style="flex-wrap: wrap;">   
-            `;
-
-            // Translate suggestion rows too
-            const trows = translateRows(result);
-            for (let i = 0; i < trows.length; i++) {
-              let url = trows[i].url;
-              let imgUrl = trows[i].img_url;
-
-              output += `
-                <div class="cartImgHolder bgCommon suggItem" 
-                  style="background-image: url('/${imgUrl}')"
-                  onclick="window.location.href='/${url}'">
+            <div class="product-container">
+                <div class="product-gallery">
+                    <img src="/${imgUrl}" class="main-image" id="mainImage" alt="${productName}">
+                    <div class="gallery-thumbs">
+                        <img src="/${imgUrl}" class="thumb active" onclick="changeImage(this.src)">
+                        ${showcaseImgs.map(img => `<img src="/images/${img}" class="thumb" onclick="changeImage(this.src)">`).join('')}
+                    </div>
                 </div>
-              `;           
-            }
 
-            output += `
+                <div class="product-details">
+                    <span class="new-badge">${category}</span>
+                    <h1 class="product-title">${productName}</h1>
+                    <div class="product-price">${price} JD</div>
+                    
+                    <div class="product-desc">
+                        ${description}
+                    </div>
+
+                    <div class="action-box">
+                        <!-- Hidden Inputs for Technical Specs -->
+                        <input type="hidden" id="rvas" value="0.2">
+                        <input type="hidden" id="suruseg" value="20">
+                        <input type="hidden" id="fvas" value="1.2">
+                        <input type="hidden" id="scale" value="1">
+                        <input type="hidden" id="printMat" value="PLA">
+                        <input type="hidden" id="tech" value="FDM">
+                        <input type="hidden" id="size" value="${size}">
+                        <input type="hidden" id="selectedColor" value="${defaultColor}">
+
+                        <div class="color-picker">
+                            <span class="color-label">Color: <span id="colorName">${defaultColor}</span></span>
+                            <div class="color-options">
+                                ${colorOptionsHtml}
+                            </div>
+                        </div>
+
+                        <div class="qty-selector">
+                            <span>Quantity:</span>
+                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <input type="number" id="quantity" value="1" class="qty-input" readonly>
+                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                        </div>
+                        
+                        <button class="btn-primary" onclick="addToCart(${id})">Order Now</button>
+                        <div id="status" style="margin-top:10px; text-align:center; font-weight:500;"></div>
+                    </div>
+
+                    <div class="specs-list">
+                        <h3>Specifications</h3>
+                        <div class="spec-item">
+                            <span class="spec-label">Size</span>
+                            <span class="spec-value">${size}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Material</span>
+                            <span class="spec-value">PLA (Premium)</span>
+                        </div>
+                    </div>
                 </div>
-              </section>
-            `;
-          }
+            </div>
 
-          output += `
-            <script type="text/javascript">
-              let isLoggedIn = ${req.user.id ? true : false};
-              _('galleria').style.height = _('galleria').clientWidth + 'px';
-              window.onresize = function resizeShowcase() {
-                _('galleria').style.height = _('galleria').clientWidth + 'px';
-              }
+            <script>
+                function changeImage(src) {
+                    document.getElementById('mainImage').src = src;
+                    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+                    event.target.classList.add('active');
+                }
+                
+                function updateQty(change) {
+                    const input = document.getElementById('quantity');
+                    let val = parseInt(input.value) + change;
+                    if (val < 1) val = 1;
+                    if (val > 100) val = 100;
+                    input.value = val;
+                }
 
-              _('view3D').addEventListener('click', function showModels(e) {
-                viewIn3D(${pathArg});
-              });
+                function selectColor(el, color) {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                    el.classList.add('selected');
+                    document.getElementById('selectedColor').value = color;
+                    document.getElementById('colorName').innerText = color;
+                }
+                
+                function getModelSize() {
+                    return document.getElementById('size').value.replace(/(x)|(mm)/g, '').replace(/\\s+/g, ',');
+                }
 
-              const PCOLORS = ${JSON.stringify(PCOLORS)};
+                function addToCart(id) {
+                    buyItem(id);
+                }
+                
+                function buyItem(id) {
+                     let rvas = document.getElementById('rvas').value;
+                     let suruseg = document.getElementById('suruseg').value;
+                     let color = document.getElementById('selectedColor').value;
+                     let scale = document.getElementById('scale').value;
+                     let fvas = document.getElementById('fvas').value;
+                     let q = document.getElementById('quantity').value;
+                     let size = getModelSize();
+                     let printMat = document.getElementById('printMat').value;
+                     let tech = document.getElementById('tech').value;
+
+                     window.location.href = \`/buy?product=\${id}&rvas=\${rvas}&suruseg=\${suruseg}&color=\${encodeURIComponent(color)}&scale=\${scale}&fvas=\${fvas}&q=\${q}&size=\${size}&printMat=\${printMat}&tech=\${tech}\`;
+                }
             </script>
           `;
-          let descToTag = description.split('Tulajdons')[0].replace(/(\r\n|\n|\r)/gm, '')
-          descToTag = descToTag.replace(/<a .*?>/, '').replace(/<\/a>/, '')
-            .replace(/<br>/g, '');
-          resolve([output, productName, descToTag]);
-        });  
-      });    
+
+                    let descToTag = description.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                    resolve([output, productName, descToTag]);
+                });
+            });
     });
-  });
-}
+};
 
 module.exports = buildItemSection;

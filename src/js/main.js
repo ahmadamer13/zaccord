@@ -16,13 +16,13 @@ const items = ['cart', 'register', 'login', 'bny', 'descTitle', 'specsTitle'];
 for (let item of items) {
   if (_(item)) {
     _(item).addEventListener('mouseover', () => {
-        animateElement(item + '_anim', 'fadeIn', 'fadeOut', 0.3, true);
-      }
+      animateElement(item + '_anim', 'fadeIn', 'fadeOut', 0.3, true);
+    }
     );
 
     _(item).addEventListener('mouseleave', () => {
-        animateElement(item + '_anim', 'fadeIn', 'fadeOut', 0.3, false);
-      }
+      animateElement(item + '_anim', 'fadeIn', 'fadeOut', 0.3, false);
+    }
     );
   }
 }
@@ -49,7 +49,7 @@ function animateElement(element, start, end, dur, begin) {
 // Handle category box dropdown menu
 function toggleCategory() {
   if (window.mobileCheck()) {
-    var def = '110px';  
+    var def = '110px';
     var open = '185px';
     var wideTop = '185px';
     var wideTopDef = '110px';
@@ -108,7 +108,7 @@ function sortByCat(cat, cid, isEye = false) {
   }
 
   // Do not display new products & more products when using 'All' category
-if (cat === 'Összes') {
+  if (cat === 'All') {
     toggleLower('none');
   } else {
     toggleLower('block');
@@ -116,7 +116,7 @@ if (cat === 'Összes') {
 
   toggleShowcase('hide');
   if (!window.mobileCheck()) {
-    if (!isEye) { 
+    if (!isEye) {
       _('ms').style.marginTop = '200px';
     } else {
       _('ms').style.marginTop = '140px';
@@ -147,7 +147,7 @@ if (cat === 'Összes') {
       scrollTop: 0
     }, 800);
   }).catch(err => {
-  _('dynamicShowcase').innerHTML = '<p>Oops... an error occurred during sorting</p>';
+    _('dynamicShowcase').innerHTML = '<p>Oops... an error occurred during sorting</p>';
   });
 }
 
@@ -234,8 +234,8 @@ function changeToRandColors() {
       throw new Error('Invalid HEX color.');
     }
     var r = parseInt(hex.slice(0, 2), 16),
-        g = parseInt(hex.slice(2, 4), 16),
-        b = parseInt(hex.slice(4, 6), 16);
+      g = parseInt(hex.slice(2, 4), 16),
+      b = parseInt(hex.slice(4, 6), 16);
 
     if (bw) {
       return (r * 0.299 + g * 0.587 + b * 0.114) > 186
@@ -267,14 +267,14 @@ function toggleMoreMenu() {
   let cont = _('mmContainer');
   if (cont.dataset.status == 'closed') {
     $("#mmOverlay").fadeIn(200);
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
     cont.dataset.status = 'opened';
   } else {
     $("#mmOverlay").fadeOut(200);
     document.body.style.overflow = 'auto';
     cont.dataset.status = 'closed';
   }
-  $("#mmContainer").animate({ width:'toggle' }, 200);
+  $("#mmContainer").animate({ width: 'toggle' }, 200);
 }
 
 _('mmOverlay').addEventListener('click', (e) => {
@@ -305,6 +305,6 @@ vmen.style.maxHeight = window.innerHeight - 120 + 'px';
 if (_('goToColor')) {
   _('goToColor').addEventListener('click', (e) => {
     let printMat = _('printMat') ? _('printMat').value : 'PLA';
-    window.location.href = '/colors#' + encodeURIComponent(_('color').value) + '_' + encodeURIComponent(printMat); 
+    window.location.href = '/colors#' + encodeURIComponent(_('color').value) + '_' + encodeURIComponent(printMat);
   });
 }

@@ -27,7 +27,7 @@ const buildHighlights = () => {
 
 const buildProdeutsSection = (conn) => {
   return new Promise((resolve, reject) => {
-    buildCategory(conn, 'Összes')
+    buildCategory(conn, 'All')
       .then(data => {
         const gridContent = data || `<p class="align" style="padding: 40px 0;">No products available right now.</p>`;
         const output = `

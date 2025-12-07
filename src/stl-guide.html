@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Prepare an STL File for 3D Printing | Jordan3DPrint</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/index_style.css">
+    <link rel="stylesheet" href="/style/home.css">
+    <meta name="description" content="Step-by-step STL preparation guide: watertight models, proper scale, wall thickness, supports, and export tips for reliable 3D printing in Jordan.">
+    <meta name="keywords" content="STL guide Jordan, prepare STL for 3D printing, 3D print file checklist Jordan, STL tips Amman, Jordan3DPrint STL help">
+    <link rel="canonical" href="https://www.jordan3dprint.store/stl-guide">
+    <style>
+      body{background:#f8fafc;color:#0f172a;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.65}
+      .wrap{max-width:900px;margin:0 auto;padding:26px 18px 70px}
+      .hero{background:#0f172a;color:#fff;border-radius:14px;padding:24px}
+      .hero h1{margin:0 0 10px;font-size:30px}
+      .hero p{margin:0 0 10px;font-size:17px}
+      .badge{display:inline-flex;align-items:center;gap:8px;background:#22c55e;color:#064e3b;font-weight:700;padding:8px 12px;border-radius:999px;margin-bottom:10px}
+      h2{margin:26px 0 10px;font-size:22px}
+      .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-top:10px}
+      ul{margin:0 0 0 18px;padding:0}
+      li{margin:6px 0}
+      .tip{color:#475569;font-size:15px}
+      .ctaRow{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+      .btn{padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700}
+      .btn-primary{background:#0ea5e9;color:#fff}
+      .btn-dark{background:#111827;color:#fff}
+      .contact{background:#111827;color:#fff;border-radius:12px;padding:16px;margin-top:22px}
+      .contact a{color:#a5f3fc;font-weight:700}
+      .checklist{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <div class="badge">STL prep checklist</div>
+        <h1>How to Prepare an STL File for Printing</h1>
+        <p>Follow these quick steps to avoid failed prints and get clean results. If you need help, send us the file and we’ll check it.</p>
+        <div class="ctaRow">
+          <a class="btn btn-primary" href="/print">Upload STL &amp; Get Price</a>
+          <a class="btn btn-dark" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Ask for a file check</a>
+        </div>
+      </section>
+
+      <h2>Essential steps</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Check scale and units:</strong> set the model to millimeters and confirm dimensions.</li>
+          <li><strong>Make it watertight:</strong> no holes or open edges. Use a mesh repair tool if needed.</li>
+          <li><strong>Wall thickness:</strong> keep thin walls &gt; 1.2 mm for FDM; thicker for structural parts.</li>
+          <li><strong>Overhangs and supports:</strong> orient parts to reduce supports; allow flat faces on the bed.</li>
+          <li><strong>Detail limits:</strong> small embossed/engraved text should be &gt; 0.5 mm thick/deep.</li>
+          <li><strong>Combine parts wisely:</strong> split large models into smaller pieces with alignment keys if needed.</li>
+          <li><strong>Export clean STL:</strong> fine enough resolution to avoid faceting, but no duplicate shells.</li>
+        </ul>
+      </div>
+
+      <h2>Quick checklist before you send</h2>
+      <div class="checklist">
+        <div class="card"><strong>Named clearly</strong><br><span class="tip">Example: project_v2_100mm.stl</span></div>
+        <div class="card"><strong>Oriented flat</strong><br><span class="tip">Bottom face down; avoid tall, wobbly setups.</span></div>
+        <div class="card"><strong>Support-friendly</strong><br><span class="tip">Rotate to minimize supports on visible areas.</span></div>
+        <div class="card"><strong>Hollowing (if needed)</strong><br><span class="tip">Add drain holes for hollow parts.</span></div>
+        <div class="card"><strong>One shell</strong><br><span class="tip">Merge overlapping bodies; remove duplicates.</span></div>
+        <div class="card"><strong>Right tolerance</strong><br><span class="tip">Leave 0.2–0.4 mm clearance for snap fits.</span></div>
+      </div>
+
+      <h2>Recommended settings by material</h2>
+      <div class="card">
+        <ul>
+          <li><strong>PLA:</strong> forgiving; great for prototypes and visual models.</li>
+          <li><strong>ABS:</strong> allow fillets and generous wall thickness for strength.</li>
+          <li><strong>TPU:</strong> keep walls &gt; 1.6 mm and avoid very fine text.</li>
+          <li><strong>NYLON:</strong> best with rounded edges; avoid super thin spikes.</li>
+        </ul>
+        <p class="tip">Not sure? Attach a note with use-case, required strength, and any critical dimensions.</p>
+      </div>
+
+      <h2>File formats</h2>
+      <div class="card">
+        <p class="tip">Send STL for printing. If you want us to adjust the design, STEP/IGES help us edit cleanly. We support ZIP uploads for multiple parts.</p>
+      </div>
+
+      <section class="contact">
+        <h2 style="margin:0 0 8px;font-size:20px;">Need a pre-flight check?</h2>
+        <p style="margin:0 0 10px;">Share your STL and we’ll validate scale, walls, and supports before printing.</p>
+        <p style="margin:0 0 10px;">Phone/WhatsApp: <a href="tel:+962797479825">+962 7 9747 9825</a> • Email: <a href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a></p>
+        <div class="ctaRow">
+          <a class="btn btn-primary" href="/print">Upload now</a>
+          <a class="btn btn-dark" href="/services-jordan">See pricing &amp; delivery</a>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

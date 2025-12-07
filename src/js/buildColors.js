@@ -4,22 +4,24 @@ const buildColors = (conn) => {
     <a class="blueLink font16" href="https://www.3djake.hu">supplier</a>.
   `;
 
-  const desc = [
-    `Popular, versatile standard FDM material available in many colors and textures.`,
-    `Easy to use, stronger and more heat‑resistant than PLA.`,
-    `Easy to sand and post‑process; can be acetone‑smoothed for a glossy finish.`,
-    `Flexible and strong material that keeps its shape.`,
-    `Similar to ABS with improved surface finish and UV resistance.`,
-    'PLA blended with wood particles for a realistic wood look.',
-    'PLA blended with metal particles for a metallic effect.',
-    'PLA blended with stone particles for a stone‑like appearance.',
-    'Gradient/multicolor PLA allowing multiple hues within one model.',
-    'Standard resin material for SLA printers.',
-    'Flexible and strong material that keeps its shape.',
-    'Flexible and strong material that keeps its shape.',
-    'High melting point, high tensile strength, strong material for industrial applications and functional parts.',
-    'Carbon‑fiber reinforced, strong and durable material for industrial applications.'
-  ];
+  const descMap = {
+    'plain': `Popular, versatile standard FDM material available in many colors and textures.`,
+    'petg': `Easy to use, stronger and more heat‑resistant than PLA.`,
+    'abs': `Easy to sand and post‑process; can be acetone‑smoothed for a glossy finish.`,
+    'TPU (HARD - A95)': `Flexible and strong material that keeps its shape.`,
+    'ASA': `Similar to ABS with improved surface finish and UV resistance.`,
+    'Wood': 'PLA blended with wood particles for a realistic wood look.',
+    'metal': 'PLA blended with metal particles for a metallic effect.',
+    'stone': 'PLA blended with stone particles for a stone‑like appearance.',
+    'magic': 'Gradient/multicolor PLA allowing multiple hues within one model.',
+    'Resin': 'Standard resin material for SLA printers.',
+    'TPU (Medium - A85)': 'Flexible and strong material that keeps its shape.',
+    'TPU (Soft - A70)': 'Flexible and strong material that keeps its shape.',
+    'nylon': 'High melting point, high tensile strength, strong material for industrial applications and functional parts.',
+    'Carbon Fiber': 'Carbon‑fiber reinforced, strong and durable material for industrial applications.',
+    // Fallback for old name if DB wasn't updated
+    'resin (resin)': 'Standard resin material for SLA printers.'
+  };
 
   const translateColor = require('./includes/translateColor.js');
   return new Promise((resolve, reject) => {
@@ -36,10 +38,12 @@ const buildColors = (conn) => {
       for (let i = 0; i < result.length; i++) {
         materials.push(result[i].material);
       }
-      
+
       for (let i = 0; i < materials.length; i++) {
         let currentMaterial = materials[i];
-        let currentDesc = desc[i] + furtherInfo;
+        let description = descMap[currentMaterial] || 'High quality 3D printing material.';
+        let currentDesc = description + furtherInfo;
+
         let promise = new Promise((resolve, reject) => {
           let matQuery = 'SELECT * FROM colors WHERE material = ? ORDER BY color';
           conn.query(matQuery, [currentMaterial], (err, result, field) => {
@@ -47,8 +51,9 @@ const buildColors = (conn) => {
               reject(err);
               return;
             } else {
-              let filamentsText = currentMaterial == 'gyanta (resin)' ? '' : 'Filaments';
-              let filamentText = currentMaterial == 'gyanta (resin)' ? '' : 'Filament';
+              let isResin = currentMaterial.toLowerCase().includes('resin');
+              let filamentsText = isResin ? '' : 'Filaments';
+              let filamentText = isResin ? '' : 'Filament';
               let output = `
                 <h2 class="fontNorm gotham ${i == 0 ? 'mtz' : 'mtf'}">
                   ${currentMaterial.toUpperCase()} ${filamentsText}
@@ -78,8 +83,8 @@ const buildColors = (conn) => {
                       <p class="${stockClass} gothamNormal">${stockText}</p>
                     </div>
                   </div>
-                `;  
-              } 
+                `;
+              }
               output += '</div>';
               resolve(output);
             }

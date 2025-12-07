@@ -2,6 +2,9 @@ const addHours = require('./includes/addHours.js');
 const EUDateFormat = require('./includes/EUDateFormat.js');
 const shipping = require('./includes/shippingConstants.js');
 const { normalizeColorLabel } = require('./includes/colorUtils.js');
+const constants = require('./includes/constants.js');
+const ADMIN_UNAME = constants.adminUname;
+const ADMIN_PASSWORD = constants.adminPassword;
 const SHIPPING_OBJ = shipping.shippingObj;
 
 // Simplified Admin Dashboard: lists New and Completed orders
@@ -74,7 +77,7 @@ const buildAdminSection = (conn) => {
               <td>${r.customerName || '-'}</td>
               <td>${contact || '-'}</td>
               <td>${specs || '-'}</td>
-              <td><span class=\"status-badge ${isDone?'status-done':'status-new'}\">${del}</span></td>
+              <td><span class=\"status-badge ${isDone ? 'status-done' : 'status-new'}\">${del}</span></td>
               <td><b id=\"allp_${i}\">${t}</b> JD</td>
               <td class=\"actions\">
                 ${files}
@@ -94,9 +97,15 @@ const buildAdminSection = (conn) => {
         ` <div class=\"metric\">New: <b>${newOrders.length}</b></div>` +
         ` <div class=\"metric\">Completed: <b>${doneOrders.length}</b></div>` +
         ` <div class=\"metric\">Total: <b>${rows.length}</b></div>` +
-      `';}</script>`;
+        `';}</script>`;
 
       html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">New Orders</h2>`;
+
+      // Add Product Button
+      html += `<div style="margin-bottom: 20px;">
+        <a href="/admin/addProduct?user=${ADMIN_UNAME}&pass=${ADMIN_PASSWORD}" class="btn" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">+ Add New Product</a>
+      </div>`;
+
       html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr>
         <th>ID</th><th>Time</th><th>Saved</th><th>Customer</th><th>Contact</th><th>Specs</th><th>Delivery</th><th>Total</th><th>Actions</th>
       </tr></thead><tbody>`;
@@ -110,16 +119,20 @@ const buildAdminSection = (conn) => {
       html += render(doneOrders, 10000, true);
       html += `</tbody></table></div></div>`;
 
-      // Recent prototype requests
+      // Recent prototype requests then product management
       conn.query('SELECT * FROM prototype ORDER BY date DESC LIMIT 20', [], (e2, r2) => {
         if (!e2 && r2 && r2.length) {
           html += `<div class=\"section\"><h2 class=\"mainTitle\" style=\"font-size:20px;margin:8px 0\">Prototype Quotes</h2>`;
           html += `<div style=\"overflow-x:auto\"><table class=\"tbl\"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Time</th></tr></thead><tbody>`;
           for (let r of r2) {
-            html += `<tr><td>${r.name}</td><td>${r.email}</td><td>${r.mobile || r.tel || ''}</td><td>${r.message}</td><td>${EUDateFormat(addHours(r.date,2))}</td></tr>`;
+            html += `<tr><td>${r.name}</td><td>${r.email}</td><td>${r.mobile || r.tel || ''}</td><td>${r.message}</td><td>${EUDateFormat(addHours(r.date, 2))}</td></tr>`;
           }
           html += `</tbody></table></div></div>`;
         }
+
+        // Expose admin creds for JS fetches (used only on admin page)
+        html += `<script>window.ADMIN_CREDS={user:'${ADMIN_UNAME}',pass:'${ADMIN_PASSWORD}'};</script>`;
+
         resolve(html);
       });
     });

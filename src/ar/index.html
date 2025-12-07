@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3DJordanPrint | خدمة الطباعة ثلاثية الأبعاد في الأردن</title>
+    <link rel="stylesheet" href="/animate/animate.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/prot.css">
+    <link rel="stylesheet" href="/style/index_style.css">
+    <link rel="stylesheet" href="/style/home.css">
+    <link rel="icon" type="image/x-icon" href="/images/icons/logo.svg">
+    <meta name="description" content="خدمة طباعة ثلاثية الأبعاد سريعة واحترافية في الأردن. اطلب أجزاء مخصّصة باستخدام PLA وPETG وABS. نماذج أولية وإنتاج نهائي. ارفع ملف STL واحصل على عرض سعر فوري.">
+    <meta name="keywords" content="خدمة الطباعة ثلاثية الأبعاد في الأردن, الطباعة ثلاثية الأبعاد, متجر الطباعة ثلاثية الأبعاد, سعر الطباعة ثلاثية الأبعاد للجرام, رفع ملف STL للطباعة ثلاثية الأبعاد, عرض سعر فوري للطباعة ثلاثية الأبعاد, خدمة النمذجة السريعة, خدمة طباعة SLA, خدمة طباعة FDM, الطباعة ثلاثية الأبعاد بمادة PLA, خدمة طباعة ثلاثية الأبعاد رخيصة, 3D printing service in Jordan, 3D printing instant quote">
+    <meta name="robots" content="index, follow">
+    <style>
+      :root{
+        --ink:#0b0b0c;
+        --silver:#f5f5f7;
+        --mid:#c7c7cc;
+        --accent:#0071e3;
+        --muted:#6e6e73;
+      }
+      body{
+        background:var(--silver);
+        color:var(--ink);
+        font-family:"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+        margin:0;
+      }
+      .page{
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+      }
+      .ar-nav{
+        position:sticky;
+        top:0;
+        z-index:10;
+        backdrop-filter:blur(10px);
+        background:rgba(245,245,247,0.9);
+        border-bottom:1px solid rgba(0,0,0,0.04);
+      }
+      .ar-nav__inner{
+        max-width:1200px;
+        margin:0 auto;
+        padding:14px 20px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:16px;
+      }
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-weight:700;
+        letter-spacing:0.4px;
+      }
+      .brand img{width:36px;height:36px}
+      .nav-actions{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+      }
+      .pill{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:10px 16px;
+        border-radius:999px;
+        border:1px solid rgba(0,0,0,0.08);
+        background:#fff;
+        color:var(--ink);
+        font-weight:600;
+        text-decoration:none;
+        box-shadow:0 8px 28px rgba(0,0,0,0.04);
+      }
+      .pill--ghost{
+        background:transparent;
+        border-color:rgba(0,0,0,0.15);
+        color:var(--ink);
+      }
+      .pill--primary{
+        background:var(--ink);
+        color:#fff;
+        border-color:var(--ink);
+      }
+      .pill:hover{transform:translateY(-1px);transition:transform 120ms ease}
+      .pill small{color:var(--muted);font-weight:500}
+
+      .hero{
+        position:relative;
+        overflow:hidden;
+        min-height:70vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:60px 20px 50px;
+      }
+      .hero::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:radial-gradient(circle at 20% 20%,rgba(0,113,227,0.18),transparent 32%),
+                   radial-gradient(circle at 80% 10%,rgba(0,0,0,0.12),transparent 28%),
+                   linear-gradient(135deg,#fff,rgba(255,255,255,0.6));
+        z-index:0;
+      }
+      .hero__inner{
+        position:relative;
+        z-index:1;
+        max-width:1200px;
+        width:100%;
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+        gap:24px;
+        align-items:center;
+      }
+      .hero__text h1{
+        font-size:46px;
+        line-height:1.05;
+        margin:0 0 16px;
+        letter-spacing:-0.02em;
+      }
+      .hero__text p{
+        font-size:20px;
+        color:var(--muted);
+        margin:0 0 20px;
+        line-height:1.6;
+      }
+      .hero__cta{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:10px;
+      }
+      .badge-row{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:12px;
+      }
+      .badge{
+        padding:8px 12px;
+        border-radius:999px;
+        background:#fff;
+        border:1px solid rgba(0,0,0,0.06);
+        color:var(--muted);
+        font-weight:600;
+        font-size:13px;
+      }
+      .hero__panel{
+        background:#fff;
+        border-radius:24px;
+        padding:20px;
+        box-shadow:0 20px 45px rgba(0,0,0,0.06);
+      }
+      .panel-title{
+        font-size:20px;
+        margin:0 0 12px;
+        display:flex;
+        align-items:center;
+        gap:8px;
+      }
+      .metrics{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:10px;
+      }
+      .metric{
+        background:var(--silver);
+        border-radius:16px;
+        padding:14px;
+      }
+      .metric strong{
+        display:block;
+        font-size:22px;
+        margin-bottom:4px;
+      }
+      .metric span{color:var(--muted);font-size:13px}
+
+      .section{
+        max-width:1200px;
+        margin:40px auto;
+        padding:0 20px;
+      }
+      .section h2{
+        font-size:30px;
+        margin:0 0 14px;
+        letter-spacing:-0.01em;
+      }
+      .section p.lead{
+        color:var(--muted);
+        margin:0 0 18px;
+        font-size:17px;
+      }
+      .grid{
+        display:grid;
+        gap:18px;
+        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      }
+      .tile{
+        background:#fff;
+        border-radius:20px;
+        padding:18px;
+        box-shadow:0 12px 32px rgba(0,0,0,0.05);
+        min-height:160px;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+      }
+      .tile h3{margin:0;font-size:19px;letter-spacing:-0.01em;}
+      .tile p{margin:0;color:var(--muted);line-height:1.6;}
+
+      .timeline{
+        display:grid;
+        gap:14px;
+        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      }
+      .step{
+        background:#0b0b0c;
+        color:#fff;
+        padding:18px;
+        border-radius:18px;
+        min-height:160px;
+      }
+      .step small{color:rgba(255,255,255,0.7);font-weight:600}
+      .step h4{margin:8px 0 8px;font-size:20px;}
+      .step p{margin:0;color:rgba(255,255,255,0.78);line-height:1.6;}
+
+      .materials{
+        display:flex;
+        gap:14px;
+        flex-wrap:wrap;
+      }
+      .chip{
+        background:#fff;
+        border-radius:14px;
+        padding:10px 14px;
+        border:1px solid rgba(0,0,0,0.06);
+        color:var(--muted);
+        font-weight:600;
+      }
+
+      .cta-band{
+        max-width:1200px;
+        margin:60px auto;
+        padding:26px 20px;
+        border-radius:26px;
+        background:linear-gradient(120deg,#0b0b0c,#1f2937);
+        color:#fff;
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:space-between;
+        gap:16px;
+      }
+      .cta-band h3{margin:0;font-size:26px;}
+      .cta-band p{margin:4px 0 0;color:rgba(255,255,255,0.75);}
+      .cta-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+      @media (max-width:700px){
+        .hero__text h1{font-size:34px;}
+        .hero__text p{font-size:18px;}
+        .ar-nav__inner{padding:12px 16px;}
+      }
+    </style>
+    <link rel="canonical" href="https://www.jordan3dprint.store/ar/">
+    <meta property="og:title" content="3DJordanPrint – خدمة الطباعة ثلاثية الأبعاد في الأردن">
+    <meta property="og:description" content="اطلب طباعة ثلاثية الأبعاد سريعة واحترافية في الأردن. ارفع ملف STL واحصل على عرض سعر فوري.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.jordan3dprint.store/ar/">
+    <meta property="og:image" content="https://www.jordan3dprint.store/images/icons/logo.svg">
+    <meta property="og:site_name" content="3DJordanPrint">
+    <meta property="og:locale" content="ar_JO">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="3DJordanPrint – خدمة الطباعة ثلاثية الأبعاد في الأردن">
+    <meta name="twitter:description" content="خدمة طباعة ثلاثية الأبعاد سريعة واحترافية في الأردن. نماذج أولية وإنتاج نهائي. ارفع ملف STL واحصل على عرض سعر فوري.">
+    <meta name="twitter:image" content="https://www.jordan3dprint.store/images/icons/logo.svg">
+    <link rel="alternate" hreflang="ar" href="https://www.jordan3dprint.store/ar/" />
+    <link rel="alternate" hreflang="en" href="https://www.jordan3dprint.store/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "3DJordanPrint",
+        "url": "https://www.jordan3dprint.store/ar/",
+        "description": "خدمة طباعة ثلاثية الأبعاد سريعة واحترافية في الأردن. اطلب أجزاء مخصّصة باستخدام PLA وPETG وABS. ارفع ملف STL واحصل على عرض سعر فوري.",
+        "image": "https://www.jordan3dprint.store/images/icons/logo.svg",
+        "telephone": "+962797479825",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "تابربور (Tabarboer)",
+          "addressLocality": "عمان",
+          "addressCountry": "JO"
+        },
+        "areaServed": [
+          {
+            "@type": "Country",
+            "name": "Jordan"
+          }
+        ],
+        "serviceType": [
+          "خدمة الطباعة ثلاثية الأبعاد في الأردن",
+          "عرض سعر فوري للطباعة ثلاثية الأبعاد",
+          "خدمة طباعة SLA",
+          "خدمة طباعة FDM",
+          "سعر الطباعة ثلاثية الأبعاد للجرام",
+          "رفع ملف STL للطباعة ثلاثية الأبعاد"
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "08:00",
+            "closes": "22:00"
+          }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "name": "سعر الطباعة ثلاثية الأبعاد للجرام",
+          "price": "0.07",
+          "priceCurrency": "JOD",
+          "unitCode": "GRM",
+          "availability": "https://schema.org/InStock",
+          "description": "طباعة ثلاثية الأبعاد بسعر 0.07 دينار للغرام لخدمات FDM وSLA"
+        },
+        "inLanguage": [
+          "ar",
+          "en"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="ar-nav">
+        <div class="ar-nav__inner">
+          <div class="brand">
+            <img src="/images/icons/logo.svg" alt="3DJordanPrint logo">
+            <span>3DJordanPrint</span>
+          </div>
+          <div class="nav-actions">
+            <a class="pill pill--ghost" href="/" lang="en" dir="ltr">English</a>
+            <a class="pill pill--primary" href="/print">احصل على سعر فوري</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero__inner">
+          <div class="hero__text">
+            <h1>طباعة ثلاثية الأبعاد بمستوى عالمي — في الأردن</h1>
+            <p>خدمة سريعة بدقة عالية، بخامات PLA وPETG وABS ورزين. أسعار فورية، دعم بالعربية، وتوصيل لكل المحافظات.</p>
+            <div class="hero__cta">
+              <a class="pill pill--primary" href="/print">ابدأ الطباعة الآن</a>
+              <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">تحدث عبر واتساب</a>
+              <a class="pill pill--ghost" href="/" lang="en" dir="ltr">English site</a>
+            </div>
+            <div class="badge-row">
+              <div class="badge">سعر 0.07 دينار للغرام</div>
+              <div class="badge">FDM و SLA</div>
+              <div class="badge">توصيل سريع داخل الأردن</div>
+            </div>
+          </div>
+          <div class="hero__panel">
+            <div class="panel-title">عرض سريع</div>
+            <div class="metrics">
+              <div class="metric">
+                <strong>سعر فوري</strong>
+                <span>ارفع STL وشاهد التكلفة مباشرة</span>
+              </div>
+              <div class="metric">
+                <strong>8ص - 10م</strong>
+                <span>ساعات العمل يوميًا</span>
+              </div>
+              <div class="metric">
+                <strong>+962 79 747 9825</strong>
+                <span>اتصل أو تواصل واتساب</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>لماذا تختارنا</h2>
+        <p class="lead">نهتم بالتفاصيل، من نمذجة أولية إلى إنتاج نهائي بلمسة فاخرة.</p>
+        <div class="grid">
+          <div class="tile">
+            <h3>جودة تشطيب راقية</h3>
+            <p>دقة عالية مع إعدادات محسّنة لسطح ناعم وقطع متينة.</p>
+          </div>
+          <div class="tile">
+            <h3>مواد معتمدة</h3>
+            <p>PLA، PETG، ABS، ورزين (SLA) بألوان متعددة لتناسب فكرتك.</p>
+          </div>
+          <div class="tile">
+            <h3>سرعة تنفيذ</h3>
+            <p>جداول مرنة لتسليم سريع دون التضحية بالجودة.</p>
+          </div>
+          <div class="tile">
+            <h3>دعم عربي مباشر</h3>
+            <p>فريق يتواصل معك بالعربية ويقترح أفضل الإعدادات لاحتياجك.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>الرحلة من ملف إلى منتج</h2>
+        <div class="timeline">
+          <div class="step">
+            <small>01</small>
+            <h4>ارفع الملف</h4>
+            <p>ارفع STL لتحصل على سعر فوري لكل غرام.</p>
+          </div>
+          <div class="step">
+            <small>02</small>
+            <h4>اختر المادة</h4>
+            <p>PLA للتجارب، PETG للمتانة، ABS ومزيج SLA للتفاصيل الدقيقة.</p>
+          </div>
+          <div class="step">
+            <small>03</small>
+            <h4>ننفّذ ونوصل</h4>
+            <p>طباعة دقيقة مع فحص جودة ثم توصيل سريع داخل الأردن.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>المواد والألوان</h2>
+        <p class="lead">نختار خامات عالية الجودة لتوازن القوة والدقة والمظهر.</p>
+        <div class="materials">
+          <div class="chip">PLA — يومي وتجريبي</div>
+          <div class="chip">PETG — مقاوم ومتين</div>
+          <div class="chip">ABS — صلب وقابل للتشطيب</div>
+          <div class="chip">Resin (SLA) — تفاصيل فائقة</div>
+          <div class="chip">ألوان متعددة جاهزة</div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div>
+          <h3>جاهز لبدء مشروعك؟</h3>
+          <p>سعر فوري، دعم عربي، وتوصيل لكل المحافظات.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="pill pill--primary" href="/print">ابدأ الآن</a>
+          <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">استشارة سريعة</a>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

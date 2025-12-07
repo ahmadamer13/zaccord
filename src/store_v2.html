@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | Jordan3DPrint</title>
+    <meta name="description" content="Premium 3D printed products in Jordan.">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent-color: #0071e3;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .store-hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: #fff;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        .store-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0 0 10px;
+            letter-spacing: -0.003em;
+        }
+
+        .store-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .filter-container {
+            position: sticky;
+            top: 0;
+            background: rgba(245, 245, 247, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 100;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .filter-scroll {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 0 20px;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn.active {
+            background: var(--text-primary);
+            color: #fff;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .card-image-wrapper {
+            width: 100%;
+            aspect-ratio: 1;
+            /* Square images */
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .card-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .card-category {
+            font-size: 12px;
+            font-weight: 600;
+            color: #bf4800;
+            /* Apple-like orange for new/category */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 0 0 8px;
+            line-height: 1.2;
+        }
+
+        .card-price {
+            font-size: 17px;
+            color: var(--text-primary);
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .buy-link {
+            margin-top: 15px;
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .buy-link::after {
+            content: '›';
+            font-size: 18px;
+            margin-left: 4px;
+            margin-top: -2px;
+        }
+
+        @media (max-width: 768px) {
+            .store-title {
+                font-size: 36px;
+            }
+
+            .store-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px 80px;
+            }
+
+            .filter-scroll {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header injected by JS -->
+
+    <div class="store-hero">
+        <h1 class="store-title">Store.</h1>
+        <p class="store-subtitle">The best way to buy the products you love.</p>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter-scroll" id="categoryFilters">
+            <button class="filter-btn active" onclick="filterProducts('All')">All</button>
+            <!-- Categories injected here -->
+        </div>
+    </div>
+
+    <div class="store-grid" id="productGrid">
+        <!-- Products injected here -->
+    </div>
+
+    <!-- Footer injected by JS -->
+
+    <script>
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const btns = document.querySelectorAll('.filter-btn');
+
+            btns.forEach(btn => {
+                if (btn.textContent === category || (category === 'All' && btn.textContent === 'All')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'All' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

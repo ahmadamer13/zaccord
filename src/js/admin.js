@@ -31,12 +31,15 @@ function hideU(i) {
   _('binfo_' + i).style.display = 'none';
 }
 
+// Safe fallback for sprices (legacy order totals)
+const _sprices = Array.isArray(window.sprices) ? window.sprices : [];
+
 if (_('box_0')) {
   let i = 0;
   let priceSum = 0;
   while (_('box_' + i)) {
-    if (!_('box_' + i)) break; 
-    let cuid =  _('uid_' + i) ? _('uid_' + i).innerText : NaN;
+    if (!_('box_' + i)) break;
+    let cuid = _('uid_' + i) ? _('uid_' + i).innerText : NaN;
     let cot = _('ot_' + i) ? _('ot_' + i).innerText : NaN;
     let nuid = _('uid_' + (i + 1)) ? _('uid_' + (i + 1)).innerText : NaN;
     let not = _('ot_' + (i + 1)) ? _('ot_' + (i + 1)).innerText : NaN;
@@ -45,23 +48,23 @@ if (_('box_0')) {
 
     if ((cuid != nuid || cot != not) && (cuid != puid || cot != pot)) {
       let cPrice = Number(_('allp_' + i).innerText);
-      _('allp_' + i).innerText = cPrice + sprices[i];
+      _('allp_' + i).innerText = cPrice + (_sprices[i] || 0);
     }
 
     if ((cuid != nuid || cot != not) && (cuid == puid && cot == pot)) {
       _('totpHolder_' + i).style.display = 'block';
       let moneyHandle = 0;
       //if (priceSum + Number(_('allp_' + i).innerText) > 15000) moneyHandle = -390;
-      _('totp_' + i).innerText = priceSum + Number(_('allp_' + i).innerText) + sprices[i]
+      _('totp_' + i).innerText = priceSum + Number(_('allp_' + i).innerText) + (_sprices[i] || 0)
         + moneyHandle;
       priceSum = 0;
     }
 
-    if (cuid == nuid && cot == not)  {
+    if (cuid == nuid && cot == not) {
       _('box_' + i).style.borderBottom = 'none';
       _('box_' + (i + 1)).style.borderTop = 'none';
       _('box_' + i).style.borderRadius = '0';
-      
+
       if (cot != pot && i > 0) {
         _('box_' + i).style.borderRadius = '30px 30px 0 0';
       } else if (i > 0 || (_('box_0') && _('box_1') && !_('box_2'))) {
@@ -96,7 +99,7 @@ _('genZprod').addEventListener('click', (e) => {
   let expiry = Number(_('zprodExpiry').value);
 
   if (!re.test(price) || !re.test(expiry)) {
-    _('genStatus').innerText = 'Price and validity must be numbers'; 
+    _('genStatus').innerText = 'Price and validity must be numbers';
     return false;
   }
 
@@ -128,9 +131,9 @@ _('genZprod').addEventListener('click', (e) => {
         </tr>
       `;
       let template = document.createElement('template');
-      newChild = newChild.trim(); 
+      newChild = newChild.trim();
       template.innerHTML = newChild;
-      _('zprodTbl').parentNode.insertBefore(template.content.firstChild, _('zprodTbl').nextSibling);  
+      _('zprodTbl').parentNode.insertBefore(template.content.firstChild, _('zprodTbl').nextSibling);
     } else {
       _('genStatus').innerText = data.message;
     }
@@ -155,7 +158,7 @@ function deleteZprod(url) {
     body: JSON.stringify(data)
   }).then(response => response.json()).then(data => {
     if (data.status == 'success') {
-      _('zprod_' + url).outerHTML = ''; 
+      _('zprod_' + url).outerHTML = '';
     } else {
       _('genStatus').innerText = data.message;
     }
@@ -182,11 +185,25 @@ function updateStatus(i, boxID) {
       } else {
         _('ch_' + boxID).value = 1;
       }
-      if (_('ch_' + boxID).value == 0) _('box_' + boxID).style.opacity = '0.3';  
-      else _('box_' + boxID).style.opacity = '1';  
+      if (_('ch_' + boxID).value == 0) _('box_' + boxID).style.opacity = '0.3';
+      else _('box_' + boxID).style.opacity = '1';
     }
-  });  
+  });
 }
+
+function getAdminCreds() {
+  try {
+    const q = new URLSearchParams(location.search);
+    return {
+      user: q.get('user') || (window.ADMIN_CREDS && window.ADMIN_CREDS.user) || '',
+      pass: q.get('pass') || (window.ADMIN_CREDS && window.ADMIN_CREDS.pass) || ''
+    };
+  } catch (e) {
+    return window.ADMIN_CREDS || { user: '', pass: '' };
+  }
+}
+
+
 
 // Send confirmation email to customer when the package is ready
 // NOTE: change the url if you want to use this feature
@@ -249,7 +266,7 @@ function generateInvoice(ID, p) {
     if (msg.success) {
       _('invGen_' + ID).innerHTML = 'siker';
     } else {
-_('invGen_' + ID).innerHTML = 'úú ezt nagyon elbasztam';
+      _('invGen_' + ID).innerHTML = 'úú ezt nagyon elbasztam';
     }
   });
 }
@@ -258,7 +275,7 @@ function markAll() {
   let i = 0;
   while (_('ch_' + i)) {
     if (!_('ch_' + i).checked) {
-      $("#ch_" + i).click(); 
+      $("#ch_" + i).click();
     }
     i++;
   }
@@ -271,13 +288,13 @@ function delFromExcel(id) {
   let address = _('address_' + id).innerText;
   let mobile = _('mobile_' + id).innerText;
   let email = _('email_' + id).innerText;
-  
+
   let data = {
-    name, pcode, city, address, mobile, email 
+    name, pcode, city, address, mobile, email
   };
 
   _('excelDel_' + id).innerHTML = 'In progress...';
-  
+
   fetch('/delFromExcel', {
     headers: {
       'Content-Type': 'application/json'
@@ -346,9 +363,9 @@ function createPacket(id, n, ppID, isPP, dt) {
       name += splitFullname[i] + ' ';
     }
   }
-  
+
   let data = {
-    number: String(_('id_' + id).innerText), 
+    number: String(_('id_' + id).innerText),
     name: name,
     surname: surname,
     email: String(_('email_' + id).innerText),
@@ -359,7 +376,7 @@ function createPacket(id, n, ppID, isPP, dt) {
     eshop: 'Jordan3DPrint'
   };
 
-if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
+  if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
     data['cod'] = val;
   }
 
@@ -372,7 +389,7 @@ if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).in
     let streetName = found[1];
     let houseNumber = '';
     for (let i = 2; i < found.length; i++) {
-      houseNumber += found[i]; 
+      houseNumber += found[i];
       houseNumber += i == found - 1 ? '' : ' ';
     }
 

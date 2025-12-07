@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products | Admin</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/admin.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .btn-back {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            background: #fff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f3f4f6;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-meta {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-delete {
+            flex: 1;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .btn-edit {
+            flex: 1;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-edit:hover {
+            background: #d97706;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal h3 {
+            margin-top: 0;
+        }
+
+        .modal-btns {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="header-actions">
+            <div>
+                <a href="#" id="backLink" class="btn-back">← Dashboard</a>
+                <h1 style="display:inline; vertical-align:middle; margin-left:10px;">Manage Products</h1>
+            </div>
+            <a href="#" id="addLink" class="btn-add">+ Add Product</a>
+        </div>
+
+        <!-- Products Container -->
+        <div class="product-grid">
+            <!-- Products will be injected here -->
+            <!-- buildAdminProducts() appends the markup here -->
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Delete Product?</h3>
+            <p>Are you sure you want to delete <b id="delProdName"></b>?</p>
+            <p style="font-size: 13px; color: #666;">This action cannot be undone.</p>
+            <div class="modal-btns">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-delete" id="confirmDeleteBtn" style="width: auto; padding: 8px 20px;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Setup links with credentials
+        (function () {
+            try {
+                const params = new URLSearchParams(location.search);
+                const user = params.get('user') || '';
+                const pass = params.get('pass') || '';
+                const creds = `user=${encodeURIComponent(user)}&pass=${encodeURIComponent(pass)}`;
+
+                document.getElementById('backLink').href = `/lick_weebshit?${creds}`;
+                document.getElementById('addLink').href = `/admin/addProduct?${creds}`;
+
+                window.ADMIN_CREDS = { user, pass };
+            } catch (e) { }
+        })();
+
+        let productToDelete = null;
+
+        function editProduct(id) {
+            const creds = `user=${encodeURIComponent(window.ADMIN_CREDS.user)}&pass=${encodeURIComponent(window.ADMIN_CREDS.pass)}`;
+            window.location.href = `/admin/editProduct?id=${id}&${creds}`;
+        }
+
+        function confirmDelete(id, name) {
+            productToDelete = id;
+            document.getElementById('delProdName').innerText = name;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            productToDelete = null;
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (!productToDelete) return;
+
+            const btn = document.getElementById('confirmDeleteBtn');
+            const originalText = btn.innerText;
+            btn.innerText = 'Deleting...';
+            btn.disabled = true;
+
+            fetch('/admin/deleteProduct', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: productToDelete,
+                    user: window.ADMIN_CREDS.user,
+                    pass: window.ADMIN_CREDS.pass
+                })
+            }).then(res => res.json()).then(data => {
+                if (data.status === 'success') {
+                    const card = document.getElementById('card_' + productToDelete);
+                    if (card) {
+                        card.style.transition = 'opacity 0.3s, transform 0.3s';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => card.remove(), 300);
+                    }
+                    closeModal();
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to delete'));
+                }
+            }).catch(err => {
+                alert('Network error');
+            }).finally(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('deleteModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('deleteModal')) closeModal();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Colors | 3D Printing Service in Jordan</title>
-    <link rel="stylesheet" href="/style/admin.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="mainTitle">Admin Dashboard</h1>
-      <div id="dashMetrics" class="metrics"></div>
-    </div>
-  </body>
-  </html>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Colors | 3D Printing Service in Jordan</title>
+  <link rel="stylesheet" href="/style/admin.css">
+</head>
+
+<body>
+  <div class="dash-wrap">
+    <div class="dash-head">
+      <h1 class="mainTitle" style="margin:0">Admin Dashboard</h1>
+      <div class="metrics" id="dashMetrics"></div>
+    </div>
+    <div class="actions" style="margin:8px 0">
+      <a id="ordersLink" class="btn" href="#">Back to Orders</a>
+    </div>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname;
+          var q = new URLSearchParams(location.search);
+          var user = q.get('user') || '';
+          var pass = q.get('pass') || '';
+          // If we are at /adminColors, we might need to go to the secret admin URL
+          // But we don't know the secret URL here easily unless we parse it or hardcode it.
+          // However, if we came from the secret URL with ?view=colors, we can just remove view=colors.
+          var link = '?user=' + encodeURIComponent(user) + '&pass=' + encodeURIComponent(pass);
+          document.getElementById('ordersLink').setAttribute('href', link);
+        } catch (e) { }
+      })();
+    </script>
+    <!-- buildAdminSection() appends the markup here -->
+  </div>
+</body>
+
+</html>
