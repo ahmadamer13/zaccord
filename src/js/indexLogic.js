@@ -209,6 +209,10 @@ const buildMainSection = (conn, cat) => {
                   <p>PLA, PETG, ABS, and resin (SLA) in stocked colors.</p>
                 </div>
                 <div class="tile">
+                  <h3>Speed without compromise</h3>
+                  <p>Flexible schedules to ship fast while keeping precision.</p>
+                </div>
+                <div class="tile">
                   <h3>Local support</h3>
                   <p>English and Arabic guidance to get the best result for your part.</p>
                 </div>
