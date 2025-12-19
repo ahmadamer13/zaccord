@@ -15,7 +15,7 @@ const path = require('path');
 function responseCache(contentType, res, isCache, cacheType = 'no-cache', forceReload = false) {
   if (!isCache) {
     const ct = contentType === 'text/html' ? 'text/html; charset=UTF-8' : contentType;
-    res.writeHead(200, {'Content-Type': ct});
+    res.writeHead(200, { 'Content-Type': ct });
   } else {
     if (!forceReload) {
       const ct = contentType === 'text/html' ? 'text/html; charset=UTF-8' : contentType;
@@ -54,12 +54,20 @@ function loggedIn(req, res) {
 }
 
 // Add header depending on user state (logged in/out)
-function addHeader(userID) {
+function addHeader(userID, isAr = false) {
+  let content = '';
   if (!userID) {
-    return fs.readFileSync(path.join('src', 'includes', 'header.html'));
+    content = fs.readFileSync(path.join('src', 'includes', 'header.html')).toString();
   } else {
-    return fs.readFileSync(path.join('src', 'includes', 'headerLogged.html'));
+    content = fs.readFileSync(path.join('src', 'includes', 'headerLogged.html')).toString();
   }
+
+  if (isAr) {
+    content = content.replace(/href="\/ar\/"/g, 'href="/"')
+      .replace(/العربية/g, 'English')
+      .replace(/>AR<\/a>/g, '>EN</a>');
+  }
+  return content;
 }
 
 // Add header and footer to every page
@@ -98,7 +106,7 @@ function fileResponse(contentType, url, res) {
     res.end(content);
   } catch (e) {
     console.log('Static file missing:', filePath, e && e.code ? e.code : e);
-    res.writeHead(404, {'Content-Type': 'text/plain; charset=UTF-8'});
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
     res.end('Not found');
   }
 }
@@ -163,8 +171,10 @@ function pageCouldNotLoad(res, userID) {
 }
 
 function commonData(content, userID, data, res, forceReload = false) {
+  content = content.toString().replace('</body>', '').replace('</html>', '');
   content += data;
   content += addTemplate(userID);
+  content += '</body></html>';
   responseCache('text/html', res, true, undefined, true);
   res.end(content, 'utf8');
 }
@@ -222,7 +232,7 @@ function loadStaticPage(callback, paramArr, content, userID, res, conn, forceRel
   }).catch(err => {
     console.log(err)
     pageCouldNotLoad(res, userID);
-  }); 
+  });
 }
 
 function returnPageWithData(src, data, userID, res, redirect = false) {
@@ -231,7 +241,7 @@ function returnPageWithData(src, data, userID, res, redirect = false) {
   content += addTemplate(userID);
   responseCache('text/html', res, true);
   if (redirect) {
-    res.writeHead(301, {Location: redirect});
+    res.writeHead(301, { Location: redirect });
   }
   res.end(content);
 }
@@ -245,7 +255,7 @@ function litDimensions(path) {
 
 // Compress .js, .css and .html files with gzip
 function sendCompressedFile(fname, response, request, contentType, append, userID, cacheType) {
-  function next() {}
+  function next() { }
   compress({})(request, response, next);
 
   let headerPath = path.join(__dirname.replace(path.join('js', 'includes'), ''), 'includes',

@@ -33,7 +33,7 @@ Implementing one or more of the following features would be nice & you may also 
 
 Use the helper script to commit+push and then pull+restart on the server.
 
-Prerequisites: your server trusts your SSH key as `root@172.245.138.214` and the app lives in `/srv/zaccord` with systemd service `zaccord`.
+Prerequisites: your server trusts your SSH key as `root@172.245.138.214` and the app lives in `/srv/jordan3dprint` with systemd service `jordan3dprint`.
 
 Commands:
 
@@ -44,15 +44,15 @@ scripts/deploy.sh "Your commit message"
 # Optional overrides
 BRANCH=master \
 REMOTE=root@172.245.138.214 \
-SERVICE=zaccord \
-APP_DIR=/srv/zaccord \
-APP_USER=zaccord \
+SERVICE=jordan3dprint \
+APP_DIR=/srv/jordan3dprint \
+APP_USER=jordan3dprint \
 scripts/deploy.sh "Copy updates"
 ```
 
 The script will:
 - git add/commit/pull --rebase/push on the current repo
-- SSH to the server, `git reset --hard origin/$BRANCH` in `/srv/zaccord`, run `npm ci` and restart `zaccord`
+- SSH to the server, `git reset --hard origin/$BRANCH` in `/srv/jordan3dprint`, run `npm ci` and restart `jordan3dprint`
 - Print service status or recent logs on failure
   - Geometrically check if the uploaded STL file determines a closed object in space
   - Check if the STL file has a minimum wall thickness (necessarry for printing)
@@ -63,11 +63,11 @@ The script will:
   - Anything else you think would be cool...
 
 ## Distributing source code
-If you found any bugs or want to contribute to the development of Zaccord as a developer feel free to do it in a pull request.
+If you found any bugs or want to contribute to the development of jordan3dprint as a developer feel free to do it in a pull request.
 You can even use it as a reference for creating your project or getting ideas for 3D-printing websites.
 
 ## Contributing
-If you want to contribute to the development of Zaccord feel free to do it. We are grateful for
+If you want to contribute to the development of jordan3dprint feel free to do it. We are grateful for
 anyone who contributes to the project.<br>
 In addition, if you implement one or more of the TODOs listed above or significantly contribute
 to this project we may send you a free 3D printed product of your choice.
@@ -78,7 +78,7 @@ In `src/js/includes/connConstants.js` configure the parameters for connecting to
 If you want to use all features you should configure `src/js/includes/constants.js` according
 to your needs.<br>
 The minimum you need to do to make it work is to change `SESSION_SECRET` in `src/js/includes/constants.js` to some random string.<br>
-Note that Zaccord is only tested in Node v. 16 and it’s advisable to run it with this version. I’m planning to test it on newer versions of Node as well.
+Note that jordan3dprint is only tested in Node v. 16 and it’s advisable to run it with this version. I’m planning to test it on newer versions of Node as well.
 To install the   run `npm ci` to install the dependencies from `package-lock.json`.<br>
 Optionally, you can download Slic3r as an executable & its libraries and place it under `Slic3r`. It’s ignored in the current version.<br>
 To start the project run `node app.js` and the site should be up on port 5000.<br>

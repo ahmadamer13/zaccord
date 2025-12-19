@@ -1,5 +1,5 @@
 const HOST = '127.0.0.1';
-const USER = 'zaccordlocalhost';
+const USER = 'jordan3dprintlocalhost';
 const PASSWORD = 'abc';
 const DATABASE = '3d';
 const DATE_STRINGS = 'date';

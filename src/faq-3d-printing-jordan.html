@@ -1,107 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ – 3D Printing in Jordan | Pricing, Materials, Delivery</title>
-    <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/index_style.css">
-    <link rel="stylesheet" href="/style/home.css">
-    <meta name="description" content="Answers about 3D printing in Jordan: pricing (0.07 JOD/gram), materials (PLA, ABS, TPU, NYLON), delivery times, file formats, and how to order.">
-    <meta name="keywords" content="3D printing FAQ Jordan, 3D print price Jordan, materials PLA ABS TPU Jordan, 3DJordanPrint questions, Jordan 3D printing delivery">
-    <link rel="canonical" href="https://www.jordan3dprint.store/faq-3d-printing-jordan">
-    <style>
-      body{background:#f8fafc;color:#0f172a;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.65}
-      .wrap{max-width:950px;margin:0 auto;padding:26px 18px 70px}
-      h1{font-size:30px;margin:0 0 10px}
-      .muted{color:#475569;font-size:16px;margin:0 0 16px}
-      .qa{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px 16px;box-shadow:0 8px 24px rgba(15,23,42,.05)}
-      .qa h3{margin:0 0 6px;font-size:18px}
-      .qa p{margin:0;color:#334155}
-      .grid{display:grid;gap:12px;margin-top:18px}
-      .ctaRow{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-      .btn{padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700}
-      .btn-primary{background:#0ea5e9;color:#fff}
-      .btn-dark{background:#111827;color:#fff}
-      .contact{background:#111827;color:#fff;border-radius:12px;padding:16px;margin-top:24px}
-      .contact a{color:#a5f3fc;font-weight:700}
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <h1>FAQ – 3D Printing in Jordan</h1>
-      <p class="muted">Quick answers to the most common questions we hear. If you need more detail, reach out anytime.</p>
 
-      <div class="grid">
-        <div class="qa">
-          <h3>What is the cost of 3D printing?</h3>
-          <p>Standard FDM printing starts at 0.07 JOD per gram. Complex jobs may vary with material, infill, and supports.</p>
-        </div>
-        <div class="qa">
-          <h3>Which materials are available?</h3>
-          <p>PLA, ABS, TPU, and NYLON. Tell us the use-case and we’ll match the right material and color.</p>
-        </div>
-        <div class="qa">
-          <h3>How long does 3D printing take?</h3>
-          <p>Most orders finish in 1–3 business days. Larger batches or detailed parts may need a few extra days.</p>
-        </div>
-        <div class="qa">
-          <h3>Can I print toys, models, or spare parts?</h3>
-          <p>Yes. We frequently print miniatures, cosplay parts, brackets, clips, and replacement pieces.</p>
-        </div>
-        <div class="qa">
-          <h3>Do you deliver across Jordan?</h3>
-          <p>Yes. We ship via courier nationwide with protective packing and share delivery updates.</p>
-        </div>
-        <div class="qa">
-          <h3>Is there a minimum order?</h3>
-          <p>No strict minimum. Pricing is based on weight and complexity; small parts are welcome.</p>
-        </div>
-        <div class="qa">
-          <h3>Which file formats do you accept?</h3>
-          <p>Upload STL for printing. If you need adjustments, STEP/IGES files help us edit cleanly.</p>
-        </div>
-        <div class="qa">
-          <h3>Can you help fix my STL?</h3>
-          <p>Yes. We can review scale, wall thickness, and supports. Share your file and the intended use.</p>
-        </div>
-        <div class="qa">
-          <h3>Do you offer flexible prints?</h3>
-          <p>Yes. TPU is available for protective sleeves, gaskets, and impact-friendly parts.</p>
-        </div>
-        <div class="qa">
-          <h3>How do I get a quote?</h3>
-          <p>Upload your STL on the Print page to see pricing instantly, or send it by email/WhatsApp for review.</p>
-        </div>
-        <div class="qa">
-          <h3>Can you print for businesses?</h3>
-          <p>Yes. We handle prototypes, fixtures, and low-volume production with repeatable settings.</p>
-        </div>
-        <div class="qa">
-          <h3>Do you provide design help?</h3>
-          <p>Light adjustments and orientation help are available. For larger design work, tell us the goal and we’ll advise.</p>
-        </div>
-        <div class="qa">
-          <h3>How are prints packaged?</h3>
-          <p>We protect parts with padding and label fragile surfaces. Multi-part kits are bagged and marked.</p>
-        </div>
-        <div class="qa">
-          <h3>Can I request a specific finish?</h3>
-          <p>We can tune layer height and infill for smoother surfaces or higher strength. Ask about the look you need.</p>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ – 3D Printing in Jordan | Pricing, Materials, Delivery</title>
+  <link rel="stylesheet" href="/style/style.css">
+  <link rel="stylesheet" href="/style/index_style.css">
+  <link rel="stylesheet" href="/style/home.css">
+  <meta name="description"
+    content="Answers about 3D printing in Jordan: pricing (0.07 JOD/gram), materials (PLA, ABS, TPU, NYLON), delivery times, file formats, and how to order.">
+  <meta name="keywords"
+    content="3D printing FAQ Jordan, 3D print price Jordan, materials PLA ABS TPU Jordan, 3DJordanPrint questions, Jordan 3D printing delivery">
+  <link rel="canonical" href="https://www.jordan3dprint.store/faq-3d-printing-jordan">
+  <style>
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      line-height: 1.65
+    }
+
+    .wrap {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 26px 18px 70px
+    }
+
+    h1 {
+      font-size: 30px;
+      margin: 0 0 10px
+    }
+
+    .muted {
+      color: #475569;
+      font-size: 16px;
+      margin: 0 0 16px
+    }
+
+    .qa {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, .05)
+    }
+
+    .qa h3 {
+      margin: 0 0 6px;
+      font-size: 18px
+    }
+
+    .qa p {
+      margin: 0;
+      color: #334155
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px
+    }
+
+    .ctaRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    .btn-primary {
+      background: #0ea5e9;
+      color: #fff
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: #fff
+    }
+
+    .contact {
+      background: #111827;
+      color: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px
+    }
+
+    .contact a {
+      color: #a5f3fc;
+      font-weight: 700
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+          "@type": "Question",
+          "name": "What is the cost of 3D printing in Jordan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard FDM printing starts at 0.07 JOD per gram. Complex jobs may vary with material, infill, and supports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which materials are available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PLA, ABS, TPU, and NYLON. Tell us the use-case and we’ll match the right material and color."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does 3D printing take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most orders finish in 1–3 business days. Larger batches or detailed parts may need a few extra days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I print toys, models, or spare parts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We frequently print miniatures, cosplay parts, brackets, clips, and replacement pieces."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you deliver across Jordan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We ship via courier nationwide with protective packing and share delivery updates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a minimum order?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No strict minimum. Pricing is based on weight and complexity; small parts are welcome."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which file formats do you accept?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload STL for printing. If you need adjustments, STEP/IGES files help us edit cleanly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you help fix my STL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We can review scale, wall thickness, and supports. Share your file and the intended use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer flexible prints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. TPU is available for protective sleeves, gaskets, and impact-friendly parts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get a quote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload your STL on the Print page to see pricing instantly, or send it by email/WhatsApp for review."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you print for businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We handle prototypes, fixtures, and low-volume production with repeatable settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide design help?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Light adjustments and orientation help are available. For larger design work, tell us the goal and we’ll advise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are prints packaged?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We protect parts with padding and label fragile surfaces. Multi-part kits are bagged and marked."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I request a specific finish?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We can tune layer height and infill for smoother surfaces or higher strength. Ask about the look you need."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="wrap">
+    <h1>FAQ – 3D Printing in Jordan</h1>
+    <p class="muted">Quick answers to the most common questions we hear. If you need more detail, reach out anytime.</p>
+
+    <div class="grid">
+      <div class="qa">
+        <h3>What is the cost of 3D printing?</h3>
+        <p>Standard FDM printing starts at 0.07 JOD per gram. Complex jobs may vary with material, infill, and supports.
+        </p>
       </div>
-
-      <div class="ctaRow" style="margin-top:22px;">
-        <a class="btn btn-primary" href="/print">Upload STL &amp; get a price</a>
-        <a class="btn btn-dark" href="/stl-guide">See STL prep guide</a>
+      <div class="qa">
+        <h3>Which materials are available?</h3>
+        <p>PLA, ABS, TPU, and NYLON. Tell us the use-case and we’ll match the right material and color.</p>
       </div>
-
-      <section class="contact">
-        <h2 style="margin:0 0 8px;font-size:20px;">Contact</h2>
-        <p style="margin:0 0 8px;">Phone/WhatsApp: <a href="tel:+962797479825">+962 7 9747 9825</a></p>
-        <p style="margin:0 0 8px;">Email: <a href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a></p>
-        <p style="margin:0;">Need help choosing materials or timing? Send the use-case and we’ll recommend the best option.</p>
-      </section>
+      <div class="qa">
+        <h3>How long does 3D printing take?</h3>
+        <p>Most orders finish in 1–3 business days. Larger batches or detailed parts may need a few extra days.</p>
+      </div>
+      <div class="qa">
+        <h3>Can I print toys, models, or spare parts?</h3>
+        <p>Yes. We frequently print miniatures, cosplay parts, brackets, clips, and replacement pieces.</p>
+      </div>
+      <div class="qa">
+        <h3>Do you deliver across Jordan?</h3>
+        <p>Yes. We ship via courier nationwide with protective packing and share delivery updates.</p>
+      </div>
+      <div class="qa">
+        <h3>Is there a minimum order?</h3>
+        <p>No strict minimum. Pricing is based on weight and complexity; small parts are welcome.</p>
+      </div>
+      <div class="qa">
+        <h3>Which file formats do you accept?</h3>
+        <p>Upload STL for printing. If you need adjustments, STEP/IGES files help us edit cleanly.</p>
+      </div>
+      <div class="qa">
+        <h3>Can you help fix my STL?</h3>
+        <p>Yes. We can review scale, wall thickness, and supports. Share your file and the intended use.</p>
+      </div>
+      <div class="qa">
+        <h3>Do you offer flexible prints?</h3>
+        <p>Yes. TPU is available for protective sleeves, gaskets, and impact-friendly parts.</p>
+      </div>
+      <div class="qa">
+        <h3>How do I get a quote?</h3>
+        <p>Upload your STL on the Print page to see pricing instantly, or send it by email/WhatsApp for review.</p>
+      </div>
+      <div class="qa">
+        <h3>Can you print for businesses?</h3>
+        <p>Yes. We handle prototypes, fixtures, and low-volume production with repeatable settings.</p>
+      </div>
+      <div class="qa">
+        <h3>Do you provide design help?</h3>
+        <p>Light adjustments and orientation help are available. For larger design work, tell us the goal and we’ll
+          advise.</p>
+      </div>
+      <div class="qa">
+        <h3>How are prints packaged?</h3>
+        <p>We protect parts with padding and label fragile surfaces. Multi-part kits are bagged and marked.</p>
+      </div>
+      <div class="qa">
+        <h3>Can I request a specific finish?</h3>
+        <p>We can tune layer height and infill for smoother surfaces or higher strength. Ask about the look you need.
+        </p>
+      </div>
     </div>
-  </body>
+
+    <div class="ctaRow" style="margin-top:22px;">
+      <a class="btn btn-primary" href="/print">Upload STL &amp; get a price</a>
+      <a class="btn btn-dark" href="/stl-guide">See STL prep guide</a>
+    </div>
+
+    <section class="contact">
+      <h2 style="margin:0 0 8px;font-size:20px;">Contact</h2>
+      <p style="margin:0 0 8px;">Phone/WhatsApp: <a href="tel:+962797479825">+962 7 9747 9825</a></p>
+      <p style="margin:0 0 8px;">Email: <a href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a></p>
+      <p style="margin:0;">Need help choosing materials or timing? Send the use-case and we’ll recommend the best
+        option.</p>
+    </section>
+  </div>
+</body>
+
 </html>

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
+
 @font-face {
   font-family: Gotham;
   src: url(../fonts/gothamNormal.woff2) format('woff2'), url(../fonts/gothamNormal.woff) format('woff'), url(../fonts/gothamNormal.ttf) format('truetype');
@@ -40,7 +41,7 @@
   width: 100%;
 }
 
-.blogImg1 > div {
+.blogImg1>div {
   width: 100%;
 }
 
@@ -56,7 +57,7 @@
   margin-bottom: 10px;
 }
 
-.flowBox > div:nth-child(1) {
+.flowBox>div:nth-child(1) {
   width: 75%;
 }
 
@@ -74,7 +75,7 @@
 .specChDD {
   width: 80%;
   margin: 0 auto;
-  box-shadow: 0px 10px 9px 0px rgb(0 0 0 / 15%); 
+  box-shadow: 0px 10px 9px 0px rgb(0 0 0 / 15%);
   margin-top: -40px;
   border-radius: 0 0 30px 30px;
   display: none;
@@ -90,7 +91,7 @@
   padding: 20px;
 }
 
-.specChDDItem > div:nth-child(3) {
+.specChDDItem>div:nth-child(3) {
   padding: 20px;
 }
 
@@ -125,7 +126,8 @@
   cursor: pointer;
 }
 
-.specChBox:hover, .specChDDItem:hover {
+.specChBox:hover,
+.specChDDItem:hover {
   background-color: #f8f8f8;
 }
 
@@ -133,12 +135,15 @@
   background-color: #0f6aff;
 }
 
-.specChLongDesc, .specChProps {
+.specChLongDesc,
+.specChProps {
   padding: 0 40px 0 40px;
   line-height: 1.4;
 }
 
-.specChLongDesc, .specChProps, .specChValBox {
+.specChLongDesc,
+.specChProps,
+.specChValBox {
   display: flex;
   align-items: center;
 }
@@ -149,14 +154,14 @@
   flex-wrap: wrap;
 }
 
-.specChValBox > p:nth-child(1) {
+.specChValBox>p:nth-child(1) {
   margin-bottom: 0;
   width: 100%;
   text-align: center;
   white-space: break-spaces;
 }
 
-.specChValBox > p:nth-child(2) {
+.specChValBox>p:nth-child(2) {
   color: black;
   font-size: 20px;
   width: 100%;
@@ -166,14 +171,14 @@
 }
 
 .specChProps {
-  text-transform: uppercase;  
+  text-transform: uppercase;
   border-left: 1px solid rgb(0 0 0 / 15%);
   border-right: 1px solid rgb(0 0 0 / 15%);
   flex-wrap: wrap;
   text-align: center;
 }
 
-.specChProps > div {
+.specChProps>div {
   margin: 0 auto;
 }
 
@@ -187,18 +192,18 @@
   font-size: 40px;
 }
 
-.specChImgBox > img {
+.specChImgBox>img {
   border-radius: 10px;
   width: 190px;
   height: 190px;
 }
 
-.flowBox > div:nth-child(2) {
+.flowBox>div:nth-child(2) {
   width: 25%;
   position: relative;
 }
 
-.flowBox > div:nth-child(2) {
+.flowBox>div:nth-child(2) {
   padding: 0 0 0 40px;
 }
 
@@ -212,7 +217,7 @@
   background-position: center;
 }
 
-.flowBox > div > div {
+.flowBox>div>div {
   height: 100%;
 }
 
@@ -264,18 +269,18 @@
   line-height: 1.6;
 }
 
-.blogHeaderCont > div {
+.blogHeaderCont>div {
   float: left;
   padding: 0 10px 0 10px;
   border-right: 1px solid #d6d6d6;
   color: #333;
 }
 
-.blogHeaderCont > div:last-child {
+.blogHeaderCont>div:last-child {
   border: 0;
 }
 
-.blogHeaderCont > div:first-child {
+.blogHeaderCont>div:first-child {
   padding-left: 0;
 }
 
@@ -331,7 +336,9 @@ body * {
   font-size: 14px;
 }
 
-.protTbl, .protTbl td, .protTbl th {
+.protTbl,
+.protTbl td,
+.protTbl th {
   border: 1px solid black;
   min-width: 200px;
   padding: 3px;
@@ -398,11 +405,12 @@ textarea:focus {
   margin: 0;
 }
 
-.upperImg > h2, .upperImg > p {
+.upperImg>h2,
+.upperImg>p {
   position: absolute;
 }
 
-.upperImg > h2 {
+.upperImg>h2 {
   left: 20px;
   right: 20px;
   display: -webkit-box;
@@ -411,13 +419,13 @@ textarea:focus {
   overflow: hidden;
 }
 
-.upperImg > p {
+.upperImg>p {
   bottom: 0;
   right: 20px;
   color: white;
 }
 
-.upperImg > div:first-child {
+.upperImg>div:first-child {
   border-radius: 30px 30px 0 0;
 }
 
@@ -432,7 +440,7 @@ textarea:focus {
   padding: 20px;
 }
 
-.middleSummary > p > span {
+.middleSummary>p>span {
   color: #333;
   font-weight: bold;
 }
@@ -441,7 +449,7 @@ textarea:focus {
   padding: 0 20px 20px 20px;
 }
 
-.lowerReadMore > a > button {
+.lowerReadMore>a>button {
   width: 100%;
 }
 
@@ -453,7 +461,8 @@ textarea:focus {
   font-size: 32px;
 }
 
-.middleSummary > p, .catLines {
+.middleSummary>p,
+.catLines {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
@@ -481,25 +490,25 @@ textarea:focus {
   color: red;
 }
 
-.colorBox > div:nth-child(1) {
+.colorBox>div:nth-child(1) {
   width: 35%;
   padding-right: 5px;
 }
 
-.colorBox > div:nth-child(2) {
+.colorBox>div:nth-child(2) {
   width: 65%;
 }
 
-.colorBox > div {
+.colorBox>div {
   float: left;
   padding: 20px;
 }
 
-.colorBox > div:nth-child(2) > p {
+.colorBox>div:nth-child(2)>p {
   margin: 5px 0 5px 0;
 }
 
-.colorBox > div > img {
+.colorBox>div>img {
   max-width: 100%;
   max-height: 100px;
   display: block;
@@ -614,7 +623,7 @@ input[type=number] {
 
 .redbar::after,
 .redbar::before {
-  background: red!important
+  background: red !important
 }
 
 .delFile {
@@ -880,7 +889,8 @@ textarea {
   border-bottom: 1px solid rgba(255, 255, 255, .3)
 }
 
-#ms, .mtz {
+#ms,
+.mtz {
   margin-top: 0
 }
 
@@ -923,7 +933,7 @@ textarea {
 
 .stlCont>div>canvas {
   border-radius: 30px;
-  width: 100%!important
+  width: 100% !important
 }
 
 header {
@@ -1038,13 +1048,16 @@ select:hover {
   width: 100%
 }
 
-.catBox > a {
+.catBox>a {
   text-decoration: none;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.catBox > a:link, .catBox > a:visited, .catBox > a:hover, .catBox > a:active {
+.catBox>a:link,
+.catBox>a:visited,
+.catBox>a:hover,
+.catBox>a:active {
   text-decoration: none;
   color: black;
 }
@@ -1094,7 +1107,7 @@ select:hover {
 }
 
 .catBox div:hover {
-  border-color: #4285f4!important
+  border-color: #4285f4 !important
 }
 
 .inProgress {
@@ -1167,7 +1180,7 @@ select:hover {
 }
 
 .colorPick:first-child {
-  border: 2px solid #4285F4; 
+  border: 2px solid #4285F4;
 }
 
 .colorPick {
@@ -1770,20 +1783,54 @@ select {
   transition: transform .12s ease, box-shadow .12s ease;
 }
 
-.bros:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+.bros:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .08);
+}
 
 /* Compact icon/utility button (e.g., 3D) */
-.bros--icon { flex: 0 0 56px; min-width: 56px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 10px; font-weight: 600; }
+.bros--icon {
+  flex: 0 0 56px;
+  min-width: 56px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  font-weight: 600;
+}
 
 /* Button visual styles */
-.btn--primary { background: #2563eb; color: #fff; border: 2px solid #2563eb; }
-.btn--primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+.btn--primary {
+  background: #2563eb;
+  color: #fff;
+  border: 2px solid #2563eb;
+}
 
-.btn--secondary { background: #ffffff; color: #2563eb; border: 2px solid #2563eb; }
-.btn--secondary:hover { background: #eff6ff; }
+.btn--primary:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
 
-.btn--ghost { background: #f3f4f6; color: #111827; border: 1px solid #e5e7eb; }
-.btn--ghost:hover { background: #e5e7eb; }
+.btn--secondary {
+  background: #ffffff;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.btn--secondary:hover {
+  background: #eff6ff;
+}
+
+.btn--ghost {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+}
+
+.btn--ghost:hover {
+  background: #e5e7eb;
+}
 
 .fillBtn {
   background-color: #4285f4;
@@ -1884,7 +1931,7 @@ ul li::before {
 }
 
 .galleria-lightbox-close:hover {
-  color: #999!important
+  color: #999 !important
 }
 
 .galleria {
@@ -1957,7 +2004,7 @@ ul li::before {
 .cartImgHolder:hover,
 .colorPick:hover,
 .orderImg:hover {
-  border: 2px solid #4285f4!important
+  border: 2px solid #4285f4 !important
 }
 
 .cartItemHolder {
@@ -2309,50 +2356,52 @@ select {
   .mainText {
     font-size: 2.125em
   }
+
   .font34 {
     font-size: 1.875em
   }
+
   .w33 {
     width: 49%;
   }
 }
 
 @media only screen and (max-width:1500px) {
-  .flowBox > div:nth-child(1) {
+  .flowBox>div:nth-child(1) {
     width: 70%;
   }
 
-  .flowBox > div:nth-child(2) {
+  .flowBox>div:nth-child(2) {
     width: 30%;
   }
 }
 
 @media only screen and (max-width:1350px) {
-  .flowBox > div:nth-child(1) {
+  .flowBox>div:nth-child(1) {
     width: 65%;
   }
 
-  .flowBox > div:nth-child(2) {
+  .flowBox>div:nth-child(2) {
     width: 35%;
   }
 }
 
 @media only screen and (max-width:1250px) {
-  .flowBox > div:nth-child(1) {
+  .flowBox>div:nth-child(1) {
     width: 60%;
   }
 
-  .flowBox > div:nth-child(2) {
+  .flowBox>div:nth-child(2) {
     width: 40%;
   }
 }
 
 @media only screen and (max-width:1150px) {
-  .flowBox > div:nth-child(1) {
+  .flowBox>div:nth-child(1) {
     width: 55%;
   }
 
-  .flowBox > div:nth-child(2) {
+  .flowBox>div:nth-child(2) {
     width: 45%;
   }
 
@@ -2362,21 +2411,26 @@ select {
 }
 
 @media only screen and (max-width:1050px) {
-  .flowBox > div:nth-child(1), .flowBox > div:nth-child(2) {
+
+  .flowBox>div:nth-child(1),
+  .flowBox>div:nth-child(2) {
     width: 50%;
   }
 }
 
 @media only screen and (max-width:1300px) {
+
   .bgShowcase,
   .darken,
   .darkenProt {
     border-radius: 0
   }
+
   .mainShowcase {
-    width: 98%!important;
+    width: 98% !important;
     margin: 0 auto
   }
+
   .protBg {
     margin-top: 60px
   }
@@ -2386,15 +2440,20 @@ select {
   #comment {
     width: 100%
   }
-  .specChValBox > p:nth-child(2) {
+
+  .specChValBox>p:nth-child(2) {
     margin-top: 20px;
   }
-  .flowBox > div:nth-child(1), .flowBox > div:nth-child(2) {
+
+  .flowBox>div:nth-child(1),
+  .flowBox>div:nth-child(2) {
     width: 100%;
   }
-  .flowBox > div:nth-child(2) {
-    padding: 20px 0 0 0; 
+
+  .flowBox>div:nth-child(2) {
+    padding: 20px 0 0 0;
   }
+
   .itemContainer,
   header {
     height: 50px;
@@ -2402,127 +2461,160 @@ select {
     -ms-flex-align: center;
     align-items: center
   }
+
   .refImgHolder,
   .refInfoHolder {
     width: 100%;
     float: none
   }
+
   .refName {
     text-align: center
   }
+
   .cartNumItems {
     margin-left: -8px;
     top: 8px
   }
+
   .stlCont {
     min-width: calc(50% - 6px)
   }
+
   .wideShowcase {
     margin-top: 110px;
     height: 33vh
   }
+
   .protBg {
     margin-top: 50px
   }
+
   .styleHolder {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column
   }
+
   #cprintHolder {
     display: block
   }
+
   .cPrintDivs {
     width: 100%
   }
+
   .leftDiv {
     border-top: 2px solid #f4f4f4;
     border-left: 2px solid #f4f4f4;
     border-right: 2px solid #f4f4f4;
     border-radius: 30px 30px 0 0
   }
+
   .rightDiv {
     border-left: 2px solid #f4f4f4;
     border-right: 2px solid #f4f4f4;
     border-bottom: 2px solid #f4f4f4;
     border-radius: 0 0 30px 30px
   }
+
   .cPrintDivs {
     min-height: calc(50vh - 45px)
   }
+
   .ddFile>div {
     width: 100%
   }
+
   .priceShow {
     display: none
   }
+
   #customProps>div>p {
     margin: 10px
   }
+
   .quantity.buttons_added {
     display: block;
     text-align: center
   }
+
   .quantity.buttons_added .minus {
     padding-left: 11px
   }
+
   .prodName {
     font-size: 1.875em
   }
+
   .qty {
     margin-top: 20px
   }
+
   .prodName {
     margin-bottom: 10px
   }
+
   .formContainer {
     width: 100%
   }
+
   .itemLeftCenter {
     width: 100%;
     border-right: none;
     position: static;
     border-bottom: 1px solid #dfdfdf
   }
+
   .itemLeftCenter>a {
     display: block;
     margin: 0 auto
   }
+
   .prodInfo {
     width: 100%
   }
+
   .itemInfo {
     margin-left: 0;
     width: 100%
   }
+
   .itemInfo>p:nth-child(2),
   .itemInfo>p:nth-child(3),
   .itemInfo>p:nth-child(4),
   .itemInfo>p:nth-child(5) {
     text-align: center
   }
+
   .leftAlignBox>* {
     float: none
   }
+
   .galleria {
     width: 70%;
     margin: 0 auto
   }
+
   .hideSeek>a>img {
     margin-top: 13px
   }
+
   .itemContainer>div>p {
     margin-top: 0
   }
+
   #removeMargin>a>img {
     height: 45px;
     width: 45px
   }
+
   .itemContainer>div>p>a>img {
     height: 25px;
     width: 25px
   }
+
   .itemContainer>div {
     margin: 0;
     height: 50px;
@@ -2536,42 +2628,54 @@ select {
     -ms-flex-pack: center;
     justify-content: center
   }
+
   .keepBottom {
     margin-top: 70px;
     width: 80%
   }
+
   .dynamicShowcase>a {
     width: calc(33.33% - 10px)
   }
+
   .newies>a {
     width: calc(33% - 3px)
   }
+
   .searchBox {
     padding: 10px
   }
+
   .topHolder {
     margin-top: 49.3px;
     padding: 10px 0 10px 0
   }
+
   .topShrink {
     width: 90%
   }
+
   .categoryImg {
     height: 41px;
     margin-top: -1px
   }
+
   .categoryImg>img {
     height: 28px
   }
+
   .hideText {
     display: none
   }
+
   .hideSeek {
     display: block
   }
+
   #loginMenuBtn {
     display: none
   }
+
   #moreMenu {
     margin-top: 4px;
     height: 25px
@@ -2581,7 +2685,7 @@ select {
 @media screen and (max-width:1200px) {
   .colorBox {
     width: calc(50% - 20px);
-  } 
+  }
 }
 
 @media screen and (max-width:1100px) {
@@ -2591,62 +2695,81 @@ select {
 }
 
 @media only screen and (max-width:768px) {
+
   .mmContainer,
-  .topInner, .w33, .w50 {
+  .topInner,
+  .w33,
+  .w50 {
     width: 100%
   }
+
   .blogSection .font18 {
     font-size: 1em;
   }
+
   .blogPageTitle {
     text-align: center;
   }
+
   .blogImg1 .bimg {
     height: 250px;
   }
+
   .blogHeaderCont {
     min-height: 140px;
   }
-  .blogHeaderCont > div {
+
+  .blogHeaderCont>div {
     float: none;
     padding: 10px;
     border: 0;
     text-align: center;
   }
+
   .hideSeekBlog {
     display: inline-block;
   }
+
   .blogCont {
     width: 100%;
     margin-right: 0;
   }
+
   .column>div>img:hover {
-    -webkit-filter: brightness(100%)!important
+    -webkit-filter: brightness(100%) !important
   }
+
   .column>div>img:hover+a>.refDownload {
-    opacity: 0!important
+    opacity: 0 !important
   }
+
   .mmClose {
     opacity: 1
   }
+
   footer>div>div {
     width: 50%
   }
+
   footer>div>div:nth-child(3),
   footer>div>div:nth-child(4) {
     margin-top: 40px
   }
+
   .hideOnMobile {
     display: none
   }
+
   .colorBox {
     width: 100%;
     margin: 10px 0 10px 0;
   }
+
   header>div {
     width: 80%;
     margin: 0 auto
   }
+
   .galleria {
     width: 100%
   }
@@ -2656,43 +2779,55 @@ select {
   .arrows {
     display: none
   }
-  .fdmChoice, .slaChoice {
+
+  .fdmChoice,
+  .slaChoice {
     padding: 15px;
   }
+
   .ffprot,
   .mainTitle {
     font-size: 1.5em
   }
+
   .stlCont {
     width: 100%
   }
+
   .cpInfo {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column
   }
+
   .cpInfo>div {
     width: 100%
   }
+
   .cpInfoImg {
     width: 100%;
     height: 300px
   }
+
   header>div {
     width: 100%;
     margin: 0 auto
   }
+
   .cbCont {
     width: calc(110% - 4px);
     margin-left: calc(-5% + 2px)
   }
+
   .dynamicShowcase>a:nth-child(2n) {
     padding-right: 0
   }
+
   .productItem {
     height: 170px
   }
+
   .catBox {
     width: 100%;
     margin: 0;
@@ -2700,12 +2835,15 @@ select {
     padding-left: 10px;
     padding-right: 10px
   }
+
   #customProps>div:not(:last-child) {
     margin-right: 0
   }
+
   .bros {
     width: calc(33% - 3px)
   }
+
   #catBox {
     -webkit-box-pack: normal;
     -ms-flex-pack: normal;
@@ -2715,12 +2853,15 @@ select {
     overflow: auto;
     padding: 10px 0 0 0
   }
+
   #catBox div:first-child {
     margin-left: 0
   }
+
   #catBox div:last-child {
     margin-right: 0
   }
+
   .scat {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2729,6 +2870,7 @@ select {
     -ms-flex-align: center;
     align-items: center
   }
+
   .suggItem {
     height: 0;
     margin: 3px;
@@ -2736,45 +2878,58 @@ select {
     width: calc(33% - 6px);
     padding-top: calc(33% - 10px)
   }
+
   .newies>a {
     width: calc(50% - 3px)
   }
+
   .newProds:nth-child(4) {
     display: none
   }
-  .catBox > a {
+
+  .catBox>a {
     margin: 5px
   }
+
   .categoryImg:hover {
     background-color: #fff
   }
+
   .dFormField {
     width: calc(50% - 5px)
   }
+
   .protmob {
     width: 100%
   }
+
   .cookieAccept p {
     margin-right: 0
   }
+
   .keepBottom {
     width: 90%
   }
+
   .galleria {
     width: 100%
   }
+
   .specBox>div,
   .specBox>div:nth-child(3n) {
     margin-right: 20px;
     width: calc(50% - 20px)
   }
+
   .specBox>div:nth-child(2n) {
     margin-right: 0
   }
+
   .dynamicShowcase>a>div {
     width: 100%;
     margin: 0
   }
+
   .dynamicShowcase>a:nth-child(2n) {
     padding-right: 0
   }
@@ -2876,7 +3031,8 @@ select {
     border-right: none;
   }
 
-  .specChValBox, .specChValBox > p {
+  .specChValBox,
+  .specChValBox>p {
     width: 100%;
     text-align: center;
     padding: 0;
@@ -2887,7 +3043,7 @@ select {
     border-top: 1px solid rgb(0 0 0 / 15%);
   }
 
-  .specChValBox > p {
+  .specChValBox>p {
     margin: 10px;
   }
 }
@@ -2902,7 +3058,7 @@ select {
     width: calc((100% - 150px) / 2);
   }
 
-  .specChImgBox > img {
+  .specChImgBox>img {
     width: 150px;
     height: 150px;
   }
@@ -2914,7 +3070,7 @@ select {
     margin: 0;
   }
 
-  .specChProps > div {
+  .specChProps>div {
     padding: 10px;
   }
 }
@@ -2931,7 +3087,7 @@ select {
     width: 100%;
   }
 
-  .specChValBox > p {
+  .specChValBox>p {
     width: 100%;
     text-align: center;
   }
@@ -2976,49 +3132,110 @@ select {
     font-size: 14px;
     padding: 0 0 0 10px;
   }
+
   .specChDDItem {
     padding: 10px;
   }
-  .specChImgBox > img {
+
+  .specChImgBox>img {
     width: 100%;
     height: auto;
   }
+
   .specChImgBox {
     width: 50%;
   }
-  .specChValBox > p {
+
+  .specChValBox>p {
     font-size: 28px;
     margin-bottom: 0;
   }
-  .specChProps > div {
+
+  .specChProps>div {
     margin: 0 auto;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
   .specChDD {
     max-height: 200px;
   }
-  .specChValBox > p:nth-child(2) {
+
+  .specChValBox>p:nth-child(2) {
     font-size: 16px;
   }
-  .specChValBox > p:nth-child(1) {
+
+  .specChValBox>p:nth-child(1) {
     font-size: 22px;
   }
+
   .specChDDItem img {
     width: 50px;
   }
+
   .specChValBox {
     margin-top: 10px;
   }
+
   .specChDDItem div {
     font-size: 14px;
     white-space: nowrap;
   }
+
   .specChDD {
     width: 90%;
   }
-  #specChMatDD > div > div:nth-child(4) {
+
+  #specChMatDD>div>div:nth-child(4) {
     display: none;
+  }
+}
+
+/* WhatsApp Order Button Styles */
+.product-card-wrapper {
+  position: relative;
+}
+
+.whatsapp-order-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-order-btn:hover {
+  background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.whatsapp-order-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-order-btn svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .whatsapp-order-btn {
+    font-size: 13px;
+    padding: 10px 14px;
   }
 }

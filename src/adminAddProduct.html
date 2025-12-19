@@ -98,9 +98,120 @@
                 <input type="file" name="stl" class="form-control" accept=".stl">
             </div>
 
+            <!-- SEO Section -->
+            <div class="form-group" style="border-top: 1px solid #ddd; padding-top: 20px; margin-top: 20px;">
+                <h3>SEO Settings (Yoast Style)</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Focus Keyword</label>
+                    <input type="text" id="seo_keyword" name="seo_keyword" class="form-control"
+                        placeholder="e.g. 3d printed vase">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Meta Description</label>
+                    <textarea id="seo_meta_desc" name="seo_meta_desc" class="form-control" rows="3"
+                        placeholder="Brief description for search engines..."></textarea>
+                    <small id="meta_desc_count" style="color: #666;">0 / 160</small>
+                </div>
+
+                <div id="seo_analysis"
+                    style="background: #f9f9f9; padding: 15px; border-radius: 4px; border: 1px solid #eee;">
+                    <h4>SEO Analysis</h4>
+                    <ul id="seo_results" style="list-style: none; padding: 0;">
+                        <!-- Results will be injected here -->
+                    </ul>
+                </div>
+            </div>
+
             <button type="submit" class="btn-submit">Save Product</button>
         </form>
     </div>
+
+    <script>
+        const keywordInput = document.getElementById('seo_keyword');
+        const metaDescInput = document.getElementById('seo_meta_desc');
+        const nameInput = document.querySelector('input[name="name"]');
+        const descInput = document.querySelector('textarea[name="description"]');
+        const resultsList = document.getElementById('seo_results');
+        const metaDescCount = document.getElementById('meta_desc_count');
+
+        function validateSEO() {
+            const keyword = keywordInput ? keywordInput.value.toLowerCase().trim() : '';
+            const metaDesc = metaDescInput ? metaDescInput.value.trim() : '';
+            const name = nameInput ? nameInput.value.toLowerCase().trim() : '';
+            const desc = descInput ? descInput.value.toLowerCase().trim() : '';
+
+            const results = [];
+
+            // Meta Description Length
+            if (metaDescCount) metaDescCount.innerText = `${metaDesc.length} / 160`;
+
+            if (metaDesc.length === 0) {
+                results.push({ status: 'gray', text: 'No meta description specified.' });
+            } else if (metaDesc.length < 120) {
+                results.push({ status: 'orange', text: 'Meta description is too short (under 120 chars).' });
+            } else if (metaDesc.length > 160) {
+                results.push({ status: 'orange', text: 'Meta description is too long (over 160 chars).' });
+            } else {
+                results.push({ status: 'green', text: 'Meta description length is good.' });
+            }
+
+            if (keyword) {
+                // Keyword in Title
+                if (name.includes(keyword)) {
+                    results.push({ status: 'green', text: 'Keyphrase appears in the title.' });
+                } else {
+                    results.push({ status: 'red', text: 'Keyphrase does not appear in the title.' });
+                }
+
+                // Keyword in Meta Description
+                if (metaDesc.toLowerCase().includes(keyword)) {
+                    results.push({ status: 'green', text: 'Keyphrase appears in the meta description.' });
+                } else {
+                    results.push({ status: 'orange', text: 'Keyphrase does not appear in the meta description.' });
+                }
+
+                // Keyword in Description (Content)
+                if (desc.includes(keyword)) {
+                    results.push({ status: 'green', text: 'Keyphrase appears in the content.' });
+                } else {
+                    results.push({ status: 'red', text: 'Keyphrase does not appear in the content.' });
+                }
+            } else {
+                results.push({ status: 'gray', text: 'Please enter a focus keyphrase to get more analysis.' });
+            }
+
+            renderResults(results);
+        }
+
+        function renderResults(items) {
+            if (!resultsList) return;
+            resultsList.innerHTML = '';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.style.marginBottom = '5px';
+                li.style.display = 'flex';
+                li.style.alignItems = 'center';
+
+                let color = '#ccc';
+                if (item.status === 'green') color = '#7ad03a';
+                if (item.status === 'orange') color = '#ff9900';
+                if (item.status === 'red') color = '#dc3232';
+
+                li.innerHTML = `<span style="width: 10px; height: 10px; border-radius: 50%; background: ${color}; display: inline-block; margin-right: 10px;"></span> ${item.text}`;
+                resultsList.appendChild(li);
+            });
+        }
+
+        // Attach listeners
+        [keywordInput, metaDescInput, nameInput, descInput].forEach(el => {
+            if (el) el.addEventListener('input', validateSEO);
+        });
+
+        // Initial run
+        validateSEO();
+    </script>
 </body>
 
 </html>

@@ -22,6 +22,8 @@ const buildAdminEditProduct = (conn, productId) => {
                 html = html.replace(/{{size}}/g, p.size || '');
                 html = html.replace(/{{img_url}}/g, p.img_url ? '/' + p.img_url : '');
                 html = html.replace(/{{stl_path}}/g, p.stl_path || 'None');
+                html = html.replace(/{{seo_keyword}}/g, p.seo_keyword || '');
+                html = html.replace(/{{seo_meta_desc}}/g, p.seo_meta_desc || '');
 
                 // Handle Category Selection
                 const categories = [

@@ -1,133 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Printing Services in Jordan | Pricing, Materials, Delivery</title>
-    <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/index_style.css">
-    <link rel="stylesheet" href="/style/home.css">
-    <meta name="description" content="Transparent 3D printing in Jordan. 0.07 JOD per gram, PLA/ABS/TPU/NYLON materials, Jordan-wide delivery, and fast turnaround with local support.">
-    <meta name="keywords" content="3D printing Jordan, 3D printing service Amman, Jordan rapid prototyping, FDM printing Jordan, SLA printing Jordan, PLA ABS TPU nylon Jordan">
-    <link rel="canonical" href="https://www.jordan3dprint.store/services-jordan">
-    <style>
-      body{background:#f8fafc;color:#0f172a;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.6}
-      .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 70px}
-      .hero{background:#0f172a;color:#fff;border-radius:14px;padding:26px;position:relative;overflow:hidden}
-      .hero h1{margin:0 0 10px;font-size:32px}
-      .hero p{margin:0 0 14px;font-size:18px;max-width:780px}
-      .badge{display:inline-flex;align-items:center;gap:8px;background:#22c55e;color:#064e3b;font-weight:700;padding:8px 12px;border-radius:999px}
-      .grid{display:grid;gap:14px;margin:22px 0;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-      .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 8px 26px rgba(15,23,42,.05)}
-      .card h3{margin:0 0 8px;font-size:18px}
-      .list{display:grid;gap:10px;margin:10px 0 0}
-      .list li{margin-left:18px}
-      .ctaRow{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-      .btn{padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;display:inline-block}
-      .btn-primary{background:#0ea5e9;color:#fff}
-      .btn-dark{background:#111827;color:#fff}
-      .sectionTitle{font-size:24px;margin:28px 0 10px}
-      .muted{color:#475569;font-size:15px}
-      .twoCol{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
-      .contact{background:#111827;color:#fff;border-radius:12px;padding:18px}
-      .contact a{color:#a5f3fc;font-weight:700}
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <section class="hero">
-        <div class="badge">Local, fast, transparent</div>
-        <h1>3D Printing Services in Jordan</h1>
-        <p>Upload your STL and get a price instantly. We print prototypes, spare parts, models, and production runs with expert local support.</p>
-        <div class="ctaRow">
-          <a class="btn btn-primary" href="/print">Upload &amp; Get Price</a>
-          <a class="btn btn-dark" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
-        </div>
-      </section>
 
-      <div class="grid">
-        <div class="card">
-          <h3>Pricing</h3>
-          <p class="muted">0.07 JOD per gram for FDM jobs. Clear quotes before we start.</p>
-        </div>
-        <div class="card">
-          <h3>Materials</h3>
-          <p class="muted">PLA, ABS, TPU, NYLON. Ask about colors and finishes.</p>
-        </div>
-        <div class="card">
-          <h3>Print Times</h3>
-          <p class="muted">Most prints finish in 1–3 business days. We confirm ETA on every order.</p>
-        </div>
-        <div class="card">
-          <h3>Delivery</h3>
-          <p class="muted">Jordan-wide courier delivery. We pack parts safely and share tracking.</p>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Printing Service in Jordan | Pricing & Materials</title>
+  <link rel="stylesheet" href="/style/style.css">
+  <link rel="stylesheet" href="/style/index_style.css">
+  <link rel="stylesheet" href="/style/home.css">
+  <meta name="description"
+    content="Professional 3D printing service in Jordan. 0.07 JOD/g, PLA/ABS/TPU/NYLON. Fast turnaround, instant quotes, and delivery to Amman and all governorates.">
+  <meta name="keywords" content="3d printing service in jordan">
+  <link rel="canonical" href="https://www.jordan3dprint.store/services-jordan">
+  <style>
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 26px 18px 70px
+    }
+
+    .hero {
+      background: #0f172a;
+      color: #fff;
+      border-radius: 14px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 32px
+    }
+
+    .hero p {
+      margin: 0 0 14px;
+      font-size: 18px;
+      max-width: 780px
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #22c55e;
+      color: #064e3b;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      margin: 22px 0;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 26px rgba(15, 23, 42, .05)
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin: 10px 0 0
+    }
+
+    .list li {
+      margin-left: 18px
+    }
+
+    .ctaRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-block
+    }
+
+    .btn-primary {
+      background: #0ea5e9;
+      color: #fff
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: #fff
+    }
+
+    .sectionTitle {
+      font-size: 24px;
+      margin: 28px 0 10px
+    }
+
+    .muted {
+      color: #475569;
+      font-size: 15px
+    }
+
+    .twoCol {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))
+    }
+
+    .contact {
+      background: #111827;
+      color: #fff;
+      border-radius: 12px;
+      padding: 18px
+    }
+
+    .contact a {
+      color: #a5f3fc;
+      font-weight: 700
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge">Local, fast, transparent</div>
+      <h1>3D Printing Services in Jordan</h1>
+      <p>Upload your STL and get a price instantly. We print prototypes, spare parts, models, and production runs with
+        expert local support.</p>
+      <div class="ctaRow">
+        <a class="btn btn-primary" href="/print">Upload &amp; Get Price</a>
+        <a class="btn btn-dark" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on
+          WhatsApp</a>
       </div>
+    </section>
 
-      <h2 class="sectionTitle">Pricing Details</h2>
-      <div class="twoCol">
-        <div class="card">
-          <h3>Standard FDM</h3>
-          <p class="muted">0.07 JOD per gram. Best for prototypes, functional parts, and low-volume production.</p>
-        </div>
-        <div class="card">
-          <h3>What affects price?</h3>
-          <ul class="list muted">
-            <li>Material choice and color</li>
-            <li>Infill percentage and layer height</li>
-            <li>Support requirements and post-processing</li>
-          </ul>
-        </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Pricing</h3>
+        <p class="muted">0.07 JOD per gram for FDM jobs. Clear quotes before we start.</p>
       </div>
-
-      <h2 class="sectionTitle">Materials We Keep Ready</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>PLA</h3>
-          <p class="muted">Great for visual models, enclosures, and fast prototyping.</p>
-        </div>
-        <div class="card">
-          <h3>ABS</h3>
-          <p class="muted">Stronger and more heat-resistant; good for functional parts.</p>
-        </div>
-        <div class="card">
-          <h3>TPU</h3>
-          <p class="muted">Flexible and impact-friendly for gaskets, protectors, and sleeves.</p>
-        </div>
-        <div class="card">
-          <h3>NYLON</h3>
-          <p class="muted">Durable and wear-resistant for tools, jigs, and production fixtures.</p>
-        </div>
+      <div class="card">
+        <h3>Materials</h3>
+        <p class="muted">PLA, ABS, TPU, NYLON. Ask about colors and finishes.</p>
       </div>
-
-      <h2 class="sectionTitle">Example Projects</h2>
-      <div class="grid">
-        <div class="card"><h3>Product prototypes</h3><p class="muted">Fast iterations before tooling.</p></div>
-        <div class="card"><h3>Spare parts</h3><p class="muted">Small runs of brackets, clips, and replacements.</p></div>
-        <div class="card"><h3>Models &amp; displays</h3><p class="muted">Architectural, cosplay, merch, and gifting.</p></div>
-        <div class="card"><h3>Engineering aids</h3><p class="muted">Jigs, fixtures, and assembly helpers.</p></div>
+      <div class="card">
+        <h3>Print Times</h3>
+        <p class="muted">Most prints finish in 1–3 business days. We confirm ETA on every order.</p>
       </div>
-
-      <h2 class="sectionTitle">Delivery &amp; Turnaround</h2>
-      <div class="twoCol">
-        <div class="card">
-          <h3>Timelines</h3>
-          <p class="muted">Most small-to-medium jobs: 1–3 business days. Larger batches: we’ll share a clear schedule before printing.</p>
-        </div>
-        <div class="card">
-          <h3>Shipping in Jordan</h3>
-          <p class="muted">Courier delivery across Jordan with protective packing. You’ll get updates and a confirmed delivery window.</p>
-        </div>
+      <div class="card">
+        <h3>Delivery</h3>
+        <p class="muted">Jordan-wide courier delivery. We pack parts safely and share tracking.</p>
       </div>
-
-      <section class="contact">
-        <h2 style="margin:0 0 8px;">Talk to a human</h2>
-        <p style="margin:0 0 10px;">Phone/WhatsApp: <a href="tel:+962797479825">+962 7 9747 9825</a> • Email: <a href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a></p>
-        <div class="ctaRow">
-          <a class="btn btn-primary" href="/print">Start a Print</a>
-          <a class="btn btn-dark" href="/blogs">Browse the blog</a>
-        </div>
-      </section>
     </div>
-  </body>
+
+    <h2 class="sectionTitle">Pricing Details</h2>
+    <div class="twoCol">
+      <div class="card">
+        <h3>Standard FDM</h3>
+        <p class="muted">0.07 JOD per gram. Best for prototypes, functional parts, and low-volume production.</p>
+      </div>
+      <div class="card">
+        <h3>What affects price?</h3>
+        <ul class="list muted">
+          <li>Material choice and color</li>
+          <li>Infill percentage and layer height</li>
+          <li>Support requirements and post-processing</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="sectionTitle">Materials We Keep Ready</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>PLA</h3>
+        <p class="muted">Great for visual models, enclosures, and fast prototyping.</p>
+      </div>
+      <div class="card">
+        <h3>ABS</h3>
+        <p class="muted">Stronger and more heat-resistant; good for functional parts.</p>
+      </div>
+      <div class="card">
+        <h3>TPU</h3>
+        <p class="muted">Flexible and impact-friendly for gaskets, protectors, and sleeves.</p>
+      </div>
+      <div class="card">
+        <h3>NYLON</h3>
+        <p class="muted">Durable and wear-resistant for tools, jigs, and production fixtures.</p>
+      </div>
+    </div>
+
+    <h2 class="sectionTitle">Example Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Product prototypes</h3>
+        <p class="muted">Fast iterations before tooling.</p>
+      </div>
+      <div class="card">
+        <h3>Spare parts</h3>
+        <p class="muted">Small runs of brackets, clips, and replacements.</p>
+      </div>
+      <div class="card">
+        <h3>Models &amp; displays</h3>
+        <p class="muted">Architectural, cosplay, merch, and gifting.</p>
+      </div>
+      <div class="card">
+        <h3>Engineering aids</h3>
+        <p class="muted">Jigs, fixtures, and assembly helpers.</p>
+      </div>
+    </div>
+
+    <h2 class="sectionTitle">Delivery &amp; Turnaround</h2>
+    <div class="twoCol">
+      <div class="card">
+        <h3>Timelines</h3>
+        <p class="muted">Most small-to-medium jobs: 1–3 business days. Larger batches: we’ll share a clear schedule
+          before printing.</p>
+      </div>
+      <div class="card">
+        <h3>Shipping in Jordan</h3>
+        <p class="muted">Courier delivery across Jordan with protective packing. You’ll get updates and a confirmed
+          delivery window.</p>
+      </div>
+    </div>
+
+    <section class="contact">
+      <h2 style="margin:0 0 8px;">Talk to a human</h2>
+      <p style="margin:0 0 10px;">Phone/WhatsApp: <a href="tel:+962797479825">+962 7 9747 9825</a> • Email: <a
+          href="mailto:info@jordan3dprint.store">info@jordan3dprint.store</a></p>
+      <div class="ctaRow">
+        <a class="btn btn-primary" href="/print">Start a Print</a>
+        <a class="btn btn-dark" href="/blogs">Browse the blog</a>
+      </div>
+    </section>
+  </div>
+</body>
+
 </html>

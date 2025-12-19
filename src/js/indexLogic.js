@@ -160,18 +160,7 @@ const buildMainSection = (conn, cat) => {
           </style>
 
           <div class="page">
-            <header class="nav-lite">
-              <div class="nav-lite__inner">
-                <div class="brand">
-                  <img src="/images/icons/logo.svg" alt="3DJordanPrint logo">
-                  <span>3DJordanPrint</span>
-                </div>
-                <div class="nav-actions">
-                  <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl">العربية</a>
-                  <a class="pill pill--primary" href="/print">Get an instant quote</a>
-                </div>
-              </div>
-            </header>
+
 
             <section class="hero">
               <div class="hero__inner">
@@ -182,6 +171,7 @@ const buildMainSection = (conn, cat) => {
                   <div class="hero__cta">
                     <a class="pill pill--primary" href="/print">Start a print</a>
                     <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+                    <a class="pill" href="/store">3D Printer Store</a>
                     <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl">الموقع بالعربية</a>
                   </div>
                 </div>
@@ -258,6 +248,28 @@ const buildMainSection = (conn, cat) => {
                 <div class="chip">ABS — Strong & post-processable</div>
                 <div class="chip">Resin (SLA) — Ultra-detailed</div>
                 <div class="chip">Wide color range</div>
+              </div>
+            </section>
+
+            <section class="section">
+              <h2>Visit Us</h2>
+              <p class="lead">Come say hello at our workshop in Amman.</p>
+              <div class="grid">
+                <div class="tile">
+                  <h3>Address</h3>
+                  <p>Amman, Jordan</p>
+                  <p>Zip Code: 11121</p>
+                  <a href="https://maps.app.goo.gl/PoRETQmSAV7xHrfSA" target="_blank" class="pill pill--ghost" style="margin-top:10px;font-size:14px;">Open in Maps</a>
+                </div>
+                <div class="tile">
+                  <h3>Opening Hours</h3>
+                  <p>Everyday: 9am - 6pm</p>
+                </div>
+                <div class="tile">
+                  <h3>Contact</h3>
+                  <p>+962 79 747 9825</p>
+                  <p>info@3djordanprint.com</p>
+                </div>
               </div>
             </section>
 
@@ -378,6 +390,34 @@ const buildMainSection = (conn, cat) => {
             output += `
                   </div>
                 </section>
+            `;
+
+            output += `
+              <section class="section">
+                <h2>FAQ</h2>
+                <p class="lead">Quick answers to common questions.</p>
+                <div class="grid">
+                  <div class="tile">
+                    <h3>How much does it cost?</h3>
+                    <p>Starts at 0.07 JOD/gram. Price depends on weight and print time.</p>
+                  </div>
+                  <div class="tile">
+                    <h3>What materials?</h3>
+                    <p>PLA (economical), PETG (strong), ABS (heat resistant), and Resin (high detail).</p>
+                  </div>
+                  <div class="tile">
+                    <h3>Do you deliver?</h3>
+                    <p>Yes, we deliver to all governorates via trusted courier services.</p>
+                  </div>
+                  <div class="tile">
+                    <h3>How to start?</h3>
+                    <p>Upload your STL on the "Get a Quote" page or message us on WhatsApp.</p>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 24px;">
+                  <a href="/faq-3d-printing-jordan" class="pill pill--ghost">View all FAQs</a>
+                </div>
+              </section>
             `;
 
             output += CONTACT_FORM;

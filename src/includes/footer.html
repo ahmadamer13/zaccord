@@ -90,6 +90,12 @@
     z-index: 9999
   }
 
+  /* RTL support for Arabic pages */
+  [dir="rtl"] .waFab {
+    right: auto;
+    left: 18px;
+  }
+
   .waFabMain {
     width: 84px;
     height: 84px;
@@ -109,11 +115,19 @@
   .waFabMenu {
     position: absolute;
     right: 12px;
-    bottom: 96px;
+    bottom: 0;
+    padding-bottom: 96px;
     display: none;
     gap: 12px;
     flex-direction: column;
     align-items: flex-end
+  }
+
+  /* RTL support for menu alignment */
+  [dir="rtl"] .waFabMenu {
+    right: auto;
+    left: 12px;
+    align-items: flex-start;
   }
 
   .waFab.open .waFabMenu {
@@ -126,7 +140,8 @@
     border-radius: 50%;
     background: #111827 no-repeat 50% 50%;
     background-size: 34px 34px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform .15s ease;
   }
 
   .waItem:hover {
@@ -148,12 +163,47 @@
     var fab = document.getElementById('waFab');
     if (!fab) return;
     var main = document.getElementById('waFloat');
+    var menu = document.getElementById('waMenu');
+    var timer;
+
+    function show() {
+      clearTimeout(timer);
+      fab.classList.add('open');
+    }
+
+    function hide() {
+      timer = setTimeout(function () {
+        fab.classList.remove('open');
+      }, 3000);
+    }
+
+    // Show menu on hover over main button or menu
+    fab.addEventListener('mouseenter', show);
+    fab.addEventListener('mouseleave', hide);
+
+    // Keep menu open when hovering over menu items
+    if (menu) {
+      menu.addEventListener('mouseenter', show);
+      menu.addEventListener('mouseleave', hide);
+    }
+
     main.addEventListener('click', function (e) {
       e.preventDefault();
-      fab.classList.toggle('open');
+      // Toggle logic for mobile/touch devices
+      if (fab.classList.contains('open')) {
+        clearTimeout(timer);
+        fab.classList.remove('open');
+      } else {
+        show();
+      }
     });
+
+    // Close menu when clicking outside
     document.addEventListener('click', function (e) {
-      if (!fab.contains(e.target)) fab.classList.remove('open');
+      if (!fab.contains(e.target)) {
+        fab.classList.remove('open');
+        clearTimeout(timer);
+      }
     });
   })();
 </script>
@@ -181,5 +231,3 @@
 theme_color="#4389F6">
 </div>
 --!>
-</body>
-</html>

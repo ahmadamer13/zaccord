@@ -550,7 +550,7 @@ const server = http.createServer((req, res) => {
     // Dynamic sitemap.xml
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
       const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
-      const staticPaths = ['/', '/print', '/account', '/cart', '/blogs', '/colors', '/references', '/services-jordan', '/stl-guide', '/faq-3d-printing-jordan', '/store', '/prodeuts'];
+      const staticPaths = ['/', '/ar/', '/print', '/account', '/cart', '/blogs', '/colors', '/references', '/services-jordan', '/stl-guide', '/faq-3d-printing-jordan', '/store', '/prodeuts'];
       let urls = staticPaths.map(p => ({ loc: host + p, lastmod: new Date().toISOString().split('T')[0] }));
 
       const addUrl = (arr, path, dateStr) => arr.push({ loc: host + path, lastmod: dateStr || new Date().toISOString().split('T')[0] });
@@ -964,7 +964,7 @@ const server = http.createServer((req, res) => {
                 }
 
                 // Insert into DB
-                const q = 'INSERT INTO fix_products (url, img_url, img_showcase, price, size, name, category, description, stl_path, priority, date_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())';
+                const q = 'INSERT INTO fix_products (url, img_url, img_showcase, price, size, name, category, description, stl_path, priority, date_added, seo_keyword, seo_meta_desc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)';
                 const productUrl = 'Item/Product = ' + Date.now(); // Simple unique URL
                 const imgUrl = 'images/' + newFileName;
                 const imgShowcase = imgUrl; // Just use main image for showcase for now
@@ -983,7 +983,7 @@ const server = http.createServer((req, res) => {
                   }
                 }
 
-                conn.query(q, [productUrl, imgUrl, imgShowcase, fields.price, fields.size, fields.name, fields.category, fields.description, stlPath, 100], (err) => {
+                conn.query(q, [productUrl, imgUrl, imgShowcase, fields.price, fields.size, fields.name, fields.category, fields.description, stlPath, 100, fields.seo_keyword, fields.seo_meta_desc], (err) => {
                   if (err) {
                     console.log(err);
                     res.writeHead(500);
@@ -1051,8 +1051,8 @@ const server = http.createServer((req, res) => {
               let newImgUrl = '';
 
               const handleUpdate = () => {
-                let q = 'UPDATE fix_products SET name=?, category=?, price=?, description=?, size=?';
-                let params = [fields.name, fields.category, fields.price, fields.description, fields.size];
+                let q = 'UPDATE fix_products SET name=?, category=?, price=?, description=?, size=?, seo_keyword=?, seo_meta_desc=?';
+                let params = [fields.name, fields.category, fields.price, fields.description, fields.size, fields.seo_keyword, fields.seo_meta_desc];
 
                 if (updateImage) {
                   q += ', img_url=?, img_showcase=?';
@@ -1213,12 +1213,18 @@ const server = http.createServer((req, res) => {
       } else {
         // To every html file append footer, header and cookies (if not accepted)
         if (extension == '.html') {
+          content = content.toString().replace('</body>', '').replace('</html>', '');
+
           if (req.url != '/') {
             content += fs.readFileSync(path.join('src', 'includes', 'footer.html'));
           }
 
           content += addCookieAccept(req);
-          content += addHeader(userID);
+          content += addHeader(userID, req.url === '/ar' || req.url === '/ar/');
+
+          if (req.url != '/') {
+            content += '</body></html>';
+          }
         }
 
         // Build pages from database
@@ -1226,6 +1232,7 @@ const server = http.createServer((req, res) => {
           buildMainSection(conn).then(data => {
             content += data;
             content += fs.readFileSync(path.join('src', 'includes', 'footer.html'));
+            content += '</body></html>';
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(content, 'utf8');
           }).catch(err => {

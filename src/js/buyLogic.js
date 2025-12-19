@@ -83,7 +83,7 @@ const buildBuySection = (conn, paramObj, req) => {
     function buildItemOutput(PRINT_MULTS, isCrt, userID, orderID, product, rvas, suruseg, color, scale, fvas, quantity) {
       return new Promise((resolve, reject) => {
         // Get the product with that id from database & validate parameters
-        let cQuery = 'SELECT * FROM fix_products WHERE id = ? LIMIT 1'; 
+        let cQuery = 'SELECT * FROM fix_products WHERE id = ? LIMIT 1';
         conn.query(cQuery, [product], (err, result, field) => {
           if (err) {
             reject('An unexpected error occurred, please try again');
@@ -115,7 +115,7 @@ const buildBuySection = (conn, paramObj, req) => {
               'itemID': itemID,
               'prodURL': prodURL,
               'imgURL': imgURL,
-              'price': calcPrice(PRINT_MULTS, price, rvas, suruseg, scale, fvas),
+              'price': 5,
               'name': name,
               'rvas': rvas,
               'suruseg': suruseg,
@@ -142,7 +142,7 @@ const buildBuySection = (conn, paramObj, req) => {
 
             // Generate html output
             let output = genItem(false, false, false, data);
-            
+
             if (!isCrt) {
               resolve([output, data, finalPrice, discountText, shippingPrice]);
             } else {
@@ -161,7 +161,7 @@ const buildBuySection = (conn, paramObj, req) => {
             reject('Invalid parameter value');
             return;
           }
-          
+
           // Validate files
           if (!isFromCrt) {
             var files = paramObj.files.split(',');
@@ -189,7 +189,7 @@ const buildBuySection = (conn, paramObj, req) => {
 
             // If model is printed with SLA make sure that it's not too large
             if (tech == 'SLA' && !shouldAllowSLA(filePath, scale)) {
-              reject('The STL file is too large for SLA printing'); 
+              reject('The STL file is too large for SLA printing');
               return;
             }
 
@@ -198,7 +198,7 @@ const buildBuySection = (conn, paramObj, req) => {
             let basePrice = calcCPPrice(vol, area);
             let price;
             if (tech == 'SLA') {
-              price = calcSLAPrice(basePrice * SLA_MULTIPLIER, rvas, suruseg, scale); 
+              price = calcSLAPrice(basePrice * SLA_MULTIPLIER, rvas, suruseg, scale);
             } else {
               price = calcPrice(PRINT_MULTS, basePrice, rvas, suruseg, scale, fvas, printMat, color);
             }
@@ -207,7 +207,7 @@ const buildBuySection = (conn, paramObj, req) => {
             // Build image path for thumbnail
             thPath = thPath.split('/');
             thPath = (thPath[thPath.length - 3] + '/' + thPath[thPath.length - 2] + '/' +
-                thPath[thPath.length - 1]); 
+              thPath[thPath.length - 1]);
 
             let pName = 'Custom printed item #' + (i + 1);
             if (isFromCrt) pName = 'Custom printed item';
@@ -247,13 +247,13 @@ const buildBuySection = (conn, paramObj, req) => {
       return new Promise((resolve, reject) => {
         let output = '';
         let params = {
-        'sphere': sphere,
-        'color': color,
-        'size': size,
-        'quantity': quantity,
-        'file': file
+          'sphere': sphere,
+          'color': color,
+          'size': size,
+          'quantity': quantity,
+          'file': file
         };
-        
+
         validateLitParams(conn, params).then(res => {
           if (!res) {
             reject('Invalid parameter value');
@@ -281,7 +281,7 @@ const buildBuySection = (conn, paramObj, req) => {
             'fixProduct': false
           };
 
-          let finalPrice = price * quantity;
+          let finalPrice = price * quantity;
           output += genItem(false, false, false, data, true);
 
           resolve([output, finalPrice, data]);
@@ -429,7 +429,7 @@ const buildBuySection = (conn, paramObj, req) => {
             // Check if customer gets a discount 
             if (finalPrice > FREE_SHIPPING_LIMIT) {
               finalPrice *= DISCOUNT;
-            } 
+            }
 
             buildLastSection(userID, finalPrice, discountText).then(lastOutput => {
               output += lastOutput;
@@ -458,11 +458,11 @@ const buildBuySection = (conn, paramObj, req) => {
           });
           return;
         }
-       
+
         if (product != 'lit') {
           paramArr = [product, rvas, suruseg, color, scale, fvas, quantity];
           buildItemOutput(PRINT_MULTS, false, userID, orderID, ...paramArr).then(data => {
-            output += data[0]; 
+            output += data[0];
             buildLastSection(userID, data[2], data[3], data[4]).then(lastOutput => {
               output += lastOutput;
               let finalPrice = data[2];
@@ -500,7 +500,7 @@ const buildBuySection = (conn, paramObj, req) => {
             // Check if customer gets a discount 
             if (finalPrice > FREE_SHIPPING_LIMIT) {
               finalPrice *= DISCOUNT;
-            } 
+            }
 
             buildLastSection(userID, finalPrice, discountText).then(lastOutput => {
               output += lastOutput;
@@ -524,10 +524,10 @@ const buildBuySection = (conn, paramObj, req) => {
           }).catch(err => {
             reject('An unexpected error occurred, please try again');
             return;
-          });        
+          });
         }
 
-      // Second case is when user buys the whole cart and data is fetched from cookies
+        // Second case is when user buys the whole cart and data is fetched from cookies
       } else {
         // Make sure cookie is not empty
         let cItems = parseCookies(req).cartItems;
@@ -608,7 +608,7 @@ const buildBuySection = (conn, paramObj, req) => {
 
           // Get shipping price & build delivery section
           let discount, dText, shipPrice;
-          
+
           let actualShippingPrice = (finalPrice > FREE_SHIPPING_LIMIT) ? 0 : DEFAULT_SHIPPING_PRICE;
 
           [discount, dText, shipPrice] = calcPrices(finalPrice);

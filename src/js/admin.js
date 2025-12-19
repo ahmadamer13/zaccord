@@ -325,7 +325,7 @@ function downloadSTLs() {
     if (msg.success) {
       let el = document.createElement('a');
       el.setAttribute('href', '/tmpZips/tmp.zip');
-      el.setAttribute('download', 'zaccord_stl.zip');
+      el.setAttribute('download', 'jordan3dprint_stl.zip');
       el.style.display = 'none';
       document.body.appendChild(el);
       el.click();

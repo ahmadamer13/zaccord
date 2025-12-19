@@ -212,6 +212,56 @@
                 justify-content: flex-start;
             }
         }
+
+        /* WhatsApp Order Button Styles */
+        .product-card-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .whatsapp-order-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 12px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
+        }
+
+        .whatsapp-order-btn:hover {
+            background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .whatsapp-order-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-order-btn svg {
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-order-btn {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+        }
     </style>
 </head>
 

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Contract Printing – 3D Printing Service in Jordan | طباعة ثلاثية الابعاد في الاردن بجودة ممتازه</title>
+    <title>Upload Contract Prints | 3D Printing Service in Jordan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Send contract 3D printing jobs in Jordan. Upload models, confirm quantities, and get reliable production with local support.">
+    <meta name="keywords" content="contract 3D printing Jordan, bulk 3D printing Amman, upload STL Jordan, local 3D print service, Jordan3DPrint production">
+    <link rel="canonical" href="https://www.jordan3dprint.store/printUpload">
     <link rel="stylesheet" href="/animate/animate.css">
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/nprogress.css">
@@ -31,13 +34,17 @@
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>   
+    <main style="padding:20px 16px;">
+      <h1 style="margin:0 0 8px;">Contract 3D Printing Upload</h1>
+      <p style="margin:0;color:#334155;max-width:720px;">Upload multiple models for production runs and we will print and deliver anywhere in Jordan.</p>
+    </main>
   </body>
 </html>
 
     <section class="keepBottom flexDiv" style="align-items: center;">
       <div>
-        <img src="/images/404error.png" class="emptyCart">
-        <p class="align" style="font-size: 32px; color: #ccc;"></p>
+        <img src="/images/shop.png" class="emptyCart">
+        <p class="align" style="font-size: 32px; color: #ccc;">An unexpected error occurred, please try again</p>
       </div>
     </section>
   <header>
@@ -45,19 +52,19 @@
     <div>
       <p id="removeMargin">
         <a href="/">
-          <img class="logo" src="/images/icons/logo.svg" width="55" height="55" />
+          <img class="logo" src="/images/icons/logo.svg" width="55" height="55" alt="3DJordanPrint logo" />
         </a>
-      </p> 
+      </p>
     </div>
 
     <div>
       <p class="hideText">
         <a href="/cart" id="cart">Cart</a>
         <sup id="cartItemNum" class="cartNumItems"></sup>
-      </p> 
+      </p>
       <p class="hideSeek">
         <a href="/cart">
-          <img src="/images/icons/cart.svg" width="25" height="25">
+          <img src="/images/icons/cart.svg" width="25" height="25" alt="Cart">
           <sup id="cartItemNumMob" class="cartNumItems"></sup>
         </a>
       </p>
@@ -67,10 +74,10 @@
     <div>
       <p class="hideText">
         <a href="/print" id="bny">Custom Printing & Lithophanes</a>
-      </p> 
+      </p>
       <p class="hideSeek">
         <a href="/print">
-          <img src="/images/icons/printer.svg" width="25" height="25">
+          <img src="/images/icons/printer.svg" width="25" height="25" alt="3D printer">
         </a>
       </p>
       <div class="hoverNavbar animate__animated" id="bny_anim"></div>
@@ -78,40 +85,49 @@
 
     <div>
       <p class="hideText">
-        <a href="/prototype" id="login">Prototyping</a>
-      </p> 
+        <a href="/store" id="storeTab">Store</a>
+      </p>
       <p class="hideSeek">
-        <a href="/prototype">
-          <img src="/images/icons/protBlack.svg" width="25" height="25">
+        <a href="/store">
+          <img src="/images/icons/vmenu.svg" width="25" height="25" alt="Store">
         </a>
       </p>
-      <div class="hoverNavbar animate__animated" id="login_anim"></div>
+      <div class="hoverNavbar animate__animated" id="store_anim"></div>
+    </div>
+
+    <div>
+      <p class="hideText">
+        <a class="langSwitch" href="/ar/" lang="ar" dir="rtl">العربية</a>
+      </p>
+      <p class="hideSeek">
+        <a class="langSwitch" href="/ar/" lang="ar" dir="rtl">AR</a>
+      </p>
+      <div class="hoverNavbar animate__animated" id="lang_anim"></div>
     </div>
 
     <div id="loginMenuBtn">
       <p class="hideText">
         <a href="/register" id="register">Register</a>
-      </p> 
+      </p>
       <p class="hideSeek">
         <a href="/register">
           <img src="/images/icons/account.svg" width="25" height="25">
         </a>
-      </p>  
+      </p>
       <div class="hoverNavbar animate__animated" id="register_anim"></div>
     </div>
 
     <div id="mmHolder">
-      <img src="/images/icons/moreMenu.svg" class="mMenu trans" id="moreMenu"
-        data-status="open" width="25" height="25">
+      <img src="/images/icons/moreMenu.svg" class="mMenu trans" id="moreMenu" data-status="open" width="25" height="25">
     </div>
   </div>
 </header>
 
 <div class="mmContainer" id="mmContainer" data-status="closed">
   <div class="mmInnerTop">
-    <p class="gotham">More Pages</p> 
+    <p class="gotham">More Pages</p>
     <div>
-      <img src="/images/icons/moreClose.svg" class="mmClose trans" id="mmClose"> 
+      <img src="/images/icons/moreClose.svg" class="mmClose trans" id="mmClose" alt="Close menu">
     </div>
   </div>
 
@@ -127,13 +143,25 @@
       <a href="/lithophaneHelp" class="gothamNormal trans">Lithophane Help</a>
     </div>
     <div>
-      <a href="/mitjelent" class="gothamNormal trans">Glossary</a>
+      <a href="/terms" class="gothamNormal trans">Glossary</a>
     </div>
     <div>
       <a href="/materialHelp" class="gothamNormal trans">Materials</a>
     </div>
     <div>
+      <a href="/services-jordan" class="gothamNormal trans">3D Printing in Jordan</a>
+    </div>
+    <div>
+      <a href="/stl-guide" class="gothamNormal trans">STL Prep Guide</a>
+    </div>
+    <div>
+      <a href="/faq-3d-printing-jordan" class="gothamNormal trans">FAQ</a>
+    </div>
+    <div>
       <a href="/colors" class="gothamNormal trans">Colors</a>
+    </div>
+    <div>
+      <a href="/store" class="gothamNormal trans">Store</a>
     </div>
     <div>
       <a href="/blogs" class="gothamNormal trans">Blog</a>
@@ -143,6 +171,9 @@
     </div>
     <div>
       <a href="/references" class="gothamNormal trans">References</a>
+    </div>
+    <div>
+      <a href="/ar/" class="gothamNormal trans langSwitch" lang="ar" dir="rtl">العربية</a>
     </div>
   </div>
 
@@ -158,7 +189,7 @@
   <button class="btnCommon fillBtn" id="pwaBtn" style="margin-right: 0;">
     Install 3DJordanPrint
   </button>
-  <img src="/images/icons/moreClose.svg" width="16" height="16" class="exitPwa trans" id="exitPwa">
+  <img src="/images/icons/moreClose.svg" width="16" height="16" class="exitPwa trans" id="exitPwa" alt="Close">
 </div>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172408841-1"></script>
 <script src="/js/includes/pwainstall.js" async></script>
@@ -174,8 +205,8 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "3DJordanPrint",
-  "url": "https://3djordanprint.com/",
-  "logo": "https://3djordanprint.com/images/icons/logo.svg",
+  "url": "https://www.jordan3dprint.store/",
+  "logo": "https://www.jordan3dprint.store/images/icons/logo.svg",
   "email": "info@3djordanprint.com",
   "telephone": "+962797479825",
   "sameAs": [
@@ -191,13 +222,36 @@
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "3DJordanPrint",
-  "image": "https://3djordanprint.com/images/icons/logo.svg",
-  "url": "https://3djordanprint.com/",
+  "image": "https://www.jordan3dprint.store/images/icons/logo.svg",
+  "url": "https://www.jordan3dprint.store/",
   "telephone": "+962797479825",
   "email": "info@3djordanprint.com",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "Amman",
+    "addressLocality": "Amman",
+    "postalCode": "11121",
     "addressCountry": "JO"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 32.021950147920315,
+    "longitude": 35.88603972882196
+  },
+  "hasMap": "https://maps.app.goo.gl/PoRETQmSAV7xHrfSA",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "opens": "09:00",
+    "closes": "18:00"
   },
   "areaServed": [{"@type":"Country","name":"Jordan"},{"@type":"City","name":"Amman"}],
   "availableLanguage": ["en", "ar"],
@@ -210,12 +264,9 @@
   ]
 }
 </script>
-<link rel="preload" href="/fonts/gothamMedium.woff2" as="font" type="font/woff2"
-  crossorigin>
-<link rel="preload" href="/fonts/gotham.woff2" as="font" type="font/woff2"
-  crossorigin>
-<link rel="preload" href="/fonts/gothamNormal.woff2" as="font" type="font/woff2"
-  crossorigin>
+<link rel="preload" href="/fonts/gothamMedium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/gotham.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/gothamNormal.woff2" as="font" type="font/woff2" crossorigin>
 
 <!--
 <noscript>
@@ -224,32 +275,31 @@
 </noscript>
 --!>
 
-<!-- Floating WhatsApp moved to footer include to avoid duplicates -->
-<footer class="animate__animated animate__fadeIn" id="zFooter">
+<!-- Floating WhatsApp moved to footer include to avoid duplicates --><footer class="animate__animated animate__fadeIn" id="zFooter">
   <div>
     <div>
       <b>Information</b>
       <div>
-        <a href="/aszf">Terms & Conditions</a>       
+        <a href="/aszf">Terms & Conditions</a>
       </div>
       <div>
-        <a href="/nyilatkozat">Privacy Policy</a>       
+        <a href="/nyilatkozat">Privacy Policy</a>
       </div>
       <div>
-        <a href="/elallas">Withdrawal Statement</a>       
+        <a href="/elallas">Withdrawal Statement</a>
       </div>
     </div>
 
     <div>
       <b>Help</b>
       <div>
-        <a href="/gyik">FAQ</a>       
+        <a href="/gyik">FAQ</a>
       </div>
       <div>
-        <a href="/vasarlas">How to Order</a>       
+        <a href="/vasarlas">How to Order</a>
       </div>
       <div>
-        <a href="/about">About</a>       
+        <a href="/about">About</a>
       </div>
     </div>
 
@@ -264,38 +314,38 @@
       <div>
         <a href="/getInvolved">Get Involved</a>
       </div>
+      <div>
+        <a href="/ar/" lang="ar" dir="rtl">العربية</a>
+      </div>
     </div>
 
     <div>
       <b>Contact</b>
       <div>
-        <a href="mailto:info@3djordanprint.com" class="contactLinks">info@3djordanprint.com</a>       
+        <a href="mailto:info@3djordanprint.com" class="contactLinks">info@3djordanprint.com</a>
       </div>
       <div>
-        <a href="tel:+962797479825" class="contactLinks">+962 79 747 9825</a>       
+        <a href="tel:+962797479825" class="contactLinks">+962 79 747 9825</a>
       </div>
       <div></div>
     </div>
-    
+
     <div class="footerSocialMedia">
       <a href="https://twitter.com/3djordanprint" target="_blank" rel="noreferrer">
-        <div class="bgCommon socialMediaIcon trans"
-          style="background-image: url('/images/icons/twitter.svg')"></div>
+        <div class="bgCommon socialMediaIcon trans" style="background-image: url('/images/icons/twitter.svg')"></div>
       </a>
 
       <a href="https://www.facebook.com/3djordanprint" target="_blank" rel="noreferrer">
-        <div class="bgCommon socialMediaIcon trans"
-          style="background-image: url('/images/icons/facebook.svg')"></div>
+        <div class="bgCommon socialMediaIcon trans" style="background-image: url('/images/icons/facebook.svg')"></div>
       </a>
 
       <a href="https://www.instagram.com/3djordanprint" target="_blank" rel="noreferrer">
-        <div class="bgCommon socialMediaIcon trans"
-          style="background-image: url('/images/icons/instagram.svg')"></div>
+        <div class="bgCommon socialMediaIcon trans" style="background-image: url('/images/icons/instagram.svg')"></div>
       </a>
     </div>
 
-    
-   
+
+
     <p class="copyright gothamMedium align note" style="margin-bottom: 0;">
       <span class="yearHolder"></span> 3DJordanPrint
     </p>
@@ -304,35 +354,83 @@
     <button type="button" id="waFloat" aria-label="Contact options" class="waFabMain"></button>
     <div id="waMenu" class="waFabMenu">
       <a href="tel:+962797479825" class="waItem waCall" aria-label="Call"></a>
-      <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="waItem waWhats" aria-label="Chat on WhatsApp"></a>
+      <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="waItem waWhats"
+        aria-label="Chat on WhatsApp"></a>
     </div>
   </div>
 </footer>
 <style>
-  .waFab{position:fixed;right:18px;bottom:18px;z-index:9999}
-  .waFabMain{width:84px;height:84px;border-radius:50%;cursor:pointer;border:0;
-    background:#25D366 url('/images/icons/whatsapp.svg') no-repeat 50% 50%;background-size:42px 42px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.2);transition:transform .15s ease}
-  .waFabMain:hover{transform:scale(1.05)}
-  .waFabMenu{position:absolute;right:12px;bottom:96px;display:none;gap:12px;flex-direction:column;align-items:flex-end}
-  .waFab.open .waFabMenu{display:flex}
-  .waItem{width:64px;height:64px;border-radius:50%;background:#111827 no-repeat 50% 50%;background-size:34px 34px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.2)}
-  .waItem:hover{transform:translateY(-2px)}
-  .waCall{background-color:#0ea5e9;background-image:url('/images/icons/phone.svg')}
-  .waWhats{background-color:#25D366;background-image:url('/images/icons/whatsapp.svg')}
+  .waFab {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 9999
+  }
+
+  .waFabMain {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 0;
+    background: #25D366 url('/images/icons/whatsapp.svg') no-repeat 50% 50%;
+    background-size: 42px 42px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform .15s ease
+  }
+
+  .waFabMain:hover {
+    transform: scale(1.05)
+  }
+
+  .waFabMenu {
+    position: absolute;
+    right: 12px;
+    bottom: 96px;
+    display: none;
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-end
+  }
+
+  .waFab.open .waFabMenu {
+    display: flex
+  }
+
+  .waItem {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #111827 no-repeat 50% 50%;
+    background-size: 34px 34px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2)
+  }
+
+  .waItem:hover {
+    transform: translateY(-2px)
+  }
+
+  .waCall {
+    background-color: #0ea5e9;
+    background-image: url('/images/icons/phone.svg')
+  }
+
+  .waWhats {
+    background-color: #25D366;
+    background-image: url('/images/icons/whatsapp.svg')
+  }
 </style>
 <script>
-  (function(){
+  (function () {
     var fab = document.getElementById('waFab');
-    if(!fab) return;
+    if (!fab) return;
     var main = document.getElementById('waFloat');
-    main.addEventListener('click', function(e){
+    main.addEventListener('click', function (e) {
       e.preventDefault();
       fab.classList.toggle('open');
     });
-    document.addEventListener('click', function(e){
-      if(!fab.contains(e.target)) fab.classList.remove('open');
+    document.addEventListener('click', function (e) {
+      if (!fab.contains(e.target)) fab.classList.remove('open');
     });
   })();
 </script>

@@ -8,7 +8,7 @@ set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DB_HOST=${DB_HOST:-127.0.0.1}
-DB_USER=${DB_USER:-zaccordlocalhost}
+DB_USER=${DB_USER:-jordan3dprintlocalhost}
 DB_PASS=${DB_PASS:-abc}
 DB_NAME=${DB_NAME:-3d}
 NODE_CMD=${NODE_CMD:-node}

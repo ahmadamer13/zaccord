@@ -106,7 +106,7 @@ let currentIndexFdm = 0;
 let titleSourcesFdm = ['FDM printer', ' Filament needed for FDM printing'];
 let textSourcesFdm = [
   `FDM printers precisely build the desired model from melted filament layer by layer from a digital file. The print head moves along all three axes (X, Y, Z), so it can create almost any shape.`,
-  `FDM printers use filament for printing, a material that melts at high temperatures (200–250 °C). The printer builds the model from the molten filament, which is ready to use after cooling. On Zaccord, in addition to standard filaments, we can also print with flexible TPU.`,
+  `FDM printers use filament for printing, a material that melts at high temperatures (200–250 °C). The printer builds the model from the molten filament, which is ready to use after cooling. On jordan3dprint, in addition to standard filaments, we can also print with flexible TPU.`,
   `SLA printers produce the desired product from a light‑curing resin that solidifies where exposed and thus builds up the result layer by layer. This technology can print much more precise parts (50 microns or below), but it is more expensive and slower than FDM printing.`
 ];
 
