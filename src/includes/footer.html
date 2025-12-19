@@ -87,7 +87,7 @@
     position: fixed;
     right: 18px;
     bottom: 18px;
-    z-index: 9999
+    z-index: 99999
   }
 
   /* RTL support for Arabic pages */
@@ -165,6 +165,7 @@
     var main = document.getElementById('waFloat');
     var menu = document.getElementById('waMenu');
     var timer;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     function show() {
       clearTimeout(timer);
@@ -177,18 +178,21 @@
       }, 3000);
     }
 
-    // Show menu on hover over main button or menu
-    fab.addEventListener('mouseenter', show);
-    fab.addEventListener('mouseleave', hide);
+    // For desktop: hover behavior
+    if (!isMobile) {
+      fab.addEventListener('mouseenter', show);
+      fab.addEventListener('mouseleave', hide);
 
-    // Keep menu open when hovering over menu items
-    if (menu) {
-      menu.addEventListener('mouseenter', show);
-      menu.addEventListener('mouseleave', hide);
+      if (menu) {
+        menu.addEventListener('mouseenter', show);
+        menu.addEventListener('mouseleave', hide);
+      }
     }
 
+    // For mobile and desktop: click/tap behavior
     main.addEventListener('click', function (e) {
       e.preventDefault();
+      e.stopPropagation();
       // Toggle logic for mobile/touch devices
       if (fab.classList.contains('open')) {
         clearTimeout(timer);
