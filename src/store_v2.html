@@ -288,7 +288,7 @@
 
     <script>
         function filterProducts(category) {
-            const cards = document.querySelectorAll('.product-card');
+            const wrappers = document.querySelectorAll('.product-card-wrapper');
             const btns = document.querySelectorAll('.filter-btn');
 
             btns.forEach(btn => {
@@ -299,11 +299,11 @@
                 }
             });
 
-            cards.forEach(card => {
-                if (category === 'All' || card.dataset.category === category) {
-                    card.style.display = 'flex';
+            wrappers.forEach(wrapper => {
+                if (category === 'All' || wrapper.dataset.category === category) {
+                    wrapper.style.display = 'block';
                 } else {
-                    card.style.display = 'none';
+                    wrapper.style.display = 'none';
                 }
             });
         }

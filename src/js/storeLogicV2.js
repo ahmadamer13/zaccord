@@ -29,8 +29,8 @@ const buildStoreSectionV2 = (conn, userID) => {
                 const whatsappUrl = `https://wa.me/962797479825?text=I%20want%20to%20order:%20${encodedProductName}`;
 
                 return `
-                            <div class="product-card-wrapper">
-                                <a href="/item/product=${product.id}" class="product-card" data-category="${product.category}">
+                            <div class="product-card-wrapper" data-category="${product.category}">
+                                <a href="/item/product=${product.id}" class="product-card">
                                     <div class="card-image-wrapper">
                                         <img src="${img}" alt="${product.name}" class="card-image" loading="lazy">
                                     </div>
@@ -86,7 +86,7 @@ const buildStoreSectionV2 = (conn, userID) => {
                 const script = `
                             <script>
                                 function filterProducts(category) {
-                                    const cards = document.querySelectorAll('.product-card');
+                                    const wrappers = document.querySelectorAll('.product-card-wrapper');
                                     const btns = document.querySelectorAll('.filter-btn');
 
                                     btns.forEach(btn => {
@@ -97,11 +97,11 @@ const buildStoreSectionV2 = (conn, userID) => {
                                         }
                                     });
 
-                                    cards.forEach(card => {
-                                        if (category === 'All' || card.dataset.category === category) {
-                                            card.style.display = 'flex';
+                                    wrappers.forEach(wrapper => {
+                                        if (category === 'All' || wrapper.dataset.category === category) {
+                                            wrapper.style.display = 'block';
                                         } else {
-                                            card.style.display = 'none';
+                                            wrapper.style.display = 'none';
                                         }
                                     });
                                 }
