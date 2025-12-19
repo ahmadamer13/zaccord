@@ -170,8 +170,9 @@ const buildMainSection = (conn, cat) => {
                   <p style="margin:6px 0 0;color:#475569;font-weight:700;">0.07 JD per gram · FDM & SLA · Fast delivery across Jordan</p>
                   <div class="hero__cta">
                     <a class="pill pill--primary" href="/print">Start a print</a>
+                    <a class="pill" href="https://wa.me/962797479825?text=I%20am%20interested%20in%203D%20design%20service" target="_blank" rel="noreferrer">3D Design Service</a>
+                    <a class="pill" href="/store">Store</a>
                     <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
-                    <a class="pill" href="/store">3D Printer Store</a>
                     <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl">الموقع بالعربية</a>
                   </div>
                 </div>
