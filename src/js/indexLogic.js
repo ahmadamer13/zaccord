@@ -165,8 +165,8 @@ const buildMainSection = (conn, cat) => {
             <section class="hero">
               <div class="hero__inner">
                 <div class="hero__text">
-                  <h1>World-class 3D printing — right here in Jordan</h1>
-                  <p>Instant quotes, fast turnaround, and expert makers. PLA, PETG, ABS, and resin (SLA) with nationwide delivery.</p>
+                  <h1>3D Printing Service in Jordan</h1>
+                  <p>The leading 3D printing service in Jordan. Instant quotes, fast turnaround, and expert makers. PLA, PETG, ABS, and resin (SLA) with delivery to Amman, Irbid, Zarqa, and all governorates.</p>
                   <p style="margin:6px 0 0;color:#475569;font-weight:700;">0.07 JD per gram · FDM & SLA · Fast delivery across Jordan</p>
                   <div class="hero__cta">
                     <a class="pill pill--primary" href="/print">Start a print</a>
@@ -254,7 +254,7 @@ const buildMainSection = (conn, cat) => {
 
             <section class="section">
               <h2>Visit Us</h2>
-              <p class="lead">Come say hello at our workshop in Amman.</p>
+              <p class="lead">Come say hello at our workshop in Amman. We serve all of Jordan.</p>
               <div class="grid">
                 <div class="tile">
                   <h3>Address</h3>
@@ -270,6 +270,10 @@ const buildMainSection = (conn, cat) => {
                   <h3>Contact</h3>
                   <p>+962 79 747 9825</p>
                   <p>info@3djordanprint.com</p>
+                </div>
+                <div class="tile">
+                  <h3>Service Areas</h3>
+                  <p>Amman, Irbid, Zarqa, Aqaba, Salt, Madaba, Jerash, Ma'an, Karak, Tafilah, Ajloun, Mafraq.</p>
                 </div>
               </div>
             </section>
