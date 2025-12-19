@@ -107,7 +107,10 @@ ssh $REMOTE_USER@$REMOTE_HOST << EOF
     echo "🔧 Fixing database connection for production..."
     sed -i 's/jordan3dprintlocalhost/zaccordlocalhost/g' src/js/includes/connConstants.js
     
-    echo "🔄 Restarting service..."
+    echo "� Fixing permissions..."
+    chown -R zaccord:zaccord $REMOTE_DIR
+    
+    echo "�🔄 Restarting service..."
     systemctl restart $SERVICE_NAME
     
     echo "⏳ Waiting for service to start..."
