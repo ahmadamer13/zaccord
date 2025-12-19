@@ -12,8 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@codingsans/billingo-client": "^2.1.0",
-    "axios": "^1.6.7",
     "animate.css": "^4.1.0",
+    "axios": "^1.6.7",
     "bcrypt": "^6.0.0",
     "canvas": "^2.11.2",
     "client-sessions": "^0.8.0",
@@ -32,6 +32,7 @@
     "minify": "^6.0.1",
     "mv": "^2.1.1",
     "mysql": "^2.18.1",
+    "mysql2": "^3.16.0",
     "node-cron": "^3.0.2",
     "node-html-parser": "^1.2.20",
     "node-persist": "^2.1.0",

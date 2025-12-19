@@ -29,11 +29,12 @@ async function buildBlog(conn, blogID, req) {
   // Apply English translations for known posts on page header/meta
   const t = blogTranslations[res.id] || {};
   let title = t.title || res.title;
+  let isAr = /^[\u0600-\u06FF]/.test(title);
   let author = res.author;
   // Normalize author name to English presentation
   if (typeof author === 'string') {
     const a = author.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
-if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
+    if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
       author = 'Mark Frankli';
     }
   }
@@ -123,15 +124,15 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body>
-        <section class="keepBottom lh ofv blogSection">
+        <section class="keepBottom lh ofv blogSection" dir="${isAr ? 'rtl' : 'ltr'}">
   `;
 
   content += `
     <h1 class="gotham fontNorm font34 blogPageTitle" style="margin-top: 0;">${title}</h1>
     <div class="blogHeaderCont notoSans">
-      <div><span class="hideSeekBlog">By:</span> ${author}</div>
-      <div><span class="hideSeekBlog">Keywords:</span> ${categories}</div> 
-      <div>Last updated: ${lastUpdate}</div> 
+      <div><span class="hideSeekBlog">${isAr ? 'بواسطة:' : 'By:'}</span> ${author}</div>
+      <div><span class="hideSeekBlog">${isAr ? 'الكلمات المفتاحية:' : 'Keywords:'}</span> ${categories}</div> 
+      <div>${isAr ? 'آخر تحديث:' : 'Last updated:'} ${lastUpdate}</div> 
     </div>
     <div class="clear"></div>
     <hr class="hrStyle">
@@ -143,7 +144,7 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
     content += `
       <hr class="hrStyle">
       <div class="blogRelated notoSans">
-        <h2 class="gotham fontNorm font24" style="margin-bottom: 12px;">More to explore</h2>
+        <h2 class="gotham fontNorm font24" style="margin-bottom: 12px;">${isAr ? 'المزيد لاستكشافه' : 'More to explore'}</h2>
         <ul class="dul font18">
           ${relatedPosts.map(post => `
             <li>
@@ -153,7 +154,7 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
           `).join('')}
         </ul>
         <p class="font16" style="margin-top: 12px;">
-          Want to dive deeper? Visit the <a class="blueLink font16" href="/blog">3D printing blog index</a> for every article.
+          ${isAr ? 'تريد معرفة المزيد؟ قم بزيارة <a class="blueLink font16" href="/blogs">فهرس مدونة الطباعة ثلاثية الأبعاد</a> لجميع المقالات.' : 'Want to dive deeper? Visit the <a class="blueLink font16" href="/blogs">3D printing blog index</a> for every article.'}
         </p>
       </div>
     `;
@@ -161,8 +162,7 @@ if (/^frankli/i.test(a.replace(/\s+/g, ' ')) || /m[aá]rk/i.test(author)) {
   content += `
     <hr class="hrStyle">
     <p class="font18 align ttt notoSans">
-      For 3D printing, visit the <a class="blueLink font18" href="/print">on‑demand printing</a> or
-      <a class="blueLink font18" href="/prototype">prototyping</a> pages.
+      ${isAr ? 'للطباعة ثلاثية الأبعاد، قم بزيارة صفحات <a class="blueLink font18" href="/print">الطباعة عند الطلب</a> أو <a class="blueLink font18" href="/prototype">النماذج الأولية</a>.' : 'For 3D printing, visit the <a class="blueLink font18" href="/print">on‑demand printing</a> or <a class="blueLink font18" href="/prototype">prototyping</a> pages.'}
     </p>
   `;
   content += '</div>'

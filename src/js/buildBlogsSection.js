@@ -18,7 +18,7 @@ function applyTranslations(blog) {
 function buildBlogItem(currentBlog) {
   currentBlog = applyTranslations(currentBlog);
   let id = currentBlog.id;
-  let title = currentBlog.title; 
+  let title = currentBlog.title;
   let categories = currentBlog.categories.split(',').map(e => e.trim()).join(', ');
   let summary = currentBlog.summary;
   let imgUrl = currentBlog.img_url;
@@ -26,7 +26,7 @@ function buildBlogItem(currentBlog) {
   let date = currentBlog.date.split(' ')[0];
 
   return `
-    <div class="blogCont trans">
+    <div class="blogCont trans" dir="${/^[\u0600-\u06FF]/.test(title) ? 'rtl' : 'ltr'}">
       <div class="upperImg bgCommon lazy" data-bg="${bgUrl}"
        style="background-color: rgb(53, 54, 58);">
         <div class="darken"></div>
@@ -37,13 +37,13 @@ function buildBlogItem(currentBlog) {
         <p class="gothamNormal maz">${summary}</p>
         <br>
         <p class="gotham maz catLines">
-          <span>Categories:</span> ${categories}
+          <span>${/^[\u0600-\u06FF]/.test(title) ? 'التصنيفات:' : 'Categories:'}</span> ${categories}
         </p>
       </div>
       <div class="lowerReadMore">
         <hr class="hrStyle">
         <a href="/blog?id=${id}">
-          <button class="fillBtn btnCommon">Read more</button>
+          <button class="fillBtn btnCommon">${/^[\u0600-\u06FF]/.test(title) ? 'اقرأ المزيد' : 'Read more'}</button>
         </a>
       </div>
     </div>
