@@ -109,6 +109,11 @@ const buildStoreSectionV2 = (conn, userID) => {
                         `;
 
                 output = output.replace('</body>', script + '</body>');
+
+                // Add common.js for sidebar functionality
+                const commonScript = '<script src="/js/clientScripts/common.js"></script>';
+                output = output.replace('</body>', commonScript + '</body>');
+
                 resolve(output);
             });
         });
