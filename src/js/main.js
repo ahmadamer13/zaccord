@@ -263,6 +263,7 @@ function changeToRandColors() {
 // changeToRandColors();
 
 // Toggle more items menu btn
+// Toggle more items menu btn
 function toggleMoreMenu() {
   let cont = _('mmContainer');
   if (cont.dataset.status == 'closed') {
@@ -277,22 +278,24 @@ function toggleMoreMenu() {
   $("#mmContainer").animate({ width: 'toggle' }, 200);
 }
 
-_('mmOverlay').addEventListener('click', (e) => {
-  if (_('mmContainer').dataset.status == 'opened') {
-    hideOnClickOutside(_('mmContainer'), toggleMoreMenu);
-  }
-});
-
-_('mmClose').addEventListener('click', function closeMenu(e) {
-  _('mmContainer').dataset.status = 'opened';
-  toggleMoreMenu();
-});
-
-function redirect(url) {
-  window.location.href = url;
+if (_('moreMenu')) {
+  _('moreMenu').addEventListener('click', toggleMoreMenu);
 }
 
-_('moreMenu').addEventListener('click', toggleMoreMenu);
+if (_('mmOverlay')) {
+  _('mmOverlay').addEventListener('click', (e) => {
+    if (_('mmContainer').dataset.status == 'opened') {
+      hideOnClickOutside(_('mmContainer'), toggleMoreMenu);
+    }
+  });
+}
+
+if (_('mmClose')) {
+  _('mmClose').addEventListener('click', function closeMenu(e) {
+    _('mmContainer').dataset.status = 'opened';
+    toggleMoreMenu();
+  });
+}
 
 let clinks = document.getElementsByClassName('contactLinks');
 for (let clink of clinks) {
