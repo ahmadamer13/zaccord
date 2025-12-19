@@ -488,12 +488,47 @@
 
 <body>
   <div class="page">
-    <!-- Floating Menu Button for Arabic Page -->
-    <div id="mmHolder"
-      style="position: fixed; top: 20px; left: 20px; z-index: 10001; cursor: pointer; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-radius: 12px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+    <!-- Hamburger Menu Button for Arabic Page -->
+    <div id="mmHolder" class="ar-menu-btn">
       <img src="/images/icons/moreMenu.svg" class="mMenu trans" id="moreMenu" data-status="open" width="24" height="24"
         alt="Menu" style="display: block;">
     </div>
+
+    <style>
+      .ar-menu-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 10001;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .ar-menu-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 255, 255, 1);
+      }
+
+      .ar-menu-btn:active {
+        transform: scale(0.95);
+      }
+
+      @media (max-width: 768px) {
+        .ar-menu-btn {
+          top: 16px;
+          left: 16px;
+          padding: 10px;
+        }
+      }
+    </style>
 
 
     <section class="hero">
