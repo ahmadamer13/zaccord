@@ -48,7 +48,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
     let subVolumes = [];
 
     let allowSLA = true;
-    
+
     let stlWidth = '';
     if (filePaths.length === 1) {
       stlWidth = 'style="min-width: 100%;"';
@@ -57,17 +57,17 @@ const buildCustomPrint = (conn, userID, filePaths) => {
     } else {
       stlWidth = 'style="min-width: calc(33% - 6px);"';
     }
-    
+
     let isMoreFiles = filePaths.length > 1;
     let extraMarginDown = '20px';
     if (isMoreFiles) {
       extraMarginDown = '0px';
     }
-    
+
     for (let i = 0; i < filePaths.length; i++) {
       let path = filePaths[i];
       // Keep density consistent with DENSITY used in pricing
-      let stl = new NodeStl(path, {density: 1.24}); // PLA density in g/cm^3
+      let stl = new NodeStl(path, { density: 1.24 }); // PLA density in g/cm^3
       let volume = (stl.volume).toFixed(2); // cm^3
       let weight = (stl.weight).toFixed(2); // gramm
       subVolumes.push(volume);
@@ -109,7 +109,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           ${subpriceText}
         </div>
       `;
-      
+
       // Make sure that model is not too large 
       if (!checkStlSize(stl.boundingBox)) {
         reject(`The maximum size can be ${PRINT_SIZES_PLA[0]}mm x ${PRINT_SIZES_PLA[1]}mm x ${PRINT_SIZES_PLA[2]}mm`);
@@ -125,7 +125,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       sizes.push(boxVolume);
       cnt++;
     }
-    
+
     // Calculate the ratio of sub prices to the total price
     let subPriceRatios = [];
     for (let price of subPrices) {
@@ -198,7 +198,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
         The price includes post‑processing!
       </p>
     `;
-    
+
     content += genQuan(afterWorkNote);
     let disableSLAClass = allowSLA ? '' : 'slaDisabled';
     content += `
@@ -305,7 +305,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             <div>Surface quality</div>
           </div>
           <div class="specChValBox font32 blue">
-<p data-value="Fehér" id="chcolor">White</p>
+            <p data-value="White" id="chcolor">White</p>
             <p class="otherPrice">Price: ${Math.round(totalPrice)} JD</p>
           </div>
         </div>
@@ -314,22 +314,22 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       `;
 
       const COLOR_LABELS = {
-        'Fehér': 'Pearl White',
-        'Fekete': 'Matte Black',
-        'Kék': 'Royal Blue',
-        'Sötétkék': 'Royal Blue',
-        'Világoskék': 'Sky Blue',
-        'Zöld': 'Emerald Green',
-        'Sötétzöld': 'Emerald Green',
-        'Piros': 'Crimson Red',
-        'Sötétszürke': 'Gunmetal Gray',
-        'Szürke': 'Gunmetal Gray',
-        'Átlátszó': 'Transparent (Clear)',
-        'Arany': 'Gold Metallic',
-        'Ezüst': 'Silver Metallic',
-        'Barna': 'Copper Bronze',
-        'Neon Narancssárga': 'Neon Orange',
-        'Lila': 'Deep Purple'
+        'White': 'Pearl White',
+        'Black': 'Matte Black',
+        'Blue': 'Royal Blue',
+        'Dark Blue': 'Royal Blue',
+        'Light Blue': 'Sky Blue',
+        'Green': 'Emerald Green',
+        'Dark Green': 'Emerald Green',
+        'Red': 'Crimson Red',
+        'Dark Gray': 'Gunmetal Gray',
+        'Gray': 'Gunmetal Gray',
+        'Transparent': 'Transparent (Clear)',
+        'Gold': 'Gold Metallic',
+        'Silver': 'Silver Metallic',
+        'Brown': 'Copper Bronze',
+        'Neon Orange': 'Neon Orange',
+        'Purple': 'Deep Purple'
       };
       const ALLOWED_COLOR_EN = new Set([
         'Matte Black',
@@ -354,7 +354,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       for (let pair of CMAT['pla']) {
         let color = Object.keys(pair)[0];
         if (!COLOR_IN_STOCK['pla'] || !Number(COLOR_IN_STOCK['pla'][color])) continue;
-        let highlight = (color == 'Fehér' || color == 'White') ? 'specChHl' : '';
+        let highlight = (color == 'White') ? 'specChHl' : '';
         let label = COLOR_LABELS[color] || color;
         if (!ALLOWED_COLOR_EN.has(label)) continue;
         // append hex code beside the name for initial PLA list
@@ -402,7 +402,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
 
         <div class="specChDD" id="specChLhDD" data-open="closed">
       `;
-      
+
       let lhPairs = [
         ['lh12', '0.12mm'],
         ['lh20', '0.20mm'],
@@ -473,7 +473,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
         `;
       }
-      
+
       content += `
         </div>
 
@@ -515,7 +515,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
         `;
       }
-      
+
       content += `
         </div>
 
@@ -558,8 +558,8 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </div>
         `;
       }
-      
-      
+
+
 
       for (let i of SCALE) {
         let highlight = i == 10 ? 'specChHl' : '';
@@ -573,9 +573,9 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             </div>
             <div class="gothamNormal"></div>
           </div>
-        `; 
+        `;
       }
-      
+
       content += `
         </div>
 
@@ -622,7 +622,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
       content += `
         </div>
       `;
-    
+
       content += `
         <hr class="hrStyle">
         <br>
@@ -652,7 +652,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
           </p>
         </section>
       `;
-        
+
       // JS content for displaying the interactive stl viewer
       content += `
         <script type="text/javascript">
@@ -685,7 +685,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
 
           (function enforceLimitedColors() {
             const limitedMap = {
-              'petg': ['White', 'Black', 'Fehér', 'Fekete']
+              'petg': ['White', 'Black']
             };
             const mats = Object.keys(PCOLORS || {});
             for (const mat of mats) {
@@ -800,7 +800,7 @@ const buildCustomPrint = (conn, userID, filePaths) => {
             let soFar = JSON.parse(getCookie('cartItems'));
             let id = getID(i);
             let colorVal = decodeURIComponent(soFar['content_' + id]['color_' + id]);
-if (_('color').value.toLowerCase().includes('átlátszó')) {
+            if (_('color').value.toLowerCase().includes('transparent')) {
               models[i].set_opacity(0, 0.5);
             } 
             chooseColor('#' + colorMaps[colorVal]);
@@ -814,7 +814,7 @@ if (_('color').value.toLowerCase().includes('átlátszó')) {
           }
 
           function setOpacityAll() {
-if (_('color').value.toLowerCase().includes('átlátszó')) {
+            if (_('color').value.toLowerCase().includes('transparent')) {
               setOpacity(0.5);
             } else {
               setOpacity(1);
@@ -834,9 +834,9 @@ if (_('color').value.toLowerCase().includes('átlátszó')) {
             }
 
             let hexToName = {
-'#ffffff': 'Fehér',
-              '#ff0000': 'Piros',
-'#0089ff': 'Kék'
+              '#ffffff': 'White',
+              '#ff0000': 'Red',
+              '#0089ff': 'Blue'
             };
 
             if (isRev) {

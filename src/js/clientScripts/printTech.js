@@ -4,7 +4,7 @@ function changeTech(techBefore, tid, price) {
   const lwValues = isSLA ? LAYER_WIDTH_VALUES_SLA : LAYER_WIDTH_VALUES;
   const infillValues = isSLA ? INFILL_VALUES_SLA : INFILL_VALUES;
   let cookieVals = JSON.parse(getCookie('cartItems'));
-  
+
   // Change print technology in cookies & get saved base price
   let currentTech = isSLA ? 'SLA' : 'FDM';
   let scaleVal = cookieVals['content_' + tid]['scale_' + tid];
@@ -19,12 +19,12 @@ function changeTech(techBefore, tid, price) {
   } else {
     cookieVals['content_' + tid]['rvas_' + tid] = '0.05';
     cookieVals['content_' + tid]['suruseg_' + tid] = encodeURIComponent('Solid');
-    cookieVals['content_' + tid]['color_' + tid] = encodeURIComponent(PCOLORS['gyanta (resin)'][0]);
+    cookieVals['content_' + tid]['color_' + tid] = encodeURIComponent(PCOLORS['resin'][0]);
   }
   setCookie('cartItems', JSON.stringify(cookieVals), 365);
   let originalPrice = Number(cookieVals['content_' + tid]['price_' + tid]);
   let oldPrice = Number(_('totpHolder_' + tid));
-  
+
   let content = `
     <div id="unitPrice_${tid}">
       ${_('unitPrice_' + tid).innerHTML}
@@ -38,12 +38,12 @@ function changeTech(techBefore, tid, price) {
         <select class="specSelect chItem" id="rvas${tid}"
           onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
   `;
-  
+
   for (let lw of lwValues) {
     let selected = '';
     if ((!isSLA && lw == 0.2) || (isSLA && lw == 0.05)) selected = 'selected';
     content += `<option value="${lw.toFixed(2)}" ${selected}>${lw.toFixed(2)}mm</option>`;
-  } 
+  }
 
   content += `
         </select>
@@ -55,7 +55,7 @@ function changeTech(techBefore, tid, price) {
         <select class="specSelect chItem" id="suruseg${tid}"
           onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
   `;
-  
+
   let postfix = isSLA ? '' : '%';
   for (let inf of infillValues) {
     let selected = '';
@@ -70,7 +70,7 @@ function changeTech(techBefore, tid, price) {
       </p>
     </div>
   `;
-  
+
   content += `
     <div id="scaleDiv_${tid}">
       ${_('scaleDiv_' + tid).innerHTML}
@@ -90,7 +90,7 @@ function changeTech(techBefore, tid, price) {
     for (let ww of WALL_WIDTH_VALUES) {
       content += `
         <option value="${ww.toFixed(1)}">${ww.toFixed(1)}mm</option>
-      `; 
+      `;
     }
 
     content += `
@@ -104,37 +104,37 @@ function changeTech(techBefore, tid, price) {
             onchange="updateSpecs(this, ${price}, '${tid}', false, true, ${isSLA})">
     `;
 
-    const ALLOWED = new Set(['PLA','ABS','PETG','TPU']);
-    for (let pm of Object.keys(PCOLORS).filter(e => e != 'gyanta (resin)').map(e => e.toUpperCase()).filter(e => ALLOWED.has(e))) {
+    const ALLOWED = new Set(['PLA', 'ABS', 'PETG', 'TPU']);
+    for (let pm of Object.keys(PCOLORS).filter(e => e != 'resin').map(e => e.toUpperCase()).filter(e => ALLOWED.has(e))) {
       content += `<option value="${pm}">${pm}</option>`;
     }
-    
+
     content += `
           </select>
         </p>
       </div>
-    `; 
+    `;
   }
-  
+
   let colorContent = '';
-  let ind = isSLA ? 'gyanta (resin)' : 'pla';
+  let ind = isSLA ? 'resin' : 'pla';
   const COLOR_LABELS = {
-    'Fekete': 'Matte Black',
-    'Fehér': 'Pearl White',
-    'Kék': 'Royal Blue',
-    'Sötétkék': 'Royal Blue',
-    'Világoskék': 'Sky Blue',
-    'Zöld': 'Emerald Green',
-    'Sötétzöld': 'Emerald Green',
-    'Arany': 'Gold',
-    'Piros': 'Crimson Red',
-    'Sötétszürke': 'Gunmetal Gray',
-    'Szürke': 'Gunmetal Gray',
-    'Neon Narancssárga': 'Neon Orange',
-    'Lila': 'Deep Purple',
-    'Ezüst': 'Silver',
-    'Átlátszó': 'Transparent (Clear)',
-    'Barna': 'Copper Bronze'
+    'Black': 'Matte Black',
+    'White': 'Pearl White',
+    'Blue': 'Royal Blue',
+    'Dark Blue': 'Royal Blue',
+    'Light Blue': 'Sky Blue',
+    'Green': 'Emerald Green',
+    'Dark Green': 'Emerald Green',
+    'Gold': 'Gold',
+    'Red': 'Crimson Red',
+    'Dark Gray': 'Gunmetal Gray',
+    'Gray': 'Gunmetal Gray',
+    'Neon Orange': 'Neon Orange',
+    'Purple': 'Deep Purple',
+    'Silver': 'Silver',
+    'Transparent': 'Transparent (Clear)',
+    'Brown': 'Copper Bronze'
   };
   const ALLOWED_COLOR_EN = new Set([
     'Matte Black',
@@ -225,7 +225,7 @@ function changeTech(techBefore, tid, price) {
 function toggleUIAllowance(shouldSkip, id, tech, price) {
   if (shouldSkip) {
     if (tech == 'SLA') changeTech('SLA', id, price);
-    _('printTech' + id).innerHTML = '<option value="FDM">FDM</option>';  
+    _('printTech' + id).innerHTML = '<option value="FDM">FDM</option>';
     $('#scale' + id).off();
     attachHandlers();
   } else {
@@ -235,7 +235,7 @@ function toggleUIAllowance(shouldSkip, id, tech, price) {
       var slaSel = '';
     } else {
       var fdmSel = '';
-      var slaSel = 'selected';     
+      var slaSel = 'selected';
     }
     _('printTech' + id).innerHTML = `
       <option value="FDM" ${fdmSel}>FDM</option>

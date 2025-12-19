@@ -13,7 +13,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
     getColors(conn).then(([colors, hex_codes]) => {
       const PRINT_COLORS = colors;
       const limitedMap = {
-        'petg': ['White', 'Black', 'Fehér', 'Fekete']
+        'petg': ['White', 'Black']
       };
       const enforceLimited = (mat) => {
         if (!mat) return;
@@ -34,22 +34,22 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
       if (MAT_KEYS.includes('petg')) ALLOWED_MATS.push('PETG');
       const PRINT_MATERIALS = ALLOWED_MATS;
       const COLOR_LABELS = {
-        'Fehér': 'Pearl White',
-        'Fekete': 'Matte Black',
-        'Kék': 'Royal Blue',
-        'Sötétkék': 'Royal Blue',
-        'Világoskék': 'Sky Blue',
-        'Zöld': 'Emerald Green',
-        'Sötétzöld': 'Emerald Green',
-        'Piros': 'Crimson Red',
-        'Sötétszürke': 'Gunmetal Gray',
-        'Szürke': 'Gunmetal Gray',
-        'Átlátszó': 'Transparent (Clear)',
-        'Arany': 'Gold',
-        'Ezüst': 'Silver',
-        'Barna': 'Copper Bronze',
-        'Neon Narancssárga': 'Neon Orange',
-        'Lila': 'Deep Purple'
+        'White': 'Pearl White',
+        'Black': 'Matte Black',
+        'Blue': 'Royal Blue',
+        'Dark Blue': 'Royal Blue',
+        'Light Blue': 'Sky Blue',
+        'Green': 'Emerald Green',
+        'Dark Green': 'Emerald Green',
+        'Red': 'Crimson Red',
+        'Dark Gray': 'Gunmetal Gray',
+        'Gray': 'Gunmetal Gray',
+        'Transparent': 'Transparent (Clear)',
+        'Gold': 'Gold',
+        'Silver': 'Silver',
+        'Brown': 'Copper Bronze',
+        'Neon Orange': 'Neon Orange',
+        'Purple': 'Deep Purple'
       };
       const ALLOWED_COLOR_EN = new Set([
         'Matte Black',
@@ -102,8 +102,8 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
           let selected = lw == 0.05 ? 'selected' : '';
           output += `
             <option value="${lw.toFixed(2)}" ${selected}>${lw.toFixed(2)}mm</option>
-          `; 
-        } 
+          `;
+        }
 
         output += `
                   </select>
@@ -113,7 +113,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
                     <select class="specSelect" id="infillSLA"
                       onchange="updateSLASpecs('infillSLA', 'suruseg')">
         `;
-        
+
         for (let infill of INFILL_VALUES_SLA) {
           let selected = infill == 'Solid' ? 'selected' : '';
           output += `
@@ -148,11 +148,11 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
                   </div>
                   <select class="specSelect" id="color">
         `;
-        
+
         for (let c of PRINT_COLORS['pla']) {
           let label = COLOR_LABELS[c] || c;
           if (!ALLOWED_COLOR_EN.has(label)) continue;
-          let selected = (c == 'Fehér' || c == 'White') ? 'selected' : '';
+          let selected = (c == 'White') ? 'selected' : '';
           output += `
             <option value="${c}" ${selected}>${label}</option>
           `;
@@ -172,7 +172,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
           let selected = scale == 1 ? 'selected' : '';
           output += `
             <option value="${scale.toFixed(1)}" ${selected}>x${scale.toFixed(1)}</option>
-          `; 
+          `;
         }
 
         output += `
@@ -204,7 +204,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
               <select class="specSelect" id="printMat" onchange="updateSpecs(this, ${price}, false,
                 false, ${isCP})">
           `;
-          
+
           for (let pm of PRINT_MATERIALS) {
             // Display name cleanup: show TPU instead of TPU_MEDIUM or other variant
             const disp = pm.startsWith('TPU') ? 'TPU' : pm;
@@ -230,10 +230,10 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
           <div>
           <div class="specTitle">Shape</div>
           <select class="specSelect" id="sphere">
-<option value="Domború" selected>Convex</option>
-<option value="Homorú">Concave</option>
-              <option value="Sima">Flat</option>
-            </select>
+            <option value="Convex" selected>Convex</option>
+            <option value="Concave">Concave</option>
+            <option value="Flat">Flat</option>
+          </select>
           </div>
 
           <div>
@@ -247,7 +247,7 @@ function genSpecs(conn, price, size, isLit = false, isCP = false) {
         `;
 
         for (let c of PRINT_COLORS['pla']) {
-let selected = (c == 'Fehér' || c == 'White') ? 'selected' : '';
+          let selected = (c == 'White') ? 'selected' : '';
           output += `
             <option value="${c}" ${selected}>${c}</option>
           `;
@@ -259,7 +259,7 @@ let selected = (c == 'Fehér' || c == 'White') ? 'selected' : '';
               </div>
             </div>
           </div>
-        `;     
+        `;
 
       }
 

@@ -131,6 +131,17 @@ function redirectToWWW(req, res) {
   }
 }
 
+// Global error handlers to prevent silent crashes and log the cause
+process.on('uncaughtException', (err) => {
+  console.error('FATAL: Uncaught Exception:', err);
+  // Give some time for the log to be written
+  setTimeout(() => process.exit(1), 100);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 const server = http.createServer((req, res) => {
   // Redirect to a www version of the URL if needed
   redirectToWWW(req, res);
@@ -420,7 +431,9 @@ const server = http.createServer((req, res) => {
     });
   } else if (req.url === '/uploadPrint' && req.method.toLowerCase() === 'post') {
     // Allow multiple files to be uploaded, max file size is 100MB
-    const form = formidable({ multiples: true, maxFileSize: 100 * 1024 * 1024 });
+    const form = new formidable.IncomingForm();
+    form.multiples = true;
+    form.maxFileSize = 100 * 1024 * 1024;
     parseUploadFiles(form, req, res, userID).then(data => {
       let promises = data[0];
       let isLit = data[1];

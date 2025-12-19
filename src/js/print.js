@@ -2,9 +2,9 @@ let bpSave = [basePrice, basePriceSLA];
 let currentMat = _('printMat').value.toLowerCase();
 let colorMaps = HEX_COLORS[currentMat];
 const LIMITED_COLOR_MAP = {
-  'petg': ['Fehér', 'Fekete']
+  'petg': ['White', 'Black']
 };
-const STANDARD_COLORS = new Set(['Fehér', 'Fekete', 'White', 'Black']);
+const STANDARD_COLORS = new Set(['White', 'Black']);
 
 function getLimitedColors(mat) {
   const mk = (mat || '').toLowerCase();
@@ -61,7 +61,7 @@ function setAttrVal(id, v) {
   let val = v;
   if (id == 'chcolor') {
     // Display color name in English for the selected swatch
-    try { val = require('./includes/translateColor.js')(v); } catch(e) { /* keep raw */ }
+    try { val = require('./includes/translateColor.js')(v); } catch (e) { /* keep raw */ }
     // Simplify marketing names
     if (val === 'Gold Metallic') val = 'Gold';
     if (val === 'Silver Metallic') val = 'Silver';
@@ -72,8 +72,8 @@ function setAttrVal(id, v) {
     val = v + '%';
   } else if (id == 'chscale') {
     val = 'x' + v;
-  } 
-  
+  }
+
   _(id).innerText = val;
 
   let postfix = id.includes('SLA') ? 'SLA' : '';
@@ -87,7 +87,7 @@ function setAttrVal(id, v) {
       break;
     }
   }
-  
+
   handleChClick(child, _(nid + 'DD' + postfix).children, nid + postfix);
 }
 
@@ -110,22 +110,22 @@ function genUIColors(selectedColor, mat) {
   let ncolors = '';
   const limitedList = getLimitedColors(mat);
   const COLOR_LABELS = {
-    'Fekete': 'Matte Black',
-    'Fehér': 'Pearl White',
-    'Kék': 'Royal Blue',
-    'Sötétkék': 'Royal Blue',
-    'Világoskék': 'Sky Blue',
-    'Zöld': 'Emerald Green',
-    'Sötétzöld': 'Emerald Green',
-    'Arany': 'Gold',
-    'Piros': 'Crimson Red',
-    'Sötétszürke': 'Gunmetal Gray',
-    'Szürke': 'Gunmetal Gray',
-    'Neon Narancssárga': 'Neon Orange',
-    'Lila': 'Deep Purple',
-    'Ezüst': 'Silver',
-    'Átlátszó': 'Transparent (Clear)',
-    'Barna': 'Copper Bronze'
+    'White': 'Pearl White',
+    'Black': 'Matte Black',
+    'Blue': 'Royal Blue',
+    'Dark Blue': 'Royal Blue',
+    'Light Blue': 'Sky Blue',
+    'Green': 'Emerald Green',
+    'Dark Green': 'Emerald Green',
+    'Gold': 'Gold',
+    'Red': 'Crimson Red',
+    'Dark Gray': 'Gunmetal Gray',
+    'Gray': 'Gunmetal Gray',
+    'Neon Orange': 'Neon Orange',
+    'Purple': 'Deep Purple',
+    'Silver': 'Silver',
+    'Transparent': 'Transparent (Clear)',
+    'Brown': 'Copper Bronze'
   };
   const ALLOWED_COLOR_EN = new Set([
     'Matte Black',
@@ -202,22 +202,22 @@ function chgMat(currentColor) {
   colorMaps = HEX_COLORS[currentMat];
   let newColors = '';
   const COLOR_LABELS = {
-    'Fekete': 'Matte Black',
-    'Fehér': 'Pearl White',
-    'Kék': 'Royal Blue',
-    'Sötétkék': 'Royal Blue',
-    'Világoskék': 'Sky Blue',
-    'Zöld': 'Emerald Green',
-    'Sötétzöld': 'Emerald Green',
-    'Arany': 'Gold',
-    'Piros': 'Crimson Red',
-    'Sötétszürke': 'Gunmetal Gray',
-    'Szürke': 'Gunmetal Gray',
-    'Neon Narancssárga': 'Neon Orange',
-    'Lila': 'Deep Purple',
-    'Ezüst': 'Silver',
-    'Átlátszó': 'Transparent (Clear)',
-    'Barna': 'Copper Bronze'
+    'White': 'Pearl White',
+    'Black': 'Matte Black',
+    'Blue': 'Royal Blue',
+    'Dark Blue': 'Royal Blue',
+    'Light Blue': 'Sky Blue',
+    'Green': 'Emerald Green',
+    'Dark Green': 'Emerald Green',
+    'Gold': 'Gold',
+    'Red': 'Crimson Red',
+    'Dark Gray': 'Gunmetal Gray',
+    'Gray': 'Gunmetal Gray',
+    'Neon Orange': 'Neon Orange',
+    'Purple': 'Deep Purple',
+    'Silver': 'Silver',
+    'Transparent': 'Transparent (Clear)',
+    'Brown': 'Copper Bronze'
   };
   const ALLOWED_COLOR_EN = new Set([
     'Matte Black',
@@ -253,7 +253,7 @@ function chgMat(currentColor) {
   } else if (Array.isArray(PCOLORS[currentMat]) && PCOLORS[currentMat].length) {
     colorPool = PCOLORS[currentMat].slice();
   } else {
-    colorPool = ['Fehér', 'Fekete', 'White', 'Black'];
+    colorPool = ['White', 'Black'];
     PCOLORS[currentMat] = colorPool.slice();
   }
 
@@ -294,11 +294,11 @@ function chgMat(currentColor) {
 function hasBelow800() {
   for (let i = 0; i < subPrices.length; i++) {
     if (_('techVal').value == 'FDM' && calcP(subPrices[i]) === 800) {
-      return true; 
+      return true;
     } else {
       let params = getSLAParams();
       if (calcSLAPrice(subPrices[i] * SLA_MULTIPLIER, ...params) === 800) {
-        return true; 
+        return true;
       }
     }
   }
@@ -329,7 +329,7 @@ function updateSLASpecs(contID, cookieID) {
 }
 
 // Toggle SLA/FDM printing specifications
-const fdmIDs = ['rvasFDMBox', 'surusegFDMBox', 'fvasFDMBox', 'printMatBox', 'specChLh', 'specChInf', 'specChShell', 'specChMat']; 
+const fdmIDs = ['rvasFDMBox', 'surusegFDMBox', 'fvasFDMBox', 'printMatBox', 'specChLh', 'specChInf', 'specChShell', 'specChMat'];
 const slaIDs = ['rvasSLABox', 'infillSLABox', 'specChLhSLA', 'specChInfSLA'];
 
 function toggleTechs(ids1, ids2, box1, box2) {
@@ -358,32 +358,32 @@ function fillTechColor(mat, sel) {
   let newColors = '';
   let ncolors = '';
   const COLOR_LABELS = {
-    'Fekete': 'Black',
-    'Fehér': 'White',
-    'Kék': 'Blue',
-    'Zöld': 'Green',
-    'Arany': 'Gold',
-    'Piros': 'Red',
-    'Citromsárga': 'Lemon Yellow',
-    'Szürke': 'Gray',
-    'Sötétszürke': 'Dark Gray',
-    'Világosszürke': 'Light Gray',
-    'Sötétzöld': 'Dark Green',
-    'Világoszöld': 'Light Green',
-    'Narancssárga': 'Orange',
-    'Neon Narancssárga': 'Neon Orange',
-    'Neon Sárga': 'Neon Yellow',
-    'Neon Zöld': 'Neon Green',
-    'Lila': 'Purple',
-    'Barna': 'Brown',
-    'Rózsaszín': 'Pink',
-    'Pasztellrózsaszín': 'Pastel Pink',
-    'Pasztellzöld': 'Pastel Green',
-    'Világoskék': 'Light Blue',
-    'Sötétkék': 'Dark Blue',
-    'Ezüst': 'Silver',
-    'Átlátszó': 'Transparent',
-    'Sárga': 'Yellow'
+    'Black': 'Black',
+    'White': 'White',
+    'Blue': 'Blue',
+    'Green': 'Green',
+    'Gold': 'Gold',
+    'Red': 'Red',
+    'Lemon Yellow': 'Lemon Yellow',
+    'Gray': 'Gray',
+    'Dark Gray': 'Dark Gray',
+    'Light Gray': 'Light Gray',
+    'Dark Green': 'Dark Green',
+    'Light Green': 'Light Green',
+    'Orange': 'Orange',
+    'Neon Orange': 'Neon Orange',
+    'Neon Yellow': 'Neon Yellow',
+    'Neon Green': 'Neon Green',
+    'Purple': 'Purple',
+    'Brown': 'Brown',
+    'Pink': 'Pink',
+    'Pastel Pink': 'Pastel Pink',
+    'Pastel Green': 'Pastel Green',
+    'Light Blue': 'Light Blue',
+    'Dark Blue': 'Dark Blue',
+    'Silver': 'Silver',
+    'Transparent': 'Transparent',
+    'Yellow': 'Yellow'
   };
   for (let i = 0; i < PCOLORS[mat].length; i++) {
     let color = PCOLORS[mat][i];
@@ -402,9 +402,9 @@ function fillTechColor(mat, sel) {
 function resetCookieValues(tech) {
   let ids;
   if (tech == 'FDM') {
-    ids = [{rvas: 'rvas'}, {suruseg: 'suruseg'}, {fvas: 'fvas'}, {printMat: 'printMat'}];
+    ids = [{ rvas: 'rvas' }, { suruseg: 'suruseg' }, { fvas: 'fvas' }, { printMat: 'printMat' }];
   } else {
-    ids = [{rvasSLA: 'rvas'}, {infillSLA: 'suruseg'}];
+    ids = [{ rvasSLA: 'rvas' }, { infillSLA: 'suruseg' }];
   }
 
   for (let id of ids) {
@@ -421,7 +421,7 @@ function proceedSLA(shouldSkip) {
     toggleTechs(slaIDs, fdmIDs, 'slaChoice', 'fdmChoice');
     basePrice = bpSave[1];
     updateSLAPrice();
-    colorMaps = HEX_COLORS['gyanta (resin)'];
+    colorMaps = HEX_COLORS['resin'];
   }
 }
 
@@ -458,11 +458,11 @@ _('fdmChoice').addEventListener('click', fdmChoice);
 _('slaChoice').addEventListener('click', (e) => {
   if (_('slaChoice').classList.contains('slaDisabled')) return;
   let fromFDM = _('fdmChoice').classList.value.includes('techChosen');
-  cookieIDs = localStorage.getItem('refresh').split('|||'); 
+  cookieIDs = localStorage.getItem('refresh').split('|||');
   toggleSLAAllowance('scale', cookieIDs, proceedSLA);
   if (fromFDM) {
-    colorMaps = HEX_COLORS['gyanta (resin)'];
-    fillTechColor('gyanta (resin)', PCOLORS['gyanta (resin)'][0]);
+    colorMaps = HEX_COLORS['resin'];
+    fillTechColor('resin', PCOLORS['resin'][0]);
     updateCookie('color');
     chooseColor('#' + colorMaps[_('color').value]);
   }
@@ -490,7 +490,7 @@ function calcP(price, rv = null, sv = null, scv = null, fv = null, mv = null, cv
   let filamentMaterial = mv == null ? _('printMat').value.toLowerCase() : mv.toLowerCase();
   let selectedColor = cv == null ? _('color').value : cv;
   let colorMultiplier = 1.0;
-  if (!STANDARD_COLORS.has(selectedColor) && filamentMaterial !== 'gyanta (resin)') {
+  if (!STANDARD_COLORS.has(selectedColor) && filamentMaterial !== 'resin') {
     colorMultiplier = 1.15;
   }
   let fp = smoothPrice(Math.round(price * scaleVal * massFactor * PRINT_MULTS[filamentMaterial] * colorMultiplier));
@@ -529,7 +529,7 @@ function updateSubSizes() {
         _('subsize_' + ((i + 1) / 3 - 1)).innerText = `${ss[0]}mm x ${ss[1]}mm x ${ss[2]}mm`;
       }
     }
-  } 
+  }
 }
 
 // Update the price of the stl model if parameters are changed
@@ -545,7 +545,7 @@ function priceChange() {
   if (subPrices.length > 1) {
     p = 0;
     for (let i = 0; i < subPrices.length; i++) {
-      p += Number(_('subprice_' + i).innerText); 
+      p += Number(_('subprice_' + i).innerText);
     }
   }
   // Update the per‑unit price text next to spec sections (class otherPrice)
@@ -583,7 +583,7 @@ function updateOtherPrices(unitPrice, hasColorSurcharge = false) {
       const label = hasColorSurcharge ? 'Price (incl. +15% color surcharge)' : 'Price';
       els[i].innerText = `${label}: ${Math.round(unitPrice)} JD`;
     }
-  } catch(e) { /* noop */ }
+  } catch (e) { /* noop */ }
 }
 
 function chgMatColor(selectedColor) {
@@ -594,7 +594,7 @@ function chgMatColor(selectedColor) {
 // Add event listeners to parameters & update the UI based on these changes
 _('scale').addEventListener('change', toggleAllowance);
 _('scale').addEventListener('change', (e) => {
-  let cookieIDs = localStorage.getItem('refresh').split('|||'); 
+  let cookieIDs = localStorage.getItem('refresh').split('|||');
   toggleSLAAllowance('scale', cookieIDs, backToFDM);
 });
 
@@ -650,7 +650,7 @@ function updateColorSurchargeHint() {
       hint.style.display = 'none';
     }
     updateTotalSurchargeNote(hasSurcharge);
-  } catch(e) { /* no-op */ }
+  } catch (e) { /* no-op */ }
 }
 
 function updateTotalSurchargeNote(hasSurcharge) {
@@ -664,7 +664,7 @@ function updateTotalSurchargeNote(hasSurcharge) {
       note.textContent = '';
       note.style.display = 'none';
     }
-  } catch(e) { /* no-op */ }
+  } catch (e) { /* no-op */ }
 }
 
 // Change the value in the cookies as well
@@ -693,7 +693,7 @@ if (window.location.href.includes('?file=')) {
   localStorage.setItem('refresh', fname);
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
   if (!localStorage.getItem('refresh')) {
     let tmp = arr.map(path => {
       let pieces = path.split('/');
@@ -760,7 +760,7 @@ window.addEventListener('DOMContentLoaded', function() {
       // Update quantity & weight
       updateQtyUI();
       updateWeight();
-    
+
       // Update & format the size of the model (format: [s1]mm x [s2]mm x [s3]mm)
       let sc = Number(_('scale').value);
       let s1, s2, s3;
@@ -770,7 +770,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  let cookieIDs = localStorage.getItem('refresh').split('|||'); 
+  let cookieIDs = localStorage.getItem('refresh').split('|||');
   toggleSLAAllowance('scale', cookieIDs, (shouldSkip) => {
     if (!shouldSkip) {
       _('slaChoice').classList.remove('slaDisabled');
@@ -797,19 +797,19 @@ function handleChClick(child, children, key) {
     let prevAttr = child.getAttribute('class');
     child.setAttribute('class', prevAttr + ' specChHl');
   }
-  
+
   for (let c of children) {
     if (c == child) continue;
     let prevAttr = c.getAttribute('class').replace('specChHl', '').replace('  ', ' ');
     c.removeAttribute('class');
     c.setAttribute('class', prevAttr);
   }
-  
+
   let postfix = key.includes('SLA') ? 'SLA' : '';
   let ID = 'ch' + key.replace('specCh', '').replace('SLA', '').toLowerCase() + postfix;
   _(ID).innerText = (child.children)[1].innerText.replace(/(\r\n|\n|\r)/gm, '').trim();
   _(ID).setAttribute('data-value', child.getAttribute('data-value'));
-  
+
   let IDpairs = {
     'specChLh': 'rvas',
     'specChInf': 'suruseg',
@@ -820,7 +820,7 @@ function handleChClick(child, children, key) {
     'specChLhSLA': 'rvasSLA',
     'specChInfSLA': 'infillSLA'
   };
-  
+
   $('#' + IDpairs[key]).val(child.getAttribute('data-value'));
   _(IDpairs[key]).dispatchEvent(new Event('change'));
   updatePriceDiffs();
@@ -849,8 +849,8 @@ function closeDDs(ddID) {
     } else {
       var postfix = '';
     }
-    if (oid + 'DD' + postfix == ddID) continue;   
-    $('#' + oid + 'DD' + postfix).slideUp('fast', (e) => {});
+    if (oid + 'DD' + postfix == ddID) continue;
+    $('#' + oid + 'DD' + postfix).slideUp('fast', (e) => { });
     _(oid + 'DD' + postfix).setAttribute('data-open', 'closed');
   }
 }
@@ -879,10 +879,10 @@ document.body.addEventListener('click', (e) => {
 function handleDropDown(ddID) {
   currentDD = ddID;
   if (_(ddID).getAttribute('data-open') == 'closed') {
-    $('#' + ddID).slideDown('fast', (e) => {}); 
+    $('#' + ddID).slideDown('fast', (e) => { });
     _(ddID).setAttribute('data-open', 'open');
   } else {
-    $('#' + ddID).slideUp('fast', (e) => {}); 
+    $('#' + ddID).slideUp('fast', (e) => { });
     _(ddID).setAttribute('data-open', 'closed');
   }
 }

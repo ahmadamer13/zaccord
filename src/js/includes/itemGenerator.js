@@ -10,7 +10,7 @@ function produceShowcaseOutput(result, isDefault, i, isUneven = false, isBest = 
   let size = result[i].size.replace(/x/g, 'mm x ') + 'mm';
   let desc = result[i].description.split('.')[0];
   if (desc.search('<a') > -1) {
-    desc = result[i].description.split('Tulajdonságok')[0]
+    desc = result[i].description.split('Features')[0]
       .replace(/<a.*?>/, '').replace('</a>', '');
   }
   let imgUrl = result[i].img_url;

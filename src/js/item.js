@@ -23,12 +23,12 @@ function addToCart(id) {
 
   // Id is the current time in microsecs + the product id
   id = String(Date.now()) + '_' + id;
-  let rvas = Number(_('rvas').value);  
+  let rvas = Number(_('rvas').value);
   let suruseg = Number(_('suruseg').value);
   let color = _('color').value;
   let scale = Number(_('scale').value);
   let fvas = Number(_('fvas').value);
-  let quantity = Number(_('quantity').value); 
+  let quantity = Number(_('quantity').value);
   let modelSize = getModelSize();
 
   // Validation on client-side
@@ -38,19 +38,19 @@ function addToCart(id) {
     return;
   } else if (INFILL_VALUES.indexOf(suruseg) < 0) {
     displayErrorMsg('Invalid infill value');
-    return; 
+    return;
   } else if (PCOLORS['pla'].indexOf(color) < 0) {
     displayErrorMsg('Invalid color value');
-    return; 
+    return;
   } else if (SCALE_VALUES.indexOf(scale) < 0) {
     displayErrorMsg('Invalid scale value');
-    return; 
+    return;
   } else if (WALL_WIDTH_VALUES.indexOf(fvas) < 0) {
     displayErrorMsg('Invalid wall thickness value');
     return;
   } else if (!_('quantity').value || quantity % 1 !== 0) {
     displayErrorMsg('Invalid quantity value');
-    return; 
+    return;
   } else if (quantity < MIN_QUANTITY || quantity > MAX_QUANTITY) {
     displayErrorMsg(`You can order at most ${MAX_QUANTITY} pcs of a single product`);
     return;
@@ -94,7 +94,7 @@ function addToCart(id) {
             // Maximum quantity for a single item is MAX_QUANTITY
             let tmpQuantity = Number(itemsSoFar['content_' + cid]['quantity_' + cid]);
             if (tmpQuantity + quantity > MAX_QUANTITY) {
-displayErrorMsg(`Egyféle termékből maximum ${MAX_QUANTITY}db rendelhető`);
+              displayErrorMsg(`At most ${MAX_QUANTITY} pcs of a single product can be ordered`);
               return;
             }
             itemsSoFar['content_' + cid]['quantity_' + cid] = tmpQuantity + quantity;
@@ -186,7 +186,7 @@ function calculatePrice(price, id = '', isLit, isCP) {
     // Keep raw values before radian conversion for CP mass scaling
     const rawInfill = surusegVal;
     const rawWall = fvasVal;
-   
+
     // Convert degrees to radians
     rvasVal *= Math.PI / 180;
     surusegVal *= Math.PI / 180;
@@ -196,8 +196,8 @@ function calculatePrice(price, id = '', isLit, isCP) {
     // Parameters values in the formula are degrees (converted to rads)
     let nPrice = (price * scaleVal *
       ((1 / (Math.sin(rvasVal) * 140 + 0.51130880187)) +
-      (Math.sin(surusegVal) / 1.3 + 0.73690758206) +
-      (Math.sin(fvasVal) * 8 + 0.83246064094) - 2));
+        (Math.sin(surusegVal) / 1.3 + 0.73690758206) +
+        (Math.sin(fvasVal) * 8 + 0.83246064094) - 2));
 
     // For custom print (isCP), scale base mass‑based price by selected infill and wall thickness
     // Baseline in server calc uses ~20% infill and ~1.2 mm walls
@@ -213,10 +213,10 @@ function calculatePrice(price, id = '', isLit, isCP) {
       return fp < MIN_PRICE ? MIN_PRICE : fp;
     }
 
-    let fp = Math.round(nPrice); 
+    let fp = Math.round(nPrice);
     return fp < MIN_PRICE ? MIN_PRICE : fp;
   } else {
-    return calcLitPrice(_('size' + id).value); 
+    return calcLitPrice(_('size' + id).value);
   }
 }
 
@@ -236,7 +236,7 @@ function updatePrice(isInCart, price, domElement, isLit, isCP = false, isSLA = f
     let scale = Number(_('scale' + id).value);
     var newPrice = calcSLAPrice(Math.round(price * SLA_MULTIPLIER), lw, infill, scale);
   } else {
-    var newPrice = calculatePrice(price, id, isLit, isCP); 
+    var newPrice = calculatePrice(price, id, isLit, isCP);
   }
   domElement.innerHTML = newPrice;
   return newPrice;
@@ -260,7 +260,7 @@ function updateSpecs(e, price, isInCart = false, isLit = false, isCP = false, is
   let value = Number(e.value);
   if (isLit) value = e.value;
   let domElement = getPriceHolder(isInCart);
-  
+
   var newPrice = updatePrice(isInCart, price, domElement, isLit, isCP, isSLA);
   updateTotPrice(isInCart, newPrice, price, isLit, isCP, isSLA);
 
@@ -270,20 +270,20 @@ function updateSpecs(e, price, isInCart = false, isLit = false, isCP = false, is
 
 // When changing the scale of the item the size also gets updated
 function updateScale(e, price, scale, isInCart) {
-  let value = Number(e.value); 
+  let value = Number(e.value);
   let domElement = getPriceHolder(isInCart);
   scale = scale.split('x').map(x => x.replace(/mm/g, '').replace(' ', ''));
 
   if (value == 1) {
     let [s1, s2, s3] = scale;
-    _('sizeHolder').innerHTML = `${s1}mm x ${s2}mm x ${s3}mm`;  
+    _('sizeHolder').innerHTML = `${s1}mm x ${s2}mm x ${s3}mm`;
   }
   var newPrice = updatePrice(isInCart, price, domElement);
   let [s1, s2, s3] = scale;
   s1 *= value;
   s2 *= value;
   s3 *= value;
-  _('sizeHolder').innerHTML = `${s1.toFixed(2)}mm x ${s2.toFixed(2)}mm x ${s3.toFixed(2)}mm`;  
+  _('sizeHolder').innerHTML = `${s1.toFixed(2)}mm x ${s2.toFixed(2)}mm x ${s3.toFixed(2)}mm`;
   updateTotPrice(isInCart, newPrice, price);
   //fbq('track', 'CustomizeProduct');
 }
@@ -300,11 +300,11 @@ function buyItem(id) {
 
   if (!_('quantity').value) {
     displayErrorMsg('Invalid quantity value');
-    return; 
+    return;
   }
 
   window.location.href =
-  `/buy?product=${id}&rvas=${rvas}&suruseg=${suruseg}&color=${encodeURIComponent(color)}&scale=${scale}&fvas=${fvas}&q=${q}&size=${size}&printMat=PLA&tech=FDM`;
+    `/buy?product=${id}&rvas=${rvas}&suruseg=${suruseg}&color=${encodeURIComponent(color)}&scale=${scale}&fvas=${fvas}&q=${q}&size=${size}&printMat=PLA&tech=FDM`;
   //fbq('track', 'InitiateCheckout');
 }
 
@@ -314,9 +314,9 @@ if (typeof isMobile === 'undefined') var isMobile = mobileCheck();
 // Handle the displaying & hiding of pop-up 3D stl viewer
 function viewIn3D(listOfPath) {
   // Get window width & height
-  const width  = window.innerWidth || document.documentElement.clientWidth || 
+  const width = window.innerWidth || document.documentElement.clientWidth ||
     document.body.clientWidth;
-  const height = window.innerHeight|| document.documentElement.clientHeight|| 
+  const height = window.innerHeight || document.documentElement.clientHeight ||
     document.body.clientHeight;
 
   if (_('overlay').style.opacity == '1') {
@@ -334,7 +334,7 @@ function viewIn3D(listOfPath) {
     _('viewBox').style.opacity = '1';
     _('viewBox').style.height = 'auto';
     document.body.style.overflow = 'hidden';
-    
+
     if (!isMobile) {
       _('viewBox').style.width = width / 1.3 + 'px';
       _('viewBox').style.height = height / 1.3 + 'px';
@@ -352,7 +352,7 @@ function viewIn3D(listOfPath) {
       _('exitBtn').style.left = width * (21 / 22) - 44 + 'px';
       _('exitBtn').style.top = height * (1 / 7) + 24 + 'px';
     }
-    
+
 
     if (!stlView) {
       // Use a 3rd party library for viewing .stl files
@@ -374,7 +374,7 @@ function incDec(qty, name, threshold, mul) {
     _(name == 'minus' ? 'plus' : 'minus').style.opacity = '1';
     _(name == 'minus' ? 'plus' : 'minus').style.cursor = 'pointer';
   }
-  
+
   if (_('quantity').value == threshold) {
     _(name).style.opacity = '0.4';
     _(name).style.cursor = 'not-allowed';
@@ -382,24 +382,24 @@ function incDec(qty, name, threshold, mul) {
 }
 
 if (_('plus')) {
-  _('plus').addEventListener('click', function increase(){
+  _('plus').addEventListener('click', function increase() {
     incDec(1, 'plus', MAX_QUANTITY, 1);
   });
 
-  _('minus').addEventListener('click', function decrease(){
+  _('minus').addEventListener('click', function decrease() {
     incDec(-1, 'minus', MIN_QUANTITY, -1);
   });
 }
 
 function clickClock(title, specs, show, hide) {
-  _(title).style.display = 'block'; 
+  _(title).style.display = 'block';
   _(title).classList.remove("animate__animated");
   _(show).style.height = 'auto';
   _(show).style.opacity = '1';
 
   _(hide).style.height = '0';
   _(hide).style.opacity = '0';
-  _(specs).style.display = 'none';  
+  _(specs).style.display = 'none';
   _(specs).classList.add("animate__animated");
 }
 

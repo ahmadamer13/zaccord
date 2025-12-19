@@ -264,9 +264,9 @@ function generateInvoice(ID, p) {
     body: JSON.stringify(data)
   }).then(response => response.json()).then(msg => {
     if (msg.success) {
-      _('invGen_' + ID).innerHTML = 'siker';
+      _('invGen_' + ID).innerHTML = 'success';
     } else {
-      _('invGen_' + ID).innerHTML = 'úú ezt nagyon elbasztam';
+      _('invGen_' + ID).innerHTML = 'error';
     }
   });
 }
@@ -303,13 +303,13 @@ function delFromExcel(id) {
     body: JSON.stringify(data)
   }).then(response => response.json()).then(msg => {
     if (msg.status == 'success') {
-      _('excelDel_' + id).innerHTML = 'Siker';
+      _('excelDel_' + id).innerHTML = 'Success';
     } else {
-      _('excelDel_' + id).innerHTML = 'Hiba';
+      _('excelDel_' + id).innerHTML = 'Error';
     }
   }).catch(err => {
     console.log(err);
-    _('excelDel_' + id).innerHTML = 'Hiba';
+    _('excelDel_' + id).innerHTML = 'Error';
   });
 }
 
@@ -376,7 +376,7 @@ function createPacket(id, n, ppID, isPP, dt) {
     eshop: 'Jordan3DPrint'
   };
 
-  if (_('paymentType_' + id).innerText == 'utánvét' || _('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
+  if (_('paymentType_' + id).innerText.toLowerCase().includes('cash')) {
     data['cod'] = val;
   }
 

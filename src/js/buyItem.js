@@ -123,14 +123,14 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     if (billingType !== 'same') {
       billingEmail = `
         <div><b>Name: </b>${billingName}</div>
-<div><b>Ország: </b>${billingCountry}</div>
+        <div><b>Country: </b>${billingCountry}</div>
         <div><b>Address: </b>${billingPcode} ${billingCity}, ${billingAddress}</div>
-      `;    
+      `;
 
       if (billingCompname) {
         billingEmail += `
-<div><b>Cégnév: </b>${billingCompname}</div>
-<div><b>Adószám: </b>${billingCompnum}</div>
+          <div><b>Company Name: </b>${billingCompname}</div>
+          <div><b>Tax Number: </b>${billingCompnum}</div>
         `;
       }
     }
@@ -138,12 +138,12 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     let compInfo = '';
     if (normalCompname) {
       compInfo = `
-<div><b>Cégnév: </b>${normalCompname}</div>
-<div><b>Adószám: </b>${normalCompnum}</div>
+        <div><b>Company Name: </b>${normalCompname}</div>
+        <div><b>Tax Number: </b>${normalCompnum}</div>
       `;
     }
 
-    if (billingType != 'same') {      
+    if (billingType != 'same') {
       if (!billingName || !billingCountry || !billingPcode || !billingCity || !billingAddress) {
         reject('Please fill out all billing details');
         return;
@@ -152,7 +152,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
         reject('Please select a valid country');
         return;
       }
-      
+
       if (billingType == 'diffYes') {
         if (!billingCompname || !billingCompnum) {
           reject('Please fill out all company billing details');
@@ -174,7 +174,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
         return;
       });
     }
-    
+
     getMaterials(conn).then(mults => {
       const PRINT_MULTS = mults;
       runPurchase(PRINT_MULTS);
@@ -183,7 +183,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
     function movePurchase(PRINT_MULTS) {
       return new Promise((resolve, reject) => {
         let commonDate = new Date().toMysqlFormat();
-        
+
         // Validate prices
         for (let d of dDataArr) {
           if (!validatePrices(PRINT_MULTS, d)) {
@@ -202,15 +202,15 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           return;
         }
 
-        let priceWithoutDiscount = localFinalPrice; 
+        let priceWithoutDiscount = localFinalPrice;
 
         if (!name || !city || !address || !mobile || !payment) {
-          reject('Missing shipping information'); 
+          reject('Missing shipping information');
           return;
         } else if (payment == 'credit' && !transactionID) {
-          reject('Please add your bank card to proceed with payment'); 
-        // Skip strict postal code validation on server
-        // Validate shipping only when a delivery type is provided
+          reject('Please add your bank card to proceed with payment');
+          // Skip strict postal code validation on server
+          // Validate shipping only when a delivery type is provided
         } else if (deliveryType) {
           if ((priceWithoutDiscount <= FREE_SHIPPING_LIMIT && shippingPrice != SHIPPING_PRICE)
             || (priceWithoutDiscount > FREE_SHIPPING_LIMIT && shippingPrice != 0)) {
@@ -223,12 +223,12 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           } else if (isPP
             && (!packetID || !packetName || !packetZipcode || !packetCity || !packetAddress)) {
             reject('Missing pickup point details');
-            return; 
+            return;
           }
         }
 
         console.log('huuuu');
-        
+
         let cnt = 0;
         for (let formData of dDataArr) {
           let itemID = formData.itemID;
@@ -255,11 +255,11 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
           let sphere = formData.sphere ? formData.sphere : '';
           let size = formData.size ? formData.size : '';
           let file = formData.file ? formData.file : '';
-          
+
           if (prodType == 'lit') {
             let sizeArr = size.split('x').map(x => Number(x));
             itemVolumes.push(sizeArr.reduce((x, y) => x * y) * quantity);
-            itemSizes.push(sizeArr); 
+            itemSizes.push(sizeArr);
           } else if (prodType == 'cp') {
             let pathCP = path.join(__dirname.replace(path.join('src', 'js'), ''),
               'printUploads', itemID + '.stl');
@@ -275,9 +275,9 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
             if (printTech != 'SLA' && printMat.toLowerCase() == 'pla') {
               stlToSlice.push(stlObj);
             }
-            let stl = new NodeStl(pathCP, {density: 1.27}); // PLA has 1.27 g/mm^3 density
+            let stl = new NodeStl(pathCP, { density: 1.27 }); // PLA has 1.27 g/mm^3 density
             itemVolumes.push(stl.boundingBox.reduce((x, y) => x * y) * scale * quantity);
-            itemSizes.push(stl.boundingBox); 
+            itemSizes.push(stl.boundingBox);
           } else if (prodType == 'fp') {
             fixProdPromises.push(new Promise((resolve, reject) => {
               getFPVolume(conn, itemID).then(v => {
@@ -304,17 +304,17 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
             if (payment != 'uvet' && payment != 'transfer' && payment != 'credit') {
               reject('Invalid payment method');
               return;
-            // Check validity of order ID
+              // Check validity of order ID
             } else if (orderID.length !== 4) {
               reject('Invalid transfer reference');
               return;
-            // Make sure SLA printing can be only applied to smaller models
+              // Make sure SLA printing can be only applied to smaller models
             } else if (!fixProduct && printTech == 'SLA' &&
               !shouldAllowSLA(path.join(__dirname.replace(path.join('src', 'js'), ''),
-              'printUploads', formData.itemID + '.stl'))) {
+                'printUploads', formData.itemID + '.stl'))) {
               reject('For SLA printing the maximum size is 115mm x 65mm x 150mm');
               return;
-            // Validate lithophane parameters
+              // Validate lithophane parameters
             } else if (isProdLit) {
               let paramObj = {
                 'sphere': sphere,
@@ -343,7 +343,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   let originalPrice = data[0].price;
                   if (calcPrice(PRINT_MULTS, originalPrice, rvas, suruseg, scale, fvas) != price) {
                     // Check if price is correct with the given parameters
-                    reject('Invalid price'); 
+                    reject('Invalid price');
                     return;
                   }
                 }
@@ -378,7 +378,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 } else {
                   var cpFname = '';
                 }
-              
+
                 price *= discount;
                 let sameBillingAddr = billingType == 'same' ? 1 : 0;
                 let isCashOnDel = payment == 'uvet';
@@ -386,14 +386,14 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
 
                 let valueArr = [
                   UID, itemID, price, String(rvas), String(suruseg),
-                  String(scale), color, printMat, printTech, String(fvas), sphere, size, file, quantity, isTrans, 
+                  String(scale), color, printMat, printTech, String(fvas), sphere, size, file, quantity, isTrans,
                   transID, transactionID, fixProduct, 0,
                   Number(shippingPrice), cpFname, isCashOnDel, packetDbID, uniqueID,
                   sameBillingAddr, normalCompname, normalCompnum, billingName, billingCountry,
                   billingCity, billingPcode, billingAddress, billingCompname, billingCompnum,
                   comment, deliveryType, eInvoice, commonDate
                 ];
-                
+
                 if (payment == 'uvet') {
                   shippingPrice -= MONEY_HANDLE;
                 }
@@ -419,7 +419,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                       if (err) {
                         reject('An unexpected error occurred, please try again');
                         return;
-                      } 
+                      }
 
                       // Check existance in db
                       if (result.length > 0) {
@@ -439,12 +439,12 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                           if (err) {
                             reject('An unexpected error occurred, please try again');
                             return;
-                          }                    
+                          }
 
                           resolve('success');
                         });
 
-                      // Only insert to db for the 1st time (because of async)
+                        // Only insert to db for the 1st time (because of async)
                       } else if (!ppUpdated) {
                         let pQuery = `
                           INSERT INTO packet_points (
@@ -464,8 +464,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                           if (err) {
                             reject('An unexpected error occurred, please try again');
                             return;
-                          }                    
-                          
+                          }
+
                           resolve('success');
                         });
                       } else {
@@ -486,54 +486,54 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
             promises.push(process);
           }).catch(err => {
             console.log(err);
-            reject('No such product'); 
+            reject('No such product');
           });
         }
 
         Promise.all(promises).then(data => {
           // Also update delivery info in db if needed
-        const upsertDelivery = callback => {
-          // Always keep the latest shipping info for logged-in users
-          const updateUserAddress = () => {
-            if (!isLoggedIn) return Promise.resolve();
-            const updateQuery = `
+          const upsertDelivery = callback => {
+            // Always keep the latest shipping info for logged-in users
+            const updateUserAddress = () => {
+              if (!isLoggedIn) return Promise.resolve();
+              const updateQuery = `
               UPDATE delivery_data
               SET name = ?, postal_code = ?, city = ?, address = ?, mobile = ?, nl_email = NULL,
                   order_id = NULL, date = NOW()
               WHERE uid = ?
             `;
-            const updateValues = [name, pcode, city, address, mobile, UID];
-            return new Promise((resolve, reject) => {
-              conn.query(updateQuery, updateValues, err => err ? reject(err) : resolve());
-            });
-          };
+              const updateValues = [name, pcode, city, address, mobile, UID];
+              return new Promise((resolve, reject) => {
+                conn.query(updateQuery, updateValues, err => err ? reject(err) : resolve());
+              });
+            };
 
-          const insertSnapshot = () => {
-            const snapshotQuery = `
+            const insertSnapshot = () => {
+              const snapshotQuery = `
               INSERT INTO delivery_data (uid, name, postal_code, city, address, mobile,
                 nl_email, order_id, date)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
             `;
-            const snapshotValues = [
-              isLoggedIn ? UID : null,
-              name,
-              pcode,
-              city,
-              address,
-              mobile,
-              nlEmail || null,
-              uniqueID
-            ];
-            return new Promise((resolve, reject) => {
-              conn.query(snapshotQuery, snapshotValues, err => err ? reject(err) : resolve());
-            });
-          };
+              const snapshotValues = [
+                isLoggedIn ? UID : null,
+                name,
+                pcode,
+                city,
+                address,
+                mobile,
+                nlEmail || null,
+                uniqueID
+              ];
+              return new Promise((resolve, reject) => {
+                conn.query(snapshotQuery, snapshotValues, err => err ? reject(err) : resolve());
+              });
+            };
 
-          updateUserAddress()
-            .then(insertSnapshot)
-            .then(() => callback(null, null))
-            .catch(err => callback(err));
-        };
+            updateUserAddress()
+              .then(insertSnapshot)
+              .then(() => callback(null, null))
+              .catch(err => callback(err));
+          };
 
           upsertDelivery((err, result) => {
             if (err) {
@@ -541,7 +541,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
               reject('An unexpected error occurred, please try again');
               return;
             }
-           
+
             // Last step is to validate credit card
             let isEmpty = payment == 'credit' ? false : true
             handlePaylike(transactionID, finalPrice + SHIPPING_PRICE, isEmpty).then(data => {
@@ -575,8 +575,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                       <div>
                         <b>Payment method: </b>
                         ${payment == 'transfer' ? 'bank transfer' : (payment == 'credit' ? 'card payment' : 'cash on delivery')}
-                        ${
-                          payment == 'transfer' ? `<div>
+                        ${payment == 'transfer' ? `<div>
                                                       <div><b>Bank account:</b> ${BA_NUM}</div>
                                                       <div>
                                                         <b>Beneficiary name:</b> ${BA_NAME}
@@ -588,8 +587,8 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                                                       </div>
                                                    </div>
                                                    `
-                                                 : ''
-                        }
+                    : ''
+                  }
                       </div>
                       <div>
                         <b>Delivery: </b> ${!isPP ? 'home delivery' : 'pickup point'}
@@ -624,7 +623,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 `;
 
                 let subject = 'We received your order! - ID: ' + uniqueID;
-                
+
                 // If customer selects the e-invoice option generate the invoice first
                 // Then download it from the server and send it as an attachment
                 // E-invoice is saved under /e-invoices/{order id}.pdf
@@ -645,7 +644,7 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                   }).catch(err => {
                     console.log(err);
                     reject('An unexpected error occurred, please try again');
-                  }); 
+                  });
                 } else {
                   sendEmail('info@jordan3dprint.store', emailContent, email, subject);
                 }
@@ -708,9 +707,9 @@ const buyItem = (conn, dDataArr, req, res, userSession) => {
                 }
 
                 console.log('last part')
-                
+
                 resolve('success');
-              }); 
+              });
             }).catch(err => {
               console.log(err);
               reject(err);

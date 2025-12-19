@@ -27,9 +27,9 @@ const DISCOUNT = constants.discount;
 const FREE_SHIPPING_LIMIT = shipping.freeShippingLimit;
 const ALLOWED_CART_MATERIALS = ['PLA', 'PETG'];
 const LIMITED_CART_COLORS = {
-  'petg': ['White', 'Black', 'Fehér', 'Fekete']
+  'petg': ['White', 'Black']
 };
-const STANDARD_COLORS = new Set(['Fehér', 'Fekete', 'White', 'Black']);
+const STANDARD_COLORS = new Set(['White', 'Black']);
 const { translateRow } = require('./includes/productTranslations.js');
 
 // Build cart page from cookies & validate them on server side
@@ -83,7 +83,7 @@ const buildCartSection = (conn, req) => {
         let tid = key.replace('content_', '');
         tidsArr.push(tid);
         let dbId = escapeVars(tid.split('_')[1]);
-        let content = cart['content_' + tid]; 
+        let content = cart['content_' + tid];
 
         let rvas = content['rvas_' + tid];
         let suruseg = decodeURIComponent(content['suruseg_' + tid]);
@@ -107,7 +107,7 @@ const buildCartSection = (conn, req) => {
 
         let matKeyForColor;
         if (printTech == 'SLA') {
-          matKeyForColor = 'gyanta (resin)';
+          matKeyForColor = 'resin';
         } else if (isLit || isFixProd) {
           matKeyForColor = 'pla';
         } else {
@@ -121,7 +121,7 @@ const buildCartSection = (conn, req) => {
           if (!filteredColors.length) filteredColors = limitedColorList.slice();
           candidateColors = Array.from(new Set(filteredColors));
         } else if (!candidateColors.length) {
-          candidateColors = ['Fehér', 'Fekete', 'White', 'Black'];
+          candidateColors = ['White', 'Black'];
         }
 
         let decodedColor = decodeURIComponent(color || '');
@@ -136,99 +136,99 @@ const buildCartSection = (conn, req) => {
         let allowSLA;
         let sqlQuery = new Promise((resolve, reject) => {
           conn.query("SELECT * FROM fix_products WHERE id = ? LIMIT 1", [dbId],
-          function (err, result, fields) {
-            if (err) {
-              reject('An unexpected error occurred, please try again');
-              return;
-            }
-
-            // Check if cookie item is a saved custom print
-            if (isCP && tid.split('_').length > 2
-              && !content.hasOwnProperty('file_' + tid)) {
-              // Make sure there is such a file  
-              let fPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
-                'printUploads', tid + '.stl');
-              let tPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
-                'printUploads', 'thumbnails', tid + '.png');
-              if (!fs.existsSync(fPath) || !fs.existsSync(tPath)) {
-                reject('The requested file does not exist');
+            function (err, result, fields) {
+              if (err) {
+                reject('An unexpected error occurred, please try again');
                 return;
               }
 
-              var url = 'uploadPrint?file=' + tid;
-              var imgUrl = 'printUploads/thumbnails/' + tid + '.png';
-              var productName = 'Custom Printed Product';
-              var price = Number(content['price_' + tid]);
-              allowSLA = shouldAllowSLA(fPath, scale);
+              // Check if cookie item is a saved custom print
+              if (isCP && tid.split('_').length > 2
+                && !content.hasOwnProperty('file_' + tid)) {
+                // Make sure there is such a file  
+                let fPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
+                  'printUploads', tid + '.stl');
+                let tPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
+                  'printUploads', 'thumbnails', tid + '.png');
+                if (!fs.existsSync(fPath) || !fs.existsSync(tPath)) {
+                  reject('The requested file does not exist');
+                  return;
+                }
 
-            // Check if cookie item is a lithophane
-            } else if (result.length === 0 && content.hasOwnProperty('sphere_' + tid)) {
-              let lithophaneFile = content['file_' + tid];
+                var url = 'uploadPrint?file=' + tid;
+                var imgUrl = 'printUploads/thumbnails/' + tid + '.png';
+                var productName = 'Custom Printed Product';
+                var price = Number(content['price_' + tid]);
+                allowSLA = shouldAllowSLA(fPath, scale);
 
-              // Make sure file exists
-              let fPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
-                'printUploads', 'lithophanes', lithophaneFile);
+                // Check if cookie item is a lithophane
+              } else if (result.length === 0 && content.hasOwnProperty('sphere_' + tid)) {
+                let lithophaneFile = content['file_' + tid];
 
-              // No such lithophane
-              if (!fs.existsSync(fPath)) {
-                reject('The requested file does not exist');
+                // Make sure file exists
+                let fPath = path.join(__dirname.replace(path.join('src', 'js'), ''),
+                  'printUploads', 'lithophanes', lithophaneFile);
+
+                // No such lithophane
+                if (!fs.existsSync(fPath)) {
+                  reject('The requested file does not exist');
+                  return;
+                }
+
+                var url = 'uploadPrint?image=' + tid;
+                var imgUrl = 'printUploads/lithophanes/' + lithophaneFile;
+                var productName = 'Lithophane';
+                var litSphere = content['sphere_' + tid];
+                var litSize = content['size_' + tid];
+                var litColor = content['color_' + tid];
+              } else if (result.length === 0) {
+                // Item is not found in db
+                reject('An unexpected error occurred, please try again');
                 return;
-              }
-
-              var url = 'uploadPrint?image=' + tid;
-              var imgUrl = 'printUploads/lithophanes/' + lithophaneFile;
-              var productName = 'Lithophane';
-              var litSphere = content['sphere_' + tid];
-              var litSize = content['size_' + tid];
-              var litColor = content['color_' + tid];
-            } else if (result.length === 0) {
-              // Item is not found in db
-              reject('An unexpected error occurred, please try again');
-              return;
-            } else {
-              const tr = translateRow(result[0]);
-              var id = tr['id'];
-              var url = tr['url'];
-              var imgUrl = tr['img_url'];
-              var productName = tr['name'];
-              var price = tr['price'];
-            }
-
-            // Calculate the actual price of the product with all extras
-            if (!isLit) {
-              let cp = printMat ? printMat : false;
-              if (printTech == 'SLA') {
-                var actualPrice = calcSLAPrice(Math.round(price * SLA_MULTIPLIER), rvas, suruseg, scale);
               } else {
-                var actualPrice = calcPrice(PRINT_MULTS, price, rvas, suruseg, scale, fvas, cp, content['color_' + tid]);
+                const tr = translateRow(result[0]);
+                var id = tr['id'];
+                var url = tr['url'];
+                var imgUrl = tr['img_url'];
+                var productName = tr['name'];
+                var price = tr['price'];
               }
-              if (isFixProd) {
-                var selQuan = `updateSpecs(this, ${price}, '${tid}')`;
-              } else if (isLit) {
+
+              // Calculate the actual price of the product with all extras
+              if (!isLit) {
+                let cp = printMat ? printMat : false;
+                if (printTech == 'SLA') {
+                  var actualPrice = calcSLAPrice(Math.round(price * SLA_MULTIPLIER), rvas, suruseg, scale);
+                } else {
+                  var actualPrice = calcPrice(PRINT_MULTS, price, rvas, suruseg, scale, fvas, cp, content['color_' + tid]);
+                }
+                if (isFixProd) {
+                  var selQuan = `updateSpecs(this, ${price}, '${tid}')`;
+                } else if (isLit) {
+                  var selQuan = `updateSpecs(this, ${price}, '${tid}', true)`;
+                } else if (printTech != 'SLA') {
+                  var selQuan = `updateSpecs(this, ${price}, '${tid}', false, true)`;
+                } else {
+                  var selQuan = `updateSpecs(this, ${price}, '${tid}', false, true, true)`;
+                }
+              } else {
+                var actualPrice = calcLitPrice(content['size_' + tid]);
                 var selQuan = `updateSpecs(this, ${price}, '${tid}', true)`;
-              } else if (printTech != 'SLA') {
-                var selQuan = `updateSpecs(this, ${price}, '${tid}', false, true)`;
-              } else {
-                var selQuan = `updateSpecs(this, ${price}, '${tid}', false, true, true)`;
+                let splitted = litSize.split('x');
+
+                // Calculate the ratio of width and height of lithophane
+                var ratio = Math.min(Number(splitted[0]) / Number(splitted[1]),
+                  Number(splitted[1]) / Number(splitted[0]));
+
+                // With the calculated ratio provide the possible sizes
+                var litSizes = [100, 150, 200].map(v => {
+                  let middleParam = (v * ratio).toFixed(2);
+                  return `${v}mm x ${middleParam}mm x 2mm`;
+                });
               }
-            } else {
-              var actualPrice = calcLitPrice(content['size_' + tid]);
-              var selQuan = `updateSpecs(this, ${price}, '${tid}', true)`;
-              let splitted = litSize.split('x');
 
-              // Calculate the ratio of width and height of lithophane
-              var ratio = Math.min(Number(splitted[0]) / Number(splitted[1]), 
-                Number(splitted[1]) / Number(splitted[0]));
-
-              // With the calculated ratio provide the possible sizes
-              var litSizes = [100, 150, 200].map(v => {
-                let middleParam = (v * ratio).toFixed(2);
-                return `${v}mm x ${middleParam}mm x 2mm`;
-              });
-            }
-
-            // Build html output
-            let output = `
+              // Build html output
+              let output = `
               <div class="cartItemHolder" id="cartItem_${tid}">
                 <img src="/images/icons/moreClose.svg" class="topRight trans"
                   onclick="removeItem('${tid}')">
@@ -250,23 +250,23 @@ const buildCartSection = (conn, req) => {
                     ${colorHasSurcharge ? '<p class="gothamNormal ddgray" style="font-size:12px;margin-top:4px;">Includes +15% color surcharge</p>' : ''}
                   </div>
             `;
-            
-            if (!isLit) {
-              if (printTech != 'SLA') {
-                output += `
+
+              if (!isLit) {
+                if (printTech != 'SLA') {
+                  output += `
                       <div>
                         <p>
                           Layer Height:
                           <select class="specSelect chItem" id="rvas${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
-                
-                for (let vas of LAYER_WIDTH_VALUES) {
-                  let selected = vas == rvas ? 'selected' : '';
-                  output += `<option value="${vas.toFixed(2)}" ${selected}>${vas.toFixed(2)}mm</option>`;
-                }
 
-                output += `            
+                  for (let vas of LAYER_WIDTH_VALUES) {
+                    let selected = vas == rvas ? 'selected' : '';
+                    output += `<option value="${vas.toFixed(2)}" ${selected}>${vas.toFixed(2)}mm</option>`;
+                  }
+
+                  output += `            
                           </select>
                         </p>
                       </div>
@@ -277,33 +277,33 @@ const buildCartSection = (conn, req) => {
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
 
-                for (let i of INFILL_VALUES) {
-                  let selected = i == suruseg ? 'selected' : '';
-                  output += `
+                  for (let i of INFILL_VALUES) {
+                    let selected = i == suruseg ? 'selected' : '';
+                    output += `
                     <option value="${i}" ${selected}>${i}%</option>
                   `;
-                }
+                  }
 
-                output += `
+                  output += `
                           </select>
                         </p>
                       </div>
                 `;
-              } else {
-                output += `
+                } else {
+                  output += `
                       <div>
                         <p>
                           Layer Height:
                           <select class="specSelect chItem" id="rvas${tid}"
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, true)">
                 `;
-                
-                for (let lw of LAYER_WIDTH_VALUES_SLA) {
-                  let selected = lw == rvas ? 'selected' : '';
-                  output += `<option value="${lw.toFixed(2)}" ${selected}>${lw.toFixed(2)}mm</option>`;
-                }
 
-                output += ` 
+                  for (let lw of LAYER_WIDTH_VALUES_SLA) {
+                    let selected = lw == rvas ? 'selected' : '';
+                    output += `<option value="${lw.toFixed(2)}" ${selected}>${lw.toFixed(2)}mm</option>`;
+                  }
+
+                  output += ` 
                           </select>
                         </p>
                       </div>
@@ -314,21 +314,21 @@ const buildCartSection = (conn, req) => {
                             onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, true)">
                 `;
 
-                for (let i of INFILL_VALUES_SLA) {
-                  let selected = i == suruseg ? 'selected' : '';
-                  output += `
+                  for (let i of INFILL_VALUES_SLA) {
+                    let selected = i == suruseg ? 'selected' : '';
+                    output += `
                     <option value="${i}" ${selected}>${i}</option>
                   `;
-                }
+                  }
 
-                output += `
+                  output += `
                           </select>
                         </p>
                       </div>
                 `;
-              }
+                }
 
-              output += `
+                output += `
                     <div id="scaleDiv_${tid}">
                       <p>
                         Scale:
@@ -336,21 +336,21 @@ const buildCartSection = (conn, req) => {
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP}, ${isSLA})">
               `;
 
-              for (let sc of SCALE_VALUES) {
-                let selected = sc == scale ? 'selected' : '';
-                output += `
+                for (let sc of SCALE_VALUES) {
+                  let selected = sc == scale ? 'selected' : '';
+                  output += `
                   <option value="${sc.toFixed(1)}" ${selected}>x${sc.toFixed(1)}</option>
-                `; 
-              }
+                `;
+                }
 
-              output += `
+                output += `
                         </select>
                       </p>
                     </div>
               `;
 
-              if (printTech != 'SLA') {
-                output += `
+                if (printTech != 'SLA') {
+                  output += `
                     <div>
                       <p>
                         Wall Thickness:
@@ -358,21 +358,21 @@ const buildCartSection = (conn, req) => {
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
                 `;
 
-                for (let ww of WALL_WIDTH_VALUES) {
-                  let selected = ww.toFixed(1) == fvas ? 'selected' : '';
-                  output += `
+                  for (let ww of WALL_WIDTH_VALUES) {
+                    let selected = ww.toFixed(1) == fvas ? 'selected' : '';
+                    output += `
                     <option value="${ww.toFixed(1)}" ${selected}>${ww.toFixed(1)}mm</option>
-                  `; 
-                }
+                  `;
+                  }
 
-                output += `
+                  output += `
                           </select>
                         </p>
                       </div>
                 `;
-                
-                if (isCP) {
-                  output += `
+
+                  if (isCP) {
+                    output += `
                     <div>
                       <p>
                         Material:
@@ -380,21 +380,21 @@ const buildCartSection = (conn, req) => {
                           onchange="updateSpecs(this, ${price}, '${tid}', false, ${isCP})">
 
                   `;
-                  
-                  for (let pm of ALLOWED_CART_MATERIALS) {
-                    let selected = pm == printMat ? 'selected' : '';
-                    output += `<option value="${pm}" ${selected}>${pm}</option>`;
-                  }
-                  
-                  output += `
+
+                    for (let pm of ALLOWED_CART_MATERIALS) {
+                      let selected = pm == printMat ? 'selected' : '';
+                      output += `<option value="${pm}" ${selected}>${pm}</option>`;
+                    }
+
+                    output += `
                         </select>
                       </p>
                     </div>
                   `;
+                  }
                 }
-              }
-            } else {
-              output += `
+              } else {
+                output += `
                   <div>
                     <p> 
                       Shape:
@@ -402,20 +402,20 @@ const buildCartSection = (conn, req) => {
                         onchange="updateLit('sphere', 'sphere${tid}', '${tid}')">
               `;
 
-              for (let c of LIT_FORMS) {
-                let selected = decodeURIComponent(litSphere) == c ? 'selected' : '';
-                output += `
+                for (let c of LIT_FORMS) {
+                  let selected = decodeURIComponent(litSphere) == c ? 'selected' : '';
+                  output += `
                   <option value="${c}" ${selected}>${c}</option>
                 `;
-              }
+                }
 
-              output += `
+                output += `
                         </select>
                       </p>
                     </div>
               `;
 
-              output += `
+                output += `
                     <div>
                       <p> 
                         Size:
@@ -423,106 +423,104 @@ const buildCartSection = (conn, req) => {
                           onchange="${selQuan}">
               `;
 
-              for (let c of litSizes) {
-                let pure = c.replace(/\s/g, '').replace(/mm/g, '');
-                let selected = pure == litSize ? 'selected' : '';
-                output += `
+                for (let c of litSizes) {
+                  let pure = c.replace(/\s/g, '').replace(/mm/g, '');
+                  let selected = pure == litSize ? 'selected' : '';
+                  output += `
                   <option value="${pure}" ${selected}>
                     ${c}
                   </option>
                 `;
-              }
+                }
 
-              output += `
+                output += `
                         </select>
                       </p>
                     </div>
               `;
-            }
+              }
 
-            output += `
+              output += `
                   <div id="colorDiv_${tid}">
                     <p> 
                       Color:
                       <select class="specSelect chItem" id="color${tid}"
                         onchange="chColor(this, '${tid}')">
             `;
-            
-            let matKey;
-            if (printTech == 'SLA') {
-              matKey = 'gyanta (resin)';
-            } else if (isLit || isFixProd) {
-              matKey = 'pla';
-            } else {
-              matKey = printMat.toLowerCase();
-            }
 
-            let cols = Array.isArray(PCOLORS[matKey]) ? PCOLORS[matKey].slice() : [];
-            const limited = LIMITED_CART_COLORS[matKey];
-            if (limited && limited.length) {
-              let filtered = cols.filter(c => limited.indexOf(c) > -1);
-              if (!filtered.length) filtered = limited.slice();
-              cols = Array.from(new Set(filtered));
-            } else if (!cols.length) {
-              cols = ['Fehér', 'Fekete', 'White', 'Black'];
-            }
+              let matKey;
+              if (printTech == 'SLA') {
+                matKey = 'resin';
+              } else if (isLit || isFixProd) {
+                matKey = 'pla';
+              } else {
+                matKey = printMat.toLowerCase();
+              }
 
-            const selectedColorRaw = decodeURIComponent(color);
+              let cols = Array.isArray(PCOLORS[matKey]) ? PCOLORS[matKey].slice() : [];
+              const limited = LIMITED_CART_COLORS[matKey];
+              if (limited && limited.length) {
+                let filtered = cols.filter(c => limited.indexOf(c) > -1);
+                if (!filtered.length) filtered = limited.slice();
+                cols = Array.from(new Set(filtered));
+              } else if (!cols.length) {
+                cols = ['White', 'Black'];
+              }
 
-            // Use same labels and filtering as upload page
-            const COLOR_LABELS_SRV = {
-              'Fekete': 'Matte Black',
-              'Fehér': 'Pearl White',
-              'Kék': 'Royal Blue',
-              'Sötétkék': 'Royal Blue',
-              'Világoskék': 'Sky Blue',
-              'Zöld': 'Emerald Green',
-              'Sötétzöld': 'Emerald Green',
-              'Arany': 'Gold',
-              'Piros': 'Crimson Red',
-              'Sötétszürke': 'Gunmetal Gray',
-              'Szürke': 'Gunmetal Gray',
-              'Neon Narancssárga': 'Neon Orange',
-              'Lila': 'Deep Purple',
-              'Ezüst': 'Silver',
-              'Átlátszó': 'Transparent (Clear)',
-              'Barna': 'Copper Bronze',
-              'White': 'White',
-              'Black': 'Black'
-            };
-            const ALLOWED_COLOR_EN_SRV = new Set([
-              'Matte Black',
-              'Pearl White',
-              'Royal Blue',
-              'Crimson Red',
-              'Emerald Green',
-              'Gunmetal Gray',
-              'Transparent (Clear)',
-              'Gold Metallic',
-              'Silver Metallic',
-              'Copper Bronze',
-              'Neon Orange',
-              'Sky Blue',
-              'Beige Sandstone',
-              'Deep Purple',
-              'Glow-in-the-Dark Green',
-              'White',
-              'Black'
-            ]);
+              const selectedColorRaw = decodeURIComponent(color);
 
-            const stockMap = COLOR_IN_STOCK[matKey] || {};
+              // Use same labels and filtering as upload page
+              const COLOR_LABELS_SRV = {
+                'Black': 'Matte Black',
+                'White': 'Pearl White',
+                'Blue': 'Royal Blue',
+                'Dark Blue': 'Royal Blue',
+                'Light Blue': 'Sky Blue',
+                'Green': 'Emerald Green',
+                'Dark Green': 'Emerald Green',
+                'Gold': 'Gold',
+                'Red': 'Crimson Red',
+                'Dark Gray': 'Gunmetal Gray',
+                'Gray': 'Gunmetal Gray',
+                'Neon Orange': 'Neon Orange',
+                'Purple': 'Deep Purple',
+                'Silver': 'Silver',
+                'Transparent': 'Transparent (Clear)',
+                'Brown': 'Copper Bronze'
+              };
+              const ALLOWED_COLOR_EN_SRV = new Set([
+                'Matte Black',
+                'Pearl White',
+                'Royal Blue',
+                'Crimson Red',
+                'Emerald Green',
+                'Gunmetal Gray',
+                'Transparent (Clear)',
+                'Gold Metallic',
+                'Silver Metallic',
+                'Copper Bronze',
+                'Neon Orange',
+                'Sky Blue',
+                'Beige Sandstone',
+                'Deep Purple',
+                'Glow-in-the-Dark Green',
+                'White',
+                'Black'
+              ]);
 
-            for (let c of cols) {
-              if (stockMap[c] !== undefined && !Number(stockMap[c])) continue;
-              let label = COLOR_LABELS_SRV[c] || c;
-              if (!ALLOWED_COLOR_EN_SRV.has(label)) continue;
-              let selected = decodeURIComponent(color) == c ? 'selected' : '';
-              output += `
+              const stockMap = COLOR_IN_STOCK[matKey] || {};
+
+              for (let c of cols) {
+                if (stockMap[c] !== undefined && !Number(stockMap[c])) continue;
+                let label = COLOR_LABELS_SRV[c] || c;
+                if (!ALLOWED_COLOR_EN_SRV.has(label)) continue;
+                let selected = decodeURIComponent(color) == c ? 'selected' : '';
+                output += `
                 <option value="${c}" ${selected}>${label}</option>
               `;
-            }
+              }
 
-            output += `
+              output += `
                       </select>
                     </p>
                   </div>
@@ -533,21 +531,21 @@ const buildCartSection = (conn, req) => {
                         onchange="${selQuan}">
             `;
 
-            for (let i = MIN_QUANTITY; i <= MAX_QUANTITY; i++) {
-              let selected = quantity == i ? 'selected' : '';
-              output += `
+              for (let i = MIN_QUANTITY; i <= MAX_QUANTITY; i++) {
+                let selected = quantity == i ? 'selected' : '';
+                output += `
                 <option value="${i}" ${selected}>${i} pcs</option>
               `;
-            }
+              }
 
-            output += `
+              output += `
                       </select>
                     </p>
                   </div>
             `;
 
-            if (isCP) {
-              output += `
+              if (isCP) {
+                output += `
                   <div id="printTechDiv_${tid}">
                     <p>
                       Technology:
@@ -555,22 +553,22 @@ const buildCartSection = (conn, req) => {
                         onchange="changeTech('${printTech}', '${tid}', ${price})">
               `;
 
-              for (let tech of PRINT_TECHS) {
-                if (!allowSLA && tech == 'SLA') continue;
-                let selected = printTech == tech ? 'selected' : '';
-                output += `
+                for (let tech of PRINT_TECHS) {
+                  if (!allowSLA && tech == 'SLA') continue;
+                  let selected = printTech == tech ? 'selected' : '';
+                  output += `
                   <option value="${tech}" ${selected}>${tech}</option>
                 `;
-              }          
+                }
 
-              output += `
+                output += `
                     </select>
                   </p>
                 </div>
               `;
-            }
+              }
 
-            output += `
+              output += `
                 <div>
                   <p class="bold">Subtotal: <span id="totpHolder_${tid}">
                     ${quantity * actualPrice}</span> JD
@@ -579,9 +577,9 @@ const buildCartSection = (conn, req) => {
               </div>
               <div class="clear"></div>
             </div>`;
-            resolve([output, quantity * actualPrice]);
-          });
-        });      
+              resolve([output, quantity * actualPrice]);
+            });
+        });
         queries.push(sqlQuery);
       }
 
@@ -652,22 +650,22 @@ const buildCartSection = (conn, req) => {
             const PCOLORS = ${JSON.stringify(PCOLORS)};
             const COLOR_IN_STOCK = ${JSON.stringify(COLOR_IN_STOCK)};
             const COLOR_LABELS = {
-              'Fekete': 'Matte Black',
-              'Fehér': 'Pearl White',
-              'Kék': 'Royal Blue',
-              'Sötétkék': 'Royal Blue',
-              'Világoskék': 'Sky Blue',
-              'Zöld': 'Emerald Green',
-              'Sötétzöld': 'Emerald Green',
-              'Arany': 'Gold',
-              'Piros': 'Crimson Red',
-              'Sötétszürke': 'Gunmetal Gray',
-              'Szürke': 'Gunmetal Gray',
-              'Neon Narancssárga': 'Neon Orange',
-              'Lila': 'Deep Purple',
-              'Ezüst': 'Silver',
-              'Átlátszó': 'Transparent (Clear)',
-              'Barna': 'Copper Bronze'
+              'Black': 'Matte Black',
+              'White': 'Pearl White',
+              'Blue': 'Royal Blue',
+              'Dark Blue': 'Royal Blue',
+              'Light Blue': 'Sky Blue',
+              'Green': 'Emerald Green',
+              'Dark Green': 'Emerald Green',
+              'Gold': 'Gold',
+              'Red': 'Crimson Red',
+              'Dark Gray': 'Gunmetal Gray',
+              'Gray': 'Gunmetal Gray',
+              'Neon Orange': 'Neon Orange',
+              'Purple': 'Deep Purple',
+              'Silver': 'Silver',
+              'Transparent': 'Transparent (Clear)',
+              'Brown': 'Copper Bronze'
             };
             const ALLOWED_COLOR_EN = new Set([
               'Matte Black',

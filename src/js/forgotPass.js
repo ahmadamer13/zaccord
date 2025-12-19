@@ -3,7 +3,7 @@ _('submitBtn').addEventListener('click', function submitEmail(e) {
   let email = _('email').value;
   _('email').style.marginBottom = '0px';
   if (!email.length) {
-  _('errStatus').innerHTML = '<p>Please provide an email address</p>';
+    _('errStatus').innerHTML = '<p>Please provide an email address</p>';
     return;
   } else {
     let data = {
@@ -21,7 +21,7 @@ _('submitBtn').addEventListener('click', function submitEmail(e) {
       body: JSON.stringify(data)
     }).then(response => response.json()).then(data => {
       if (data.success) {
-_('succStatus').innerHTML = `<p>Ideiglenes jelszó sikeresen idényelve</p>`;
+        _('succStatus').innerHTML = `<p>Temporary password successfully requested</p>`;
         _('email').value = '';
       } else {
         _('errStatus').innerHTML = data.error;

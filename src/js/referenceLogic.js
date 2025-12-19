@@ -25,7 +25,7 @@ const formatShortDesc = (description) => {
 const buildReferencePage = (conn) => {
   return new Promise((resolve, reject) => {
     // First gather the photos from db
-    let iQuery = "SELECT * FROM reference_images WHERE title <> 'Meztelen Női Test'";
+    let iQuery = "SELECT * FROM reference_images WHERE title <> 'Naked Female Body'";
     conn.query(iQuery, (err, result, fields) => {
       if (err) {
         reject('Problem during reference image fetch from database');
@@ -36,7 +36,7 @@ const buildReferencePage = (conn) => {
         <section class="keepBottom">
           <div class="row">  
       `;
-      
+
       let initial = 0;
       for (let i = 0; i < NUM_OF_COLS; i++) {
         content += '<div class="column">';

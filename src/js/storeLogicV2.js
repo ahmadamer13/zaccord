@@ -1,19 +1,20 @@
 const buildCategory = require('./buildCategory.js');
 
 const { addHeader } = require('./includes/helperFunctions.js');
+const { translateRows } = require('./includes/productTranslations.js');
 
 const buildStoreSectionV2 = (conn, userID) => {
     return new Promise((resolve, reject) => {
         // Fetch all products initially
-        // buildCategory(conn, 'All') ... we are skipping buildCategory and querying directly as per previous step
-
         const sQuery = `SELECT * FROM fix_products ORDER BY priority ASC`;
 
-        conn.query(sQuery, (err, rows) => {
+        conn.query(sQuery, (err, result) => {
             if (err) {
                 reject(err);
                 return;
             }
+
+            const rows = translateRows(result);
 
             // Extract unique categories
             const categories = [...new Set(rows.map(r => r.category))].sort();

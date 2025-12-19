@@ -36,9 +36,9 @@ function buildPage(req, res, conn, userID, buildFunc, htmlPath) {
 function validateParams(formData) {
   // Validates prototype parameters
   if (!formData.email || !formData.name || !formData.tel || !formData.message) {
-return 'Kérlek tölts ki minden mezőt';
+    return 'Please fill in all fields';
   } else if (!validateEmail.validate(formData.email)) {
-return 'Kérlek valós e-mailt adj meg';
+    return 'Please provide a valid email address';
   } else {
     return 'success';
   }
@@ -47,13 +47,13 @@ return 'Kérlek valós e-mailt adj meg';
 function validateRegisterParams(formData) {
   // Validate params for user sign up
   if (!formData.email || !formData.pass || !formData.passConf) {
-return 'Kérlek tölts ki minden mezőt';
+    return 'Please fill in all fields';
   } else if (!validateEmail.validate(formData.email)) {
-return 'Kérlek valós e-mailt adj meg'
+    return 'Please provide a valid email address'
   } else if (formData.pass != formData.passConf) {
-    return 'A jelszavak nem egyeznek';
+    return 'Passwords do not match';
   } else if (formData.pass.length < 6) {
-return 'A jelszónak minimum 6 karakterből kell állnia';
+    return 'Password must be at least 6 characters long';
   } else {
     return 'success';
   }
@@ -66,8 +66,8 @@ function toClientPrototype(res, stat, req, formData) {
   } else {
     sendPrototype(conn, formData, req).then(data => {
       // Auto log in user after successful registration
-responseData.success = 'Sikeres kapcsolatfelvétel<br>Hamarosan részletes árajánlattal jelentkezünk számodra';
-      res.writeHead(200, {'Content-Type': 'application/json'});
+      responseData.success = 'Contact successful<br>We will get back to you with a detailed quote soon';
+      res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(responseData));
     }).catch(err => {
       errorFormResponse(res, err);
@@ -76,7 +76,7 @@ responseData.success = 'Sikeres kapcsolatfelvétel<br>Hamarosan részletes áraj
 }
 
 function toClientRegister(res, stat, req, formData, userSession) {
-  let responseData = {}; 
+  let responseData = {};
   if (stat != 'success') {
     errorFormResponse(res, stat);
   } else {
@@ -85,7 +85,7 @@ function toClientRegister(res, stat, req, formData, userSession) {
       userSession(req, res, function uSession() {
         req.user.id = data;
         responseData.success = '<p>register succsfully</p>';
-        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(responseData));
       });
     }).catch(err => {
@@ -95,7 +95,7 @@ function toClientRegister(res, stat, req, formData, userSession) {
 }
 
 function validatePcode(pcode) {
-  // Validates a Hungarian post code
+  // Validates a postal code
   if (!Number.isInteger(pcode) || pcode < 1000 || pcode > 9985) {
     return false;
   }
@@ -103,13 +103,18 @@ function validatePcode(pcode) {
 }
 
 function validateUploadFile(cFile, err) {
-  // Make sure that the number of files to be uploaded is between 1 and 5 (both inclusive)
-  if (!Array.isArray(cFile) && !cFile.size) {
+  if (err) {
+    return ['sfupload', 'An error occurred during upload: ' + (err.message || err)];
+  }
+  if (!cFile) {
     return ['cFile', 'Choose a file'];
-  } else if (cFile.length > 5) {
-return ['sfupload', 'Maximum 5db fájlt tölthetsz fel'];
-  } else if (err) {
-    return ['sfupload', 'An error occurred'];
+  }
+  // Make sure that the number of files to be uploaded is between 1 and 5 (both inclusive)
+  if (Array.isArray(cFile)) {
+    if (cFile.length === 0) return ['cFile', 'Choose a file'];
+    if (cFile.length > 5) return ['sfupload', 'You can upload a maximum of 5 files'];
+  } else {
+    if (!cFile.size) return ['cFile', 'Choose a file'];
   }
   return 'success';
 }
@@ -137,11 +142,11 @@ function getFilePaths(extension, prefix, i) {
   let timestamp = Number((Date.now() / 1000).toFixed(0)) % 1000;
   if (extension === 'stl') {
     var isLit = false;
-    var uploadFileName = prefix + '_' + timestamp + '_' + i; 
+    var uploadFileName = prefix + '_' + timestamp + '_' + i;
     var newpath = path.join(basePath(__dirname), 'printUploads', uploadFileName + '.stl');
   } else {
     var isLit = true;
-    var uploadFileName = prefix + '_' + timestamp + '_lit_' + i; 
+    var uploadFileName = prefix + '_' + timestamp + '_lit_' + i;
     var newpath = path.join(basePath(__dirname), 'printUploads', 'lithophanes',
       uploadFileName + '.' + extension);
   }
@@ -152,11 +157,11 @@ function createDefaultThumbnail(fname) {
   // Moves a default stock photo as the STL thumbnail to a permanent location
   return new Promise((resolve, reject) => {
     let source = DEFAULT_CP_IMG;
-    let destination = path.join(basePath(__dirname), 'printUploads', 'thumbnails', 
+    let destination = path.join(basePath(__dirname), 'printUploads', 'thumbnails',
       fname + '.png');
     fs.copyFile(source, destination, (err) => {
       if (err) {
-reject('Hiba az alapértelmezett thumbnail készítése közben');
+        reject('Error creating default thumbnail');
       }
       resolve('success');
     });
@@ -175,23 +180,35 @@ function createThumbnail(fname) {
       return;
     }
 
-    let thumbnailer = new StlThumbnailer({
-      filePath: path.join(basePath(__dirname), 'printUploads', fname + '.stl'), 
-      requestThumbnails: [
-        {
-          width: 500,
-          height: 500
+    try {
+      let thumbnailer = new StlThumbnailer({
+        filePath: path.join(basePath(__dirname), 'printUploads', fname + '.stl'),
+        requestThumbnails: [
+          {
+            width: 500,
+            height: 500
+          }
+        ]
+      }).then(function (thumbnails) {
+        if (!thumbnails || !thumbnails[0]) {
+          return createDefaultThumbnail(fname).then(() => resolve('success')).catch(reject);
         }
-      ] 	
-    }).then(function(thumbnails) {
-      thumbnails[0].toBuffer(function(err, buf) {      
-        fs.writeFile(path.join(basePath(__dirname), 'printUploads', 'thumbnails',
-          fname + '.png'), buf, function (err) {
-if (err) reject('Hiba a thumbnail készítése közben');
-          resolve('success');
+        thumbnails[0].toBuffer(function (err, buf) {
+          if (err) return reject('Error creating thumbnail buffer');
+          fs.writeFile(path.join(basePath(__dirname), 'printUploads', 'thumbnails',
+            fname + '.png'), buf, function (err) {
+              if (err) reject('Error writing thumbnail file');
+              resolve('success');
+            });
         });
+      }).catch(err => {
+        console.error('Thumbnailer promise error:', err);
+        createDefaultThumbnail(fname).then(() => resolve('success')).catch(reject);
       });
-    });
+    } catch (err) {
+      console.error('Thumbnailer sync error:', err);
+      createDefaultThumbnail(fname).then(() => resolve('success')).catch(reject);
+    }
   });
 }
 
@@ -206,11 +223,11 @@ function resizeLitImage(newpath) {
       if (width > 1920 && height <= 1920) {
         var options = {
           width: 1920
-        }; 
+        };
       } else if (width <= 1920 && height > 1920) {
-         var options = {
+        var options = {
           height: 1920
-        };                  
+        };
       } else {
         var options = {
           width: 1920,
@@ -220,13 +237,17 @@ function resizeLitImage(newpath) {
 
       // Resize img and write file
       (async () => {
-        const image = await resizeImg(fs.readFileSync(newpath), options);
-
-        fs.writeFileSync(newpath, image);
-        resolve('success');
+        try {
+          const image = await resizeImg(fs.readFileSync(newpath), options);
+          fs.writeFileSync(newpath, image);
+          resolve('success');
+        } catch (e) {
+          console.error('Error resizing image:', e);
+          reject('Error resizing lithophane image');
+        }
       })();
     }
-  }); 
+  });
 }
 
 function parseUploadFiles(form, req, res, userID) {
@@ -236,15 +257,15 @@ function parseUploadFiles(form, req, res, userID) {
       let cFile = files['file[]'];
       let isError = validateUploadFile(cFile, err);
       if (isError != 'success') {
-        imgError(res, userID, isError[0], isError[1]); 
+        imgError(res, userID, isError[0], isError[1]);
         reject(isError[0]);
         return;
       }
-      
+
       if (!Array.isArray(cFile)) {
-        cFile = [cFile];  
+        cFile = [cFile];
       }
-      
+
       let filePaths = [];
       let promises = [];
       let allImgs = isAllImages(cFile);
@@ -252,23 +273,24 @@ function parseUploadFiles(form, req, res, userID) {
 
       // Make sure that only 1 image is uploaded
       if (isMoreImages(cFile, allImgs)) {
-imgError(res, userID, 'sfupload', 'Egyszerre csak 1 képet tölthetsz fel');
-reject('Egyszerre csak 1 képet tölthetsz fel');
+        imgError(res, userID, 'sfupload', 'You can only upload 1 image at a time');
+        reject('You can only upload 1 image at a time');
         return;
       }
 
       let uploadFnames = [];
       for (let i = 0; i < cFile.length; i++) {
+        if (!cFile[i]) continue;
         let oldpath = cFile[i].path;
-        let splitted = cFile[i].name.split('.');
+        let splitted = (cFile[i].name || 'unknown.stl').split('.');
         let extension = splitted[splitted.length - 1].toLowerCase();
         let uploadFileSize = cFile[i].size;
-        
+
         // Make sure the extension is valid
         if (['png', 'jpg', 'jpeg', 'stl'].indexOf(extension) < 0) {
-reject('Hibás fájlkiterjesztés');
+          reject('Invalid file extension');
           return;
-        } 
+        }
 
         // If user is not logged in file prefix is 1 char random string, otherwise it's the uid
         let prefix = randomstring.generate(1);
@@ -279,13 +301,13 @@ reject('Hibás fájlkiterjesztés');
 
         uploadFnames.push(uploadFileName);
         origFnames[uploadFileName] = cFile[i].name;
-        
-        let send = newpath.substr(1);
+
         let move = new Promise((resolve, reject) => {
+          if (!oldpath) return reject('No temporary file path found');
           mv(oldpath, newpath, err => {
             if (err) {
-              console.log(err);
-reject('Hiba a fájlok átvitelekor');
+              console.log('Error moving file:', err);
+              reject('Error transferring files');
               return;
             }
 
@@ -296,17 +318,17 @@ reject('Hiba a fájlok átvitelekor');
             */
             if (extension === 'stl') {
               if (uploadFileSize > 10 * 1024 * 1024) {
-                createDefaultThumbnail(uploadFnames[i]).then(res => {
+                createDefaultThumbnail(uploadFileName).then(res => {
                   resolve('success');
                 }).catch(err => {
                   console.log(err);
-reject('Hiba az alapértelmezett thumbnail készítése közben');
+                  reject('Error creating default thumbnail');
                 });
               } else {
-                createThumbnail(uploadFnames[i]).then(res => {
+                createThumbnail(uploadFileName).then(res => {
                   resolve('success');
                 }).catch(err => {
-reject('Hiba a thumbnail készítése közben');
+                  reject('Error creating thumbnail');
                 });
               }
             } else {
@@ -315,7 +337,7 @@ reject('Hiba a thumbnail készítése közben');
               resizeLitImage(newpath).then(res => {
                 resolve('success');
               }).catch(err => {
-reject('Hiba a litofán kép átméretezése közben');
+                reject('Error resizing lithophane image');
               });
             }
           });
@@ -323,17 +345,17 @@ reject('Hiba a litofán kép átméretezése közben');
 
         filePaths.push(newpath);
         promises.push(move);
-        resolve([promises, isLit, filePaths, newpath, origFnames]);
       }
-    }); 
+      resolve([promises, isLit, filePaths, filePaths[0], origFnames]);
+    });
   });
 }
 
 function isProtectedFile(url) {
   if (url.includes(path.join('js', 'includes', 'constants.js')) ||
-      url.includes(path.join('js', 'includes', 'sendEmail.js')) ||
-      url.includes(path.join('js', 'includes', 'adminLogic.js')) ||
-      url.includes(path.join('js', 'includes', 'createSession.js'))) {
+    url.includes(path.join('js', 'includes', 'sendEmail.js')) ||
+    url.includes(path.join('js', 'includes', 'adminLogic.js')) ||
+    url.includes(path.join('js', 'includes', 'createSession.js'))) {
     return true;
   }
   return false;

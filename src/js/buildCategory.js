@@ -9,8 +9,8 @@ const buildCategory = (conn, category, opts = {}) => {
     /*
       Tackle 3 cases:
         - category is an ordinary category in db
-- category is 'Legnépszerűbb' which is marked as is_best in db
-- catgegory is 'All' when we list all products from every category
+        - category is 'Most Popular' which is marked as is_best in db
+        - category is 'All' when we list all products from every category
     */
 
     let sQuery;
