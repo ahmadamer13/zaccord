@@ -563,7 +563,14 @@ const server = http.createServer((req, res) => {
     // Dynamic sitemap.xml
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
       const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
-      const staticPaths = ['/', '/ar/', '/print', '/account', '/cart', '/blogs', '/colors', '/references', '/services-jordan', '/stl-guide', '/faq-3d-printing-jordan', '/store', '/prodeuts'];
+      const staticPaths = [
+        '/', '/ar/', '/print', '/account', '/cart', '/blogs', '/colors', '/references',
+        '/services-jordan', '/stl-guide', '/faq-3d-printing-jordan', '/store', '/prodeuts',
+        '/printUpload', '/printHelp', '/materialHelp', '/lithophane', '/lithophaneHelp',
+        '/about', '/cookies', '/aszf', '/elallas', '/nyilatkozat', '/gyik', '/vasarlas',
+        '/offline', '/login', '/register', '/forgotPassword', '/getInvolved', '/openSource',
+        '/feedback'
+      ];
       let urls = staticPaths.map(p => ({ loc: host + p, lastmod: new Date().toISOString().split('T')[0] }));
 
       const addUrl = (arr, path, dateStr) => arr.push({ loc: host + path, lastmod: dateStr || new Date().toISOString().split('T')[0] });

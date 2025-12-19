@@ -262,40 +262,7 @@ function changeToRandColors() {
 
 // changeToRandColors();
 
-// Toggle more items menu btn
-// Toggle more items menu btn
-function toggleMoreMenu() {
-  let cont = _('mmContainer');
-  if (cont.dataset.status == 'closed') {
-    $("#mmOverlay").fadeIn(200);
-    document.body.style.overflow = 'hidden';
-    cont.dataset.status = 'opened';
-  } else {
-    $("#mmOverlay").fadeOut(200);
-    document.body.style.overflow = 'auto';
-    cont.dataset.status = 'closed';
-  }
-  $("#mmContainer").animate({ width: 'toggle' }, 200);
-}
 
-if (_('moreMenu')) {
-  _('moreMenu').addEventListener('click', toggleMoreMenu);
-}
-
-if (_('mmOverlay')) {
-  _('mmOverlay').addEventListener('click', (e) => {
-    if (_('mmContainer').dataset.status == 'opened') {
-      hideOnClickOutside(_('mmContainer'), toggleMoreMenu);
-    }
-  });
-}
-
-if (_('mmClose')) {
-  _('mmClose').addEventListener('click', function closeMenu(e) {
-    _('mmContainer').dataset.status = 'opened';
-    toggleMoreMenu();
-  });
-}
 
 let clinks = document.getElementsByClassName('contactLinks');
 for (let clink of clinks) {

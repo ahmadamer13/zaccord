@@ -2,7 +2,7 @@
 function updateQtyUI() {
   _('minus').style.opacity = '1';
   _('minus').style.cursor = 'pointer';
-  
+
   if (_('quantity').value == MAX_QUANTITY) {
     _('plus').style.opacity = '0.4';
     _('plus').style.cursor = 'not-allowed';
@@ -37,7 +37,7 @@ function updateCookie(param, qty = null, cookieID = null) {
       let cid = cookieID ? cookieID : param;
       soFar['content_' + id][cid + '_' + id] = encodeURIComponent(_(param).value);
     }
-  } 
+  }
   setCookie('cartItems', JSON.stringify(soFar), 365);
   updateCartNum();
   //fbq('track', 'CustomizeProduct');
@@ -58,3 +58,66 @@ function smoothPrice(price) {
     //return Math.round(Math.sqrt(price) * 110);
   }
 }
+
+// Helper function for selecting elements
+const _ = (id) => document.getElementById(id);
+
+// Toggle more items menu btn
+function toggleMoreMenu() {
+  let cont = _('mmContainer');
+  if (!cont) return;
+
+  // Ensure jQuery is available, otherwise fallback to vanilla JS
+  if (typeof $ !== 'undefined') {
+    if (cont.dataset.status == 'closed') {
+      $("#mmOverlay").fadeIn(200);
+      document.body.style.overflow = 'hidden';
+      cont.dataset.status = 'opened';
+    } else {
+      $("#mmOverlay").fadeOut(200);
+      document.body.style.overflow = 'auto';
+      cont.dataset.status = 'closed';
+    }
+    $("#mmContainer").animate({ width: 'toggle' }, 200);
+  } else {
+    // Vanilla JS fallback
+    if (cont.dataset.status == 'closed') {
+      _('mmOverlay').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      cont.dataset.status = 'opened';
+      cont.style.display = 'block'; // Assuming toggle means display block/none or width
+      cont.style.width = '280px'; // Approximate width
+    } else {
+      _('mmOverlay').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      cont.dataset.status = 'closed';
+      cont.style.display = 'none';
+      cont.style.width = '0';
+    }
+  }
+}
+
+// Initialize More Menu listeners
+document.addEventListener('DOMContentLoaded', () => {
+  if (_('moreMenu')) {
+    _('moreMenu').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMoreMenu();
+    });
+  }
+
+  if (_('mmOverlay')) {
+    _('mmOverlay').addEventListener('click', () => {
+      if (_('mmContainer').dataset.status == 'opened') {
+        toggleMoreMenu();
+      }
+    });
+  }
+
+  if (_('mmClose')) {
+    _('mmClose').addEventListener('click', () => {
+      _('mmContainer').dataset.status = 'opened'; // Ensure it closes
+      toggleMoreMenu();
+    });
+  }
+});
