@@ -87,7 +87,8 @@
     position: fixed;
     right: 18px;
     bottom: 18px;
-    z-index: 99999
+    z-index: 99999 !important;
+    isolation: isolate;
   }
 
   /* RTL support for Arabic pages */
@@ -105,7 +106,9 @@
     background: #25D366 url('/images/icons/whatsapp.svg') no-repeat 50% 50%;
     background-size: 42px 42px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    transition: transform .15s ease
+    transition: transform .15s ease;
+    position: relative;
+    z-index: 1;
   }
 
   .waFabMain:hover {
@@ -120,7 +123,8 @@
     display: none;
     gap: 12px;
     flex-direction: column;
-    align-items: flex-end
+    align-items: flex-end;
+    z-index: 2;
   }
 
   /* RTL support for menu alignment */
@@ -142,6 +146,8 @@
     background-size: 34px 34px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     transition: transform .15s ease;
+    position: relative;
+    z-index: 3;
   }
 
   .waItem:hover {
