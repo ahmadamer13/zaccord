@@ -488,6 +488,25 @@
 
 <body>
   <div class="page">
+    <nav class="ar-nav">
+      <div class="ar-nav__inner">
+        <div class="brand">
+          <a href="/ar/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+            <img src="/images/icons/logo.svg" alt="3DJordanPrint Logo">
+            <span>3DJordanPrint</span>
+          </a>
+        </div>
+        <div class="nav-actions">
+          <a class="pill pill--primary" href="/print">ابدأ الطباعة</a>
+          <a class="pill" href="/store">المتجر</a>
+          <a class="pill" href="/blogs">المدونة</a>
+          <div id="mmHolder" style="cursor:pointer; display:flex; align-items:center;">
+            <img src="/images/icons/moreMenu.svg" class="mMenu trans" id="moreMenu" data-status="open" width="24"
+              height="24" alt="Menu">
+          </div>
+        </div>
+      </div>
+    </nav>
 
 
     <section class="hero">
@@ -668,6 +687,54 @@
       </div>
     </section>
   </div>
+  <!-- Sidebar Menu (Arabic) -->
+  <div class="mmContainer" id="mmContainer" data-status="closed"
+    style="right:auto; left:0; transform: translateX(-100%); border-right: 1px solid rgba(0,0,0,0.05); border-left: none;">
+    <div class="mmInnerTop" style="flex-direction: row-reverse;">
+      <p class="gotham">القائمة</p>
+      <div>
+        <img src="/images/icons/moreClose.svg" class="mmClose trans" id="mmClose" alt="Close menu">
+      </div>
+    </div>
+
+    <div class="mainMenuCont" dir="rtl">
+      <div><a href="/login" class="gothamNormal trans">تسجيل الدخول</a></div>
+      <div><a href="/printHelp" class="gothamNormal trans">مساعدة الطباعة</a></div>
+      <div><a href="/lithophaneHelp" class="gothamNormal trans">مساعدة الليثوفين</a></div>
+      <div><a href="/terms" class="gothamNormal trans">المصطلحات</a></div>
+      <div><a href="/materialHelp" class="gothamNormal trans">المواد</a></div>
+      <div><a href="/services-jordan" class="gothamNormal trans">الطباعة ثلاثية الأبعاد في الأردن</a></div>
+      <div><a href="/stl-guide" class="gothamNormal trans">دليل تجهيز الملفات</a></div>
+      <div><a href="/faq-3d-printing-jordan" class="gothamNormal trans">الأسئلة الشائعة</a></div>
+      <div><a href="/colors" class="gothamNormal trans">الألوان</a></div>
+      <div><a href="/store" class="gothamNormal trans">المتجر</a></div>
+      <div><a href="/blogs" class="gothamNormal trans">المدونة</a></div>
+      <div><a href="/forgotPassword" class="gothamNormal trans">نسيت كلمة المرور</a></div>
+      <div><a href="/references" class="gothamNormal trans">المراجع</a></div>
+      <div><a href="/" class="gothamNormal trans" lang="en" dir="ltr">English Site</a></div>
+    </div>
+
+    <div class="relDiv">
+      <div class="mmFooter">
+        <p class="align ddgray gothamNormal font14"><span class="yearHolder"></span> 3DJordanPrint</p>
+      </div>
+    </div>
+  </div>
+  <div class="mmOverlay" id="mmOverlay"></div>
+
+  <script src="/js/clientScripts/common.js"></script>
+  <script>
+    // Fix sidebar direction for Arabic
+    const mmCont = document.getElementById('mmContainer');
+    if (mmCont) {
+      mmCont.classList.add('rtl-sidebar');
+    }
+  </script>
+  <style>
+    .rtl-sidebar.open {
+      transform: translateX(0) !important;
+    }
+  </style>
 </body>
 
 </html>
