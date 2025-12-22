@@ -165,15 +165,20 @@ const buildMainSection = (conn, cat) => {
             <section class="hero">
               <div class="hero__inner">
                 <div class="hero__text">
-                  <h1>3D Printing Service in Jordan</h1>
-                  <p>The leading 3D printing service in Jordan. Instant quotes, fast turnaround, and expert makers. PLA, PETG, ABS, and resin (SLA) with delivery to Amman, Irbid, Zarqa, and all governorates.</p>
-                  <p style="margin:6px 0 0;color:#475569;font-weight:700;">0.07 JD per gram · FDM & SLA · Fast delivery across Jordan</p>
+                  <h1>Professional 3D Printing Services in Jordan</h1>
+                  <p>Get custom 3D printing in Jordan with instant quotes. Upload your STL file and choose from PLA, PETG, ABS, and resin (SLA) materials. Fast delivery to Amman, Irbid, Zarqa, Aqaba, and all governorates across Jordan.</p>
+                  <p style="margin:6px 0 0;color:#475569;font-weight:700;">0.07 JD per gram · FDM & SLA · Same-day printing available</p>
                   <div class="hero__cta">
-                    <a class="pill pill--primary" href="/print">Start a print</a>
-                    <a class="pill" href="https://wa.me/962797479825?text=I%20am%20interested%20in%203D%20design%20service" target="_blank" rel="noreferrer">3D Design Service</a>
-                    <a class="pill" href="/store">Store</a>
-                    <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
-                    <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl">الموقع بالعربية</a>
+                    <a class="pill pill--primary" href="/print" aria-label="Upload STL file for instant 3D printing quote">Upload STL & Get Quote</a>
+                    <a class="pill" href="https://wa.me/962797479825?text=I%20am%20interested%20in%203D%20design%20service" target="_blank" rel="noreferrer" aria-label="Contact for 3D design service">3D Design Service</a>
+                    <a class="pill" href="/store" aria-label="Browse 3D printed products store">Store</a>
+                    <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp for 3D printing help">Chat on WhatsApp</a>
+                    <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl" aria-label="View website in Arabic">الموقع بالعربية</a>
+                  </div>
+                  <div class="badge-row">
+                    <div class="badge">✓ 1000+ Parts Printed</div>
+                    <div class="badge">✓ Same-Day Service</div>
+                    <div class="badge">✓ All Jordan Coverage</div>
                   </div>
                 </div>
                 <div class="hero__panel">
@@ -197,57 +202,74 @@ const buildMainSection = (conn, cat) => {
             </section>
 
             <section class="section">
-              <h2>Why choose us</h2>
-              <p class="lead">Premium finishing, honest pricing, and attentive support from local makers.</p>
-              <div class="grid">
-                <div class="tile">
-                  <h3>Refined finish</h3>
-                  <p>High-quality tuning for smooth surfaces and durable parts.</p>
-                </div>
-                <div class="tile">
-                  <h3>Trusted materials</h3>
-                  <p>PLA, PETG, ABS, and resin (SLA) in stocked colors.</p>
-                </div>
-                <div class="tile">
-                  <h3>Speed without compromise</h3>
-                  <p>Flexible schedules to ship fast while keeping precision.</p>
-                </div>
-                <div class="tile">
-                  <h3>Local support</h3>
-                  <p>English and Arabic guidance to get the best result for your part.</p>
-                </div>
-              </div>
-            </section>
-
-            <section class="section">
-              <h2>From file to finished part</h2>
+              <h2>How Our 3D Printing Service Works</h2>
+              <p class="lead">Simple, transparent process from STL upload to delivery across Jordan.</p>
               <div class="timeline">
                 <div class="step">
                   <small>01</small>
-                  <h4>Upload your STL</h4>
-                  <p>See the per-gram price instantly with no wait.</p>
+                  <h4>Upload your STL file</h4>
+                  <p>Get instant pricing based on weight and material. No hidden fees or waiting.</p>
                 </div>
                 <div class="step">
                   <small>02</small>
-                  <h4>Pick the material</h4>
-                  <p>PLA for general use, PETG for strength, ABS or resin for detail.</p>
+                  <h4>Choose material & color</h4>
+                  <p>PLA for prototypes, PETG for strength, ABS for heat resistance, or resin for detail.</p>
                 </div>
                 <div class="step">
                   <small>03</small>
-                  <h4>We print and deliver</h4>
-                  <p>Quality check, then fast delivery anywhere in Jordan.</p>
+                  <h4>We print & deliver</h4>
+                  <p>Quality check every print, then fast delivery anywhere in Jordan.</p>
                 </div>
               </div>
             </section>
 
             <section class="section">
-              <h2>Materials & colors</h2>
-              <p class="lead">Curated filaments and resin to balance strength, accuracy, and aesthetics.</p>
+              <h2>Why Choose Us for 3D Printing in Jordan</h2>
+              <p class="lead">Premium quality, honest pricing, and expert support from local makers in Amman.</p>
+              <div class="grid">
+                <div class="tile">
+                  <h3>✓ Instant Online Quotes</h3>
+                  <p>Upload your STL file and see exact pricing immediately. 0.07 JD per gram with no surprises.</p>
+                </div>
+                <div class="tile">
+                  <h3>✓ Premium Materials</h3>
+                  <p>PLA, PETG, ABS, and resin (SLA) from trusted brands. All colors in stock.</p>
+                </div>
+                <div class="tile">
+                  <h3>✓ Fast Turnaround</h3>
+                  <p>Same-day printing available. Flexible schedules for urgent projects without compromising quality.</p>
+                </div>
+                <div class="tile">
+                  <h3>✓ Local Expert Support</h3>
+                  <p>English and Arabic guidance via WhatsApp. We help optimize your design for best results.</p>
+                </div>
+                <div class="tile">
+                  <h3>✓ Nationwide Delivery</h3>
+                  <p>Fast shipping to Amman, Irbid, Zarqa, Aqaba, and all Jordan governorates.</p>
+                </div>
+                <div class="tile">
+                  <h3>✓ Quality Guaranteed</h3>
+                  <p>Every print inspected before shipping. We reprint if there's any issue.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="section">
+              <h2>Materials, Prices & Delivery Options</h2>
+              <p class="lead">Transparent pricing at 0.07 JD per gram. Choose the right material for your project.</p>
               <div class="materials">
-                <div class="chip">PLA — Everyday & prototypes</div>
-                <div class="chip">PETG — Tough & moisture resistant</div>
-                <div class="chip">ABS — Strong & post-processable</div>
-                <div class="chip">Resin (SLA) — Ultra-detailed</div>
+                <div class="chip">PLA — Best for prototypes & decorative items</div>
+                <div class="chip">PETG — Tough & weather resistant</div>
+                <div class="chip">ABS — Heat resistant & post-processable</div>
+                <div class="chip">Resin (SLA) — Ultra-detailed & smooth</div>
+                <div class="chip">TPU — Flexible & impact resistant</div>
+                <div class="chip">Nylon — Industrial strength</div>
+              </div>
+              <p style="margin-top:16px;color:var(--muted);">
+                <strong>Delivery:</strong> Fast shipping across Jordan. Same-day printing for urgent orders. 
+                <a href="/print" class="blueLink">Upload your STL file now →</a>
+              </p>
+            </section>
                 <div class="chip">Wide color range</div>
               </div>
             </section>

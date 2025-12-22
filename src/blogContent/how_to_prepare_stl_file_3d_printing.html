@@ -1,169 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
+<h2 class="gothamNormal fontNorm font22">Introduction</h2>
+<p class="font18">
+    Getting your 3D model ready for printing is crucial for achieving high-quality results. Whether you're printing
+    functional prototypes or decorative items in Jordan, proper STL file preparation can save you time, money, and
+    frustration. This comprehensive guide covers everything you need to know.<br><br>
+</p>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Prepare Your STL File for Perfect 3D Printing Results in Jordan</title>
-    <meta name="description"
-        content="Complete guide to preparing STL files for 3D printing in Jordan. Learn about file optimization, wall thickness, supports, and export settings for FDM and SLA printing.">
-    <meta name="keywords"
-        content="stl file preparation, 3d printing file format, prepare stl for printing, 3d model optimization jordan, stl export settings">
-</head>
+<h2 class="gothamNormal fontNorm font22">What is an STL File?</h2>
+<p class="font18">
+    STL (Standard Tessellation Language) is the most common file format for 3D printing. It represents your 3D model as
+    a collection of triangular faces. Most 3D modeling software like Fusion 360, Blender, Tinkercad, and SolidWorks can
+    export to STL format.<br><br>
+</p>
 
-<body>
-    <article>
-        <h1>How to Prepare Your STL File for Perfect 3D Printing Results in Jordan</h1>
+<h2 class="gothamNormal fontNorm font22">Step 1: Ensure Your Model is Watertight</h2>
+<p class="font18">
+    A "watertight" or "manifold" model has no holes, gaps, or missing faces. Think of it like a water balloon – if there
+    are any holes, it won't hold water. Similarly, 3D printers need a completely closed surface to understand what's
+    inside and outside your model.<br><br>
+</p>
 
-        <p class="lead">Getting your 3D model ready for printing is crucial for achieving high-quality results. Whether
-            you're printing functional prototypes or decorative items in Jordan, proper STL file preparation can save
-            you time, money, and frustration. This comprehensive guide covers everything you need to know.</p>
+<h3 class="gothamNormal fontNorm font20">How to Check if Your Model is Watertight:</h3>
+<ul class="dul font18">
+    <li><strong>In Meshmixer:</strong> Analysis → Inspector → Auto Repair All</li>
+    <li><strong>In Blender:</strong> Edit Mode → Select All → Mesh → Normals → Recalculate Outside</li>
+    <li><strong>Online tools:</strong> Use free services like Microsoft 3D Model Repair</li>
+</ul>
 
-        <h2>What is an STL File?</h2>
-        <p>STL (Standard Tessellation Language) is the most common file format for 3D printing. It represents your 3D
-            model as a collection of triangular faces. Most 3D modeling software like Fusion 360, Blender, Tinkercad,
-            and SolidWorks can export to STL format.</p>
+<h2 class="gothamNormal fontNorm font22">Step 2: Check Wall Thickness</h2>
+<p class="font18">
+    Walls that are too thin will be fragile or impossible to print. For FDM printing (PLA, PETG, ABS), minimum wall
+    thickness should be:<br><br>
+</p>
+<ul class="dul font18">
+    <li><strong>Functional parts:</strong> 1.2mm - 2mm minimum</li>
+    <li><strong>Decorative items:</strong> 0.8mm - 1mm minimum</li>
+    <li><strong>SLA/Resin printing:</strong> 0.4mm - 0.6mm minimum (more detail possible)</li>
+</ul>
 
-        <h2>Step 1: Ensure Your Model is Watertight</h2>
-        <p>A "watertight" or "manifold" model has no holes, gaps, or missing faces. Think of it like a water balloon –
-            if there are any holes, it won't hold water. Similarly, 3D printers need a completely closed surface to
-            understand what's inside and outside your model.</p>
+<h2 class="gothamNormal fontNorm font22">Step 3: Set Proper Scale and Units</h2>
+<p class="font18">
+    Always verify your model's dimensions before exporting. A common mistake is having the wrong units – a 100mm cube
+    accidentally exported as 100cm becomes massive!<br><br>
 
-        <h3>How to Check if Your Model is Watertight:</h3>
-        <ul>
-            <li><strong>In Meshmixer:</strong> Analysis → Inspector → Auto Repair All</li>
-            <li><strong>In Blender:</strong> Edit Mode → Select All → Mesh → Normals → Recalculate Outside</li>
-            <li><strong>Online tools:</strong> Use free services like Microsoft 3D Model Repair</li>
-        </ul>
+    <strong>Best practice:</strong> Work in millimeters (mm) as this is the standard for 3D printing. Double-check
+    dimensions in your CAD software before export.<br><br>
+</p>
 
-        <h2>Step 2: Check Wall Thickness</h2>
-        <p>Walls that are too thin will be fragile or impossible to print. For FDM printing (PLA, PETG, ABS), minimum
-            wall thickness should be:</p>
-        <ul>
-            <li><strong>Functional parts:</strong> 1.2mm - 2mm minimum</li>
-            <li><strong>Decorative items:</strong> 0.8mm - 1mm minimum</li>
-            <li><strong>SLA/Resin printing:</strong> 0.4mm - 0.6mm minimum (more detail possible)</li>
-        </ul>
+<h2 class="gothamNormal fontNorm font22">Step 4: Consider Support Structures</h2>
+<p class="font18">
+    Overhangs beyond 45° typically need supports. The "45-degree rule" states that angles steeper than 45° from vertical
+    will need support material.<br><br>
+</p>
 
-        <h2>Step 3: Set Proper Scale and Units</h2>
-        <p>Always verify your model's dimensions before exporting. A common mistake is having the wrong units – a 100mm
-            cube accidentally exported as 100cm becomes massive!</p>
+<h3 class="gothamNormal fontNorm font20">Tips to Minimize Supports:</h3>
+<ul class="dul font18">
+    <li>Orient your model to reduce overhangs</li>
+    <li>Design chamfers instead of sharp overhangs</li>
+    <li>Split complex models into multiple parts</li>
+    <li>Use teardrop shapes for horizontal holes</li>
+</ul>
 
-        <p><strong>Best practice:</strong> Work in millimeters (mm) as this is the standard for 3D printing.
-            Double-check dimensions in your CAD software before export.</p>
+<h2 class="gothamNormal fontNorm font22">Step 5: Optimize File Size</h2>
+<p class="font18">
+    STL files can become very large with high polygon counts. While detail is important, excessively large files slow
+    down processing.<br><br>
+</p>
 
-        <h2>Step 4: Consider Support Structures</h2>
-        <p>Overhangs beyond 45° typically need supports. The "45-degree rule" states that angles steeper than 45° from
-            vertical will need support material.</p>
+<h3 class="gothamNormal fontNorm font20">Recommended Settings:</h3>
+<ul class="dul font18">
+    <li><strong>For organic shapes:</strong> 0.01mm - 0.05mm tolerance</li>
+    <li><strong>For mechanical parts:</strong> 0.1mm tolerance is usually sufficient</li>
+    <li><strong>File size:</strong> Aim for under 100MB for easier handling</li>
+</ul>
 
-        <h3>Tips to Minimize Supports:</h3>
-        <ul>
-            <li>Orient your model to reduce overhangs</li>
-            <li>Design chamfers instead of sharp overhangs</li>
-            <li>Split complex models into multiple parts</li>
-            <li>Use teardrop shapes for horizontal holes</li>
-        </ul>
+<h2 class="gothamNormal fontNorm font22">Step 6: Export Settings for Different Software</h2>
 
-        <h2>Step 5: Optimize File Size</h2>
-        <p>STL files can become very large with high polygon counts. While detail is important, excessively large files
-            slow down processing.</p>
+<h3 class="gothamNormal fontNorm font20">Fusion 360:</h3>
+<ol class="font18">
+    <li>Right-click on your component → Save As STL</li>
+    <li>Set refinement to "High" for curved surfaces</li>
+    <li>Choose "Binary" format (smaller file size)</li>
+</ol>
 
-        <h3>Recommended Settings:</h3>
-        <ul>
-            <li><strong>For organic shapes:</strong> 0.01mm - 0.05mm tolerance</li>
-            <li><strong>For mechanical parts:</strong> 0.1mm tolerance is usually sufficient</li>
-            <li><strong>File size:</strong> Aim for under 100MB for easier handling</li>
-        </ul>
+<h3 class="gothamNormal fontNorm font20">Blender:</h3>
+<ol class="font18">
+    <li>File → Export → STL</li>
+    <li>Check "Apply Modifiers"</li>
+    <li>Set "Forward" to Y Forward, "Up" to Z Up</li>
+</ol>
 
-        <h2>Step 6: Export Settings for Different Software</h2>
+<h3 class="gothamNormal fontNorm font20">Tinkercad:</h3>
+<ol class="font18">
+    <li>Click "Export" → STL</li>
+    <li>Files are automatically optimized</li>
+</ol>
 
-        <h3>Fusion 360:</h3>
-        <ol>
-            <li>Right-click on your component → Save As STL</li>
-            <li>Set refinement to "High" for curved surfaces</li>
-            <li>Choose "Binary" format (smaller file size)</li>
-        </ol>
+<h2 class="gothamNormal fontNorm font22">Step 7: Test Your File Before Ordering</h2>
+<p class="font18">
+    Before sending your STL to a 3D printing service in Jordan, preview it using free slicing software:<br><br>
+</p>
+<ul class="dul font18">
+    <li><strong>Cura (Free):</strong> Shows exactly how your print will look layer by layer</li>
+    <li><strong>PrusaSlicer (Free):</strong> Excellent for detecting issues</li>
+    <li><strong>Online viewers:</strong> ViewSTL.com for quick checks</li>
+</ul>
 
-        <h3>Blender:</h3>
-        <ol>
-            <li>File → Export → STL</li>
-            <li>Check "Apply Modifiers"</li>
-            <li>Set "Forward" to Y Forward, "Up" to Z Up</li>
-        </ol>
+<h2 class="gothamNormal fontNorm font22">Common STL Preparation Mistakes to Avoid</h2>
+<ul class="dul font18">
+    <li><strong>Inverted normals:</strong> Faces pointing the wrong direction</li>
+    <li><strong>Intersecting geometry:</strong> Parts overlapping incorrectly</li>
+    <li><strong>Non-manifold edges:</strong> Edges shared by more than 2 faces</li>
+    <li><strong>Floating shells:</strong> Disconnected pieces inside your model</li>
+    <li><strong>Wrong orientation:</strong> Not considering print direction</li>
+</ul>
 
-        <h3>Tinkercad:</h3>
-        <ol>
-            <li>Click "Export" → STL</li>
-            <li>Files are automatically optimized</li>
-        </ol>
+<h2 class="gothamNormal fontNorm font22">Material-Specific Considerations for Jordan</h2>
 
-        <h2>Step 7: Test Your File Before Ordering</h2>
-        <p>Before sending your STL to a 3D printing service in Jordan, preview it using free slicing software:</p>
-        <ul>
-            <li><strong>Cura (Free):</strong> Shows exactly how your print will look layer by layer</li>
-            <li><strong>PrusaSlicer (Free):</strong> Excellent for detecting issues</li>
-            <li><strong>Online viewers:</strong> ViewSTL.com for quick checks</li>
-        </ul>
+<h3 class="gothamNormal fontNorm font20">PLA (Most Popular):</h3>
+<p class="font18">
+    Great for beginners. Minimum wall thickness: 1mm. Best for decorative items, prototypes, and low-stress parts.
+    Biodegradable and easy to print.<br><br>
+</p>
 
-        <h2>Common STL Preparation Mistakes to Avoid</h2>
-        <ul>
-            <li><strong>Inverted normals:</strong> Faces pointing the wrong direction</li>
-            <li><strong>Intersecting geometry:</strong> Parts overlapping incorrectly</li>
-            <li><strong>Non-manifold edges:</strong> Edges shared by more than 2 faces</li>
-            <li><strong>Floating shells:</strong> Disconnected pieces inside your model</li>
-            <li><strong>Wrong orientation:</strong> Not considering print direction</li>
-        </ul>
+<h3 class="gothamNormal fontNorm font20">PETG (Durable):</h3>
+<p class="font18">
+    Stronger than PLA with better layer adhesion. Minimum wall thickness: 1.2mm. Ideal for functional parts, outdoor
+    use, and items that need flexibility.<br><br>
+</p>
 
-        <h2>Material-Specific Considerations for Jordan</h2>
+<h3 class="gothamNormal fontNorm font20">ABS (Heat Resistant):</h3>
+<p class="font18">
+    Requires careful design due to warping. Minimum wall thickness: 1.5mm. Best for automotive parts, enclosures, and
+    high-temperature applications.<br><br>
+</p>
 
-        <h3>PLA (Most Popular):</h3>
-        <p>Great for beginners. Minimum wall thickness: 1mm. Best for decorative items, prototypes, and low-stress
-            parts. Biodegradable and easy to print.</p>
+<h3 class="gothamNormal fontNorm font20">Resin/SLA (High Detail):</h3>
+<p class="font18">
+    Allows thinner walls (0.4mm+) and incredible detail. Perfect for miniatures, jewelry, dental models, and intricate
+    designs.<br><br>
+</p>
 
-        <h3>PETG (Durable):</h3>
-        <p>Stronger than PLA with better layer adhesion. Minimum wall thickness: 1.2mm. Ideal for functional parts,
-            outdoor use, and items that need flexibility.</p>
+<h2 class="gothamNormal fontNorm font22">Pricing Impact of File Preparation</h2>
+<p class="font18">
+    At 3DJordanPrint, pricing is based on weight (0.07 JD/gram) and print time. Proper file preparation can reduce costs
+    by:<br><br>
+</p>
+<ul class="dul font18">
+    <li>Reducing unnecessary material through hollowing</li>
+    <li>Minimizing support structures</li>
+    <li>Optimizing orientation for faster printing</li>
+    <li>Preventing failed prints and reprints</li>
+</ul>
 
-        <h3>ABS (Heat Resistant):</h3>
-        <p>Requires careful design due to warping. Minimum wall thickness: 1.5mm. Best for automotive parts, enclosures,
-            and high-temperature applications.</p>
+<h2 class="gothamNormal fontNorm font22">Free STL Repair Tools</h2>
+<ul class="dul font18">
+    <li><strong>Microsoft 3D Builder:</strong> Windows built-in repair tool</li>
+    <li><strong>Meshmixer:</strong> Advanced free tool from Autodesk</li>
+    <li><strong>Netfabb Basic:</strong> Professional-grade repair</li>
+    <li><strong>MakePrintable:</strong> Online STL repair service</li>
+</ul>
 
-        <h3>Resin/SLA (High Detail):</h3>
-        <p>Allows thinner walls (0.4mm+) and incredible detail. Perfect for miniatures, jewelry, dental models, and
-            intricate designs.</p>
+<h2 class="gothamNormal fontNorm font22">Ready to Print in Jordan?</h2>
+<p class="font18">
+    Once your STL file is properly prepared, upload it to 3DJordanPrint for an instant quote. Our system automatically
+    checks for common issues and provides recommendations. We serve all of Jordan including Amman, Irbid, Zarqa, Aqaba,
+    and all governorates with fast delivery.<br><br>
 
-        <h2>Pricing Impact of File Preparation</h2>
-        <p>At 3DJordanPrint, pricing is based on weight (0.07 JD/gram) and print time. Proper file preparation can
-            reduce costs by:</p>
-        <ul>
-            <li>Reducing unnecessary material through hollowing</li>
-            <li>Minimizing support structures</li>
-            <li>Optimizing orientation for faster printing</li>
-            <li>Preventing failed prints and reprints</li>
-        </ul>
+    <strong>Need help with your STL file?</strong> Contact us on WhatsApp at +962 79 747 9825. Our team can review your
+    file and suggest optimizations for the best print quality and price.<br><br>
+</p>
 
-        <h2>Free STL Repair Tools</h2>
-        <ul>
-            <li><strong>Microsoft 3D Builder:</strong> Windows built-in repair tool</li>
-            <li><strong>Meshmixer:</strong> Advanced free tool from Autodesk</li>
-            <li><strong>Netfabb Basic:</strong> Professional-grade repair</li>
-            <li><strong>MakePrintable:</strong> Online STL repair service</li>
-        </ul>
-
-        <h2>Ready to Print in Jordan?</h2>
-        <p>Once your STL file is properly prepared, upload it to 3DJordanPrint for an instant quote. Our system
-            automatically checks for common issues and provides recommendations. We serve all of Jordan including Amman,
-            Irbid, Zarqa, Aqaba, and all governorates with fast delivery.</p>
-
-        <p><strong>Need help with your STL file?</strong> Contact us on WhatsApp at +962 79 747 9825. Our team can
-            review your file and suggest optimizations for the best print quality and price.</p>
-
-        <div class="cta-box">
-            <h3>Start Your 3D Print Today</h3>
-            <p>Upload your STL file now for instant pricing on PLA, PETG, ABS, and Resin prints</p>
-            <a href="/print" class="btn-primary">Get Instant Quote</a>
-        </div>
-    </article>
-</body>
-
-</html>
+<div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h3 class="gothamNormal fontNorm font20">Start Your 3D Print Today</h3>
+    <p class="font18">Upload your STL file now for instant pricing on PLA, PETG, ABS, and Resin prints</p>
+    <a href="/print" class="blueLink font18">Get Instant Quote →</a>
+</div>
