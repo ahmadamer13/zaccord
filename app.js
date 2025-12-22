@@ -634,12 +634,15 @@ const server = http.createServer((req, res) => {
       request
     */
 
-    let ending = path.join(req.url === '/' ? 'index.html' : req.url.replace('src', ''));
+    // Parse URL to handle query parameters properly
+    const parsedUrl = url.parse(req.url);
+    const pathname = parsedUrl.pathname || '/';
+    let ending = path.join(pathname === '/' ? 'index.html' : pathname.replace('src', ''));
     let filePath = path.join(__dirname, 'src', ending);
     let extension = path.extname(filePath);
 
     // Serve Arabic homepage via /ar or /ar/
-    if (req.url === '/ar' || req.url === '/ar/') {
+    if (pathname === '/ar' || pathname === '/ar/') {
       filePath = path.join(__dirname, 'src', 'ar', 'index.html');
       extension = '.html';
     }
@@ -659,9 +662,9 @@ const server = http.createServer((req, res) => {
     if (handled) return;
 
     // Make sure user is not logged in when visiting /login and /register pages
-    if ((['/register', '/login'].indexOf(req.url) > -1 && req.user.id)
-      || req.url.substr(0, 8) === '/?fbclid' || isProtectedFile(req.url) ||
-      (req.url == '/forgotPassword' && req.user.id)) {
+    if ((['/register', '/login'].indexOf(pathname) > -1 && req.user.id)
+      || isProtectedFile(pathname) ||
+      (pathname == '/forgotPassword' && req.user.id)) {
       res.writeHead(302, {
         'Location': '/'
       });
@@ -1235,20 +1238,20 @@ const server = http.createServer((req, res) => {
         if (extension == '.html') {
           content = content.toString().replace('</body>', '').replace('</html>', '');
 
-          if (req.url != '/') {
+          if (pathname != '/') {
             content += fs.readFileSync(path.join('src', 'includes', 'footer.html'));
           }
 
           content += addCookieAccept(req);
-          content += addHeader(userID, req.url === '/ar' || req.url === '/ar/');
+          content += addHeader(userID, pathname === '/ar' || pathname === '/ar/');
 
-          if (req.url != '/') {
+          if (pathname != '/') {
             content += '</body></html>';
           }
         }
 
         // Build pages from database
-        if (req.url === '/') {
+        if (pathname === '/') {
           buildMainSection(conn).then(data => {
             content += data;
             content += fs.readFileSync(path.join('src', 'includes', 'footer.html'));
