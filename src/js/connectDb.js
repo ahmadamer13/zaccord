@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const connContsts = require('./includes/connConstants.js');
 const HOST = connContsts.host;
 const USER = connContsts.user;
