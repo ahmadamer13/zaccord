@@ -163,6 +163,35 @@
     background-color: #25D366;
     background-image: url('/images/icons/whatsapp.svg')
   }
+
+  /* Mobile adjustments to prevent overlap with content */
+  @media (max-width: 768px) {
+    .waFab {
+      bottom: 24px;
+      right: 12px;
+    }
+
+    [dir="rtl"] .waFab {
+      right: auto;
+      left: 12px;
+    }
+
+    .waFabMain {
+      width: 64px;
+      height: 64px;
+      background-size: 32px 32px;
+    }
+
+    .waItem {
+      width: 54px;
+      height: 54px;
+      background-size: 28px 28px;
+    }
+
+    .waFabMenu {
+      padding-bottom: 76px;
+    }
+  }
 </style>
 <script>
   (function () {
