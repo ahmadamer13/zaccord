@@ -48,6 +48,7 @@ const getXMLPacketa = require('./src/js/includes/getXMLPacketa.js');
 const buildBlogsSection = require('./src/js/buildBlogsSection.js').buildBlogsSection;
 const handleZprod = require('./src/js/handleZprod.js');
 const buildZprod = require('./src/js/buildZprod.js');
+const publicStoreAPI = require('./src/js/publicStoreAPI.js');
 
 const helpers = require('./src/js/includes/helperFunctions.js');
 const addCookieAccept = helpers.addCookieAccept;
@@ -559,6 +560,98 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       returnToClient(genOrder, [conn, req.user.id], null, res);
     });
+
+    // ========== PUBLIC STORE API ROUTES ==========
+  } else if (req.url === '/api/public-store/categories' && req.method === 'GET') {
+    // Get all categories
+    publicStoreAPI.getCategories(conn).then(categories => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(categories));
+    }).catch(err => {
+      console.error('Error fetching categories:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to fetch categories' }));
+    });
+
+  } else if (req.url.startsWith('/api/public-store/items') && req.method === 'GET') {
+    // Get marketplace items with filters
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const filters = {
+      page: urlObj.searchParams.get('page') || 1,
+      limit: urlObj.searchParams.get('limit') || 12,
+      search: urlObj.searchParams.get('search') || '',
+      category: urlObj.searchParams.get('category') || '',
+      priceRange: urlObj.searchParams.get('priceRange') || '',
+      sort: urlObj.searchParams.get('sort') || 'newest'
+    };
+
+    publicStoreAPI.getItems(conn, filters).then(data => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(data));
+    }).catch(err => {
+      console.error('Error fetching items:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to fetch items' }));
+    });
+
+  } else if (req.url.match(/^\/api\/public-store\/item\/\d+$/) && req.method === 'GET') {
+    // Get single item details
+    const itemId = req.url.split('/').pop();
+    publicStoreAPI.getItemById(conn, itemId, userID).then(item => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(item));
+    }).catch(err => {
+      console.error('Error fetching item:', err);
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Item not found' }));
+    });
+
+  } else if (req.url === '/api/public-store/upload' && req.method === 'POST') {
+    // Upload new design
+    if (!userID) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Please log in to upload designs' }));
+      return;
+    }
+
+    publicStoreAPI.uploadDesign(conn, req, userID).then(result => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
+    }).catch(err => {
+      console.error('Error uploading design:', err);
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message || 'Failed to upload design' }));
+    });
+
+  } else if (req.url === '/api/public-store/stats' && req.method === 'GET') {
+    // Get platform statistics
+    publicStoreAPI.getStats(conn).then(stats => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(stats));
+    }).catch(err => {
+      console.error('Error fetching stats:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to fetch statistics' }));
+    });
+
+  } else if (req.url.match(/^\/api\/public-store\/favorite\/\d+$/) && req.method === 'POST') {
+    // Toggle favorite
+    if (!userID) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Please log in to favorite items' }));
+      return;
+    }
+
+    const itemId = req.url.split('/').pop();
+    publicStoreAPI.toggleFavorite(conn, userID, itemId).then(result => {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
+    }).catch(err => {
+      console.error('Error toggling favorite:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to toggle favorite' }));
+    });
+    // ========== END PUBLIC STORE API ROUTES ==========
   } else {
     // Dynamic sitemap.xml
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
