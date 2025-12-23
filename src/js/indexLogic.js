@@ -55,148 +55,302 @@ const buildMainSection = (conn, cat) => {
         // Translate most-popular items
         result = translateRows(result);
 
-        // Create html output (Apple-inspired minimal layout)
+        // Create html output (Craftcloud-inspired clean layout)
         let output = `
           <style>
             :root{
-              --ink:#0b0b0c;
-              --silver:#f5f5f7;
-              --mid:#c7c7cc;
-              --accent:#0071e3;
-              --muted:#6e6e73;
+              --primary-blue:#0066cc;
+              --dark-text:#1a1a1a;
+              --light-gray:#f8f9fa;
+              --border-gray:#e0e0e0;
+              --muted-text:#6c757d;
             }
             body{
-              background:var(--silver);
-              color:var(--ink);
+              background:#fff;
+              color:var(--dark-text);
               font-family:"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+              margin:0;
+              padding:0;
             }
-            .page{min-height:100vh;display:flex;flex-direction:column;}
-            .nav-lite{
-              position:sticky;top:0;z-index:10;
-              backdrop-filter:blur(10px);
-              background:rgba(245,245,247,0.92);
-              border-bottom:1px solid rgba(0,0,0,0.04);
+            .page{min-height:100vh;}
+            
+            /* Hero Section */
+            .hero-clean{
+              background:#fff;
+              padding:0;
+              position:relative;
+              min-height:600px;
             }
-            .nav-lite__inner{
-              max-width:1200px;margin:0 auto;padding:14px 20px;
-              display:flex;align-items:center;justify-content:space-between;gap:16px;
+            .hero-clean__container{
+              max-width:1400px;
+              margin:0 auto;
+              position:relative;
+              min-height:600px;
             }
-            .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:0.4px;}
-            .brand img{width:36px;height:36px}
-            .nav-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-            .pill{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;
-              border:1px solid rgba(0,0,0,0.08);background:#fff;color:var(--ink);font-weight:600;
-              text-decoration:none;box-shadow:0 8px 28px rgba(0,0,0,0.04);font-size:16px;}
-            .pill--ghost{background:transparent;border-color:rgba(0,0,0,0.15);}
-            .pill--primary{background:var(--ink);color:#fff;border-color:var(--ink);}
-            .pill:hover{transform:translateY(-1px);transition:transform 120ms ease;}
-            .pill small{color:var(--muted);font-weight:500;}
-            .hero{
-              position:relative;overflow:hidden;min-height:70vh;display:flex;align-items:center;justify-content:center;
-              padding:60px 20px 50px;
+            .hero-clean__image{
+              position:absolute;
+              top:0;
+              right:0;
+              width:65%;
+              height:100%;
+              min-height:600px;
             }
-            .hero::before{
-              content:"";position:absolute;inset:0;
-              background:radial-gradient(circle at 20% 20%,rgba(0,113,227,0.18),transparent 32%),
-                         radial-gradient(circle at 80% 10%,rgba(0,0,0,0.12),transparent 28%),
-                         linear-gradient(135deg,#fff,rgba(255,255,255,0.7));
-              z-index:0;
+            .hero-clean__image::before{
+              content:'';
+              position:absolute;
+              top:0;
+              left:0;
+              width:40%;
+              height:100%;
+              background:linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0) 100%);
+              z-index:1;
             }
-            .hero__inner{
-              position:relative;z-index:1;max-width:1200px;width:100%;
-              display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-              gap:24px;align-items:center;
+            .hero-clean__image img{
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              object-position:center;
+              border-radius:0 0 0 40px;
             }
-            .hero__text{max-width:650px;}
-            .hero__text h1{font-size:42px;line-height:1.08;margin:0 0 16px;letter-spacing:-0.02em;}
-            .hero__text p{font-size:19px;color:var(--muted);margin:0 0 20px;line-height:1.65;}
-            .hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;margin-bottom:12px;}
-            .badge-row{
+            .hero-clean__text{
+              position:relative;
+              z-index:2;
+              max-width:600px;
+              padding:80px 40px;
+            }
+            .hero-clean__text h1{
+              font-size:48px;
+              font-weight:700;
+              line-height:1.2;
+              margin:0 0 20px;
+              color:var(--dark-text);
+            }
+            .hero-clean__text .subtitle{
+              font-size:18px;
+              color:var(--muted-text);
+              margin:0 0 30px;
+              line-height:1.6;
+            }
+            .hero-clean__cta{
               display:flex;
               gap:12px;
               flex-wrap:wrap;
-              margin-top:18px;
+            }
+            .pill{
+              display:inline-flex;
               align-items:center;
-              width:100%;
-              justify-content:flex-start;
+              gap:8px;
+              padding:12px 20px;
+              border-radius:999px;
+              border:1px solid rgba(0,0,0,0.08);
+              background:#fff;
+              color:var(--dark-text);
+              font-weight:600;
+              text-decoration:none;
+              box-shadow:0 4px 12px rgba(0,0,0,0.08);
+              font-size:15px;
+              transition:all 0.2s;
             }
-            .badge{padding:9px 14px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,0.06);
-              color:var(--muted);font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:10px;}
-            .badge img{width:18px;height:18px;}
-            .hero__panel{background:#fff;border-radius:24px;padding:20px;box-shadow:0 20px 45px rgba(0,0,0,0.06);}
-            .panel-title{font-size:20px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
-            .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
-            .metric{background:var(--silver);border-radius:16px;padding:14px;}
-            .metric strong{display:block;font-size:22px;margin-bottom:4px;}
-            .metric span{color:var(--muted);font-size:13px;}
-            .section{max-width:1200px;margin:40px auto;padding:0 20px;}
-            .section h2{font-size:30px;margin:0 0 14px;letter-spacing:-0.01em;}
-            .section p.lead{color:var(--muted);margin:0 0 18px;font-size:17px;}
-            .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
-            .tile{background:#fff;border-radius:20px;padding:18px;box-shadow:0 12px 32px rgba(0,0,0,0.05);min-height:160px;display:flex;flex-direction:column;gap:8px;}
-            .tile h3{margin:0;font-size:19px;letter-spacing:-0.01em;}
-            .tile p{margin:0;color:var(--muted);line-height:1.6;}
-            .timeline{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
-            .step{background:#0b0b0c;color:#fff;padding:18px;border-radius:18px;min-height:160px;}
-            .step small{color:rgba(255,255,255,0.7);font-weight:600;}
-            .step h4{margin:8px 0 8px;font-size:20px;}
-            .step p{margin:0;color:rgba(255,255,255,0.78);line-height:1.6;}
-            .materials{display:flex;gap:14px;flex-wrap:wrap;}
-            .chip{background:#fff;border-radius:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.06);color:var(--muted);font-weight:600;font-size:15px;}
+            .pill:hover{
+              transform:translateY(-2px);
+              box-shadow:0 8px 20px rgba(0,0,0,0.12);
+            }
+            .pill--primary{
+              background:var(--primary-blue);
+              color:#fff;
+              border-color:var(--primary-blue);
+            }
+            .pill--primary:hover{
+              background:#0052a3;
+            }
+            .pill--ghost{
+              background:transparent;
+              border-color:rgba(0,0,0,0.15);
+            }
+            
+            /* Section Styles */
+            .section{
+              max-width:1200px;
+              margin:60px auto;
+              padding:0 20px;
+            }
+            .section h2{
+              font-size:36px;
+              font-weight:700;
+              margin:0 0 16px;
+              color:var(--dark-text);
+            }
+            .section p.lead{
+              color:var(--muted-text);
+              margin:0 0 30px;
+              font-size:18px;
+              line-height:1.6;
+            }
+            .grid{
+              display:grid;
+              gap:24px;
+              grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            }
+            .tile{
+              background:#fff;
+              border:1px solid var(--border-gray);
+              border-radius:8px;
+              padding:24px;
+              transition:box-shadow 0.2s;
+            }
+            .tile:hover{
+              box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            }
+            .tile h3{
+              margin:0 0 12px;
+              font-size:20px;
+              font-weight:600;
+              color:var(--dark-text);
+            }
+            .tile p{
+              margin:0;
+              color:var(--muted-text);
+              line-height:1.6;
+              font-size:15px;
+            }
+            .timeline{
+              display:grid;
+              gap:20px;
+              grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            }
+            .step{
+              background:var(--dark-text);
+              color:#fff;
+              padding:24px;
+              border-radius:8px;
+            }
+            .step small{
+              color:rgba(255,255,255,0.6);
+              font-weight:600;
+              font-size:14px;
+            }
+            .step h4{
+              margin:12px 0 8px;
+              font-size:22px;
+              font-weight:600;
+            }
+            .step p{
+              margin:0;
+              color:rgba(255,255,255,0.85);
+              line-height:1.6;
+            }
+            .materials{
+              display:flex;
+              gap:12px;
+              flex-wrap:wrap;
+            }
+            .chip{
+              background:var(--light-gray);
+              border-radius:20px;
+              padding:10px 18px;
+              border:1px solid var(--border-gray);
+              color:var(--dark-text);
+              font-weight:600;
+              font-size:14px;
+            }
             .cta-band{
-              max-width:1200px;margin:60px auto;padding:26px 20px;border-radius:26px;
-              background:linear-gradient(120deg,#0b0b0c,#1f2937);color:#fff;
-              display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+              max-width:1200px;
+              margin:80px auto;
+              padding:40px;
+              border-radius:12px;
+              background:linear-gradient(135deg,#0066cc,#0052a3);
+              color:#fff;
+              display:flex;
+              flex-wrap:wrap;
+              align-items:center;
+              justify-content:space-between;
+              gap:20px;
             }
-            .cta-band h3{margin:0;font-size:26px;}
-            .cta-band p{margin:4px 0 0;color:rgba(255,255,255,0.75);}
-            .cta-actions{display:flex;gap:10px;flex-wrap:wrap;}
-            @media (max-width:700px){
-              .hero__text h1{font-size:32px;}
-              .hero__text p{font-size:17px;}
-              .nav-lite__inner{padding:12px 16px;}
-              .pill{width:100%;justify-content:center;}
+            .cta-band h3{
+              margin:0;
+              font-size:32px;
+              font-weight:700;
+            }
+            .cta-band p{
+              margin:8px 0 0;
+              color:rgba(255,255,255,0.9);
+              font-size:16px;
+            }
+            .cta-actions{
+              display:flex;
+              gap:12px;
+              flex-wrap:wrap;
+            }
+            .btn-white{
+              background:#fff;
+              color:var(--primary-blue);
+              padding:14px 28px;
+              border-radius:6px;
+              text-decoration:none;
+              font-weight:600;
+              font-size:16px;
+              display:inline-block;
+            }
+            .btn-outline-white{
+              background:transparent;
+              color:#fff;
+              padding:14px 28px;
+              border-radius:6px;
+              text-decoration:none;
+              font-weight:600;
+              font-size:16px;
+              border:2px solid #fff;
+              display:inline-block;
+            }
+            
+            @media (max-width:768px){
+              .hero-clean__container{
+                min-height:auto;
+              }
+              .hero-clean__image{
+                position:relative;
+                width:100%;
+                min-height:300px;
+                order:2;
+              }
+              .hero-clean__image::before{
+                display:none;
+              }
+              .hero-clean__image img{
+                border-radius:0;
+              }
+              .hero-clean__text{
+                padding:40px 20px;
+                order:1;
+              }
+              .hero-clean__text h1{
+                font-size:36px;
+              }
+              .section h2{
+                font-size:28px;
+              }
             }
           </style>
 
           <div class="page">
-
-
-            <section class="hero">
-              <div class="hero__inner">
-                <div class="hero__text">
-                  <h1>Professional 3D Printing Services in Jordan</h1>
-                  <p>Get custom 3D printing in Jordan with instant quotes. Upload your STL file and choose from PLA, PETG, ABS, and resin (SLA) materials. Fast delivery to Amman, Irbid, Zarqa, Aqaba, and all governorates across Jordan.</p>
-                  <p style="margin:6px 0 0;color:#475569;font-weight:700;">0.07 JD per gram · FDM & SLA · Same-day printing available</p>
-                  <div class="hero__cta">
-                    <a class="pill pill--primary" href="/print" aria-label="Upload STL file for instant 3D printing quote">Upload STL & Get Quote</a>
-                    <a class="pill" href="https://wa.me/962797479825?text=I%20am%20interested%20in%203D%20design%20service" target="_blank" rel="noreferrer" aria-label="Contact for 3D design service">3D Design Service</a>
-                    <a class="pill" href="/store" aria-label="Browse 3D printed products store">Store</a>
-                    <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp for 3D printing help">Chat on WhatsApp</a>
-                    <a class="pill pill--ghost" href="/ar/" lang="ar" dir="rtl" aria-label="View website in Arabic">الموقع بالعربية</a>
-                  </div>
-                  <div class="badge-row">
-                    <div class="badge">✓ 1000+ Parts Printed</div>
-                    <div class="badge">✓ Same-Day Service</div>
-                    <div class="badge">✓ All Jordan Coverage</div>
+            <section class="hero-clean">
+              <div class="hero-clean__container">
+                <div class="hero-clean__text">
+                  <h1>Your Streamlined<br>3D Printing Service</h1>
+                  <p class="subtitle">Get Quality Parts at the Best Price<br><br>Compare manufacturers around the world in real time. Order industrial-quality parts at the most competitive price. We take care of everything, including your satisfaction.</p>
+                  <div class="hero-clean__cta">
+                    <a href="/print" class="pill pill--primary">
+                      <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/></svg>
+                      Get instant quotes
+                    </a>
+                    <a href="/store" class="pill">Try it out</a>
+                    <a href="https://wa.me/962797479825?text=I%20am%20interested%20in%203D%20design%20service" target="_blank" rel="noreferrer" class="pill">3D Design Service</a>
+                    <a href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer" class="pill">Chat on WhatsApp</a>
+                    <a href="/ar/" lang="ar" dir="rtl" class="pill pill--ghost">الموقع بالعربية</a>
                   </div>
                 </div>
-                <div class="hero__panel">
-                  <div class="panel-title">At a glance</div>
-                  <div class="metrics">
-                    <div class="metric">
-                      <strong>Instant price</strong>
-                      <span>Upload STL for transparent cost</span>
-                    </div>
-                    <div class="metric">
-                      <strong>8am – 10pm</strong>
-                      <span>Open daily</span>
-                    </div>
-                    <div class="metric">
-                      <strong>+962 79 747 9825</strong>
-                      <span>Call or WhatsApp anytime</span>
-                    </div>
-                  </div>
+                <div class="hero-clean__image">
+                  <img src="/images/hero-3d-parts.png" alt="3D Printed Parts Showcase" loading="eager">
                 </div>
               </div>
             </section>
@@ -328,8 +482,8 @@ const buildMainSection = (conn, cat) => {
                 <p>Instant quotes, bilingual support, and Jordan-wide delivery.</p>
               </div>
               <div class="cta-actions">
-                <a class="pill pill--primary" href="/print">Upload STL</a>
-                <a class="pill" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Quick consult</a>
+                <a class="btn-white" href="/print">Upload STL</a>
+                <a class="btn-outline-white" href="https://wa.me/message/KQRSOE7ZSWJBK1" target="_blank" rel="noreferrer">Quick consult</a>
               </div>
             </section>
           </div>
