@@ -122,6 +122,12 @@ const translations = {
     summary:
       'Mobile technicians arrive with diagnostic gear, spare parts, and calibration tools so homes, schools, and companies avoid moving heavy equipment.',
     img_url: 'blog_on_site.jpg'
+  },
+  53: {
+    title: 'How to Prepare Your STL File for Perfect 3D Printing Results in Jordan',
+    categories: '3D Printing, Tutorial, STL, Guide, Jordan',
+    summary: 'Proper STL file preparation is the first step to a successful print. A poorly prepared STL file can lead to print failure, weak parts, or extra costs. In this guide, we explain how to prepare your file professionally.',
+    img_url: 'blog_calibration.png'
   }
 };
 

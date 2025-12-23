@@ -46,6 +46,7 @@ const downloadSTLs = require('./src/js/includes/downloadSTLs.js');
 const packetaXML = require('./src/js/includes/packetaXML.js');
 const getXMLPacketa = require('./src/js/includes/getXMLPacketa.js');
 const buildBlogsSection = require('./src/js/buildBlogsSection.js').buildBlogsSection;
+const buildBlogsSectionAr = require('./src/js/buildBlogsSection.js').buildBlogsSectionAr;
 const handleZprod = require('./src/js/handleZprod.js');
 const buildZprod = require('./src/js/buildZprod.js');
 
@@ -93,7 +94,7 @@ const ADMIN_UNAME = constants.adminUname;
 const ADMIN_PASSWORD = constants.adminPassword;
 const DOWNLOAD_STLS_URL = constants.downloadSTLsURL;
 
-const BPAGES = ['/references', '/colors', '/blogs'];
+const BPAGES = ['/references', '/colors', '/blogs', '/ar/blogs'];
 const PAGE_LOOKUP = {
   '/references': {
     'func': buildReferencePage,
@@ -106,6 +107,10 @@ const PAGE_LOOKUP = {
   '/blogs': {
     'func': buildBlogsSection,
     'path': 'src/blog.html'
+  },
+  '/ar/blogs': {
+    'func': buildBlogsSectionAr,
+    'path': 'src/ar/blogs.html'
   }
 }
 
@@ -564,7 +569,7 @@ const server = http.createServer((req, res) => {
     if (req.url === '/sitemap.xml' && req.method.toLowerCase() === 'get') {
       const host = (req.headers['x-forwarded-proto'] ? req.headers['x-forwarded-proto'] : 'https') + '://' + req.headers.host;
       const staticPaths = [
-        '/', '/ar/', '/print', '/account', '/cart', '/blogs', '/colors', '/references',
+        '/', '/ar/', '/print', '/account', '/cart', '/blogs', '/ar/blogs', '/colors', '/references',
         '/services-jordan', '/stl-guide', '/faq-3d-printing-jordan', '/store', '/prodeuts',
         '/printUpload', '/printHelp', '/materialHelp', '/lithophane', '/lithophaneHelp',
         '/about', '/cookies', '/aszf', '/elallas', '/nyilatkozat', '/gyik', '/vasarlas',
@@ -691,7 +696,7 @@ const server = http.createServer((req, res) => {
               console.log(error);
               imgError(res, userID, 'parcel');
             });
-          } else if (req.url === '/blog' || req.url.indexOf('/blog?') === 0) {
+          } else if (req.url === '/blog' || req.url.indexOf('/blog?') === 0 || req.url === '/ar/blog' || req.url.indexOf('/ar/blog?') === 0) {
             let blogID = NaN;
             try {
               const urlObj = new URL(req.url, 'http://localhost');
