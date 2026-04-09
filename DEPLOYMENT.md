@@ -10,7 +10,7 @@ To deploy your changes to the production server, simply run:
 
 ### Example:
 ```bash
-./deploy.sh "Fixed bug in product page"
+./deploy.sh "Fixed bug in product page1"
 ./deploy.sh "Added new feature to cart"
 ./deploy.sh "Updated styling for mobile devices"
 ```
